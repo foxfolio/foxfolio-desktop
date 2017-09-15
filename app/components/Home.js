@@ -44,8 +44,11 @@ export default class Home extends Component {
           <Table selectable={false}>
             <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
               <TableRow>
-                <TableHeaderColumn>Name</TableHeaderColumn>
-                <TableHeaderColumn>Status</TableHeaderColumn>
+                <TableHeaderColumn>Date</TableHeaderColumn>
+                <TableHeaderColumn>Source</TableHeaderColumn>
+                <TableHeaderColumn>Destination</TableHeaderColumn>
+                <TableHeaderColumn>Quantity</TableHeaderColumn>
+                <TableHeaderColumn>Rate</TableHeaderColumn>
               </TableRow>
             </TableHeader>
             <TableBody displayRowCheckbox={false}>
