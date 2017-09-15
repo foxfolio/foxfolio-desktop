@@ -5,7 +5,7 @@ import { TableRow, TableRowColumn } from 'material-ui';
 export default class TransactionRow extends Component {
   props: {
     data: {
-      date: object,
+      date: Date,
       type: string,
       fromCurr: string,
       toCurr: string,

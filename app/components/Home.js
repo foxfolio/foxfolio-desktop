@@ -1,44 +1,28 @@
 import React, { Component } from 'react';
 import Paper from 'material-ui/Paper';
-import { Col, Grid, Row } from 'react-flexbox-grid';
+import { Table, TableBody, TableHeader, TableHeaderColumn, TableRow } from 'material-ui';
 
 import styles from './Home.css';
-import { Table, TableBody, TableHeader, TableHeaderColumn, TableRow } from 'material-ui';
 import TransactionRow from './TransactionRow';
-import BittrexTransactions from '../sources/bittrex';
+import Portfolio from './Portfolio';
 
 export default class Home extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      transactions: [],
-    };
-  }
+  props: {
+    getTransactions: () => void,
+    transactions: any
+  };
 
   componentDidMount() {
-    BittrexTransactions()
-      .then(res => this.setState({ transactions: res }))
-      .catch(err => console.log(err));
+    const { getTransactions } = this.props;
+    getTransactions();
   }
 
   render() {
+    const { transactions } = this.props;
+
     return (
       <div className={styles.container}>
-        <Paper style={{ padding: 10 }} zDepth={2}>
-          <h1>Portfolio</h1>
-          <Grid fluid>
-            <Row>
-              <Col xs={1}><h3>XBT</h3></Col>
-              <Col xs={1}><h4>1.541</h4></Col>
-              <Col xsOffset={1} xs={1}><h3>ETH</h3></Col>
-              <Col xs={1}><h4>10.215</h4></Col>
-              <Col xsOffset={1} xs={1}><h3>XRP</h3></Col>
-              <Col xs={1}><h4>150.510</h4></Col>
-              <Col xsOffset={1} xs={1}><h3>OMG</h3></Col>
-              <Col xs={1}><h4>15.642</h4></Col>
-            </Row>
-          </Grid>
-        </Paper>
+        <Portfolio transactions={transactions}/>
         <Paper style={{ marginTop: 30, padding: 10 }} zDepth={2}>
           <h1>Transactions</h1>
           <Table selectable={false}>
@@ -52,7 +36,7 @@ export default class Home extends Component {
               </TableRow>
             </TableHeader>
             <TableBody displayRowCheckbox={false}>
-              {this.state.transactions.map(transaction =>
+              {transactions.map(transaction =>
                 <TransactionRow key={transaction.id} data={transaction}/>)}
             </TableBody>
           </Table>
