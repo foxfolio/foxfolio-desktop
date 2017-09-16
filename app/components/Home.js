@@ -6,19 +6,27 @@ import styles from './Home.css';
 import TransactionRow from './TransactionRow';
 import Portfolio from './Portfolio';
 
+let flattenTransactions = function(transactions) {
+  let flattenedTransactions = [];
+  Object.keys(transactions)
+    .forEach(key => {
+      flattenedTransactions = flattenedTransactions.concat(transactions[key].items);
+    });
+  return flattenedTransactions;
+};
 export default class Home extends Component {
   props: {
-    getTransactions: () => void,
+    fetchAllTransactions: () => void,
     transactions: any
   };
 
   componentDidMount() {
-    const { getTransactions } = this.props;
-    getTransactions();
+    const { fetchAllTransactions } = this.props;
+    fetchAllTransactions();
   }
 
   render() {
-    const { transactions } = this.props;
+    const transactions = flattenTransactions(this.props.transactions);
 
     return (
       <div className={styles.container}>

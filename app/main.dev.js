@@ -70,7 +70,7 @@ app.on('ready', async () => {
     }
     mainWindow.setMenu(null);
     mainWindow.show();
-    mainWindow.focus();
+    // mainWindow.focus();
   });
 
   mainWindow.on('closed', () => {

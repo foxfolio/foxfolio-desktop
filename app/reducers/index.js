@@ -1,11 +1,13 @@
 // @flow
 import { combineReducers } from 'redux';
 import { routerReducer as router } from 'react-router-redux';
-import bittrex from './bittrex';
 import counter from './counter';
+import transactions from './transactions';
+import sources from './sources';
 
 const rootReducer = combineReducers({
-  transactions: bittrex,
+  sources,
+  transactions,
   counter,
   router,
 });
