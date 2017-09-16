@@ -18,3 +18,7 @@ body {
 a.active {
   background-color: rgba(0, 0, 0, 0.1) !important;
 }
+
+.container {
+  margin: 30px;
+}

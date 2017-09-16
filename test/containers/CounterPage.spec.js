@@ -3,7 +3,7 @@ import { mount } from 'enzyme';
 import { Provider } from 'react-redux';
 import { createBrowserHistory } from 'history';
 import { ConnectedRouter } from 'react-router-redux';
-import CounterPage from '../../app/containers/CounterPage';
+import CounterPage from '../../app/containers/SourcePage';
 import { configureStore } from '../../app/store/configureStore';
 
 function setup(initialState) {
