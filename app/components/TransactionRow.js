@@ -20,11 +20,11 @@ export default class TransactionRow extends Component {
     const destCurr = (type === 'buy' ? toCurr : fromCurr);
     return (
       <TableRow>
-        <TableRowColumn>{date.toLocaleString()}</TableRowColumn>
+        <TableRowColumn>{date.toLocaleDateString()}</TableRowColumn>
         <TableRowColumn><i className={`cc ${sourceCurr}`}/> {sourceCurr}</TableRowColumn>
         <TableRowColumn><i className={`cc ${destCurr}`}/> {destCurr}</TableRowColumn>
-        <TableRowColumn>{quantity}</TableRowColumn>
-        <TableRowColumn>{rate} {fromCurr}</TableRowColumn>
+        <TableRowColumn>{Math.round(quantity * 10000) / 10000}</TableRowColumn>
+        <TableRowColumn>{rate.toFixed(6)} {fromCurr}</TableRowColumn>
       </TableRow>
     );
   }
