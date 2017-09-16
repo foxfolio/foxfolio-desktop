@@ -1,7 +1,15 @@
 // @flow
 import React, { Component } from 'react';
 import { Col, Grid, Row } from 'react-flexbox-grid';
+import { FloatingActionButton } from 'material-ui';
+import { ContentAdd } from 'material-ui/svg-icons/index';
 import Source from './Source';
+
+const fabStyle = {
+  position: 'absolute',
+  right: 40,
+  bottom: 40,
+};
 
 class Sources extends Component {
 
@@ -23,6 +31,9 @@ class Sources extends Component {
             </Row>
           ))}
         </Grid>
+        <FloatingActionButton style={fabStyle}>
+          <ContentAdd/>
+        </FloatingActionButton>
       </div>
     );
   }
