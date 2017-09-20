@@ -7,19 +7,20 @@ export default class Source extends Component {
     source: {
       name: string,
       apiKey: string
-    }
+    },
+    onEdit: () => void
   };
 
   render() {
-    const { name, apiKey } = this.props.source;
+    const { source, onEdit } = this.props;
     return (
       <Card className={style.source}>
         <CardHeader
-          title={name}
-          subtitle={`Key: ${apiKey}`}
+          title={source.name}
+          subtitle={`Key: ${source.apiKey}`}
         />
         <CardActions>
-          <FlatButton primary label="Edit"/>
+          <FlatButton primary label="Edit" onClick={onEdit(source)}/>
         </CardActions>
       </Card>
     );

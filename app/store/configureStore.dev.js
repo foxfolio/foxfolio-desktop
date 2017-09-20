@@ -5,7 +5,7 @@ import { routerActions, routerMiddleware } from 'react-router-redux';
 import { createLogger } from 'redux-logger';
 import rootReducer from '../reducers';
 import * as bittrexActions from '../actions/bittrex';
-import * as counterActions from '../actions/counter';
+import * as sourceActions from '../actions/sources';
 
 const history = createHashHistory();
 
@@ -30,7 +30,7 @@ const configureStore = (initialState?: any) => {
 
   // Redux DevTools Configuration
   const actionCreators = {
-    ...counterActions,
+    ...sourceActions,
     ...bittrexActions,
     ...routerActions,
   };

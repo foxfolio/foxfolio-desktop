@@ -5,7 +5,7 @@ type actionType = {
   +type: string
 };
 
-export function getTransactions(source) {
+export default function getBittrexTransactions(source) {
   return (dispatch: (action: actionType) => void) => {
     const nonce = Date.now().valueOf();
     const uri = `https://bittrex.com/api/v1.1/account/getorderhistory?apikey=${source.apiKey}&nonce=${nonce}`;

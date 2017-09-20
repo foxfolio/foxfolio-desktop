@@ -1,4 +1,4 @@
-import { getTransactions as getBittrexTransactions } from './bittrex';
+import getBittrexTransactions from './bittrex';
 
 export const REQUEST_TRANSACTIONS = 'REQUEST_TRANSACTIONS';
 

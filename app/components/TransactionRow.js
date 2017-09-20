@@ -21,8 +21,8 @@ export default class TransactionRow extends Component {
     return (
       <TableRow>
         <TableRowColumn>{date.toLocaleDateString()}</TableRowColumn>
-        <TableRowColumn><i className={`cc ${sourceCurr}`}/> {sourceCurr}</TableRowColumn>
-        <TableRowColumn><i className={`cc ${destCurr}`}/> {destCurr}</TableRowColumn>
+        <TableRowColumn>{sourceCurr} <i className={`cc ${sourceCurr}`}/></TableRowColumn>
+        <TableRowColumn>{destCurr} <i className={`cc ${destCurr}`}/></TableRowColumn>
         <TableRowColumn>{Math.round(quantity * 10000) / 10000}</TableRowColumn>
         <TableRowColumn>{rate.toFixed(6)} {fromCurr}</TableRowColumn>
       </TableRow>
