@@ -26,8 +26,8 @@ export default class Portfolio extends Component {
             <Row>
               {assets.map((asset, key) =>
                 [
-                  <Col xs={2} xsOffset={(key === 0 ? 0 : 1)}><h3>{asset.toUpperCase()}</h3></Col>,
-                  <Col xs={1}>< h4> {portfolio[asset].toFixed(6)}</h4></Col>,
+                  <Col xs={2} xsOffset={(key === 0 ? 0 : 1)}><h2>{asset.toUpperCase()}</h2></Col>,
+                  <Col xs={1}><h3> {portfolio[asset].toFixed(6)}</h3></Col>,
                 ],
               )}
             </Row>

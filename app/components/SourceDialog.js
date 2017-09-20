@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { MenuItem, SelectField, TextField } from 'material-ui';
+import { Dialog, FlatButton, MenuItem, SelectField, TextField } from 'material-ui';
 import type { sourceType } from '../reducers/sources';
 
-export default class SourceForm extends Component {
+export default class SourceDialog extends Component {
   props: {
     source: sourceType,
     save: (source: sourceType) => void
@@ -36,22 +36,40 @@ export default class SourceForm extends Component {
     });
   };
 
-  handleChange = (event) => {
-    const name = event.target.name;
-    const value = event.target.value;
+  handleChange = (name, value) => {
     this.setState(
       { [name]: value },
     );
   };
 
   render() {
+    const { open, close } = this.props;
+
+    const actions = [
+      <FlatButton
+        label="Cancel"
+        primary
+        onClick={close}
+      />,
+      <FlatButton
+        label="Submit"
+        primary
+        onClick={this.save}
+      />,
+    ];
+
     return (
-      <form>
+      <Dialog
+        title="New Source"
+        actions={actions}
+        open={open}
+        onRequestClose={close}
+      >
         <SelectField
           floatingLabelText="Exchange"
           name="name"
           value={this.state.name}
-          onChange={event => this.handleChange(event)}
+          onChange={(event, index, value) => this.handleChange('name', value)}
           fullWidth
         >
           <MenuItem value="bittrex" primaryText="Bittrex"/>
@@ -60,17 +78,17 @@ export default class SourceForm extends Component {
           floatingLabelText="API Key"
           name="apiKey"
           value={this.state.apiKey}
-          onChange={event => { this.handleChange(event); }}
+          onChange={(event, value) => { this.handleChange('apiKey', value); }}
           fullWidth
         /><br/>
         <TextField
           floatingLabelText="API Secret"
           name="apiSecret"
           value={this.state.apiSecret}
-          onChange={event => this.handleChange(event)}
+          onChange={(event, value) => { this.handleChange('apiSecret', value); }}
           fullWidth
         />
-      </form>
+      </Dialog>
     );
   }
 }

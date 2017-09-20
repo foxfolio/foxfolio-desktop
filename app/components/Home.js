@@ -34,8 +34,9 @@ export default class Home extends Component {
               </TableRow>
             </TableHeader>
             <TableBody displayRowCheckbox={false}>
-              {transactions.map(transaction =>
-                <TransactionRow key={transaction.id} data={transaction}/>)}
+              {transactions.map(transaction => (
+                <TransactionRow key={transaction.id} data={transaction}/>
+              ))}
             </TableBody>
           </Table>
         </Paper>

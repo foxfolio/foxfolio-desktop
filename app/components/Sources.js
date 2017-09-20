@@ -5,7 +5,7 @@ import { Dialog, FlatButton, FloatingActionButton, MenuItem, SelectField, TextFi
 import { ContentAdd } from 'material-ui/svg-icons/index';
 import Source from './Source';
 import type { sourceType } from '../reducers/sources';
-import SourceForm from './SourceForm';
+import SourceForm from './SourceDialog';
 
 const fabStyle = {
   position: 'absolute',
@@ -26,11 +26,11 @@ export default class Sources extends Component {
   };
 
   addDialog = () => {
-    this.setState({ open: true, currentSource: { name: '', apiKey: '', apiSecret: '' } });
+    this.setState({ open: true, isNew: true, currentSource: { name: '', apiKey: '', apiSecret: '' } });
   };
 
   editDialog = (source: sourceType) => () => {
-    this.setState({ open: true, currentSource: source });
+    this.setState({ open: true, isNew: false, currentSource: source });
   };
 
   closeDialog = () => {
@@ -64,13 +64,7 @@ export default class Sources extends Component {
         <FloatingActionButton onClick={this.addDialog} style={fabStyle}>
           <ContentAdd/>
         </FloatingActionButton>
-        <Dialog
-          title="New Source"
-          open={this.state.open}
-          onRequestClose={this.closeDialog}
-        >
-          <SourceForm source={this.state.currentSource} save={this.saveDialog}/>
-        </Dialog>
+        <SourceForm open={this.state.open} source={this.state.currentSource} close={this.closeDialog} save={this.saveDialog}/>
       </div>
     );
   }
