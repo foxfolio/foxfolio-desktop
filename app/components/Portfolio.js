@@ -29,15 +29,19 @@ export default class Portfolio extends Component {
 
 function calculatePortfolio(transactions) {
   return transactions.reduce((acc, transaction) => {
-    if (!(transaction.fromCurr in acc)) {
+    if (transaction.fromCurr && !(transaction.fromCurr in acc)) {
       acc[transaction.fromCurr] = 0;
     }
-    if (!(transaction.toCurr in acc)) {
+    if (transaction.toCurr && !(transaction.toCurr in acc)) {
       acc[transaction.toCurr] = 0;
     }
-    acc[transaction.fromCurr] += (transaction.type === 'sell' ? 1 : -1) * transaction.price;
-    acc[transaction.toCurr] += (transaction.type === 'buy' ? 1 : -1) * transaction.quantity;
 
+    if (transaction.type === 'deposit' || transaction.type === 'withdraw') {
+      acc[transaction.toCurr] += transaction.quantity;
+    } else {
+      acc[transaction.fromCurr] += (transaction.type === 'sell' ? 1 : -1) * transaction.price;
+      acc[transaction.toCurr] += (transaction.type === 'buy' ? 1 : -1) * transaction.quantity;
+    }
     return acc;
   }, {});
 }

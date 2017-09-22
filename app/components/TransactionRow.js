@@ -7,7 +7,7 @@ export default class TransactionRow extends Component {
     data: {
       date: Date,
       type: string,
-      fromCurr: string,
+      fromCurr?: string,
       toCurr: string,
       quantity: number,
       rate: number
@@ -16,6 +16,19 @@ export default class TransactionRow extends Component {
 
   render() {
     const { date, type, fromCurr, toCurr, quantity, rate } = this.props.data;
+
+    if (type === 'deposit') {
+      return (
+        <TableRow>
+          <TableCell>{date.toLocaleDateString()}</TableCell>
+          <TableCell/>
+          <TableCell>{toCurr} <i className={`cc ${toCurr}`}/></TableCell>
+          <TableCell>{Math.round(quantity * 10000) / 10000}</TableCell>
+          <TableCell/>
+        </TableRow>
+      );
+    }
+
     const sourceCurr = (type === 'buy' ? fromCurr : toCurr);
     const destCurr = (type === 'buy' ? toCurr : fromCurr);
     return (

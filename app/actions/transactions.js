@@ -26,7 +26,12 @@ function getConfiguredSources(state) {
 function fetchTransactions(source) {
   return dispatch => {
     dispatch(requestTransactions(source));
-    return dispatch(getBittrexTransactions(source));
+    switch (source.name) {
+      case 'bittrex':
+        return dispatch(getBittrexTransactions(source));
+      default:
+        return dispatch(receiveTransactions(source, []));
+    }
   };
 }
 

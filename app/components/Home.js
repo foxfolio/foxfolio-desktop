@@ -51,5 +51,6 @@ function flattenTransactions(transactions) {
     .forEach(key => {
       flattenedTransactions = flattenedTransactions.concat(transactions[key].items);
     });
+  flattenedTransactions.sort((a, b) => b.date - a.date);
   return flattenedTransactions;
 }
