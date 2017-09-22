@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { TableRow, TableRowColumn } from 'material-ui';
+import { TableCell, TableRow } from 'material-ui';
 
 export default class TransactionRow extends Component {
   props: {
@@ -20,11 +20,11 @@ export default class TransactionRow extends Component {
     const destCurr = (type === 'buy' ? toCurr : fromCurr);
     return (
       <TableRow>
-        <TableRowColumn>{date.toLocaleDateString()}</TableRowColumn>
-        <TableRowColumn>{sourceCurr} <i className={`cc ${sourceCurr}`}/></TableRowColumn>
-        <TableRowColumn>{destCurr} <i className={`cc ${destCurr}`}/></TableRowColumn>
-        <TableRowColumn>{Math.round(quantity * 10000) / 10000}</TableRowColumn>
-        <TableRowColumn>{rate.toFixed(6)} {fromCurr}</TableRowColumn>
+        <TableCell>{date.toLocaleDateString()}</TableCell>
+        <TableCell>{sourceCurr} <i className={`cc ${sourceCurr}`}/></TableCell>
+        <TableCell>{destCurr} <i className={`cc ${destCurr}`}/></TableCell>
+        <TableCell>{Math.round(quantity * 10000) / 10000}</TableCell>
+        <TableCell>{rate.toFixed(6)} {fromCurr}</TableCell>
       </TableRow>
     );
   }

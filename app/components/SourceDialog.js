@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Dialog, FlatButton, MenuItem, SelectField, TextField } from 'material-ui';
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, FormControl, Input, InputLabel, MenuItem, Select, TextField } from 'material-ui';
 import type { sourceType } from '../reducers/sources';
 
 export default class SourceDialog extends Component {
@@ -36,58 +36,61 @@ export default class SourceDialog extends Component {
     });
   };
 
-  handleChange = (name, value) => {
+  handleChange = name => event => {
     this.setState(
-      { [name]: value },
+      { [name]: event.target.value },
     );
   };
 
   render() {
     const { open, close } = this.props;
 
-    const actions = [
-      <FlatButton
-        label="Cancel"
-        primary
-        onClick={close}
-      />,
-      <FlatButton
-        label="Submit"
-        primary
-        onClick={this.save}
-      />,
-    ];
-
     return (
       <Dialog
         title="New Source"
-        actions={actions}
         open={open}
         onRequestClose={close}
       >
-        <SelectField
-          floatingLabelText="Exchange"
-          name="name"
-          value={this.state.name}
-          onChange={(event, index, value) => this.handleChange('name', value)}
-          fullWidth
-        >
-          <MenuItem value="bittrex" primaryText="Bittrex"/>
-        </SelectField><br/>
-        <TextField
-          floatingLabelText="API Key"
-          name="apiKey"
-          value={this.state.apiKey}
-          onChange={(event, value) => { this.handleChange('apiKey', value); }}
-          fullWidth
-        /><br/>
-        <TextField
-          floatingLabelText="API Secret"
-          name="apiSecret"
-          value={this.state.apiSecret}
-          onChange={(event, value) => { this.handleChange('apiSecret', value); }}
-          fullWidth
-        />
+        <DialogTitle>New source</DialogTitle>
+        <DialogContent>
+          <form autoComplete="off">
+            <FormControl fullWidth>
+              <InputLabel htmlFor="name">Exchange</InputLabel>
+              <Select
+                value={this.state.name}
+                onChange={this.handleChange('name')}
+                fullWidth
+                input={<Input id="name"/>}
+              >
+                <MenuItem value="bittrex">Bittrex</MenuItem>
+              </Select>
+            </FormControl>
+            <TextField
+              label="API Key"
+              id="apiKey"
+              value={this.state.apiKey}
+              onChange={this.handleChange('apiKey')}
+              fullWidth
+              margin="normal"
+            />
+            <TextField
+              label="API Secret"
+              id="apiSecret"
+              value={this.state.apiSecret}
+              onChange={this.handleChange('apiSecret')}
+              fullWidth
+              margin="normal"
+            />
+            <DialogActions>
+              <Button onClick={close} color="primary">
+                Cancel
+              </Button>
+              <Button onClick={this.save} color="primary">
+                Ok
+              </Button>
+            </DialogActions>
+          </form>
+        </DialogContent>
       </Dialog>
     );
   }

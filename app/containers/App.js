@@ -1,40 +1,71 @@
+// @flow
 import type { Children } from 'react';
 import React, { Component } from 'react';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import getMuiTheme from 'material-ui/styles/getMuiTheme';
-import { deepOrange500 } from 'material-ui/styles/colors';
+import { withStyles } from 'material-ui/styles';
 import Drawer from 'material-ui/Drawer';
-import AppBar from 'material-ui/AppBar';
-import MenuItem from 'material-ui/MenuItem';
-import DashboardIcon from 'material-ui/svg-icons/action/dashboard';
-import CloudIcon from 'material-ui/svg-icons/file/cloud';
+import { AppBar, List, ListItem, ListItemIcon, ListItemText, Toolbar, Typography } from 'material-ui';
+import { Cloud, Dashboard } from 'material-ui-icons';
 import { NavLink } from 'react-router-dom';
 
-const muiTheme = getMuiTheme({
-  palette: {
-    accent1Color: deepOrange500,
+const drawerWidth = 250;
+
+const styles = theme => ({
+  appFrame: {
+    width: '100%',
+    height: '100%',
+  },
+  content: {
+    backgroundColor: theme.palette.background.default,
+    padding: theme.spacing.unit * 3,
+    height: 'calc(100% - 56px)',
+    marginLeft: drawerWidth,
+  },
+  drawerPaper: {
+    width: drawerWidth,
   },
 });
 
-export default class App extends Component {
+class App extends Component {
   props: {
-    children: Children
+    children: Children,
+    classes: any
   };
 
   render() {
+    const { classes, children } = this.props;
     return (
-      <MuiThemeProvider muiTheme={muiTheme}>
-        <div>
-          <Drawer open zDepth={2}>
-            <AppBar showMenuIconButton={false} zDepth={0} title="Awesome portfolio"/>
-            <MenuItem leftIcon={<DashboardIcon/>} containerElement={<NavLink exact to="/"/>}>Portfolio</MenuItem>
-            <MenuItem leftIcon={<CloudIcon/>} containerElement={<NavLink to="/sources"/>}>Sources</MenuItem>
-          </Drawer>
-          <div className="content">
-            {this.props.children}
-          </div>
-        </div>
-      </MuiThemeProvider>
+      <div className={classes.appFrame}>
+        <Drawer type="permanent" classes={{ paper: classes.drawerPaper }}>
+          <AppBar position="static" color="primary" elevation={1}>
+            <Toolbar>
+              <Typography type="title" color="inherit">
+                Awesome Portfolio
+              </Typography>
+            </Toolbar>
+          </AppBar>
+          <List>
+            <ListItem button component={NavLink} exact to="/">
+              <ListItemIcon>
+                <Dashboard/>
+              </ListItemIcon>
+              <ListItemText primary="Portfolio"/>
+            </ListItem>
+            <ListItem button component={NavLink} to="/sources">
+              <ListItemIcon>
+                <Cloud/>
+              </ListItemIcon>
+              <ListItemText primary="Sources"/>
+            </ListItem>
+          </List>
+          {/*<MenuItem leftIcon={<Icon>dashboard</Icon>} containerElement={<NavLink exact to="/"/>}>Portfolio</MenuItem>*/}
+          {/*<MenuItem leftIcon={<Icon>cloud</Icon>} containerElement={<NavLink to="/sources"/>}>Sources</MenuItem>*/}
+        </Drawer>
+        <main className={classes.content}>
+          {children}
+        </main>
+      </div>
     );
   }
 }
+
+export default withStyles(styles)(App);

@@ -1,19 +1,23 @@
 // @flow
 import React, { Component } from 'react';
-import { Col, Grid, Row } from 'react-flexbox-grid';
-import { Dialog, FlatButton, FloatingActionButton, MenuItem, SelectField, TextField } from 'material-ui';
-import { ContentAdd } from 'material-ui/svg-icons/index';
-import Source from './Source';
+import { Button, Grid } from 'material-ui';
+import { Add } from 'material-ui-icons';
+import { withStyles } from 'material-ui/styles';
+
 import type { sourceType } from '../reducers/sources';
-import SourceForm from './SourceDialog';
+import Source from './Source';
+import SourceDialog from './SourceDialog';
 
-const fabStyle = {
-  position: 'absolute',
-  right: 40,
-  bottom: 40,
-};
+const styles = theme => ({
+  button: {
+    margin: theme.spacing.unit,
+    position: 'absolute',
+    right: 40,
+    bottom: 40,
+  },
+});
 
-export default class Sources extends Component {
+class Sources extends Component {
   props: {
     sources: [sourceType],
     addSource: (source: sourceType) => void
@@ -47,25 +51,25 @@ export default class Sources extends Component {
   };
 
   render() {
-    const { sources } = this.props;
+    const { sources, classes } = this.props;
 
     return (
       <div className="container">
         <h1>Sources</h1>
-        <Grid style={{ width: 'auto' }}>
+        <Grid container>
           {sources.map(source => (
-            <Row key={source.apiKey}>
-              <Col md={6} xs={12}>
-                <Source source={source} onEdit={this.editDialog}/>
-              </Col>
-            </Row>
+            <Grid item key={source.apiKey} xs={12} md={6}>
+              <Source source={source} onEdit={this.editDialog}/>
+            </Grid>
           ))}
         </Grid>
-        <FloatingActionButton onClick={this.addDialog} style={fabStyle}>
-          <ContentAdd/>
-        </FloatingActionButton>
-        <SourceForm open={this.state.open} source={this.state.currentSource} close={this.closeDialog} save={this.saveDialog}/>
+        <Button fab color="primary" aria-label="add" className={classes.button} onClick={this.addDialog}>
+          <Add/>
+        </Button>
+        <SourceDialog open={this.state.open} source={this.state.currentSource} close={this.closeDialog} save={this.saveDialog}/>
       </div>
     );
   }
 }
+
+export default withStyles(styles)(Sources);

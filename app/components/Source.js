@@ -1,8 +1,17 @@
+// @flow
 import React, { Component } from 'react';
-import { Card, CardActions, CardHeader, FlatButton } from 'material-ui';
+import { Button, Card, CardActions, CardContent, Typography } from 'material-ui';
+import { withStyles } from 'material-ui/styles';
 import style from './Source.css';
 
-export default class Source extends Component {
+const styles = theme => ({
+  subheader: {
+    marginBottom: 12,
+    color: theme.palette.text.secondary,
+  },
+});
+
+class Source extends Component {
   props: {
     source: {
       name: string,
@@ -12,17 +21,23 @@ export default class Source extends Component {
   };
 
   render() {
-    const { source, onEdit } = this.props;
+    const { classes, source, onEdit } = this.props;
     return (
       <Card className={style.source}>
-        <CardHeader
-          title={source.name}
-          subtitle={`Key: ${source.apiKey}`}
-        />
+        <CardContent>
+          <Typography type="headline" component="h2">
+            {source.name}
+          </Typography>
+          <Typography type="body1" className={classes.subheader}>
+            {`Key: ${source.apiKey}`}
+          </Typography>
+        </CardContent>
         <CardActions>
-          <FlatButton primary label="Edit" onClick={onEdit(source)}/>
+          <Button dense color="primary" onClick={onEdit(source)}>Edit</Button>
         </CardActions>
       </Card>
     );
   }
 }
+
+export default withStyles(styles)(Source);

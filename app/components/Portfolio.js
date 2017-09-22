@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { Paper } from 'material-ui';
-import { Col, Grid, Row } from 'react-flexbox-grid';
+import { Grid, Paper } from 'material-ui';
 
 export default class Portfolio extends Component {
   props: {
@@ -11,27 +10,17 @@ export default class Portfolio extends Component {
     const { transactions } = this.props;
     const portfolio = calculatePortfolio(transactions);
     const keys = Object.keys(portfolio);
-    const groupedAssets = [];
-    const size = 3;
-
-    while (keys.length > 0) {
-      groupedAssets.push(keys.splice(0, size));
-    }
 
     return (
-      <Paper style={{ padding: 10 }} zDepth={2}>
+      <Paper style={{ padding: 10 }}>
         <h1>Portfolio</h1>
-        <Grid fluid>
-          {groupedAssets.map(assets => (
-            <Row>
-              {assets.map((asset, key) =>
-                [
-                  <Col xs={2} xsOffset={(key === 0 ? 0 : 1)}><h2>{asset.toUpperCase()}</h2></Col>,
-                  <Col xs={1}><h3> {portfolio[asset].toFixed(6)}</h3></Col>,
-                ],
-              )}
-            </Row>
-          ))}
+        <Grid container spacing={24} style={{ padding: 10 }}>
+          {keys.map(asset =>
+            [
+              <Grid item xs={6} md={2}><h2>{asset.toUpperCase()}</h2></Grid>,
+              <Grid item xs={6} md={2}><h3> {portfolio[asset].toFixed(6)}</h3></Grid>,
+            ],
+          )}
         </Grid>
       </Paper>
     );
