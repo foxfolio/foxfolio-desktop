@@ -23,6 +23,10 @@ const styles = theme => ({
   drawerPaper: {
     width: drawerWidth,
   },
+  bottomList: {
+    marginTop: 'auto',
+    flexGrow: 0,
+  },
 });
 
 class App extends Component {
@@ -50,6 +54,8 @@ class App extends Component {
               </ListItemIcon>
               <ListItemText primary="Portfolio"/>
             </ListItem>
+          </List>
+          <List className={classes.bottomList}>
             <ListItem button component={NavLink} to="/sources">
               <ListItemIcon>
                 <Cloud/>
@@ -57,8 +63,6 @@ class App extends Component {
               <ListItemText primary="Sources"/>
             </ListItem>
           </List>
-          {/*<MenuItem leftIcon={<Icon>dashboard</Icon>} containerElement={<NavLink exact to="/"/>}>Portfolio</MenuItem>*/}
-          {/*<MenuItem leftIcon={<Icon>cloud</Icon>} containerElement={<NavLink to="/sources"/>}>Sources</MenuItem>*/}
         </Drawer>
         <main className={classes.content}>
           {children}
