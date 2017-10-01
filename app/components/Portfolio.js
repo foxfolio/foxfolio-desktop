@@ -1,5 +1,7 @@
+// @flow
 import React, { Component } from 'react';
 import { Grid, Paper } from 'material-ui';
+import type { transactionType } from '../reducers/transactions';
 
 export default class Portfolio extends Component {
   props: {
@@ -15,32 +17,34 @@ export default class Portfolio extends Component {
       <Paper style={{ padding: 10 }}>
         <h1>Portfolio</h1>
         <Grid container spacing={24} style={{ padding: 10 }}>
-          {keys.map(asset =>
-            [
-              <Grid item xs={6} md={2}><h2>{asset.toUpperCase()}</h2></Grid>,
-              <Grid item xs={6} md={2}><h3> {portfolio[asset].toFixed(6)}</h3></Grid>,
-            ],
-          )}
+          {keys
+            .filter(asset => portfolio[asset] !== 0)
+            .map(asset =>
+              [
+                <Grid item xs={6} md={2}><h2>{asset.toUpperCase()}</h2></Grid>,
+                <Grid item xs={6} md={2}><h3> {portfolio[asset].toFixed(6)}</h3></Grid>,
+              ],
+            )}
         </Grid>
       </Paper>
     );
   }
 }
 
-function calculatePortfolio(transactions) {
+function calculatePortfolio(transactions: Array<transactionType>) {
   return transactions.reduce((acc, transaction) => {
-    if (transaction.fromCurr && !(transaction.fromCurr in acc)) {
-      acc[transaction.fromCurr] = 0;
+    console.log(transaction);
+    if (transaction.outgoing) {
+      if (!(transaction.outgoing in acc)) {
+        acc[transaction.outgoing] = 0;
+      }
+      acc[transaction.outgoing] -= transaction.quantityOutgoing;
     }
-    if (transaction.toCurr && !(transaction.toCurr in acc)) {
-      acc[transaction.toCurr] = 0;
-    }
-
-    if (transaction.type === 'deposit' || transaction.type === 'withdraw') {
-      acc[transaction.toCurr] += transaction.quantity;
-    } else {
-      acc[transaction.fromCurr] += (transaction.type === 'sell' ? 1 : -1) * transaction.price;
-      acc[transaction.toCurr] += (transaction.type === 'buy' ? 1 : -1) * transaction.quantity;
+    if (transaction.incoming) {
+      if (!(transaction.incoming in acc)) {
+        acc[transaction.incoming] = 0;
+      }
+      acc[transaction.incoming] += transaction.quantityIncoming;
     }
     return acc;
   }, {});

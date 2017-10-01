@@ -1,16 +1,18 @@
+// @flow
 import crypto from 'crypto';
 import { receiveTransactions } from './transactions';
+import type { transactionType } from '../reducers/transactions';
+import type { sourceType } from '../reducers/sources';
 
 type actionType = {
   +type: string
 };
 
-export default function getBittrexTransactions(source) {
-  return (dispatch: (action: actionType) => void) => {
-    return Promise.all([getOrderHistory(source), getDepositHistory(source)])
+export default function getBittrexTransactions(source: sourceType) {
+  return (dispatch: (action: actionType) => void) =>
+    Promise.all([getOrderHistory(source), getDepositHistory(source)])
       .then(results => [].concat(...results))
       .then(transactions => dispatch(receiveTransactions('bittrex', transactions)));
-  };
 }
 
 function getOrderHistory(source) {
@@ -35,27 +37,35 @@ function bittrexRequest(endpoint, source) {
     .then(result => result.json());
 }
 
-function orderHistoryToTransactions(response) {
-  return response.result.map(bittrexTransaction => ({
-    id: bittrexTransaction.OrderUuid,
-    date: new Date(bittrexTransaction.TimeStamp),
-    type: bittrexTransaction.OrderType.split('_')[1].toLowerCase(),
-    fromCurr: bittrexTransaction.Exchange.split('-')[0],
-    toCurr: bittrexTransaction.Exchange.split('-')[1],
-    price: bittrexTransaction.Price,
-    rate: bittrexTransaction.PricePerUnit,
-    quantity: bittrexTransaction.Quantity,
-  }));
+function orderHistoryToTransactions(response): Array<transactionType> {
+  return response.result.map(bittrexTransaction => {
+    console.log(bittrexTransaction);
+    const type = bittrexTransaction.OrderType.split('_')[1];
+    return ({
+      id: bittrexTransaction.OrderUuid,
+      date: new Date(bittrexTransaction.TimeStamp),
+      source: 'bittrex',
+      type: 'trade',
+      outgoing: bittrexTransaction.Exchange.split('-')[type === 'BUY' ? 0 : 1],
+      incoming: bittrexTransaction.Exchange.split('-')[type === 'BUY' ? 1 : 0],
+      rate: bittrexTransaction.PricePerUnit,
+      quantityIncoming: type === 'BUY'
+        ? bittrexTransaction.Quantity - bittrexTransaction.QuantityRemaining
+        : bittrexTransaction.Price - bittrexTransaction.Commission,
+      quantityOutgoing: type === 'BUY'
+        ? bittrexTransaction.Price + bittrexTransaction.Commission
+        : bittrexTransaction.Quantity - bittrexTransaction.QuantityRemaining,
+    });
+  });
 }
 
-function depositHistoryToTransactions(depositHistory) {
+function depositHistoryToTransactions(depositHistory): Array<transactionType> {
   return depositHistory.result.map(deposit => ({
     id: deposit.Id,
     date: new Date(deposit.LastUpdated),
+    source: 'bittrex',
     type: 'deposit',
-    toCurr: deposit.Currency,
-    rate: 1,
-    price: 1,
-    quantity: deposit.Amount,
+    incoming: deposit.Currency,
+    quantityIncoming: deposit.Amount,
   }));
 }

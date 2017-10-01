@@ -8,17 +8,6 @@ export default class SourceDialog extends Component {
     save: (source: sourceType) => void
   };
 
-  constructor(props) {
-    super(props);
-    if (props.source) {
-      this.state = {
-        name: props.source.name,
-        apiKey: props.source.apiKey,
-        apiSecret: props.source.apiSecret,
-      };
-    }
-  }
-
   state = {
     name: '',
     apiKey: '',
@@ -27,6 +16,15 @@ export default class SourceDialog extends Component {
     apiKeyValid: true,
     apiSecretValid: true,
   };
+
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      name: nextProps.source.name,
+      customerId: nextProps.source.customerId,
+      apiKey: nextProps.source.apiKey,
+      apiSecret: nextProps.source.apiSecret,
+    });
+  }
 
   save = () => {
     this.props.save({
@@ -63,24 +61,10 @@ export default class SourceDialog extends Component {
                 input={<Input id="name"/>}
               >
                 <MenuItem value="bittrex">Bittrex</MenuItem>
+                <MenuItem value="bitstamp">Bitstamp</MenuItem>
               </Select>
             </FormControl>
-            <TextField
-              label="API Key"
-              id="apiKey"
-              value={this.state.apiKey}
-              onChange={this.handleChange('apiKey')}
-              fullWidth
-              margin="normal"
-            />
-            <TextField
-              label="API Secret"
-              id="apiSecret"
-              value={this.state.apiSecret}
-              onChange={this.handleChange('apiSecret')}
-              fullWidth
-              margin="normal"
-            />
+            {getFormForExchange(this.state.name, this.state, this.handleChange)}
             <DialogActions>
               <Button onClick={close} color="primary">
                 Cancel
@@ -95,3 +79,56 @@ export default class SourceDialog extends Component {
     );
   }
 }
+
+const getFormForExchange = (exchange, state, handleChange) => {
+  switch (exchange) {
+    case 'bittrex':
+      return (<div>
+        <TextField
+          label="API Key"
+          id="apiKey"
+          value={state.apiKey}
+          onChange={handleChange('apiKey')}
+          fullWidth
+          margin="normal"
+        />
+        <TextField
+          label="API Secret"
+          id="apiSecret"
+          value={state.apiSecret}
+          onChange={handleChange('apiSecret')}
+          fullWidth
+          margin="normal"
+        />
+      </div>);
+    case 'bitstamp':
+      return (<div>
+        <TextField
+          label="Customer ID"
+          id="customerId"
+          value={state.customerId}
+          onChange={handleChange('customerId')}
+          fullWidth
+          margin="normal"
+        />
+        <TextField
+          label="API Key"
+          id="apiKey"
+          value={state.apiKey}
+          onChange={handleChange('apiKey')}
+          fullWidth
+          margin="normal"
+        />
+        <TextField
+          label="API Secret"
+          id="apiSecret"
+          value={state.apiSecret}
+          onChange={handleChange('apiSecret')}
+          fullWidth
+          margin="normal"
+        />
+      </div>);
+    default:
+      return '';
+  }
+};

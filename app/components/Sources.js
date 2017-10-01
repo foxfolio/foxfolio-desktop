@@ -33,7 +33,8 @@ class Sources extends Component {
     this.setState({ open: true, isNew: true, currentSource: { name: '', apiKey: '', apiSecret: '' } });
   };
 
-  editDialog = (source: sourceType) => () => {
+  editDialog = (source: sourceType) => {
+    console.log(source);
     this.setState({ open: true, isNew: false, currentSource: source });
   };
 
@@ -58,7 +59,7 @@ class Sources extends Component {
         <h1>Sources</h1>
         <Grid container>
           {sources.map(source => (
-            <Grid item key={source.apiKey} xs={12} md={6}>
+            <Grid item key={source.name + source.apiKey} xs={12} md={6}>
               <Source source={source} onEdit={this.editDialog}/>
             </Grid>
           ))}

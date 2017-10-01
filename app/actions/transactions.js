@@ -1,4 +1,5 @@
 import getBittrexTransactions from './bittrex';
+import getBitstampTransactions from './bitstamp';
 
 export const REQUEST_TRANSACTIONS = 'REQUEST_TRANSACTIONS';
 
@@ -29,6 +30,8 @@ function fetchTransactions(source) {
     switch (source.name) {
       case 'bittrex':
         return dispatch(getBittrexTransactions(source));
+      case 'bitstamp':
+        return dispatch(getBitstampTransactions(source));
       default:
         return dispatch(receiveTransactions(source, []));
     }

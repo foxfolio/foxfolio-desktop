@@ -17,7 +17,7 @@ class Source extends Component {
       name: string,
       apiKey: string
     },
-    onEdit: () => void
+    onEdit: (source: sourceType) => void
   };
 
   render() {
@@ -33,7 +33,7 @@ class Source extends Component {
           </Typography>
         </CardContent>
         <CardActions>
-          <Button dense color="primary" onClick={onEdit(source)}>Edit</Button>
+          <Button dense color="primary" onClick={() => onEdit(source)}>Edit</Button>
         </CardActions>
       </Card>
     );

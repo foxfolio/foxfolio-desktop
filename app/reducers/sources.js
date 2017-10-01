@@ -7,6 +7,12 @@ const initialState = [
     apiKey: '',
     apiSecret: '',
   },
+  {
+    name: 'bitstamp',
+    customerId: '',
+    apiKey: '',
+    apiSecret: '',
+  },
 ];
 
 export type sourceType = {

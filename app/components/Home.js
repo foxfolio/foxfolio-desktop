@@ -28,8 +28,8 @@ export default class Home extends Component {
               <TableRow>
                 <TableCell>Date</TableCell>
                 <TableCell>Source</TableCell>
-                <TableCell>Destination</TableCell>
-                <TableCell>Quantity</TableCell>
+                <TableCell>Outgoing</TableCell>
+                <TableCell>Incoming</TableCell>
                 <TableCell>Rate</TableCell>
               </TableRow>
             </TableHead>

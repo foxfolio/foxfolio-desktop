@@ -1,44 +1,27 @@
 import React, { Component } from 'react';
 
 import { TableCell, TableRow } from 'material-ui';
+import type { transactionType } from '../reducers/transactions';
 
 export default class TransactionRow extends Component {
   props: {
-    data: {
-      date: Date,
-      type: string,
-      fromCurr?: string,
-      toCurr: string,
-      quantity: number,
-      rate: number
-    }
+    data: transactionType
   };
 
   render() {
-    const { date, type, fromCurr, toCurr, quantity, rate } = this.props.data;
-
-    if (type === 'deposit') {
-      return (
-        <TableRow>
-          <TableCell>{date.toLocaleDateString()}</TableCell>
-          <TableCell/>
-          <TableCell>{toCurr} <i className={`cc ${toCurr}`}/></TableCell>
-          <TableCell>{Math.round(quantity * 10000) / 10000}</TableCell>
-          <TableCell/>
-        </TableRow>
-      );
-    }
-
-    const sourceCurr = (type === 'buy' ? fromCurr : toCurr);
-    const destCurr = (type === 'buy' ? toCurr : fromCurr);
+    const { date, source, outgoing, incoming, quantityIncoming, quantityOutgoing, rate } = this.props.data;
     return (
       <TableRow>
         <TableCell>{date.toLocaleDateString()}</TableCell>
-        <TableCell>{sourceCurr} <i className={`cc ${sourceCurr}`}/></TableCell>
-        <TableCell>{destCurr} <i className={`cc ${destCurr}`}/></TableCell>
-        <TableCell>{Math.round(quantity * 10000) / 10000}</TableCell>
-        <TableCell>{rate.toFixed(6)} {fromCurr}</TableCell>
+        <TableCell>{source}</TableCell>
+        <TableCell>{quantityOutgoing ? roundToSixDigits(quantityOutgoing) : ''} {outgoing} <i className={`cc ${outgoing}`}/></TableCell>
+        <TableCell>{quantityIncoming ? roundToSixDigits(quantityIncoming) : ''} {incoming} <i className={`cc ${incoming}`}/></TableCell>
+        <TableCell>{rate ? rate.toFixed(6) : ''} {rate ? outgoing : ''}</TableCell>
       </TableRow>
     );
   }
+}
+
+function roundToSixDigits(number) {
+  return Math.round(number * 10000) / 10000;
 }
