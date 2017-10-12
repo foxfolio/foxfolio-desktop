@@ -11,7 +11,9 @@ function mapStateToProps(state) {
   };
 }
 
-function mapDispatchToProps(dispatch) {
+type Action = { +type: string };
+
+function mapDispatchToProps(dispatch: (action: Action) => any) {
   return bindActionCreators(TransactionActions, dispatch);
 }
 

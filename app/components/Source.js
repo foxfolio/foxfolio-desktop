@@ -17,7 +17,7 @@ class Source extends Component {
       name: string,
       apiKey: string
     },
-    onEdit: (source: sourceType) => void
+    onEdit: (source: Source) => void
   };
 
   render() {

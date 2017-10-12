@@ -1,7 +1,7 @@
 // @flow
 import React, { Component } from 'react';
 import { Grid, Paper } from 'material-ui';
-import type { transactionType } from '../reducers/transactions';
+import type { Transaction } from '../reducers/transactions';
 
 export default class Portfolio extends Component {
   props: {
@@ -31,7 +31,7 @@ export default class Portfolio extends Component {
   }
 }
 
-function calculatePortfolio(transactions: Array<transactionType>) {
+function calculatePortfolio(transactions: Transaction[]) {
   return transactions.reduce((acc, transaction) => {
     console.log(transaction);
     if (transaction.outgoing) {

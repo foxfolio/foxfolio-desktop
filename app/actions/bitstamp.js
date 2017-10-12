@@ -1,22 +1,45 @@
+// @flow
 import crypto from 'crypto';
 import request from 'request-promise-native';
-import R from 'ramda';
 import { receiveTransactions } from './transactions';
+import type { Trade, Transfer } from '../reducers/transactions';
+import type { sourceType } from '../reducers/sources';
 
-type actionType = {
+type Action = {
   +type: string
 };
 
-export default function getBitstampTransactions(source) {
-  return (dispatch: (action: actionType) => void) =>
+type BitstampTransaction = {
+  id: number,
+  datetime: string,
+  type: string,
+  btc?: number | string,
+  eth?: number | string,
+  usd?: number | string,
+  eur?: number | string,
+  xrp?: number | string,
+  ltc?: number | string,
+  btc_usd?: number | string,
+  btc_eur?: number | string,
+  eth_usd?: number | string,
+  eth_eur?: number | string,
+  eth_eur?: number | string,
+  xrp_usd?: number | string,
+  xrp_eur?: number | string,
+  ltc_usd?: number | string,
+  ltc_eur?: number | string,
+  fee: string
+};
+
+export default function getBitstampTransactions(source: sourceType) {
+  return (dispatch: (action: Action) => void) =>
     getOrderHistory(source)
-      .then(results => [].concat(...results))
-      .then(transactions => dispatch(receiveTransactions('bitstamp', transactions)));
+      .then((results: [Trade[], Transfer[]]) => dispatch(receiveTransactions('bitstamp', results[0], results[1])));
 }
 
-function getOrderHistory(source) {
+function getOrderHistory(source): Promise<[Trade[], Transfer[]]> {
   return bitstampRequest('user_transactions', source)
-    .then(orderHistoryToTransactions);
+    .then(orderHistoryToTradesAndTransfers);
 }
 
 function bitstampRequest(endpoint, source) {
@@ -33,55 +56,64 @@ function bitstampRequest(endpoint, source) {
   return request.post(uri, { form }).then(JSON.parse);
 }
 
-function orderHistoryToTransactions(response) {
-  return response.map(bitstampTransaction => {
-    const transaction = {
-      id: bitstampTransaction.id,
-      source: 'bitstamp',
-      date: new Date(bitstampTransaction.datetime),
-      type: getTypeFromId(bitstampTransaction.type),
-    };
-    return R.pipe(updateTransactionWithCurrency(bitstampTransaction, 'btc'),
-      updateTransactionWithCurrency(bitstampTransaction, 'eth'),
-      updateTransactionWithCurrency(bitstampTransaction, 'eur'),
-      updateTransactionWithCurrency(bitstampTransaction, 'usd'),
-      updateTransactionWithCurrency(bitstampTransaction, 'xrp'))(transaction);
+function orderHistoryToTradesAndTransfers(transactions: BitstampTransaction[]): [Trade[], Transfer[]] {
+  const trades = transactions
+    .filter(transaction => transaction.type === '2').map(convertBitstampTrade);
+  const transfers = transactions
+    .filter(transaction => ['0', '1'].includes(transaction.type)).map(convertBitstampTransfer);
+  return [trades, transfers];
+}
+
+function convertBitstampTransfer(bitstampTransaction: BitstampTransaction): Transfer {
+  const transfer: Transfer = {
+    id: `${bitstampTransaction.id}`,
+    source: 'bitstamp',
+    date: new Date(bitstampTransaction.datetime),
+    type: bitstampTransaction.type === '0' ? 'DEPOSIT' : 'WITHDRAW',
+    currency: '',
+    amount: 0,
+  };
+  ['btc', 'eth', 'eur', 'usd', 'ltc', 'xrp'].forEach(currency => {
+    if (bitstampTransaction[currency] && parseFloat(bitstampTransaction[currency]) !== 0) {
+      transfer.currency = currency;
+      transfer.amount = parseFloat(bitstampTransaction[currency]);
+    }
   });
+  return transfer;
 }
 
-function getTypeFromId(typeId) {
-  switch (typeId) {
-    case '0':
-      return 'deposit';
-    case '1':
-      return 'withdraw';
-    case '2':
-      return 'trade';
-    default:
-      return 'UNKNOWN';
-  }
-}
-
-function updateTransactionWithCurrency(bitstampTransaction, currency) {
-  return transaction => {
-    if (bitstampTransaction[currency]) {
-      console.log(currency);
-      console.log(bitstampTransaction);
-      const value = parseFloat(bitstampTransaction[currency]);
-      if (value < 0 || bitstampTransaction[currency] === '-0.00') {
-        transaction.outgoing = currency.toUpperCase();
-        transaction.quantityOutgoing = -1 * value;
-        if (transaction.quantityIncoming) {
-          transaction.rate = Math.abs(transaction.quantityOutgoing / transaction.quantityIncoming);
-        }
+function convertBitstampTrade(bitstampTransaction: BitstampTransaction): Trade {
+  const trade: Trade = {
+    id: `${bitstampTransaction.id}`,
+    source: 'bitstamp',
+    date: new Date(bitstampTransaction.datetime),
+    type: 'BUY',
+    amount: 0,
+    commission: 0,
+    rate: 0,
+    market: {
+      major: '',
+      minor: '',
+    },
+  };
+  ['btc_usd', 'btc_eur', 'eth_usd', 'eth_eur', 'xrp_usd', 'xrp_eur', 'ltc_usd', 'ltc_eur'].forEach(market => {
+    if (bitstampTransaction[market] && parseFloat(bitstampTransaction[market]) !== 0) {
+      trade.market = {
+        minor: market.split('_')[0],
+        major: market.split('_')[1],
+      };
+      trade.amount = parseFloat(bitstampTransaction[trade.market.minor]);
+      trade.rate = parseFloat(bitstampTransaction[market]);
+      trade.commission = parseFloat(bitstampTransaction.fee);
+      if (trade.amount < 0 || bitstampTransaction[trade.market.minor] === '-0.00') {
+        trade.type = 'SELL';
       } else {
-        transaction.incoming = currency.toUpperCase();
-        transaction.quantityIncoming = value;
-        if (transaction.quantityOutgoing) {
-          transaction.rate = Math.abs(transaction.quantityOutgoing / transaction.quantityIncoming);
-        }
+        trade.type = 'BUY';
       }
     }
-    return transaction;
-  };
+  });
+  if (trade.market.major === '') {
+    throw new Error(`Could not convert bitstamp trade with id ${trade.id}`);
+  }
+  return trade;
 }

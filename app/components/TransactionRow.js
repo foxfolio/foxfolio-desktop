@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 
 import { TableCell, TableRow } from 'material-ui';
-import type { transactionType } from '../reducers/transactions';
+import type { Transaction } from '../reducers/transactions';
 
 export default class TransactionRow extends Component {
   props: {
-    data: transactionType
+    data: Transaction
   };
 
   render() {

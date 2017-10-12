@@ -49,7 +49,7 @@ function flattenTransactions(transactions) {
   let flattenedTransactions = [];
   Object.keys(transactions)
     .forEach(key => {
-      flattenedTransactions = flattenedTransactions.concat(transactions[key].items);
+      flattenedTransactions = flattenedTransactions.concat(transactions[key].trades);
     });
   flattenedTransactions.sort((a, b) => b.date - a.date);
   return flattenedTransactions;

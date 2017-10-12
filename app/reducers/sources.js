@@ -18,7 +18,8 @@ const initialState = [
 export type sourceType = {
   name: string,
   apiKey: string,
-  apiSecret: string
+  apiSecret: string,
+  customerId?: string
 };
 
 type actionType = {
@@ -26,7 +27,7 @@ type actionType = {
   source: any
 };
 
-export default function sources(state: [sourceType] = initialState, action: actionType) {
+export default function sources(state: Array<sourceType> = initialState, action: actionType) {
   switch (action.type) {
     case ADD_SOURCE:
       return [...state, action.source];

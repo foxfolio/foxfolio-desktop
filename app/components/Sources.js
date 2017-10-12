@@ -19,8 +19,8 @@ const styles = theme => ({
 
 class Sources extends Component {
   props: {
-    sources: [sourceType],
-    addSource: (source: sourceType) => void
+    sources: [Source],
+    addSource: (source: Source) => void
   };
 
   state = {
@@ -33,7 +33,7 @@ class Sources extends Component {
     this.setState({ open: true, isNew: true, currentSource: { name: '', apiKey: '', apiSecret: '' } });
   };
 
-  editDialog = (source: sourceType) => {
+  editDialog = (source: Source) => {
     console.log(source);
     this.setState({ open: true, isNew: false, currentSource: source });
   };

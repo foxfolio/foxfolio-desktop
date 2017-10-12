@@ -1,34 +1,21 @@
+// @flow
 import R from 'ramda';
+import type { Action } from '../actions/transactions';
 import { RECEIVE_TRANSACTIONS, REQUEST_TRANSACTIONS } from '../actions/transactions';
 
-export type transactionType = {
-  date: Date,
-  type: 'deposit' | 'withdraw' | 'trade',
-  source: string,
-  outgoing?: string,
-  incoming?: string,
-  quantityIncoming?: number,
-  quantityOutgoing?: number,
-  rate?: number
+const initialSourceState = {
+  isFetching: false,
+  didInvalidate: false,
+  trades: [],
+  transfers: [],
 };
 
-type actionType = {
-  +type: string,
-  transactions: any
+const initialState = {
+  bittrex: initialSourceState,
+  bitstamp: initialSourceState,
 };
 
-export default function transactions(state = {
-  bittrex: {
-    isFetching: false,
-    didInvalidate: false,
-    items: [],
-  },
-  bitstamp: {
-    isFetching: false,
-    didInvalidate: false,
-    items: [],
-  },
-}, action: actionType) {
+export default function transactions(state: State = initialState, action: Action) {
   switch (action.type) {
     case REQUEST_TRANSACTIONS:
       return {
@@ -45,13 +32,51 @@ export default function transactions(state = {
           isFetching: false,
           didInvalidate: false,
           lastUpdated: Date.now().valueOf(),
-          items: unionTransactions(state[action.exchange].items, action.transactions),
+          trades: unionTransactions(state[action.exchange].trades, action.trades),
+          transfers: unionTransactions(state[action.exchange].transfers, action.transfers),
         },
       };
     default:
       return state;
   }
 }
+
+export type Transaction = Trade | Transfer;
+
+export type Trade = {|
+  id: string,
+  source: string,
+  date: Date,
+  market: {
+    major: string,
+    minor: string
+  },
+  type: 'BUY' | 'SELL',
+  amount: number,
+  rate: number,
+  commission: number
+|};
+
+export type Transfer = {|
+  id: string,
+  source: string,
+  date: Date,
+  currency: string,
+  type: 'DEPOSIT' | 'WITHDRAW',
+  amount: number
+|};
+
+type State = {
+  bittrex: SourceState,
+  bitstamp: SourceState
+};
+
+type SourceState = {
+  isFetching: boolean,
+  didInvalidate: boolean,
+  trades: Trade[],
+  transfers: Transfer[]
+};
 
 function unionTransactions(existingTransactions, newTransactions) {
   return R.unionWith(R.eqBy(R.prop('id')), existingTransactions, newTransactions);
