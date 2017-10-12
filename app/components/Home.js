@@ -1,3 +1,4 @@
+// @flow
 import React, { Component } from 'react';
 import Paper from 'material-ui/Paper';
 import { Table, TableBody, TableCell, TableHead, TableRow } from 'material-ui';
@@ -28,14 +29,15 @@ export default class Home extends Component {
               <TableRow>
                 <TableCell>Date</TableCell>
                 <TableCell>Source</TableCell>
-                <TableCell>Outgoing</TableCell>
-                <TableCell>Incoming</TableCell>
+                <TableCell>Market / Currency</TableCell>
+                <TableCell>Type</TableCell>
+                <TableCell>Amount</TableCell>
                 <TableCell>Rate</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {transactions.map(transaction => (
-                <TransactionRow key={transaction.id} data={transaction}/>
+                <TransactionRow key={transaction.id} transaction={transaction}/>
               ))}
             </TableBody>
           </Table>
@@ -49,7 +51,8 @@ function flattenTransactions(transactions) {
   let flattenedTransactions = [];
   Object.keys(transactions)
     .forEach(key => {
-      flattenedTransactions = flattenedTransactions.concat(transactions[key].trades);
+      flattenedTransactions = flattenedTransactions
+        .concat(transactions[key].trades).concat(transactions[key].transfers);
     });
   flattenedTransactions.sort((a, b) => b.date - a.date);
   return flattenedTransactions;
