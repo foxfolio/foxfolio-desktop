@@ -3,8 +3,6 @@ import React, { Component } from 'react';
 import { Button, Grid } from 'material-ui';
 import { Add } from 'material-ui-icons';
 import { withStyles } from 'material-ui/styles';
-
-import type { sourceType } from '../reducers/sources';
 import Source from './Source';
 import SourceDialog from './SourceDialog';
 
@@ -19,6 +17,7 @@ const styles = theme => ({
 
 class Sources extends Component {
   props: {
+    classes: any,
     sources: [Source],
     addSource: (source: Source) => void
   };
@@ -67,7 +66,12 @@ class Sources extends Component {
         <Button fab color="primary" aria-label="add" className={classes.button} onClick={this.addDialog}>
           <Add/>
         </Button>
-        <SourceDialog open={this.state.open} source={this.state.currentSource} close={this.closeDialog} save={this.saveDialog}/>
+        <SourceDialog
+          open={this.state.open}
+          source={this.state.currentSource}
+          close={this.closeDialog}
+          save={this.saveDialog}
+        />
       </div>
     );
   }

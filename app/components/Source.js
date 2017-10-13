@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { Button, Card, CardActions, CardContent, Typography } from 'material-ui';
 import { withStyles } from 'material-ui/styles';
 import style from './Source.css';
+import type { sourceType } from '../reducers/sources';
 
 const styles = theme => ({
   subheader: {
@@ -13,11 +14,9 @@ const styles = theme => ({
 
 class Source extends Component {
   props: {
-    source: {
-      name: string,
-      apiKey: string
-    },
-    onEdit: (source: Source) => void
+    classes: any,
+    source: sourceType,
+    onEdit: (source: sourceType) => void
   };
 
   render() {
