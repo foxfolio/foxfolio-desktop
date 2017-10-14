@@ -5,6 +5,7 @@ import { Add } from 'material-ui-icons';
 import { withStyles } from 'material-ui/styles';
 import Source from './Source';
 import SourceDialog from './SourceDialog';
+import type { sourceType } from '../reducers/sources';
 
 const styles = theme => ({
   button: {
@@ -18,8 +19,8 @@ const styles = theme => ({
 class Sources extends Component {
   props: {
     classes: any,
-    sources: [Source],
-    addSource: (source: Source) => void
+    sources: sourceType[],
+    addSource: (source: sourceType) => void
   };
 
   state = {
@@ -32,7 +33,7 @@ class Sources extends Component {
     this.setState({ open: true, isNew: true, currentSource: { name: '', apiKey: '', apiSecret: '' } });
   };
 
-  editDialog = (source: Source) => {
+  editDialog = (source: sourceType) => {
     console.log(source);
     this.setState({ open: true, isNew: false, currentSource: source });
   };

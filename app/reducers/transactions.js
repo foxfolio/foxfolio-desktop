@@ -66,7 +66,7 @@ export type Transfer = {|
   amount: number
 |};
 
-type State = {
+export type State = {
   bittrex: SourceState,
   bitstamp: SourceState
 };

@@ -12,19 +12,7 @@ type actionType = {
   source: any
 };
 
-const initialState: sourceType[] = [
-  {
-    name: 'bittrex',
-    apiKey: '',
-    apiSecret: '',
-  },
-  {
-    name: 'bitstamp',
-    customerId: '',
-    apiKey: '',
-    apiSecret: '',
-  },
-];
+const initialState: sourceType[] = [];
 
 export default function sources(state: Array<sourceType> = initialState, action: actionType) {
   switch (action.type) {

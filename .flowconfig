@@ -1,5 +1,11 @@
 [ignore]
-<PROJECT_ROOT>/node_modules/*
+; Ignore libraries with broken flow
+<PROJECT_ROOT>/node_modules/babel-plugin-flow-runtime/*
+<PROJECT_ROOT>/node_modules/jss/*
+<PROJECT_ROOT>/node_modules/material-ui/*
+<PROJECT_ROOT>/node_modules/react-event-listener/*
+<PROJECT_ROOT>/node_modules/stylelint/*
+
 <PROJECT_ROOT>/app/main.prod.js
 <PROJECT_ROOT>/app/main.prod.js.map
 <PROJECT_ROOT>/app/dist/.*

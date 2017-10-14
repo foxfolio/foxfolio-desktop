@@ -7,14 +7,8 @@ import Portfolio from './Portfolio';
 
 export default class Home extends Component {
   props: {
-    fetchAllTransactions: () => void,
     transactions: any
   };
-
-  componentDidMount() {
-    const { fetchAllTransactions } = this.props;
-    fetchAllTransactions();
-  }
 
   render() {
     const transactions = flattenTransactions(this.props.transactions);

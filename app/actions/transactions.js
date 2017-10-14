@@ -5,6 +5,7 @@ import type { Trade, Transfer } from '../reducers/transactions';
 
 export const REQUEST_TRANSACTIONS = 'REQUEST_TRANSACTIONS';
 export const RECEIVE_TRANSACTIONS = 'RECEIVE_TRANSACTIONS';
+const REFRESH_TIME_IN_MS = 30000;
 
 function requestTransactions(source): RequestAction {
   return {
@@ -44,6 +45,13 @@ export function fetchAllTransactions() {
   return (dispatch, getState) => {
     const sources = getConfiguredSources(getState());
     return sources.map(source => dispatch(fetchTransactions(source)));
+  };
+}
+
+export function continuouslyFetchTransactions() {
+  return dispatch => {
+    setInterval(() => dispatch(fetchAllTransactions()), REFRESH_TIME_IN_MS);
+    fetchAllTransactions();
   };
 }
 
