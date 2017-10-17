@@ -20,7 +20,8 @@ class Sources extends Component {
   props: {
     classes: any,
     sources: sourceType[],
-    addSource: (source: sourceType) => void
+    addSource: (source: sourceType) => void,
+    editSource: (oldSource: sourceType, newSource: sourceType) => void
   };
 
   state = {
@@ -46,7 +47,7 @@ class Sources extends Component {
     if (this.state.isNew) {
       this.props.addSource(source);
     } else {
-      // TODO save
+      this.props.editSource(this.state.currentSource, source);
     }
     this.closeDialog();
   };

@@ -1,5 +1,7 @@
 // @flow
-import { ADD_SOURCE } from '../actions/sources';
+import R from 'ramda';
+import type { Action } from '../actions/sources';
+import { ADD_SOURCE, EDIT_SOURCE } from '../actions/sources';
 
 export type sourceType = {
   name: string,
@@ -7,17 +9,15 @@ export type sourceType = {
   apiSecret: string,
   customerId?: string
 };
-type actionType = {
-  +type: string,
-  source: any
-};
 
 const initialState: sourceType[] = [];
 
-export default function sources(state: Array<sourceType> = initialState, action: actionType) {
+export default function sources(state: sourceType[] = initialState, action: Action) {
   switch (action.type) {
     case ADD_SOURCE:
       return [...state, action.source];
+    case EDIT_SOURCE:
+      return [...R.reject(R.equals(action.oldSource), state), action.newSource];
     default:
       return state;
   }
