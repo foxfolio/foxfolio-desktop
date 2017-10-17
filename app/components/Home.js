@@ -45,9 +45,9 @@ export default class Home extends Component<Props> {
 function flattenTransactions(transactions) {
   let flattenedTransactions = [];
   Object.keys(transactions)
-    .forEach(key => {
+    .forEach(sourceName => {
       flattenedTransactions = flattenedTransactions
-        .concat(transactions[key].trades).concat(transactions[key].transfers);
+        .concat(transactions[sourceName].trades).concat(transactions[sourceName].transfers);
     });
   flattenedTransactions.sort((a, b) => b.date - a.date);
   return flattenedTransactions;

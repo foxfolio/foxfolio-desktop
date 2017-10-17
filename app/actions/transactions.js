@@ -57,6 +57,5 @@ export function fetchAllTransactions() {
 export function continuouslyFetchTransactions() {
   return dispatch => {
     setInterval(() => dispatch(fetchAllTransactions()), REFRESH_TIME_IN_MS);
-    fetchAllTransactions();
   };
 }

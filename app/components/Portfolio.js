@@ -8,7 +8,7 @@ type Props = {
 };
 
 export default class Portfolio extends Component<Props> {
-  
+
   render() {
     const { transactions } = this.props;
     const portfolio = calculatePortfolio(transactions);

@@ -1,20 +1,36 @@
 import React, { Component } from 'react';
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, FormControl, Input, InputLabel, MenuItem, Select, TextField } from 'material-ui';
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  FormControl,
+  Input,
+  InputLabel,
+  MenuItem,
+  Select,
+  TextField,
+} from 'material-ui';
 import type { sourceType } from '../reducers/sources';
 
-export default class SourceDialog extends Component {
-  props: {
-    source: sourceType,
-    save: (source: sourceType) => void
-  };
+type Props = {
+  source: sourceType,
+  open: boolean,
+  close: () => void
+  save: (source: sourceType) => void,
+};
 
+export default class SourceDialog extends Component<Props> {
   state = {
     name: '',
     apiKey: '',
     apiSecret: '',
+    customerId: undefined,
     nameValid: true,
     apiKeyValid: true,
     apiSecretValid: true,
+    customerIdValid: true,
   };
 
   componentWillReceiveProps(nextProps) {
@@ -31,6 +47,7 @@ export default class SourceDialog extends Component {
       name: this.state.name,
       apiKey: this.state.apiKey,
       apiSecret: this.state.apiSecret,
+      customerId: this.state.customerId,
     });
   };
 

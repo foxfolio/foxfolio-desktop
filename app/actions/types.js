@@ -1,7 +1,6 @@
 // @flow
 
 export type Action =
-  | { type: '@@router/LOCATION_CHANGE' }
   | { type: 'ADD_SOURCE', source: Object }
   | { type: 'EDIT_SOURCE', source: Object, newSource: Object }
   | { type: 'REQUEST_TRANSACTIONS', source: Object }

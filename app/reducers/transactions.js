@@ -1,7 +1,6 @@
 // @flow
 import R from 'ramda';
 import type { Action } from '../actions/transactions';
-import { RECEIVE_TRANSACTIONS, REQUEST_TRANSACTIONS } from '../actions/transactions';
 
 const initialSourceState = {
   isFetching: false,
@@ -17,7 +16,7 @@ const initialState = {
 
 export default function transactions(state: State = initialState, action: Action) {
   switch (action.type) {
-    case REQUEST_TRANSACTIONS:
+    case 'REQUEST_TRANSACTIONS':
       return {
         ...state,
         [action.source.name]: {
@@ -25,7 +24,7 @@ export default function transactions(state: State = initialState, action: Action
           isFetching: true,
         },
       };
-    case RECEIVE_TRANSACTIONS:
+    case 'RECEIVE_TRANSACTIONS':
       return {
         ...state,
         [action.exchange]: {
@@ -34,6 +33,16 @@ export default function transactions(state: State = initialState, action: Action
           lastUpdated: Date.now().valueOf(),
           trades: unionTransactions(state[action.exchange].trades, action.trades),
           transfers: unionTransactions(state[action.exchange].transfers, action.transfers),
+        },
+      };
+    case 'FAILED_TRANSACTION':
+      return {
+        ...state,
+        [action.exchange]: {
+          isFetching: false,
+          didInvalidate: false,
+          lastUpdated: Date.now().valueOf(),
+          error: action.error,
         },
       };
     default:

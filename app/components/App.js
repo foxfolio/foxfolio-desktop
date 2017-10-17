@@ -7,6 +7,7 @@ import { AppBar, List, ListItem, ListItemIcon, ListItemText, Toolbar, Typography
 import { Cloud, Dashboard } from 'material-ui-icons';
 import { NavLink } from 'react-router-dom';
 import { continuouslyFetchTransactions } from '../actions/transactions';
+import type { Dispatch } from '../actions/types';
 
 const drawerWidth = 250;
 
@@ -31,7 +32,7 @@ const styles = theme => ({
 });
 
 type Props = {
-  dispatch: (action: any) => void,
+  dispatch: Dispatch,
   children: Node,
   classes: any
 };
