@@ -6,7 +6,6 @@ import Drawer from 'material-ui/Drawer';
 import { AppBar, List, ListItem, ListItemIcon, ListItemText, Toolbar, Typography } from 'material-ui';
 import { Cloud, Dashboard } from 'material-ui-icons';
 import { NavLink } from 'react-router-dom';
-import { connect } from 'react-redux';
 import { continuouslyFetchTransactions } from '../actions/transactions';
 
 const drawerWidth = 250;
@@ -79,4 +78,4 @@ class App extends Component {
   }
 }
 
-export default connect()(withStyles(styles)(App));
+export default withStyles(styles)(App);
