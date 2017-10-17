@@ -19,6 +19,7 @@ const styles = theme => ({
 type Props = {
   classes: any,
   sources: sourceType[],
+  transactions: Object,
   addSource: (source: sourceType) => void,
   editSource: (oldSource: sourceType, newSource: sourceType) => void
 };
@@ -59,7 +60,7 @@ class Sources extends Component<Props, State> {
   };
 
   render() {
-    const { sources, classes } = this.props;
+    const { sources, transactions, classes } = this.props;
 
     return (
       <div className="container">
@@ -67,7 +68,7 @@ class Sources extends Component<Props, State> {
         <Grid container>
           {sources.map(source => (
             <Grid item key={source.name + source.apiKey} xs={12} md={6}>
-              <Source source={source} onEdit={this.editDialog}/>
+              <Source source={source} transactions={transactions[source.name]} onEdit={this.editDialog}/>
             </Grid>
           ))}
         </Grid>

@@ -15,13 +15,14 @@ const styles = theme => ({
 type Props = {
   classes: any,
   source: sourceType,
+  transactions: Object,
   onEdit: (source: sourceType) => void
 };
 
 class Source extends Component<Props> {
 
   render() {
-    const { classes, source, onEdit } = this.props;
+    const { classes, source, transactions, onEdit } = this.props;
     return (
       <Card className={style.source}>
         <CardContent>
@@ -30,6 +31,11 @@ class Source extends Component<Props> {
           </Typography>
           <Typography type="body1" className={classes.subheader}>
             {`Key: ${source.apiKey}`}
+          </Typography>
+          <Typography type="body1" className={classes.subheader}>
+            {`Last update: ${new Date(transactions.lastUpdated || Date.now()).toTimeString()}`}
+            <br/>
+            {`Status: ${transactions.error ? transactions.error.response.body : 'ok'}`}
           </Typography>
         </CardContent>
         <CardActions>

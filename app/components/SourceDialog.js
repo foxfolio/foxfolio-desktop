@@ -17,8 +17,8 @@ import type { sourceType } from '../reducers/sources';
 type Props = {
   source: sourceType,
   open: boolean,
-  close: () => void
-  save: (source: sourceType) => void,
+  close: () => void,
+  save: (source: sourceType) => void
 };
 
 export default class SourceDialog extends Component<Props> {

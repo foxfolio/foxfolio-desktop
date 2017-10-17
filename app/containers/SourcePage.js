@@ -6,6 +6,7 @@ import * as SourceActions from '../actions/sources';
 function mapStateToProps(state) {
   return {
     sources: state.sources,
+    transactions: state.transactions,
   };
 }
 
