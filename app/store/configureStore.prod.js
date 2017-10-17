@@ -7,7 +7,9 @@ import { autoRehydrate } from 'redux-persist';
 import rootReducer from '../reducers';
 import persistStore from './persistStore';
 
-const history = createBrowserHistory();
+const history = createBrowserHistory({
+  basename: '/',
+});
 const router = routerMiddleware(history);
 const enhancer = compose(applyMiddleware(thunk, router), autoRehydrate());
 
