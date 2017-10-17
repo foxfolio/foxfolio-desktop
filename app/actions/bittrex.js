@@ -1,12 +1,9 @@
 // @flow
 import crypto from 'crypto';
-import { receiveTransactions } from './transactions';
+import { failedTransaction, receiveTransactions } from './transactions';
 import type { Trade, Transfer } from '../reducers/transactions';
 import type { sourceType } from '../reducers/sources';
-
-type actionType = {
-  +type: string
-};
+import type { Dispatch, ThunkAction } from './types';
 
 type bittrexTradeType = {
   +OrderUuid: string,
@@ -26,10 +23,12 @@ type bittrexDepositType = {
   +Amount: number
 };
 
-export default function getBittrexTransactions(source: sourceType) {
-  return (dispatch: (action: actionType) => void) =>
+export default function getBittrexTransactions(source: sourceType): ThunkAction {
+  return (dispatch: Dispatch) => {
     Promise.all([getOrderHistory(source), getDepositHistory(source)])
-      .then((results: [Trade[], Transfer[]]) => dispatch(receiveTransactions('bittrex', results[0], results[1])));
+      .then((results: [Trade[], Transfer[]]) => dispatch(receiveTransactions('bittrex', results[0], results[1])))
+      .catch(error => dispatch(failedTransaction(source.name, error)));
+  };
 }
 
 function getOrderHistory(source): Promise<Array<Trade>> {

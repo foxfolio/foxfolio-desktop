@@ -1,7 +1,6 @@
 // @flow
 import R from 'ramda';
-import type { Action } from '../actions/sources';
-import { ADD_SOURCE, EDIT_SOURCE } from '../actions/sources';
+import type { Action } from '../actions/types';
 
 export type sourceType = {
   name: string,
@@ -10,14 +9,12 @@ export type sourceType = {
   customerId?: string
 };
 
-const initialState: sourceType[] = [];
-
-export default function sources(state: sourceType[] = initialState, action: Action) {
+export default function sources(state: sourceType[] = [], action: Action) {
   switch (action.type) {
-    case ADD_SOURCE:
+    case 'ADD_SOURCE':
       return [...state, action.source];
-    case EDIT_SOURCE:
-      return [...R.reject(R.equals(action.oldSource), state), action.newSource];
+    case 'EDIT_SOURCE':
+      return [...R.reject(R.equals(action.source), state), action.newSource];
     default:
       return state;
   }

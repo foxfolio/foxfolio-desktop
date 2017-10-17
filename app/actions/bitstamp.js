@@ -1,13 +1,10 @@
 // @flow
 import crypto from 'crypto';
 import request from 'request-promise-native';
-import { receiveTransactions } from './transactions';
+import { failedTransaction, receiveTransactions } from './transactions';
 import type { Trade, Transfer } from '../reducers/transactions';
 import type { sourceType } from '../reducers/sources';
-
-type Action = {
-  +type: string
-};
+import type { Dispatch, ThunkAction } from './types';
 
 type BitstampTransaction = {
   id: number,
@@ -31,13 +28,18 @@ type BitstampTransaction = {
   fee: string
 };
 
-export default function getBitstampTransactions(source: sourceType) {
-  return (dispatch: (action: Action) => void) =>
+const currencies = ['btc', 'eth', 'eur', 'usd', 'ltc', 'xrp'];
+const markets = ['btc_usd', 'btc_eur', 'eth_usd', 'eth_eur', 'xrp_usd', 'xrp_eur', 'ltc_usd', 'ltc_eur'];
+
+export default function getBitstampTransactions(source: sourceType): ThunkAction {
+  return (dispatch: Dispatch) => {
     getOrderHistory(source)
-      .then((results: [Trade[], Transfer[]]) => dispatch(receiveTransactions('bitstamp', results[0], results[1])));
+      .then((results: [Trade[], Transfer[]]) => dispatch(receiveTransactions(source.name, results[0], results[1])))
+      .catch(error => dispatch(failedTransaction(source.name, error)));
+  };
 }
 
-function getOrderHistory(source): Promise<[Trade[], Transfer[]]> {
+function getOrderHistory(source: sourceType): Promise<[Trade[], Transfer[]]> {
   return bitstampRequest('user_transactions', source)
     .then(orderHistoryToTradesAndTransfers);
 }
@@ -73,7 +75,7 @@ function convertBitstampTransfer(bitstampTransaction: BitstampTransaction): Tran
     currency: '',
     amount: 0,
   };
-  ['btc', 'eth', 'eur', 'usd', 'ltc', 'xrp'].forEach(currency => {
+  currencies.forEach(currency => {
     if (bitstampTransaction[currency] && parseFloat(bitstampTransaction[currency]) !== 0) {
       transfer.currency = currency;
       transfer.amount = parseFloat(bitstampTransaction[currency]);
@@ -96,7 +98,7 @@ function convertBitstampTrade(bitstampTransaction: BitstampTransaction): Trade {
       minor: '',
     },
   };
-  ['btc_usd', 'btc_eur', 'eth_usd', 'eth_eur', 'xrp_usd', 'xrp_eur', 'ltc_usd', 'ltc_eur'].forEach(market => {
+  markets.forEach(market => {
     if (bitstampTransaction[market] && parseFloat(bitstampTransaction[market]) !== 0) {
       trade.market = {
         minor: market.split('_')[0],

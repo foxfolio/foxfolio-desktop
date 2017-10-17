@@ -1,36 +1,18 @@
 // @flow
 import type { sourceType } from '../reducers/sources';
+import type { Action } from './types';
 
-export const ADD_SOURCE = 'ADD_SOURCE';
-export const EDIT_SOURCE = 'EDIT_SOURCE';
-
-export type Action =
-  | { type: string }
-  | AddSourceAction
-  | EditSourceAction;
-
-export type AddSourceAction = {
-  type: 'ADD_SOURCE',
-  source: sourceType
-};
-
-export type EditSourceAction = {
-  type: 'EDIT_SOURCE',
-  oldSource: sourceType,
-  newSource: sourceType
-};
-
-export function addSource(source: sourceType) {
+export function addSource(source: sourceType): Action {
   return {
-    type: ADD_SOURCE,
+    type: 'ADD_SOURCE',
     source,
   };
 }
 
-export function editSource(oldSource: sourceType, newSource: sourceType) {
+export function editSource(source: sourceType, newSource: sourceType): Action {
   return {
-    type: EDIT_SOURCE,
-    oldSource,
+    type: 'EDIT_SOURCE',
+    source,
     newSource,
   };
 }

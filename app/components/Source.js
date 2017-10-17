@@ -12,12 +12,13 @@ const styles = theme => ({
   },
 });
 
-class Source extends Component {
-  props: {
-    classes: any,
-    source: sourceType,
-    onEdit: (source: sourceType) => void
-  };
+type Props = {
+  classes: any,
+  source: sourceType,
+  onEdit: (source: sourceType) => void
+};
+
+class Source extends Component<Props> {
 
   render() {
     const { classes, source, onEdit } = this.props;

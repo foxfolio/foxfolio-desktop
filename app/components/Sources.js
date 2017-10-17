@@ -16,14 +16,20 @@ const styles = theme => ({
   },
 });
 
-class Sources extends Component {
-  props: {
-    classes: any,
-    sources: sourceType[],
-    addSource: (source: sourceType) => void,
-    editSource: (oldSource: sourceType, newSource: sourceType) => void
-  };
+type Props = {
+  classes: any,
+  sources: sourceType[],
+  addSource: (source: sourceType) => void,
+  editSource: (oldSource: sourceType, newSource: sourceType) => void
+};
 
+type State = {
+  open: boolean,
+  isNew: boolean,
+  currentSource: sourceType
+};
+
+class Sources extends Component<Props, State> {
   state = {
     open: false,
     isNew: true,

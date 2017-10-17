@@ -1,25 +1,31 @@
 import getBittrexTransactions from './bittrex';
 import getBitstampTransactions from './bitstamp';
-import type { sourceType } from '../reducers/sources';
 import type { Trade, Transfer } from '../reducers/transactions';
+import type { Action } from './types';
 
-export const REQUEST_TRANSACTIONS = 'REQUEST_TRANSACTIONS';
-export const RECEIVE_TRANSACTIONS = 'RECEIVE_TRANSACTIONS';
 const REFRESH_TIME_IN_MS = 30000;
 
-function requestTransactions(source): RequestAction {
+function requestTransactions(source): Action {
   return {
-    type: REQUEST_TRANSACTIONS,
+    type: 'REQUEST_TRANSACTIONS',
     source,
   };
 }
 
-export function receiveTransactions(exchange: string, trades: Trade[] = [], transfers: Transfer[] = []): ReceiveAction {
+export function receiveTransactions(exchange: string, trades: Trade[] = [], transfers: Transfer[] = []): Action {
   return {
-    type: RECEIVE_TRANSACTIONS,
+    type: 'RECEIVE_TRANSACTIONS',
     exchange,
     trades,
     transfers,
+  };
+}
+
+export function failedTransaction(exchange: string, error: string): Action {
+  return {
+    type: 'FAILED_TRANSACTION',
+    exchange,
+    error,
   };
 }
 
@@ -54,19 +60,3 @@ export function continuouslyFetchTransactions() {
     fetchAllTransactions();
   };
 }
-
-export type Action =
-  | { type: string }
-  | RequestAction
-  | ReceiveAction;
-
-export type RequestAction = {
-  type: 'REQUEST_TRANSACTIONS',
-  source: sourceType
-};
-export type ReceiveAction = {
-  type: 'RECEIVE_TRANSACTIONS',
-  exchange: string,
-  trades: Trade[],
-  transfers: Transfer[]
-};

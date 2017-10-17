@@ -5,10 +5,11 @@ import { Table, TableBody, TableCell, TableHead, TableRow } from 'material-ui';
 import TransactionRow from './TransactionRow';
 import Portfolio from './Portfolio';
 
-export default class Home extends Component {
-  props: {
-    transactions: any
-  };
+type Props = {
+  transactions: any
+};
+
+export default class Home extends Component<Props> {
 
   render() {
     const transactions = flattenTransactions(this.props.transactions);

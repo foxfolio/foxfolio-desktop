@@ -3,11 +3,12 @@ import React, { Component } from 'react';
 import { Grid, Paper } from 'material-ui';
 import type { Transaction } from '../reducers/transactions';
 
-export default class Portfolio extends Component {
-  props: {
-    transactions: any
-  };
+type Props = {
+  transactions: any
+};
 
+export default class Portfolio extends Component<Props> {
+  
   render() {
     const { transactions } = this.props;
     const portfolio = calculatePortfolio(transactions);

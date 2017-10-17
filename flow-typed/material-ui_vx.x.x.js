@@ -23,7 +23,7 @@ declare module 'material-ui' {
  * require those files directly. Feel free to delete any files that aren't
  * needed.
  */
-declare module 'material-ui/AppBar' {
+declare module 'material-ui/AppBar/AppBar' {
   declare module .exports: any
 ;
 }

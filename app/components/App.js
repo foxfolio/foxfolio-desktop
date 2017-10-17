@@ -1,5 +1,5 @@
 // @flow
-import type { Children } from 'react';
+import type { Node } from 'react';
 import React, { Component } from 'react';
 import { withStyles } from 'material-ui/styles';
 import Drawer from 'material-ui/Drawer';
@@ -30,12 +30,13 @@ const styles = theme => ({
   },
 });
 
-class App extends Component {
-  props: {
-    dispatch: (action: any) => void,
-    children: Children,
-    classes: any
-  };
+type Props = {
+  dispatch: (action: any) => void,
+  children: Node,
+  classes: any
+};
+
+class App extends Component<Props> {
 
   componentDidMount() {
     this.props.dispatch(continuouslyFetchTransactions());
