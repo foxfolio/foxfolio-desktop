@@ -5,11 +5,12 @@ const mapPath = R.curry((path, f, obj) =>
   R.assocPath(path, f(R.path(path, obj)), obj),
 );
 
+const convertDate = R.map(mapPath(['date'], dateString => new Date(dateString)));
+const convertDateIn = key => R.map(mapPath([key], convertDate));
+
 const dateTransform = createTransform(null, (outboundState, key) => {
-  const convertDate = R.map(mapPath(['date'], dateString => new Date(dateString)));
   if (key === 'transactions') {
-    const temp = R.map(mapPath(['trades'], convertDate))(outboundState);
-    return R.map(mapPath(['transfers'], convertDate))(temp);
+    return R.pipe(convertDateIn('transfers'), convertDateIn('trades'))(outboundState);
   }
   return outboundState;
 });
