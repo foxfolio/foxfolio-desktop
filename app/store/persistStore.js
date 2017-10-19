@@ -9,7 +9,7 @@ const convertDate = R.map(mapPath(['date'], dateString => new Date(dateString)))
 const convertDateIn = key => R.map(mapPath([key], convertDate));
 
 const dateTransform = createTransform(null, (outboundState, key) => {
-  if (key === 'transactions') {
+  if (key === 'transactions' && Object.keys(outboundState).length > 0) {
     return R.pipe(convertDateIn('transfers'), convertDateIn('trades'))(outboundState);
   }
   return outboundState;

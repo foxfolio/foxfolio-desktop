@@ -1,7 +1,7 @@
 // @flow
 import type { sourceType } from '../reducers/sources';
 import type { ThunkAction } from './types';
-import { fetchAllTransactions } from './transactions';
+import { fetchAllTransactions, readTransactionsFromFile } from './transactions';
 
 export function addSource(source: sourceType): ThunkAction {
   return (dispatch) => {
@@ -9,6 +9,9 @@ export function addSource(source: sourceType): ThunkAction {
       type: 'ADD_SOURCE',
       source,
     });
+    if (source.transactionFile) {
+      dispatch(readTransactionsFromFile(source));
+    }
     dispatch(fetchAllTransactions());
   };
 }
@@ -20,6 +23,9 @@ export function editSource(source: sourceType, newSource: sourceType): ThunkActi
       source,
       newSource,
     });
+    if (newSource.transactionFile) {
+      dispatch(readTransactionsFromFile(newSource));
+    }
     dispatch(fetchAllTransactions());
   };
 }

@@ -1,4 +1,4 @@
-import getBittrexTransactions from './bittrex';
+import { getBittrexTransactions, readBittrexTransactionsFromFile } from './bittrex';
 import getBitstampTransactions from './bitstamp';
 import type { Trade, Transfer } from '../reducers/transactions';
 import type { Action } from './types';
@@ -57,5 +57,16 @@ export function fetchAllTransactions() {
 export function continuouslyFetchTransactions() {
   return dispatch => {
     setInterval(() => dispatch(fetchAllTransactions()), REFRESH_TIME_IN_MS);
+  };
+}
+
+export function readTransactionsFromFile(source: sourceType) {
+  return dispatch => {
+    switch (source.name) {
+      case 'bittrex':
+        return dispatch(readBittrexTransactionsFromFile(source));
+      default:
+        return dispatch(receiveTransactions(source));
+    }
   };
 }

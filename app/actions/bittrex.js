@@ -1,5 +1,6 @@
 // @flow
 import crypto from 'crypto';
+import { Converter } from 'csvtojson';
 import { failedTransaction, receiveTransactions } from './transactions';
 import type { Trade, Transfer } from '../reducers/transactions';
 import type { sourceType } from '../reducers/sources';
@@ -10,24 +11,50 @@ type bittrexTradeType = {
   +OrderType: string,
   +TimeStamp: string,
   +Exchange: string,
-  +PricePerUnit: number,
-  +Quantity: number,
-  +QuantityRemaining: number,
-  +Commission: number
+  +PricePerUnit: number | string,
+  +Quantity: number | string,
+  +QuantityRemaining: number | string,
+  +Commission: number | string
 };
 
 type bittrexDepositType = {
   +Id: number,
   +LastUpdated: string,
   +Currency: string,
-  +Amount: number
+  +Amount: number | string
 };
 
-export default function getBittrexTransactions(source: sourceType): ThunkAction {
+export function getBittrexTransactions(source: sourceType): ThunkAction {
   return (dispatch: Dispatch) => {
     Promise.all([getOrderHistory(source), getDepositHistory(source)])
       .then((results: [Trade[], Transfer[]]) => dispatch(receiveTransactions('bittrex', results[0], results[1])))
       .catch(error => dispatch(failedTransaction(source.name, error)));
+  };
+}
+
+export function readBittrexTransactionsFromFile(source: sourceType): ThunkAction {
+  return (dispatch: Dispatch) => {
+    if (source.transactionFile) {
+      const trades: bittrexTradeType[] = [];
+      new Converter()
+        .fromFile(source.transactionFile, { encoding: 'utf8' })
+        .preRawData((csvRawData, cb) => {
+          cb(csvRawData.replace(/\0/g, ''));
+        })
+        .on('json', (trade) => {
+          trades.push({
+            ...trade,
+            OrderType: trade.Type,
+            TimeStamp: trade.Closed,
+            Commission: trade.CommissionPaid,
+            PricePerUnit: trade.Price / trade.Quantity,
+            QuantityRemaining: 0,
+          });
+        })
+        .on('done', () => {
+          dispatch(receiveTransactions('bittrex', orderHistoryToTransactions(trades), []));
+        });
+    }
   };
 }
 
@@ -77,9 +104,9 @@ function convertBittrexTrade(bittrexTransaction): Trade {
       major: bittrexTransaction.Exchange.split('-')[0],
       minor: bittrexTransaction.Exchange.split('-')[1],
     },
-    amount: bittrexTransaction.Quantity - bittrexTransaction.QuantityRemaining,
-    commission: bittrexTransaction.Commission,
-    rate: bittrexTransaction.PricePerUnit,
+    amount: parseFloat(bittrexTransaction.Quantity) - parseFloat(bittrexTransaction.QuantityRemaining),
+    commission: parseFloat(bittrexTransaction.Commission),
+    rate: parseFloat(bittrexTransaction.PricePerUnit),
   });
 }
 
@@ -90,6 +117,6 @@ function convertBittrexDeposit(deposit: bittrexDepositType): Transfer {
     source: 'bittrex',
     type: 'DEPOSIT',
     currency: deposit.Currency,
-    amount: deposit.Amount,
+    amount: parseFloat(deposit.Amount),
   };
 }

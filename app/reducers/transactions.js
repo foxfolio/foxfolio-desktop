@@ -39,6 +39,7 @@ export default function transactions(state: State = initialState, action: Action
       return {
         ...state,
         [action.exchange]: {
+          ...state[action.exchange],
           isFetching: false,
           didInvalidate: false,
           lastUpdated: Date.now().valueOf(),

@@ -26,7 +26,6 @@ export default class SourceDialog extends Component<Props> {
     name: '',
     apiKey: '',
     apiSecret: '',
-    customerId: undefined,
     nameValid: true,
     apiKeyValid: true,
     apiSecretValid: true,
@@ -48,13 +47,13 @@ export default class SourceDialog extends Component<Props> {
       apiKey: this.state.apiKey,
       apiSecret: this.state.apiSecret,
       customerId: this.state.customerId,
+      transactionFile: this.state.transactionFile,
     });
   };
 
   handleChange = name => event => {
-    this.setState(
-      { [name]: event.target.value },
-    );
+    const value = event.target.type === 'file' ? event.target.files[0].path : event.target.value;
+    this.setState({ [name]: value });
   };
 
   render() {
@@ -117,6 +116,19 @@ const getFormForExchange = (exchange, state, handleChange) => {
           fullWidth
           margin="normal"
         />
+        <input
+          accept="csv"
+          style={{ display: 'none' }}
+          id="file"
+          type="file"
+          onChange={handleChange('transactionFile')}
+        />
+        <label htmlFor="file">
+          <Button raised component="span">
+            Add transactions from file
+          </Button>
+        </label>
+        {state.transactionFile}
       </div>);
     case 'bitstamp':
       return (<div>
