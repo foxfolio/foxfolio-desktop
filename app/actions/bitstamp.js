@@ -77,7 +77,7 @@ function convertBitstampTransfer(bitstampTransaction: BitstampTransaction): Tran
   };
   currencies.forEach(currency => {
     if (bitstampTransaction[currency] && parseFloat(bitstampTransaction[currency]) !== 0) {
-      transfer.currency = currency;
+      transfer.currency = currency.toUpperCase();
       transfer.amount = parseFloat(bitstampTransaction[currency]);
     }
   });
@@ -101,13 +101,13 @@ function convertBitstampTrade(bitstampTransaction: BitstampTransaction): Trade {
   markets.forEach(market => {
     if (bitstampTransaction[market] && parseFloat(bitstampTransaction[market]) !== 0) {
       trade.market = {
-        minor: market.split('_')[0],
-        major: market.split('_')[1],
+        minor: market.split('_')[0].toUpperCase(),
+        major: market.split('_')[1].toUpperCase(),
       };
-      trade.amount = parseFloat(bitstampTransaction[trade.market.minor]);
+      trade.amount = parseFloat(bitstampTransaction[trade.market.minor.toLowerCase()]);
       trade.rate = parseFloat(bitstampTransaction[market]);
       trade.commission = parseFloat(bitstampTransaction.fee);
-      if (trade.amount < 0 || bitstampTransaction[trade.market.minor] === '-0.00') {
+      if (trade.amount < 0 || bitstampTransaction[trade.market.minor.toLowerCase()] === '-0.00') {
         trade.type = 'SELL';
       } else {
         trade.type = 'BUY';

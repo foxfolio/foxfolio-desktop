@@ -4,14 +4,14 @@ import { Grid, Paper } from 'material-ui';
 import type { Transaction } from '../reducers/transactions';
 
 type Props = {
-  transactions: any
+  transactions: Transaction[]
 };
 
 export default class Portfolio extends Component<Props> {
 
   render() {
-    const { transactions } = this.props;
-    const portfolio = calculatePortfolio(transactions);
+    const portfolio = calculatePortfolio(this.props.transactions);
+    console.log(portfolio);
     const keys = Object.keys(portfolio);
 
     return (
@@ -22,7 +22,7 @@ export default class Portfolio extends Component<Props> {
             .filter(asset => portfolio[asset] !== 0)
             .map(asset =>
               [
-                <Grid item xs={6} md={2}><h2>{asset.toUpperCase()}</h2></Grid>,
+                <Grid item xs={6} md={2}><h2>{asset}</h2></Grid>,
                 <Grid item xs={6} md={2}><h3> {portfolio[asset].toFixed(6)}</h3></Grid>,
               ],
             )}
@@ -35,17 +35,41 @@ export default class Portfolio extends Component<Props> {
 function calculatePortfolio(transactions: Transaction[]) {
   return transactions.reduce((acc, transaction) => {
     console.log(transaction);
-    if (transaction.outgoing) {
-      if (!(transaction.outgoing in acc)) {
-        acc[transaction.outgoing] = 0;
-      }
-      acc[transaction.outgoing] -= transaction.quantityOutgoing;
-    }
-    if (transaction.incoming) {
-      if (!(transaction.incoming in acc)) {
-        acc[transaction.incoming] = 0;
-      }
-      acc[transaction.incoming] += transaction.quantityIncoming;
+    console.log(transaction.type);
+    switch (transaction.type) {
+      case 'DEPOSIT':
+      case 'WITHDRAW':
+        acc[transaction.currency] = acc[transaction.currency] || 0;
+        console.log(acc[transaction.currency]);
+        acc[transaction.currency] += transaction.amount;
+        console.log(acc[transaction.currency]);
+        break;
+      case 'BUY':
+        acc[transaction.market.major] = acc[transaction.market.major] || 0;
+        acc[transaction.market.minor] = acc[transaction.market.minor] || 0;
+        console.log(acc[transaction.market.major]);
+        console.log(acc[transaction.market.minor]);
+
+        acc[transaction.market.major] -= ((transaction.rate * transaction.amount) + transaction.commission);
+        acc[transaction.market.minor] += transaction.amount;
+
+        console.log(acc[transaction.market.major]);
+        console.log(acc[transaction.market.minor]);
+        break;
+      case 'SELL':
+        acc[transaction.market.major] = acc[transaction.market.major] || 0;
+        acc[transaction.market.minor] = acc[transaction.market.minor] || 0;
+        console.log(acc[transaction.market.major]);
+        console.log(acc[transaction.market.minor]);
+
+        acc[transaction.market.major] += ((transaction.rate * transaction.amount) - transaction.commission);
+        acc[transaction.market.minor] -= transaction.amount;
+
+        console.log(acc[transaction.market.major]);
+        console.log(acc[transaction.market.minor]);
+        break;
+      default:
+        break;
     }
     return acc;
   }, {});
