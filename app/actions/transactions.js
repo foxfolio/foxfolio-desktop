@@ -1,7 +1,10 @@
+// @flow
 import { getBittrexTransactions, readBittrexTransactionsFromFile } from './bittrex';
 import getBitstampTransactions from './bitstamp';
 import type { Trade, Transfer } from '../reducers/transactions';
-import type { Action } from './types';
+import type { Action, Dispatch, GetState } from './types';
+import type { sourceType } from '../reducers/sources';
+import startTimer from './timer';
 
 const REFRESH_TIME_IN_MS = 30000;
 
@@ -48,25 +51,28 @@ function fetchTransactions(source) {
 }
 
 export function fetchAllTransactions() {
-  return (dispatch, getState) => {
+  return (dispatch: Dispatch, getState: GetState) => {
     const sources = getConfiguredSources(getState());
     return sources.map(source => dispatch(fetchTransactions(source)));
   };
 }
 
 export function continuouslyFetchTransactions() {
-  return dispatch => {
-    setInterval(() => dispatch(fetchAllTransactions()), REFRESH_TIME_IN_MS);
+  return (dispatch: Dispatch, getState: GetState) => {
+    if (!getState().timer.transactions) {
+      const timer = setInterval(() => dispatch(fetchAllTransactions()), REFRESH_TIME_IN_MS);
+      dispatch(startTimer('transactions', timer));
+    }
   };
 }
 
 export function readTransactionsFromFile(source: sourceType) {
-  return dispatch => {
+  return (dispatch: Dispatch) => {
     switch (source.name) {
       case 'bittrex':
         return dispatch(readBittrexTransactionsFromFile(source));
       default:
-        return dispatch(receiveTransactions(source));
+        return dispatch(receiveTransactions(source.name));
     }
   };
 }

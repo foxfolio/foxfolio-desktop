@@ -11,6 +11,7 @@ function mapStateToProps(state) {
     transactions: state.transactions,
     sources: state.sources,
     ticker: state.ticker,
+    coinlist: state.coinlist,
   };
 }
 

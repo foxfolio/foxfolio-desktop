@@ -8,7 +8,7 @@ import { Cloud, Dashboard, SwapHoriz } from 'material-ui-icons';
 import { NavLink } from 'react-router-dom';
 import { continuouslyFetchTransactions } from '../actions/transactions';
 import type { Dispatch } from '../actions/types';
-import { continuouslyUpdateTicker } from '../actions/ticker';
+import { continuouslyUpdateTicker, requestCoinList } from '../actions/ticker';
 
 const drawerWidth = 250;
 
@@ -46,6 +46,7 @@ class App extends Component<Props> {
   componentDidMount() {
     this.props.dispatch(continuouslyFetchTransactions());
     this.props.dispatch(continuouslyUpdateTicker());
+    this.props.dispatch(requestCoinList());
   }
 
   render() {

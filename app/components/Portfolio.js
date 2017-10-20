@@ -1,11 +1,12 @@
 // @flow
 import React, { Component } from 'react';
-import { Grid, Paper } from 'material-ui';
+import { Avatar, Card, CardHeader, Grid, Paper } from 'material-ui';
 import type { Transaction } from '../reducers/transactions';
 
 type Props = {
   transactions: Transaction[],
-  ticker: Object
+  ticker: Object,
+  coinlist: Object
 };
 
 export default class Portfolio extends Component<Props> {
@@ -16,24 +17,43 @@ export default class Portfolio extends Component<Props> {
 
     const keys = Object.keys(portfolio);
     return (
-      <Paper style={{ padding: 10 }}>
-        <h1>Portfolio</h1>
-        <Grid container spacing={24} style={{ padding: 10 }}>
-          {keys
-            .filter(asset => portfolio[asset] !== 0)
-            .map(asset =>
-              [
-                <Grid item xs={6} md={1}><h2>{asset}</h2></Grid>,
-                <Grid item xs={6} md={1}><h3>{portfolio[asset].toFixed(6)}</h3>
-                </Grid>,
-                <Grid item xs={6} md={2}><h3>= {ticker[asset]
-                  ? (parseFloat(ticker[asset].EUR.PRICE) * portfolio[asset]).toFixed(2)
-                  : 0} €</h3>
-                </Grid>,
-              ],
-            )}
-        </Grid>
-      </Paper>
+      <div>
+        <Paper style={{ padding: 10 }}>
+          <h1>Portfolio</h1>
+          <Grid container spacing={24} style={{ padding: 10 }}>
+            {keys
+              .filter(asset => portfolio[asset] !== 0)
+              .map(asset =>
+                [
+                  <Grid item xs={6} md={1}><h2>{asset}</h2></Grid>,
+                  <Grid item xs={6} md={1}><h3>{portfolio[asset].toFixed(6)}</h3>
+                  </Grid>,
+                  <Grid item xs={6} md={2}><h3>= {ticker[asset]
+                    ? (parseFloat(ticker[asset].EUR.PRICE) * portfolio[asset]).toFixed(2)
+                    : 0} €</h3>
+                  </Grid>,
+                ],
+              )}
+          </Grid>
+        </Paper>
+        <Paper style={{ marginTop: 30, paddingTop: 10 }}>
+          <h1>Portfolio List</h1>
+          {keys.filter(asset => this.props.coinlist[asset]).map(asset => (
+            <Card>
+              <CardHeader
+                avatar={
+                  <Avatar src={this.props.coinlist[asset]
+                    ? `https://www.cryptocompare.com${this.props.coinlist[asset].ImageUrl}`
+                    : ''}
+                  />
+                }
+                title={this.props.coinlist[asset].FullName}
+                subheader={portfolio[asset].toPrecision(4)}
+              />
+            </Card>
+          ))}
+        </Paper>
+      </div>
     );
   }
 }

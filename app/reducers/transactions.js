@@ -1,6 +1,6 @@
 // @flow
 import R from 'ramda';
-import type { Action } from '../actions/transactions';
+import type { Action } from '../actions/types';
 
 const initialSourceState = {
   isFetching: false,
