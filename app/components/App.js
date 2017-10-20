@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 import { withStyles } from 'material-ui/styles';
 import Drawer from 'material-ui/Drawer';
 import { AppBar, List, ListItem, ListItemIcon, ListItemText, Toolbar, Typography } from 'material-ui';
-import { Cloud, Dashboard } from 'material-ui-icons';
+import { Cloud, Dashboard, SwapHoriz } from 'material-ui-icons';
 import { NavLink } from 'react-router-dom';
 import { continuouslyFetchTransactions } from '../actions/transactions';
 import type { Dispatch } from '../actions/types';
@@ -25,6 +25,9 @@ const styles = theme => ({
   },
   drawerPaper: {
     width: drawerWidth,
+  },
+  topList: {
+    paddingTop: 0,
   },
   bottomList: {
     marginTop: 'auto',
@@ -57,12 +60,18 @@ class App extends Component<Props> {
               </Typography>
             </Toolbar>
           </AppBar>
-          <List>
+          <List className={classes.topList}>
             <ListItem button component={NavLink} exact to="/">
               <ListItemIcon>
                 <Dashboard/>
               </ListItemIcon>
               <ListItemText primary="Portfolio"/>
+            </ListItem>
+            <ListItem button component={NavLink} to="/transactions">
+              <ListItemIcon>
+                <SwapHoriz/>
+              </ListItemIcon>
+              <ListItemText primary="Transactions"/>
             </ListItem>
           </List>
           <List className={classes.bottomList}>

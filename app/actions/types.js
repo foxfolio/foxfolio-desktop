@@ -6,7 +6,7 @@ export type Action =
   | { type: 'REQUEST_TRANSACTIONS', source: Object }
   | { type: 'RECEIVE_TRANSACTIONS', exchange: string, trades: Object[], transfers: Object[] }
   | { type: 'FAILED_TRANSACTIONS', exchange: string, error: string }
-  | { type: 'TICKER_UPDATE', ticker: Object[] }
+  | { type: 'TICKER_UPDATE', ticker: Object }
   ;
 
 export type Dispatch = (action: Action | ThunkAction | PromiseAction | Array<Action>) => any;
