@@ -10,6 +10,7 @@ function mapStateToProps(state) {
   return {
     transactions: state.transactions,
     sources: state.sources,
+    ticker: state.ticker,
   };
 }
 

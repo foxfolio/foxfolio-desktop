@@ -4,7 +4,8 @@ import Portfolio from './Portfolio';
 import TransactionTable from './TransactionTable';
 
 type Props = {
-  transactions: any
+  transactions: any,
+  ticker: any
 };
 
 export default class Home extends Component<Props> {
@@ -14,7 +15,7 @@ export default class Home extends Component<Props> {
 
     return (
       <div className="container">
-        <Portfolio transactions={transactions}/>
+        <Portfolio transactions={transactions} ticker={this.props.ticker}/>
         <TransactionTable transactions={transactions}/>
       </div>
     );
