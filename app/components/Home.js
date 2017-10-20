@@ -16,7 +16,7 @@ export default class Home extends Component<Props> {
     return (
       <div className="container">
         <Portfolio transactions={transactions} ticker={this.props.ticker}/>
-        <TransactionTable transactions={transactions}/>
+        <TransactionTable transactions={transactions} ticker={this.props.ticker}/>
       </div>
     );
   }

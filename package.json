@@ -186,6 +186,7 @@
     "webpack-merge": "^4.1.0"
   },
   "dependencies": {
+    "classnames": "^2.2.5",
     "csvtojson": "^1.1.9",
     "devtron": "^1.4.0",
     "electron-debug": "^1.2.0",

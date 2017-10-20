@@ -101,8 +101,8 @@ function convertBittrexTrade(bittrexTransaction): Trade {
     source: 'bittrex',
     type: type === 'BUY' ? 'BUY' : 'SELL',
     market: {
-      major: bittrexTransaction.Exchange.split('-')[0],
-      minor: bittrexTransaction.Exchange.split('-')[1],
+      major: unifySymbols(bittrexTransaction.Exchange.split('-')[0]),
+      minor: unifySymbols(bittrexTransaction.Exchange.split('-')[1]),
     },
     amount: parseFloat(bittrexTransaction.Quantity) - parseFloat(bittrexTransaction.QuantityRemaining),
     commission: parseFloat(bittrexTransaction.Commission),
@@ -116,7 +116,16 @@ function convertBittrexDeposit(deposit: bittrexDepositType): Transfer {
     date: new Date(deposit.LastUpdated),
     source: 'bittrex',
     type: 'DEPOSIT',
-    currency: deposit.Currency,
+    currency: unifySymbols(deposit.Currency),
     amount: parseFloat(deposit.Amount),
   };
+}
+
+function unifySymbols(symbol: string) {
+  switch (symbol) {
+    case 'BCC':
+      return 'BCH';
+    default:
+      return symbol;
+  }
 }
