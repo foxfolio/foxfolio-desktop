@@ -16,17 +16,10 @@ export function requestTickerUpdate(): ThunkAction {
   return (dispatch: Dispatch, getState: GetState) => {
     const state = getState();
     const symbols = getSymbolsFromTransactions(state.transactions);
-    Promise.all(
-      symbols.map(symbol =>
-        fetch(`https://min-api.cryptocompare.com/data/price?fsym=${symbol}&tsyms=BTC,USD,EUR`)
-          .then(result => result.json())
-          .then(result => ({ [symbol]: result }))))
-      .then(result => R.mergeAll(result))
-      .then(result => dispatch(receiveTickerUpdate(result)))
+    fetch(`https://min-api.cryptocompare.com/data/pricemultifull?fsyms=${symbols.join(',')}&tsyms=BTC,USD,EUR,ETH`)
+      .then(result => result.json())
+      .then(result => dispatch(receiveTickerUpdate(result.RAW)))
       .catch(error => console.error(error));
-
-    // .then(result => dispatch(receiveTickerUpdate(result)))
-    // .catch(error => console.error(error));
   };
 }
 

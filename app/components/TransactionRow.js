@@ -107,7 +107,7 @@ class TransactionRow extends Component<Props, State> {
     const { classes, ticker, transaction } = this.props;
     if (transaction.type === 'BUY' || transaction.type === 'SELL') {
       const trade = (transaction: Trade);
-      const currentRate = ticker[trade.market.minor][trade.market.major];
+      const currentRate = ticker[trade.market.minor][trade.market.major].PRICE;
       return (
         <Card>
           {this.rowCard(

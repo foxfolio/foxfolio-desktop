@@ -27,7 +27,7 @@ export default class Portfolio extends Component<Props> {
                 <Grid item xs={6} md={1}><h3>{portfolio[asset].toFixed(6)}</h3>
                 </Grid>,
                 <Grid item xs={6} md={2}><h3>= {ticker[asset]
-                  ? (parseFloat(ticker[asset].EUR) * portfolio[asset]).toFixed(2)
+                  ? (parseFloat(ticker[asset].EUR.PRICE) * portfolio[asset]).toFixed(2)
                   : 0} €</h3>
                 </Grid>,
               ],
