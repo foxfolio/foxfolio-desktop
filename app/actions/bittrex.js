@@ -24,9 +24,16 @@ type bittrexDepositType = {
   +Amount: number | string
 };
 
+type bittrexWithdrawalType = {
+  +PaymentUuid: number,
+  +Opened: string,
+  +Currency: string,
+  +Amount: number | string
+};
+
 export function getBittrexTransactions(source: sourceType): ThunkAction {
   return (dispatch: Dispatch) => {
-    Promise.all([getOrderHistory(source), getDepositHistory(source)])
+    Promise.all([getOrderHistory(source), getTransferHistory(source)])
       .then((results: [Trade[], Transfer[]]) => dispatch(receiveTransactions('bittrex', results[0], results[1])))
       .catch(error => dispatch(failedTransaction(source.name, error)));
   };
@@ -63,9 +70,19 @@ function getOrderHistory(source): Promise<Array<Trade>> {
     .then(orderHistoryToTransactions);
 }
 
+function getTransferHistory(source): Promise<Array<Transfer>> {
+  return Promise.all([getDepositHistory(source), getWithdrawalHistory(source)])
+    .then((results: [Transfer[], Transfer[]]) => results[0].concat(results[1]));
+}
+
 function getDepositHistory(source): Promise<Array<Transfer>> {
   return bittrexRequest('getdeposithistory', source)
     .then(depositHistoryToTransactions);
+}
+
+function getWithdrawalHistory(source): Promise<Array<Transfer>> {
+  return bittrexRequest('getwithdrawalhistory', source)
+    .then(withdrawalHistoryToTransactions);
 }
 
 function bittrexRequest(endpoint, source) {
@@ -87,6 +104,10 @@ function orderHistoryToTransactions(bittrexTrades: bittrexTradeType[]): Array<Tr
 
 function depositHistoryToTransactions(bittrexDeposits: bittrexDepositType[]): Array<Transfer> {
   return bittrexDeposits.map(convertBittrexDeposit);
+}
+
+function withdrawalHistoryToTransactions(bittrexWithdrawals: bittrexWithdrawalType[]): Array<Transfer> {
+  return bittrexWithdrawals.map(convertBittrexWithdrawal);
 }
 
 function convertBittrexTrade(bittrexTransaction): Trade {
@@ -116,6 +137,17 @@ function convertBittrexDeposit(deposit: bittrexDepositType): Transfer {
     date: new Date(deposit.LastUpdated),
     source: 'bittrex',
     type: 'DEPOSIT',
+    currency: unifySymbols(deposit.Currency),
+    amount: parseFloat(deposit.Amount),
+  };
+}
+
+function convertBittrexWithdrawal(deposit: bittrexWithdrawalType): Transfer {
+  return {
+    id: `${deposit.PaymentUuid}`,
+    date: new Date(deposit.Opened),
+    source: 'bittrex',
+    type: 'WITHDRAW',
     currency: unifySymbols(deposit.Currency),
     amount: parseFloat(deposit.Amount),
   };
