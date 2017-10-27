@@ -22,6 +22,9 @@ export const styles = (theme: Object) => ({
     display: 'flex',
     alignItems: 'center',
   },
+  card: {
+    paddingLeft: 50,
+  },
   avatar: {
     flex: '0 0 auto',
     marginRight: theme.spacing.unit * 2,
@@ -109,7 +112,7 @@ class TransactionRow extends Component<Props, State> {
       const trade = (transaction: Trade);
       const currentRate = ticker[trade.market.minor][trade.market.major].PRICE;
       return (
-        <Card>
+        <Card className={classes.card}>
           {this.rowCard(
             <Avatar className={trade.type === 'BUY' ? classes.buyAvatar : classes.sellAvatar}>
               <SwapHorizIcon/>
@@ -131,7 +134,7 @@ class TransactionRow extends Component<Props, State> {
     } else if (transaction.type === 'DEPOSIT' || transaction.type === 'WITHDRAW') {
       const transfer = (transaction: Transfer);
       return (
-        <Card>
+        <Card className={classes.card}>
           {this.rowCard(
             <Avatar className={transfer.type === 'DEPOSIT' ? classes.depositAvatar : classes.withdrawAvatar}>
               {transfer.type === 'DEPOSIT' ? <AddCircleIcon/> : <RemoveCircleIcon/>}
