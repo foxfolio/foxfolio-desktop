@@ -78,7 +78,7 @@ function convertBitstampTransfer(bitstampTransaction: BitstampTransaction): Tran
   currencies.forEach(currency => {
     if (bitstampTransaction[currency] && parseFloat(bitstampTransaction[currency]) !== 0) {
       transfer.currency = currency.toUpperCase();
-      transfer.amount = parseFloat(bitstampTransaction[currency]);
+      transfer.amount = Math.abs(parseFloat(bitstampTransaction[currency]));
     }
   });
   return transfer;

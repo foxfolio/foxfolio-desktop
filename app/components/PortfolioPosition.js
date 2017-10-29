@@ -125,7 +125,7 @@ class PortfolioPosition extends Component<Props, State> {
       )}
       <Collapse in={this.state.expanded}>
         {transactions.map(transaction =>
-          <TransactionRow style={{ paddingLeft: 50 }} transaction={transaction} ticker={ticker}/>)}
+          <TransactionRow key={transaction.id} style={{ paddingLeft: 50 }} transaction={transaction} ticker={ticker}/>)}
       </Collapse>
     </Card>);
   }

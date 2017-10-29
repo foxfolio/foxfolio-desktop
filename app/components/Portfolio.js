@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { Avatar, Card, CardHeader, Grid, Paper } from 'material-ui';
+import { Avatar, Card, CardHeader, Grid, Paper, Typography } from 'material-ui';
 import type { Transaction } from '../reducers/transactions';
 import PortfolioPosition from './PortfolioPosition';
 
@@ -19,15 +19,14 @@ export default class Portfolio extends Component<Props> {
     const keys = Object.keys(portfolio);
     return (
       <div>
-        <Paper style={{ marginTop: 30, paddingTop: 10 }}>
+        <Paper style={{ marginTop: 30, paddingBottom: 20, paddingTop: 10 }}>
           <h1 style={{ paddingLeft: 20 }}>Positions</h1>
           {keys
             .filter(asset => coinlist[asset])
-            .sort((a, b) => {
-              return (portfolio[b] * ticker[b].EUR.PRICE) - (portfolio[a] * ticker[a].EUR.PRICE);
-            })
+            .sort((a, b) => (portfolio[b] * ticker[b].EUR.PRICE) - (portfolio[a] * ticker[a].EUR.PRICE))
             .map(asset => (
               <PortfolioPosition
+                key={asset}
                 coinlist={coinlist}
                 transactions={transactions.filter(containsAsset(asset))}
                 ticker={ticker}
@@ -62,7 +61,7 @@ function calculatePortfolio(transactions: Transaction[]) {
       case 'DEPOSIT':
       case 'WITHDRAW':
         acc[transaction.currency] = acc[transaction.currency] || 0;
-        acc[transaction.currency] += transaction.amount;
+        acc[transaction.currency] += (transaction.type === 'WITHDRAW' ? -1 : 1) * transaction.amount;
         break;
       case 'BUY':
         acc[transaction.market.major] = acc[transaction.market.major] || 0;
