@@ -23,11 +23,13 @@ export default class Portfolio extends Component<Props> {
       <div>
         <Paper style={{ marginTop: 30, paddingBottom: 20, paddingTop: 10 }}>
           <h1 style={{ paddingLeft: 20 }}>Portfolio</h1>
-          <h3 style={{ paddingLeft: 20 }}>{sumBTC.toPrecision(5)} BTC
-            | {`${(ticker.BTC.BTC.CHANGEPCT24HOUR).toFixed(2)}%`}<br/>
-            {sumEUR.toPrecision(5)} €
-            | {`${(ticker.BTC.EUR.CHANGEPCT24HOUR).toFixed(2)}%`}
-          </h3>
+          {ticker.BTC ? (
+            <h3 style={{ paddingLeft: 20 }}>{sumBTC.toPrecision(5)} BTC
+              | {`${(ticker.BTC.BTC.CHANGEPCT24HOUR).toFixed(2)}%`}<br/>
+              {sumEUR.toPrecision(5)} €
+              | {`${(ticker.BTC.EUR.CHANGEPCT24HOUR).toFixed(2)}%`}
+            </h3>
+          ) : ''}
           {keys
             .filter(asset => coinlist[asset])
             .sort((a, b) => (portfolio[b] * ticker[b].EUR.PRICE) - (portfolio[a] * ticker[a].EUR.PRICE))
