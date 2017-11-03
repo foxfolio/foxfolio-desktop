@@ -1,20 +1,22 @@
 // @flow
 import React, { Component } from 'react';
-import { Avatar, Card, CardHeader, Grid, Paper, Typography } from 'material-ui';
+import { Paper } from 'material-ui';
 import type { Transaction } from '../reducers/transactions';
 import PortfolioPosition from './PortfolioPosition';
+import type { walletType } from '../reducers/wallets';
 
 type Props = {
   transactions: Transaction[],
   ticker: Object,
-  coinlist: Object
+  coinlist: Object,
+  wallets: walletType[]
 };
 
 export default class Portfolio extends Component<Props> {
 
   render() {
-    const { ticker, coinlist, transactions } = this.props;
-    const portfolio = calculatePortfolio(transactions);
+    const { ticker, coinlist, transactions, wallets } = this.props;
+    const portfolio = calculatePortfolio(transactions, wallets);
     const sumBTC = calculateSum(ticker, portfolio, 'BTC');
     const sumEUR = calculateSum(ticker, portfolio, 'EUR');
 
@@ -41,6 +43,7 @@ export default class Portfolio extends Component<Props> {
                 ticker={ticker}
                 asset={asset}
                 quantity={portfolio[asset]}
+                sumBTC={sumBTC}
               />
             ))}
         </Paper>
@@ -64,8 +67,8 @@ function containsAsset(asset: string) {
   };
 }
 
-function calculatePortfolio(transactions: Transaction[]) {
-  return transactions.reduce((acc, transaction) => {
+function calculatePortfolio(transactions: Transaction[], wallets: walletType[]) {
+  const portfolio = transactions.reduce((acc, transaction) => {
     switch (transaction.type) {
       case 'DEPOSIT':
       case 'WITHDRAW':
@@ -91,10 +94,16 @@ function calculatePortfolio(transactions: Transaction[]) {
     }
     return acc;
   }, {});
+
+  wallets.forEach(wallet => {
+    portfolio[wallet.currency] = portfolio[wallet.currency] || 0;
+    portfolio[wallet.currency] += wallet.quantity;
+  });
+  return portfolio;
 }
 
 function calculateSum(ticker: Object, portfolio: Object, currency: string) {
   return Object.keys(portfolio)
     .filter(asset => ticker[asset])
-    .reduce((acc, asset) => acc + ticker[asset][currency.toUpperCase()].PRICE * portfolio[asset], 0);
+    .reduce((acc, asset) => acc + (ticker[asset][currency.toUpperCase()].PRICE * portfolio[asset]), 0);
 }

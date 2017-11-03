@@ -4,7 +4,9 @@ import type { Action } from '../actions/types';
 
 export type walletType = {
   currency: string,
-  address: string
+  address: string,
+  quantity: number,
+  note?: string
 };
 
 export default function wallets(state: walletType[] = [], action: Action) {

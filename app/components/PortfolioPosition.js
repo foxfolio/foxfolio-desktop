@@ -41,7 +41,8 @@ type Props = {
   ticker: Object,
   transactions: Object[],
   quantity: number,
-  classes: any
+  classes: any,
+  sumBTC: number
 };
 
 type State = {
@@ -58,14 +59,14 @@ class PortfolioPosition extends Component<Props, State> {
   };
 
   rowCard(avatar: Node) {
-    const { asset, quantity, classes, coinlist, ticker } = this.props;
+    const { asset, quantity, classes, coinlist, ticker, sumBTC } = this.props;
     return (
       <CardContent className={classes.root} onClick={this.handleExpandClick}>
         <div className={classes.avatar}>{avatar}</div>
         <div className={classes.content}>
           <Grid container>
             <Grid item xs={3}>
-              <Typography type="body2" component="span">
+              <Typography type="body2" component="span" color={quantity > 0 ? 'primary' : 'secondary'}>
                 {coinlist[asset].FullName}
               </Typography>
               <Typography
@@ -76,11 +77,17 @@ class PortfolioPosition extends Component<Props, State> {
                 {quantity.toPrecision(5)}
               </Typography>
             </Grid>
+            <Grid item xs={1} className={classes.right}>
+              <Typography type="body2" component="span" color={quantity > 0 ? 'primary' : 'secondary'}>
+                <br/>
+                {`${((quantity * ticker[asset].BTC.PRICE * 100) / sumBTC).toFixed(1)} %`}
+              </Typography>
+            </Grid>
             <Grid item xs={2} className={classes.right}>
-              <Typography type="body2" component="span">
+              <Typography type="body2" component="span" color={quantity > 0 ? 'primary' : 'secondary'}>
                 {`${(ticker[asset].EUR.PRICE * quantity).toFixed(2)}  €`}
               </Typography>
-              <Typography type="body2" component="span">
+              <Typography type="body2" component="span" color={quantity > 0 ? 'primary' : 'secondary'}>
                 {`${(ticker[asset].BTC.PRICE * quantity).toPrecision(5)} BTC`}
               </Typography>
             </Grid>
@@ -88,14 +95,14 @@ class PortfolioPosition extends Component<Props, State> {
               <Typography
                 type="body2"
                 component="span"
-                color="secondary"
+                color={quantity > 0 ? 'primary' : 'secondary'}
               >
                 {`${(ticker[asset].EUR.PRICE).toPrecision(5)} €`}
               </Typography>
               <Typography
                 type="body2"
                 component="span"
-                color="secondary"
+                color={quantity > 0 ? 'primary' : 'secondary'}
               >
                 {`${(ticker[asset].BTC.PRICE).toPrecision(5)} BTC`}
               </Typography>
@@ -104,7 +111,7 @@ class PortfolioPosition extends Component<Props, State> {
               <Typography
                 type="body2"
                 component="span"
-                color="secondary"
+                color={quantity > 0 ? 'primary' : 'secondary'}
               >
                 {`${ticker[asset].EUR.CHANGEPCT24HOUR > 0 ? '+' : ''}
                 ${(ticker[asset].EUR.CHANGEPCT24HOUR).toFixed(2)}%`}
@@ -112,7 +119,7 @@ class PortfolioPosition extends Component<Props, State> {
               <Typography
                 type="body2"
                 component="span"
-                color="secondary"
+                color={quantity > 0 ? 'primary' : 'secondary'}
               >
                 {`${ticker[asset].BTC.CHANGEPCT24HOUR > 0 ? '+' : ''}
                 ${(ticker[asset].BTC.CHANGEPCT24HOUR).toFixed(2)}%`}
