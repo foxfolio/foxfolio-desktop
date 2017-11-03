@@ -3,6 +3,8 @@
 export type Action =
   | { type: 'ADD_SOURCE', source: Object }
   | { type: 'EDIT_SOURCE', source: Object, newSource: Object }
+  | { type: 'ADD_WALLET', wallet: Object }
+  | { type: 'EDIT_WALLET', wallet: Object, newWallet: Object }
   | { type: 'REQUEST_TRANSACTIONS', source: Object }
   | { type: 'RECEIVE_TRANSACTIONS', exchange: string, trades: Object[], transfers: Object[] }
   | { type: 'FAILED_TRANSACTION', exchange: string, error: string }
