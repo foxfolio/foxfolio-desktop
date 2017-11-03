@@ -30,6 +30,9 @@ export const styles = (theme: Object) => ({
   expandOpen: {
     transform: 'rotate(180deg)',
   },
+  right: {
+    textAlign: 'right',
+  },
 });
 
 type Props = {
@@ -61,7 +64,7 @@ class PortfolioPosition extends Component<Props, State> {
         <div className={classes.avatar}>{avatar}</div>
         <div className={classes.content}>
           <Grid container>
-            <Grid item xs={4}>
+            <Grid item xs={3}>
               <Typography type="body2" component="span">
                 {coinlist[asset].FullName}
               </Typography>
@@ -73,10 +76,31 @@ class PortfolioPosition extends Component<Props, State> {
                 {quantity.toPrecision(5)}
               </Typography>
             </Grid>
-            <Grid item xs={2}>
+            <Grid item xs={2} className={classes.right}>
               <Typography type="body2" component="span">
                 {`${(ticker[asset].EUR.PRICE * quantity).toFixed(2)}  €`}
               </Typography>
+              <Typography type="body2" component="span">
+                {`${(ticker[asset].BTC.PRICE * quantity).toPrecision(5)} BTC`}
+              </Typography>
+            </Grid>
+            <Grid item xs={3} className={classes.right}>
+              <Typography
+                type="body2"
+                component="span"
+                color="secondary"
+              >
+                {`${(ticker[asset].EUR.PRICE).toPrecision(5)} €`}
+              </Typography>
+              <Typography
+                type="body2"
+                component="span"
+                color="secondary"
+              >
+                {`${(ticker[asset].BTC.PRICE).toPrecision(5)} BTC`}
+              </Typography>
+            </Grid>
+            <Grid item xs={2} className={classes.right}>
               <Typography
                 type="body2"
                 component="span"
@@ -84,11 +108,6 @@ class PortfolioPosition extends Component<Props, State> {
               >
                 {`${ticker[asset].EUR.CHANGEPCT24HOUR > 0 ? '+' : ''}
                 ${(ticker[asset].EUR.CHANGEPCT24HOUR).toFixed(2)}%`}
-              </Typography>
-            </Grid>
-            <Grid item xs={2}>
-              <Typography type="body2" component="span">
-                {`${(ticker[asset].BTC.PRICE * quantity).toPrecision(5)} BTC`}
               </Typography>
               <Typography
                 type="body2"
