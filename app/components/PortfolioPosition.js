@@ -8,6 +8,7 @@ import Collapse from 'material-ui/transitions/Collapse';
 import { withStyles } from 'material-ui/styles';
 import { ExpandMore } from 'material-ui-icons';
 import TransactionRow from './TransactionRow';
+import PriceChangeText from './PriceChangeText';
 
 export const styles = (theme: Object) => ({
   root: {
@@ -113,16 +114,14 @@ class PortfolioPosition extends Component<Props, State> {
                 component="span"
                 color={quantity > 0 ? 'primary' : 'secondary'}
               >
-                {`${ticker[asset].EUR.CHANGEPCT24HOUR > 0 ? '+' : ''}
-                ${(ticker[asset].EUR.CHANGEPCT24HOUR).toFixed(2)}%`}
+                <PriceChangeText change={ticker[asset].EUR.CHANGEPCT24HOUR}/>
               </Typography>
               <Typography
                 type="body2"
                 component="span"
                 color={quantity > 0 ? 'primary' : 'secondary'}
               >
-                {`${ticker[asset].BTC.CHANGEPCT24HOUR > 0 ? '+' : ''}
-                ${(ticker[asset].BTC.CHANGEPCT24HOUR).toFixed(2)}%`}
+                <PriceChangeText change={ticker[asset].BTC.CHANGEPCT24HOUR}/>
               </Typography>
             </Grid>
           </Grid>

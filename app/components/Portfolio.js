@@ -6,6 +6,7 @@ import getColor from '../utils/colors';
 import type { Transaction } from '../reducers/transactions';
 import PortfolioPosition from './PortfolioPosition';
 import type { walletType } from '../reducers/wallets';
+import PriceChangeText from './PriceChangeText';
 
 // Disable animating charts by default.
 defaults.global.animation = false;
@@ -36,12 +37,12 @@ export default class Portfolio extends Component<Props> {
               <Grid item xs={2}/>
               <Grid item xs={4}>
                 <h2>
-                  {sumEUR.toPrecision(5)} € | {`${(ticker.BTC.EUR.CHANGEPCT24HOUR).toFixed(2)}%`}
+                  {sumEUR.toPrecision(5)} € | <PriceChangeText change={ticker.BTC.EUR.CHANGEPCT24HOUR}/>
                 </h2>
               </Grid>
               <Grid item xs={4}>
                 <h2 style={{ paddingLeft: 20 }}>
-                  {sumBTC.toPrecision(5)} BTC | {`${(ticker.BTC.BTC.CHANGEPCT24HOUR).toFixed(2)}%`}<br/>
+                  {sumBTC.toPrecision(5)} BTC | <PriceChangeText change={ticker.BTC.BTC.CHANGEPCT24HOUR}/>
                 </h2>
               </Grid>
             </Grid>
