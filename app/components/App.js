@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 import { withStyles } from 'material-ui/styles';
 import Drawer from 'material-ui/Drawer';
 import { AppBar, List, ListItem, ListItemIcon, ListItemText, Toolbar, Typography } from 'material-ui';
-import { AccountBalanceWallet, Cloud, Dashboard, SwapHoriz } from 'material-ui-icons';
+import { AccountBalanceWallet, Cloud, Dashboard, Settings, SwapHoriz } from 'material-ui-icons';
 import { NavLink } from 'react-router-dom';
 import { continuouslyFetchTransactions } from '../actions/transactions';
 import type { Dispatch } from '../actions/types';
@@ -87,6 +87,12 @@ class App extends Component<Props> {
                 <Cloud/>
               </ListItemIcon>
               <ListItemText primary="Sources"/>
+            </ListItem>
+            <ListItem button component={NavLink} to="/settings">
+              <ListItemIcon>
+                <Settings/>
+              </ListItemIcon>
+              <ListItemText primary="Settings"/>
             </ListItem>
           </List>
         </Drawer>

@@ -56,6 +56,9 @@ export default class Portfolio extends Component<Props> {
               maintainAspectRatio: false,
               tooltips: {
                 mode: 'x',
+                callbacks: {
+                  label: (item, data) => `${data.datasets[item.datasetIndex].label}: ${item.xLabel} %`,
+                },
               },
               legend: {
                 display: true,
