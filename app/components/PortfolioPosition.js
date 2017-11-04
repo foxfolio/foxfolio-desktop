@@ -67,7 +67,7 @@ class PortfolioPosition extends Component<Props, State> {
         <div className={classes.content}>
           <Grid container>
             <Grid item xs={3}>
-              <Typography type="body2" component="span" color={quantity > 0 ? 'primary' : 'secondary'}>
+              <Typography type="body2" component="span" color={quantity > 0 ? 'default' : 'secondary'}>
                 {coinlist[asset].FullName}
               </Typography>
               <Typography
@@ -79,16 +79,16 @@ class PortfolioPosition extends Component<Props, State> {
               </Typography>
             </Grid>
             <Grid item xs={1} className={classes.right}>
-              <Typography type="body2" component="span" color={quantity > 0 ? 'primary' : 'secondary'}>
+              <Typography type="body2" component="span" color={quantity > 0 ? 'default' : 'secondary'}>
                 <br/>
                 {`${((quantity * ticker[asset].BTC.PRICE * 100) / sumBTC).toFixed(1)} %`}
               </Typography>
             </Grid>
             <Grid item xs={2} className={classes.right}>
-              <Typography type="body2" component="span" color={quantity > 0 ? 'primary' : 'secondary'}>
+              <Typography type="body2" component="span" color={quantity > 0 ? 'default' : 'secondary'}>
                 {`${(ticker[asset].EUR.PRICE * quantity).toFixed(2)}  €`}
               </Typography>
-              <Typography type="body2" component="span" color={quantity > 0 ? 'primary' : 'secondary'}>
+              <Typography type="body2" component="span" color={quantity > 0 ? 'default' : 'secondary'}>
                 {`${(ticker[asset].BTC.PRICE * quantity).toPrecision(5)} BTC`}
               </Typography>
             </Grid>
@@ -96,14 +96,14 @@ class PortfolioPosition extends Component<Props, State> {
               <Typography
                 type="body2"
                 component="span"
-                color={quantity > 0 ? 'primary' : 'secondary'}
+                color={quantity > 0 ? 'default' : 'secondary'}
               >
                 {`${(ticker[asset].EUR.PRICE).toPrecision(5)} €`}
               </Typography>
               <Typography
                 type="body2"
                 component="span"
-                color={quantity > 0 ? 'primary' : 'secondary'}
+                color={quantity > 0 ? 'default' : 'secondary'}
               >
                 {`${(ticker[asset].BTC.PRICE).toPrecision(5)} BTC`}
               </Typography>
@@ -112,14 +112,14 @@ class PortfolioPosition extends Component<Props, State> {
               <Typography
                 type="body2"
                 component="span"
-                color={quantity > 0 ? 'primary' : 'secondary'}
+                color={quantity > 0 ? 'default' : 'secondary'}
               >
                 <PriceChangeText change={ticker[asset].EUR.CHANGEPCT24HOUR}/>
               </Typography>
               <Typography
                 type="body2"
                 component="span"
-                color={quantity > 0 ? 'primary' : 'secondary'}
+                color={quantity > 0 ? 'default' : 'secondary'}
               >
                 <PriceChangeText change={ticker[asset].BTC.CHANGEPCT24HOUR}/>
               </Typography>
@@ -150,7 +150,7 @@ class PortfolioPosition extends Component<Props, State> {
       )}
       <Collapse in={this.state.expanded}>
         {transactions.map(transaction =>
-          <TransactionRow key={transaction.id} style={{ paddingLeft: 50 }} transaction={transaction} ticker={ticker}/>)}
+          <TransactionRow key={transaction.id} paddingLeft={50} transaction={transaction} ticker={ticker}/>)}
       </Collapse>
     </Card>);
   }

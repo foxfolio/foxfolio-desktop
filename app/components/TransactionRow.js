@@ -22,9 +22,6 @@ export const styles = (theme: Object) => ({
     display: 'flex',
     alignItems: 'center',
   },
-  card: {
-    paddingLeft: 50,
-  },
   avatar: {
     flex: '0 0 auto',
     marginRight: theme.spacing.unit * 2,
@@ -62,7 +59,8 @@ export const styles = (theme: Object) => ({
 type Props = {
   transaction: Transaction,
   classes: Object,
-  ticker: Object
+  ticker: Object,
+  paddingLeft: number
 };
 
 type State = {
@@ -107,12 +105,12 @@ class TransactionRow extends Component<Props, State> {
   };
 
   render() {
-    const { classes, ticker, transaction } = this.props;
+    const { classes, ticker, transaction, paddingLeft } = this.props;
     if (transaction.type === 'BUY' || transaction.type === 'SELL') {
       const trade = (transaction: Trade);
-      const currentRate = ticker[trade.market.minor][trade.market.major].PRICE;
+      const currentRate = ticker[trade.market.minor] ? ticker[trade.market.minor][trade.market.major].PRICE : 0;
       return (
-        <Card className={classes.card}>
+        <Card style={{ paddingLeft: paddingLeft || 0 }}>
           {this.rowCard(
             <Avatar className={trade.type === 'BUY' ? classes.buyAvatar : classes.sellAvatar}>
               <SwapHorizIcon/>
@@ -134,7 +132,7 @@ class TransactionRow extends Component<Props, State> {
     } else if (transaction.type === 'DEPOSIT' || transaction.type === 'WITHDRAW') {
       const transfer = (transaction: Transfer);
       return (
-        <Card className={classes.card}>
+        <Card style={{ paddingLeft: paddingLeft || 0 }}>
           {this.rowCard(
             <Avatar className={transfer.type === 'DEPOSIT' ? classes.depositAvatar : classes.withdrawAvatar}>
               {transfer.type === 'DEPOSIT' ? <AddCircleIcon/> : <RemoveCircleIcon/>}

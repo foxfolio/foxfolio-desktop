@@ -1,15 +1,12 @@
 // @flow
 import React, { Component } from 'react';
-import { Grid, Paper } from 'material-ui';
-import { defaults, HorizontalBar } from 'react-chartjs-2';
-import getColor from '../utils/colors';
+import { Button, Grid, Paper, Typography } from 'material-ui';
+import { Link } from 'react-router-dom';
 import type { Transaction } from '../reducers/transactions';
 import PortfolioPosition from './PortfolioPosition';
 import type { walletType } from '../reducers/wallets';
 import PriceChangeText from './PriceChangeText';
-
-// Disable animating charts by default.
-defaults.global.animation = false;
+import PortfolioChart from './PortfolioChart';
 
 type Props = {
   transactions: Transaction[],
@@ -23,63 +20,42 @@ export default class Portfolio extends Component<Props> {
   render() {
     const { ticker, coinlist, transactions, wallets } = this.props;
     const portfolio = calculatePortfolio(transactions, wallets);
-    const sumBTC = calculateSum(ticker, portfolio, 'BTC');
-    const sumEUR = calculateSum(ticker, portfolio, 'EUR');
-
-    const chartData = calculateChartData(ticker, portfolio, sumBTC);
+    const sum = {
+      eur: calculateSum(ticker, portfolio, 'EUR'),
+      btc: calculateSum(ticker, portfolio, 'BTC'),
+    };
 
     const keys = Object.keys(portfolio);
     return (
       <div>
-        <Paper style={{ marginTop: 30, paddingBottom: 20, paddingTop: 10 }}>
+        <Paper style={{ marginTop: 0, paddingBottom: 25, paddingTop: 25, textAlign: 'center' }}>
           {ticker.BTC ? (
-            <Grid container style={{ textAlign: 'center' }}>
+            <Grid container>
               <Grid item xs={2}/>
               <Grid item xs={4}>
-                <h2>
-                  {sumEUR.toPrecision(5)} € | <PriceChangeText change={ticker.BTC.EUR.CHANGEPCT24HOUR}/>
-                </h2>
+                <Typography type="title">
+                  {sum.eur.toPrecision(5)} € | <PriceChangeText change={ticker.BTC.EUR.CHANGEPCT24HOUR}/>
+                </Typography>
               </Grid>
               <Grid item xs={4}>
-                <h2 style={{ paddingLeft: 20 }}>
-                  {sumBTC.toPrecision(5)} BTC | <PriceChangeText change={ticker.BTC.BTC.CHANGEPCT24HOUR}/>
-                </h2>
+                <Typography type="title" style={{ paddingLeft: 20 }}>
+                  {sum.btc.toPrecision(5)} BTC | <PriceChangeText change={ticker.BTC.BTC.CHANGEPCT24HOUR}/>
+                </Typography>
               </Grid>
             </Grid>
-          ) : ''}
+          ) : <div>
+            <Typography type="title">No data yet</Typography>
+            <Typography type="subheading">
+              Try to add an<Button dense color="primary" component={Link} to="/sources">exchange</Button>
+              or a<Button dense color="primary" component={Link} to="/wallets">wallet</Button>
+            </Typography>
+          </div>}
         </Paper>
-        <Paper style={{ marginTop: 30, paddingBottom: 20, paddingTop: 10 }}>
-          <HorizontalBar
-            data={chartData}
-            options={{
-              responsive: true,
-              maintainAspectRatio: false,
-              tooltips: {
-                mode: 'x',
-                callbacks: {
-                  label: (item, data) => `${data.datasets[item.datasetIndex].label}: ${item.xLabel} %`,
-                },
-              },
-              legend: {
-                display: true,
-              },
-              scales: {
-                xAxes: [
-                  {
-                    stacked: true,
-                    ticks: {
-                      min: 0,
-                      max: 100,
-                    },
-                  }],
-                yAxes: [
-                  {
-                    stacked: true,
-                  }],
-              },
-            }}
-          />
-        </Paper>
+        {ticker.BTC ? (
+          <Paper style={{ marginTop: 30, paddingBottom: 20, paddingTop: 10 }}>
+            <PortfolioChart ticker={ticker} portfolio={portfolio} sum={sum.btc}/>
+          </Paper>
+        ) : ''}
         <Paper style={{ marginTop: 30 }}>
           {keys
             .filter(asset => ticker[asset])
@@ -92,7 +68,7 @@ export default class Portfolio extends Component<Props> {
                 ticker={ticker}
                 asset={asset}
                 quantity={portfolio[asset]}
-                sumBTC={sumBTC}
+                sumBTC={sum.btc}
               />
             ))}
         </Paper>
@@ -157,18 +133,3 @@ function calculateSum(ticker: Object, portfolio: Object, currency: string) {
     .reduce((acc, asset) => acc + (ticker[asset][currency.toUpperCase()].PRICE * portfolio[asset]), 0);
 }
 
-function calculateChartData(ticker: Object, portfolio: Object, sumBTC: number) {
-  const datasets = Object.keys(portfolio)
-    .filter(asset => portfolio[asset] > 0)
-    .filter(asset => ticker[asset])
-    .sort((a, b) => (ticker[b].BTC.PRICE * portfolio[b]) - (ticker[a].BTC.PRICE * portfolio[a]))
-    .map(asset => ({
-      label: asset.toUpperCase(),
-      backgroundColor: getColor(asset),
-      borderColor: '#fff',
-      borderWidth: 1,
-      data: [((ticker[asset].BTC.PRICE * portfolio[asset] * 100) / sumBTC).toFixed(2)],
-    }));
-
-  return { datasets };
-}

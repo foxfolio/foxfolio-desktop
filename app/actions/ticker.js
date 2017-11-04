@@ -63,6 +63,6 @@ function getSymbolsFromTransactions(transactions, wallets: walletType[]): { from
       acc.from.push(transaction.currency);
     }
     return acc;
-  }, { from: walletSymbols, to: ['BTC'] }, trans);
+  }, { from: walletSymbols, to: ['BTC', 'EUR'] }, trans);
   return R.map(R.uniq)(symbols);
 }
