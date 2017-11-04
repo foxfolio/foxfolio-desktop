@@ -33,7 +33,7 @@ export default class WalletDialog extends Component<Props> {
     this.props.save({
       currency: this.state.currency,
       address: this.state.address,
-      quantity: this.state.quantity,
+      quantity: parseFloat(this.state.quantity),
       note: this.state.note,
     });
   };

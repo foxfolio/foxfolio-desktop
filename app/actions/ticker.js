@@ -3,6 +3,7 @@ import * as R from 'ramda';
 import type { Action, Dispatch, GetState, ThunkAction } from './types';
 import type { Transaction } from '../reducers/transactions';
 import startTimer from './timer';
+import type { walletType } from '../reducers/wallets';
 
 const REFRESH_TIME_IN_MS = 10000;
 
@@ -23,7 +24,7 @@ function receiveCoinList(coinlist: Object): Action {
 export function requestTickerUpdate(): ThunkAction {
   return (dispatch: Dispatch, getState: GetState) => {
     const state = getState();
-    const symbols = getSymbolsFromTransactions(state.transactions);
+    const symbols = getSymbolsFromTransactions(state.transactions, state.wallets);
     fetch(`https://min-api.cryptocompare.com/data/pricemultifull?fsyms=${symbols.from.join(',')}
         &tsyms=${symbols.to.join(',')}`)
       .then(result => result.json())
@@ -50,7 +51,8 @@ export function continuouslyUpdateTicker() {
   };
 }
 
-function getSymbolsFromTransactions(transactions): { from: string[], to: string[] } {
+function getSymbolsFromTransactions(transactions, wallets: walletType[]): { from: string[], to: string[] } {
+  const walletSymbols = wallets.map(wallet => wallet.currency || '');
   const trans: Transaction[] = R.chain(source => R.concat(source.trades, source.transfers), R.values(transactions));
   const symbols = R.reduce((acc, transaction) => {
     if (transaction.type === 'BUY' || transaction.type === 'SELL') {
@@ -61,6 +63,6 @@ function getSymbolsFromTransactions(transactions): { from: string[], to: string[
       acc.from.push(transaction.currency);
     }
     return acc;
-  }, { from: [], to: [] }, trans);
+  }, { from: walletSymbols, to: ['BTC'] }, trans);
   return R.map(R.uniq)(symbols);
 }
