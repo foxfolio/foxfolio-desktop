@@ -35,13 +35,13 @@ export default class Portfolio extends Component<Props> {
             <Grid container style={{ textAlign: 'center' }}>
               <Grid item xs={2}/>
               <Grid item xs={4}>
-                <h2 style={{ paddingLeft: 20 }}>
-                  {sumBTC.toPrecision(5)} BTC | {`${(ticker.BTC.BTC.CHANGEPCT24HOUR).toFixed(2)}%`}<br/>
+                <h2>
+                  {sumEUR.toPrecision(5)} € | {`${(ticker.BTC.EUR.CHANGEPCT24HOUR).toFixed(2)}%`}
                 </h2>
               </Grid>
               <Grid item xs={4}>
-                <h2>
-                  {sumEUR.toPrecision(5)} € | {`${(ticker.BTC.EUR.CHANGEPCT24HOUR).toFixed(2)}%`}
+                <h2 style={{ paddingLeft: 20 }}>
+                  {sumBTC.toPrecision(5)} BTC | {`${(ticker.BTC.BTC.CHANGEPCT24HOUR).toFixed(2)}%`}<br/>
                 </h2>
               </Grid>
             </Grid>
