@@ -186,6 +186,7 @@
     "webpack-merge": "^4.1.0"
   },
   "dependencies": {
+    "chart.js": "^2.7.1",
     "classnames": "^2.2.5",
     "csvtojson": "^1.1.9",
     "devtron": "^1.4.0",
@@ -196,6 +197,7 @@
     "material-ui-icons": "^1.0.0-beta.10",
     "ramda": "^0.24.1",
     "react": "^15.6.1",
+    "react-chartjs-2": "^2.6.4",
     "react-dom": "^15.6.1",
     "react-flexbox-grid": "^1.1.5",
     "react-hot-loader": "3.0.0-beta.6",
