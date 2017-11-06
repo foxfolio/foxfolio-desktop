@@ -1,6 +1,6 @@
 // @flow
-import { getBittrexTransactions, readBittrexTransactionsFromFile } from './bittrex';
-import getBitstampTransactions from './bitstamp';
+import { getBittrexTransactions, readBittrexTransactionsFromFile } from './exchanges/bittrex';
+import getBitstampTransactions from './exchanges/bitstamp';
 import type { Trade, Transfer } from '../reducers/transactions';
 import type { Action, Dispatch, GetState } from './types';
 import type { sourceType } from '../reducers/sources';

@@ -1,10 +1,10 @@
 // @flow
 import crypto from 'crypto';
 import { Converter } from 'csvtojson';
-import { failedTransaction, receiveTransactions } from './transactions';
-import type { Trade, Transfer } from '../reducers/transactions';
-import type { sourceType } from '../reducers/sources';
-import type { Dispatch, ThunkAction } from './types';
+import { failedTransaction, receiveTransactions } from '../transactions';
+import type { Trade, Transfer } from '../../reducers/transactions';
+import type { sourceType } from '../../reducers/sources';
+import type { Dispatch, ThunkAction } from '../types';
 
 type bittrexTradeType = {
   +OrderUuid: string,

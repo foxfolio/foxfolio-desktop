@@ -1,10 +1,10 @@
 // @flow
 import crypto from 'crypto';
 import request from 'request-promise-native';
-import { failedTransaction, receiveTransactions } from './transactions';
-import type { Trade, Transfer } from '../reducers/transactions';
-import type { sourceType } from '../reducers/sources';
-import type { Dispatch, ThunkAction } from './types';
+import { failedTransaction, receiveTransactions } from '../transactions';
+import type { Trade, Transfer } from '../../reducers/transactions';
+import type { sourceType } from '../../reducers/sources';
+import type { Dispatch, ThunkAction } from '../types';
 
 type BitstampTransaction = {
   id: number,
