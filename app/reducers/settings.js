@@ -1,16 +1,18 @@
 // @flow
 import type { Action } from '../actions/types';
 
-export type Settings = {
+export type SettingsType = {
   fiatCurrency: string
 };
 
-const initialSettings: Settings = {
+const initialSettings: SettingsType = {
   fiatCurrency: 'EUR'
 };
 
-export default function settings(state: Settings = initialSettings, action: Action) {
+export default function settings(state: SettingsType = initialSettings, action: Action) {
   switch (action.type) {
+    case 'SAVE_SETTINGS':
+      return action.settings;
     default:
       return state;
   }

@@ -2,14 +2,14 @@
 import React, { Component } from 'react';
 import Portfolio from './Portfolio';
 import type { walletType } from '../reducers/wallets';
-import type { Settings } from '../reducers/settings';
+import type { SettingsType } from '../reducers/settings';
 
 type Props = {
   transactions: any,
   ticker: any,
   coinlist: Object,
   wallets: walletType[],
-  settings: Settings
+  settings: SettingsType
 };
 
 export default class Home extends Component<Props> {

@@ -1,4 +1,5 @@
 // @flow
+import type { SettingsType } from '../reducers/settings';
 
 export type Action =
   | { type: 'ADD_SOURCE', source: Object }
@@ -11,6 +12,7 @@ export type Action =
   | { type: 'TICKER_UPDATE', ticker: Object }
   | { type: 'START_TIMER', name: string, timer: Object }
   | { type: 'RECEIVE_COIN_LIST', coinlist: Object }
+  | { type: 'SAVE_SETTINGS', settings: SettingsType }
   ;
 
 export type Dispatch = (action: Action | ThunkAction | PromiseAction | Array<Action>) => any;

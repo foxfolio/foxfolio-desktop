@@ -6,6 +6,7 @@ import HomePage from './containers/HomePage';
 import WalletPage from './containers/WalletPage';
 import SourcePage from './containers/SourcePage';
 import TransactionPage from './containers/TransactionPage';
+import SettingsPage from './containers/SettingsPage';
 
 export default () => (
   <AppPage>
@@ -14,6 +15,7 @@ export default () => (
       <Route path="/transactions" component={TransactionPage}/>
       <Route path="/wallets" component={WalletPage}/>
       <Route path="/sources" component={SourcePage}/>
+      <Route path="/settings" component={SettingsPage}/>
     </Switch>
   </AppPage>
 );

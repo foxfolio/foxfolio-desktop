@@ -7,14 +7,14 @@ import PortfolioPosition from './PortfolioPosition';
 import type { walletType } from '../reducers/wallets';
 import PriceChangeText from './PriceChangeText';
 import PortfolioChart from './PortfolioChart';
-import type { Settings } from '../reducers/settings';
+import type { SettingsType } from '../reducers/settings';
 
 type Props = {
   transactions: Transaction[],
   ticker: Object,
   coinlist: Object,
   wallets: walletType[],
-  settings: Settings
+  settings: SettingsType
 };
 
 export default class Portfolio extends Component<Props> {
