@@ -7,14 +7,16 @@ import wallets from './wallets';
 import ticker from './ticker';
 import timer from './timer';
 import coinlist from './coinlist';
+import settings from './settings';
 
 const rootReducer = combineReducers({
-  sources,
-  timer,
   coinlist,
-  transactions,
   router,
+  settings,
+  sources,
   ticker,
+  timer,
+  transactions,
   wallets,
 });
 

@@ -43,7 +43,8 @@ type Props = {
   transactions: Object[],
   quantity: number,
   classes: any,
-  sumBTC: number
+  sumBTC: number,
+  fiatCurrency: string
 };
 
 type State = {
@@ -60,7 +61,7 @@ class PortfolioPosition extends Component<Props, State> {
   };
 
   rowCard(avatar: Node) {
-    const { asset, quantity, classes, coinlist, ticker, sumBTC } = this.props;
+    const { asset, quantity, classes, coinlist, ticker, sumBTC, fiatCurrency } = this.props;
     return (
       <CardContent className={classes.root} onClick={this.handleExpandClick}>
         <div className={classes.avatar}>{avatar}</div>
@@ -86,7 +87,7 @@ class PortfolioPosition extends Component<Props, State> {
             </Grid>
             <Grid item xs={2} className={classes.right}>
               <Typography type="body2" component="span" color={quantity > 0 ? 'default' : 'secondary'}>
-                {`${(ticker[asset].EUR.PRICE * quantity).toFixed(2)}  €`}
+                {`${(ticker[asset][fiatCurrency].PRICE * quantity).toFixed(2)}  €`}
               </Typography>
               <Typography type="body2" component="span" color={quantity > 0 ? 'default' : 'secondary'}>
                 {`${(ticker[asset].BTC.PRICE * quantity).toPrecision(5)} BTC`}
@@ -98,7 +99,7 @@ class PortfolioPosition extends Component<Props, State> {
                 component="span"
                 color={quantity > 0 ? 'default' : 'secondary'}
               >
-                {`${(ticker[asset].EUR.PRICE).toPrecision(5)} €`}
+                {`${(ticker[asset][fiatCurrency].PRICE).toPrecision(5)} €`}
               </Typography>
               <Typography
                 type="body2"
@@ -114,7 +115,7 @@ class PortfolioPosition extends Component<Props, State> {
                 component="span"
                 color={quantity > 0 ? 'default' : 'secondary'}
               >
-                <PriceChangeText change={ticker[asset].EUR.CHANGEPCT24HOUR}/>
+                <PriceChangeText change={ticker[asset][fiatCurrency].CHANGEPCT24HOUR}/>
               </Typography>
               <Typography
                 type="body2"

@@ -24,7 +24,7 @@ function receiveCoinList(coinlist: Object): Action {
 export function requestTickerUpdate(): ThunkAction {
   return (dispatch: Dispatch, getState: GetState) => {
     const state = getState();
-    const symbols = getSymbolsFromTransactions(state.transactions, state.wallets);
+    const symbols = getSymbolsFromTransactions(state.transactions, state.wallets, state.settings.fiatCurrency);
     const fsyms = symbols.from.join(',');
     const tsyms = symbols.to.join(',');
     fetch(`https://min-api.cryptocompare.com/data/pricemultifull?fsyms=${fsyms}&tsyms=${tsyms}`)
@@ -52,7 +52,8 @@ export function continuouslyUpdateTicker() {
   };
 }
 
-function getSymbolsFromTransactions(transactions, wallets: walletType[]): { from: string[], to: string[] } {
+function getSymbolsFromTransactions(
+  transactions, wallets: walletType[], fiatCurrency: string): { from: string[], to: string[] } {
   const walletSymbols = wallets.map(wallet => wallet.currency || '');
   const trans: Transaction[] = R.chain(source => R.concat(source.trades, source.transfers), R.values(transactions));
   const symbols = R.reduce((acc, transaction) => {
@@ -64,6 +65,6 @@ function getSymbolsFromTransactions(transactions, wallets: walletType[]): { from
       acc.from.push(transaction.currency);
     }
     return acc;
-  }, { from: walletSymbols, to: ['BTC', 'EUR'] }, trans);
+  }, { from: walletSymbols, to: ['BTC', fiatCurrency] }, trans);
   return R.map(R.uniq)(symbols);
 }

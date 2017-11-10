@@ -7,22 +7,24 @@ import PortfolioPosition from './PortfolioPosition';
 import type { walletType } from '../reducers/wallets';
 import PriceChangeText from './PriceChangeText';
 import PortfolioChart from './PortfolioChart';
+import type { Settings } from '../reducers/settings';
 
 type Props = {
   transactions: Transaction[],
   ticker: Object,
   coinlist: Object,
-  wallets: walletType[]
+  wallets: walletType[],
+  settings: Settings
 };
 
 export default class Portfolio extends Component<Props> {
 
   render() {
-    const { ticker, coinlist, transactions, wallets } = this.props;
+    const { ticker, coinlist, transactions, wallets, settings } = this.props;
     const portfolio = calculatePortfolio(transactions, wallets);
     const sum = {
-      eur: calculateSum(ticker, portfolio, 'EUR'),
       btc: calculateSum(ticker, portfolio, 'BTC'),
+      fiat: calculateSum(ticker, portfolio, settings.fiatCurrency),
     };
 
     const keys = Object.keys(portfolio);
@@ -34,7 +36,8 @@ export default class Portfolio extends Component<Props> {
               <Grid item xs={2}/>
               <Grid item xs={4}>
                 <Typography type="title">
-                  {sum.eur.toPrecision(5)} € | <PriceChangeText change={ticker.BTC.EUR.CHANGEPCT24HOUR}/>
+                  {sum.fiat.toPrecision(5)} {settings.fiatCurrency} |&nbsp;
+                  <PriceChangeText change={ticker.BTC[settings.fiatCurrency].CHANGEPCT24HOUR}/>
                 </Typography>
               </Grid>
               <Grid item xs={4}>
@@ -60,7 +63,9 @@ export default class Portfolio extends Component<Props> {
           {keys
             .filter(asset => coinlist[asset]) // TODO replace by ignore of fiat currency
             .filter(asset => ticker[asset])
-            .sort((a, b) => (portfolio[b] * ticker[b].EUR.PRICE) - (portfolio[a] * ticker[a].EUR.PRICE))
+            .sort((a, b) =>
+              (portfolio[b] * ticker[b][settings.fiatCurrency].PRICE)
+              - (portfolio[a] * ticker[a][settings.fiatCurrency].PRICE))
             .map(asset => (
               <PortfolioPosition
                 key={asset}
@@ -70,6 +75,7 @@ export default class Portfolio extends Component<Props> {
                 asset={asset}
                 quantity={portfolio[asset]}
                 sumBTC={sum.btc}
+                fiatCurrency={settings.fiatCurrency}
               />
             ))}
         </Paper>
