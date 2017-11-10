@@ -58,6 +58,7 @@ export default class Portfolio extends Component<Props> {
         ) : ''}
         <Paper style={{ marginTop: 30 }}>
           {keys
+            .filter(asset => coinlist[asset]) // TODO replace by ignore of fiat currency
             .filter(asset => ticker[asset])
             .sort((a, b) => (portfolio[b] * ticker[b].EUR.PRICE) - (portfolio[a] * ticker[a].EUR.PRICE))
             .map(asset => (
