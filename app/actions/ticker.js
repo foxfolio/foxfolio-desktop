@@ -25,8 +25,9 @@ export function requestTickerUpdate(): ThunkAction {
   return (dispatch: Dispatch, getState: GetState) => {
     const state = getState();
     const symbols = getSymbolsFromTransactions(state.transactions, state.wallets);
-    fetch(`https://min-api.cryptocompare.com/data/pricemultifull?fsyms=${symbols.from.join(',')}
-        &tsyms=${symbols.to.join(',')}`)
+    const fsyms = symbols.from.join(',');
+    const tsyms = symbols.to.join(',');
+    fetch(`https://min-api.cryptocompare.com/data/pricemultifull?fsyms=${fsyms}&tsyms=${tsyms}`)
       .then(result => result.json())
       .then(result => dispatch(receiveTickerUpdate(result.RAW)))
       .catch(error => console.error(error));
