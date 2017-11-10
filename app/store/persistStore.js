@@ -1,5 +1,6 @@
 import { createTransform, persistStore as reduxPersistStore } from 'redux-persist';
 import * as R from 'ramda';
+import rehydrationComplete from '../actions/init';
 
 const mapPath = R.curry((path, f, obj) =>
   R.assocPath(path, f(R.path(path, obj)), obj),
@@ -19,7 +20,7 @@ export default function persistStore(store) {
   const persistor = reduxPersistStore(store, {
     transforms: [dateTransform],
     blacklist: ['router', 'timer'],
-  });
+  }, () => store.dispatch(rehydrationComplete()));
   // persistor.purge(['transactions']);
   return persistor;
 }
