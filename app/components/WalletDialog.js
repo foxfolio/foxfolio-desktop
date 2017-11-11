@@ -13,20 +13,18 @@ export default class WalletDialog extends Component<Props> {
   state = {
     currency: '',
     address: '',
-    quantity: 0,
-    currencyValid: true,
-    addressValid: true,
-    quantityValid: true,
-    noteValid: true,
+    quantity: 0
   };
 
   componentWillReceiveProps(nextProps) {
-    this.setState({
-      currency: nextProps.wallet.currency,
-      address: nextProps.wallet.address,
-      quantity: nextProps.wallet.quantity,
-      note: nextProps.wallet.note,
-    });
+    if (this.props.open !== nextProps.open) {
+      this.setState({
+        currency: nextProps.wallet.currency,
+        address: nextProps.wallet.address,
+        quantity: nextProps.wallet.quantity,
+        note: nextProps.wallet.note,
+      });
+    }
   }
 
   save = () => {

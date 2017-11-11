@@ -25,20 +25,18 @@ export default class SourceDialog extends Component<Props> {
   state = {
     name: '',
     apiKey: '',
-    apiSecret: '',
-    nameValid: true,
-    apiKeyValid: true,
-    apiSecretValid: true,
-    customerIdValid: true,
+    apiSecret: ''
   };
 
   componentWillReceiveProps(nextProps) {
-    this.setState({
-      name: nextProps.source.name,
-      customerId: nextProps.source.customerId,
-      apiKey: nextProps.source.apiKey,
-      apiSecret: nextProps.source.apiSecret,
-    });
+    if (this.props.open !== nextProps.open) {
+      this.setState({
+        name: nextProps.source.name,
+        customerId: nextProps.source.customerId,
+        apiKey: nextProps.source.apiKey,
+        apiSecret: nextProps.source.apiSecret,
+      });
+    }
   }
 
   save = () => {
