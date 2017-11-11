@@ -1,6 +1,6 @@
 // @flow
 import crypto from 'crypto';
-import request from 'request-promise-native';
+import querystring from 'querystring';
 import { failedTransaction, receiveTransactions } from '../transactions';
 import type { Trade, Transfer } from '../../reducers/transactions';
 import type { sourceType } from '../../reducers/sources';
@@ -55,7 +55,14 @@ function bitstampRequest(endpoint, source) {
     signature,
     nonce,
   };
-  return request.post(uri, { form }).then(JSON.parse);
+
+  return fetch(uri, {
+    method: 'POST',
+    body: querystring.stringify(form),
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    }
+  }).then(result => result.json());
 }
 
 function orderHistoryToTradesAndTransfers(transactions: BitstampTransaction[]): [Trade[], Transfer[]] {
