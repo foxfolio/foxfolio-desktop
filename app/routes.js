@@ -1,12 +1,12 @@
 /* eslint flowtype-errors/show-errors: 0 */
 import React from 'react';
 import { Route, Switch } from 'react-router';
-import AppPage from './containers/AppPage';
-import HomePage from './containers/HomePage';
-import WalletPage from './containers/WalletPage';
-import SourcePage from './containers/SourcePage';
-import TransactionPage from './containers/TransactionPage';
-import SettingsPage from './containers/SettingsPage';
+import AppPage from './pages/AppPage';
+import HomePage from './pages/HomePage';
+import WalletPage from './pages/WalletPage';
+import SourcePage from './pages/SourcePage';
+import TransactionPage from './pages/TransactionPage';
+import SettingsPage from './pages/SettingsPage';
 
 export default () => (
   <AppPage>
