@@ -7,8 +7,8 @@ import { Avatar, Card, CardContent, Grid, IconButton, Typography } from 'materia
 import Collapse from 'material-ui/transitions/Collapse';
 import { withStyles } from 'material-ui/styles';
 import { ExpandMore } from 'material-ui-icons';
-import TransactionRow from './TransactionRow';
-import PriceChangeText from './PriceChangeText';
+import TransactionRow from '../TransactionRow';
+import PriceChangeText from '../PriceChangeText';
 
 export const styles = (theme: Object) => ({
   root: {

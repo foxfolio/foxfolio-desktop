@@ -2,7 +2,7 @@
 import React from 'react';
 import { Route, Switch } from 'react-router';
 import AppPage from './containers/Layout';
-import HomePage from './pages/HomePage';
+import HomePage from './pages/PortfolioPage';
 import WalletPage from './pages/WalletPage';
 import SourcePage from './pages/SourcePage';
 import TransactionPage from './pages/TransactionPage';
