@@ -1,14 +1,16 @@
 // @flow
 import type { Node } from 'react';
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router';
 import { withStyles } from 'material-ui/styles';
 import Drawer from 'material-ui/Drawer';
-import { AppBar, List, ListItem, ListItemIcon, ListItemText, Toolbar, Typography } from 'material-ui';
+import { AppBar, List, Toolbar, Typography } from 'material-ui';
 import { AccountBalanceWallet, Cloud, Dashboard, Settings, SwapHoriz } from 'material-ui-icons';
-import { NavLink } from 'react-router-dom';
 import { continuouslyFetchTransactions } from '../actions/transactions';
 import type { Dispatch } from '../actions/types';
 import { continuouslyUpdateTicker, requestCoinList } from '../actions/ticker';
+import { DrawerItem } from '../components/DrawerItem';
 
 const drawerWidth = 250;
 
@@ -62,38 +64,13 @@ class App extends Component<Props> {
             </Toolbar>
           </AppBar>
           <List className={classes.topList}>
-            <ListItem button component={NavLink} exact to="/">
-              <ListItemIcon>
-                <Dashboard/>
-              </ListItemIcon>
-              <ListItemText primary="Portfolio"/>
-            </ListItem>
-            <ListItem button component={NavLink} to="/transactions">
-              <ListItemIcon>
-                <SwapHoriz/>
-              </ListItemIcon>
-              <ListItemText primary="Transactions"/>
-            </ListItem>
+            <DrawerItem label="Portfolio" route="/" icon={<Dashboard/>}/>
+            <DrawerItem label="Transactions" route="/transactions" icon={<SwapHoriz/>}/>
           </List>
           <List className={classes.bottomList}>
-            <ListItem button component={NavLink} to="/wallets">
-              <ListItemIcon>
-                <AccountBalanceWallet/>
-              </ListItemIcon>
-              <ListItemText primary="Wallets"/>
-            </ListItem>
-            <ListItem button component={NavLink} to="/sources">
-              <ListItemIcon>
-                <Cloud/>
-              </ListItemIcon>
-              <ListItemText primary="Sources"/>
-            </ListItem>
-            <ListItem button component={NavLink} to="/settings">
-              <ListItemIcon>
-                <Settings/>
-              </ListItemIcon>
-              <ListItemText primary="Settings"/>
-            </ListItem>
+            <DrawerItem label="Wallets" route="/wallets" icon={<AccountBalanceWallet/>}/>
+            <DrawerItem label="Sources" route="/sources" icon={<Cloud/>}/>
+            <DrawerItem label="Settings" route="/settings" icon={<Settings/>}/>
           </List>
         </Drawer>
         <main className={classes.content}>
@@ -104,4 +81,4 @@ class App extends Component<Props> {
   }
 }
 
-export default withStyles(styles)(App);
+export default withRouter(connect()(withStyles(styles)(App)));
