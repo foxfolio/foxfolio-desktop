@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { withStyles } from 'material-ui/styles';
 import Drawer from 'material-ui/Drawer';
-import { AppBar, createMuiTheme, List, MuiThemeProvider, Toolbar, Typography } from 'material-ui';
+import { AppBar, Avatar, createMuiTheme, List, MuiThemeProvider, Toolbar, Typography } from 'material-ui';
 import { AccountBalanceWallet, Cloud, Dashboard, Settings, SwapHoriz } from 'material-ui-icons';
 import { deepOrange, green } from 'material-ui/colors';
 import { continuouslyFetchTransactions } from '../actions/transactions';
@@ -26,11 +26,15 @@ const styles = theme => ({
     width: '100%',
     height: '100%',
   },
+  avatar: { margin: 10 },
   content: {
     backgroundColor: theme.palette.background.default,
     padding: theme.spacing.unit * 3,
     height: 'calc(100% - 56px)',
     marginLeft: drawerWidth,
+  },
+  toolbar: {
+    padding: 0
   },
   drawerPaper: {
     width: drawerWidth,
@@ -65,8 +69,9 @@ class App extends Component<Props> {
         <div className={classes.appFrame}>
           <Drawer type="permanent" classes={{ paper: classes.drawerPaper }}>
             <AppBar position="static" color="default" elevation={1}>
-              <Toolbar>
-                <Typography type="title" color="inherit" style={{ textAlign: 'center' }}>
+              <Toolbar className={classes.toolbar}>
+                <Avatar src="./resources/icon.png" className={classes.avatar}/>
+                <Typography type="title" color="inherit">
                   FuxFolio
                 </Typography>
               </Toolbar>
