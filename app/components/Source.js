@@ -10,6 +10,9 @@ const styles = theme => ({
     marginBottom: 12,
     color: theme.palette.text.secondary,
   },
+  flexGrow: {
+    flex: '1 1 auto',
+  },
 });
 
 type Props = {
@@ -39,6 +42,7 @@ class Source extends Component<Props> {
           </Typography>
         </CardContent>
         <CardActions>
+          <div className={classes.flexGrow}/>
           <Button dense color="primary" onClick={() => onEdit(source)}>Edit</Button>
         </CardActions>
       </Card>

@@ -67,7 +67,7 @@ class WalletGrid extends Component<Props, State> {
           {wallets
             .sort((a, b) => a.address.localeCompare(b.address))
             .map(wallet => (
-              <Grid item key={wallet.currency + wallet.address} xs={6} md={4}>
+              <Grid item key={wallet.currency + wallet.address} sm={12} md={6}>
                 <WalletGridItem wallet={wallet} onEdit={this.editDialog}/>
               </Grid>
             ))}

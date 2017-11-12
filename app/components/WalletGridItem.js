@@ -10,18 +10,22 @@ const styles = theme => ({
     marginBottom: 12,
     color: theme.palette.text.secondary,
   },
+  flexGrow: {
+    flex: '1 1 auto',
+  },
 });
 
 type Props = {
   classes: any,
   wallet: walletType,
-  onEdit: (wallet: walletType) => void
+  onEdit: (wallet: walletType) => void,
+  onDelete: (wallet: walletType) => void
 };
 
 class WalletGridItem extends Component<Props> {
 
   render() {
-    const { classes, wallet, onEdit } = this.props;
+    const { classes, wallet, onEdit, onDelete } = this.props;
     return (
       <Card className={style.source}>
         <CardContent>
@@ -36,7 +40,9 @@ class WalletGridItem extends Component<Props> {
             {`Note: ${wallet.note ? wallet.note : ''}`}
           </Typography>
         </CardContent>
-        <CardActions>
+        <CardActions className="pull-right">
+          <div className={classes.flexGrow}/>
+          <Button dense color="secondary" onClick={() => onDelete(wallet)}>Delete</Button>
           <Button dense color="primary" onClick={() => onEdit(wallet)}>Edit</Button>
         </CardActions>
       </Card>

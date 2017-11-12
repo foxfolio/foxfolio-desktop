@@ -67,7 +67,7 @@ class Sources extends Component<Props, State> {
         <h1>Sources</h1>
         <Grid container>
           {sources.map(source => (
-            <Grid item key={source.name + source.apiKey} xs={12} md={6}>
+            <Grid item key={source.name + source.apiKey} sm={12} md={6}>
               <Source source={source} transactions={transactions[source.name]} onEdit={this.editDialog}/>
             </Grid>
           ))}

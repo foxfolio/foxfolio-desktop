@@ -7,8 +7,7 @@ import { withStyles } from 'material-ui/styles';
 import Drawer from 'material-ui/Drawer';
 import { AppBar, createMuiTheme, List, MuiThemeProvider, Toolbar, Typography } from 'material-ui';
 import { AccountBalanceWallet, Cloud, Dashboard, Settings, SwapHoriz } from 'material-ui-icons';
-import deepOrange from 'material-ui/colors/deepOrange';
-import green from 'material-ui/colors/green';
+import { deepOrange, green } from 'material-ui/colors';
 import { continuouslyFetchTransactions } from '../actions/transactions';
 import type { Dispatch } from '../actions/types';
 import { continuouslyUpdateTicker, requestCoinList } from '../actions/ticker';
@@ -65,7 +64,7 @@ class App extends Component<Props> {
       <MuiThemeProvider theme={appThene}>
         <div className={classes.appFrame}>
           <Drawer type="permanent" classes={{ paper: classes.drawerPaper }}>
-            <AppBar position="static" color="primary" elevation={1}>
+            <AppBar position="static" color="default" elevation={1}>
               <Toolbar>
                 <Typography type="title" color="inherit" style={{ textAlign: 'center' }}>
                   FuxFolio
