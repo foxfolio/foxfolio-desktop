@@ -1,0 +1,41 @@
+image: electronuserland/builder:wine
+
+cache:
+  paths:
+  - node_modules/
+  - app/node_modules/
+
+before_script:
+  - npm install --unsafe-perm
+
+stages:
+  - lint
+  - build
+  - test
+  - package
+
+lint:
+  stage: lint
+  script:
+    - npm run lint
+
+build:
+  stage: build
+  script:
+    - npm run build
+
+test:
+  stage: test
+  script:
+    - npm run test
+
+package_linux_and_windows:
+  stage: package
+  script:
+    - npm run package-linux-windows
+  only:
+    - master
+  artifacts:
+    paths:
+    - release/*.deb
+    - release/*.exe

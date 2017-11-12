@@ -17,6 +17,7 @@
     "lint-styles-fix": "stylefmt -r app/*.css app/components/*.css",
     "package": "npm run build && build --publish never",
     "package-all": "npm run build && build -mwl",
+    "package-linux-windows": "npm run build && build -wl --publish=never",
     "package-linux": "npm run build && build --linux",
     "package-win": "npm run build && build --win --x64",
     "postinstall": "concurrently \"npm run flow-typed\" \"npm run build-dll\" \"electron-builder install-app-deps\" \"node node_modules/fbjs-scripts/node/check-dev-engines.js package.json\"",
@@ -73,16 +74,16 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/chentsulin/electron-react-boilerplate.git"
+    "url": "git+https://gitlab.com/greimela/crypto-portfolio.git"
   },
   "author": {
-    "name": "C. T. Lin",
-    "email": "chentsulin@gmail.com",
-    "url": "https://github.com/chentsulin"
+    "name": "Andreas Greimel",
+    "email": "andreas@greimel.de",
+    "url": "https://gitlab.com/greimela"
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/chentsulin/electron-react-boilerplate/issues"
+    "url": "https://gitlab.com/greimela/crypto-portfolio/issues"
   },
   "keywords": [
     "electron",
@@ -95,7 +96,6 @@
     "hot",
     "reload"
   ],
-  "homepage": "https://github.com/chentsulin/electron-react-boilerplate#readme",
   "jest": {
     "moduleNameMapper": {
       "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/internals/mocks/fileMock.js",
@@ -115,6 +115,7 @@
       "./internals/scripts/CheckBuiltsExist.js"
     ]
   },
+  "homepage": "https://gitlab.com/greimela/crypto-portfolio",
   "devDependencies": {
     "babel-core": "^6.24.1",
     "babel-eslint": "^7.2.3",
@@ -214,7 +215,7 @@
     "source-map-support": "^0.4.15"
   },
   "devEngines": {
-    "node": ">=8.9",
+    "node": ">=8.7",
     "npm": ">=5.x"
   }
 }
