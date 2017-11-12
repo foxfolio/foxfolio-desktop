@@ -1,8 +1,8 @@
 {
-  "name": "electron-react-boilerplate",
-  "productName": "ElectronReact",
-  "version": "0.12.0",
-  "description": "Electron application boilerplate based on React, React Router, Webpack, React Hot Loader for rapid application development",
+  "name": "fuxfolio",
+  "productName": "FuxFolio",
+  "version": "0.0.1",
+  "description": "Crypto portfolio app",
   "scripts": {
     "build": "concurrently \"npm run build-main\" \"npm run build-renderer\"",
     "build-dll": "cross-env NODE_ENV=development node --trace-warnings -r babel-register ./node_modules/webpack/bin/webpack --config webpack.config.renderer.dev.dll.js --colors",
@@ -214,7 +214,7 @@
     "source-map-support": "^0.4.15"
   },
   "devEngines": {
-    "node": ">=8.x",
+    "node": ">=8.9",
     "npm": ">=5.x"
   }
 }
