@@ -1,6 +1,7 @@
 // @flow
 import { getBittrexTransactions, readBittrexTransactionsFromFile } from './exchanges/bittrex';
 import getBitstampTransactions from './exchanges/bitstamp';
+import { getKrakenTransactions } from './exchanges/kraken';
 import type { Trade, Transfer } from '../reducers/transactions';
 import type { Action, Dispatch, GetState } from './types';
 import type { sourceType } from '../reducers/sources';
@@ -44,6 +45,8 @@ function fetchTransactions(source) {
         return dispatch(getBittrexTransactions(source));
       case 'bitstamp':
         return dispatch(getBitstampTransactions(source));
+      case 'kraken':
+        return dispatch(getKrakenTransactions(source));
       default:
         return dispatch(receiveTransactions(source));
     }

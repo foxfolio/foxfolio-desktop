@@ -12,6 +12,7 @@ const initialSourceState = {
 const initialState = {
   bittrex: initialSourceState,
   bitstamp: initialSourceState,
+  kraken: initialSourceState,
 };
 
 export default function transactions(state: State = initialState, action: Action) {
@@ -78,7 +79,8 @@ export type Transfer = {|
 
 export type State = {
   bittrex: SourceState,
-  bitstamp: SourceState
+  bitstamp: SourceState,
+  kraken: SourceState
 };
 
 type SourceState = {

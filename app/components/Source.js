@@ -33,9 +33,9 @@ class Source extends Component<Props> {
             {`Key: ${source.apiKey}`}
           </Typography>
           <Typography type="body1" className={classes.subheader}>
-            {`Last update: ${new Date(transactions.lastUpdated || Date.now()).toTimeString()}`}
+            {`Last update: ${transactions ? new Date(transactions.lastUpdated || Date.now()).toTimeString() : 'Never'}`}
             <br/>
-            {`Status: ${transactions.error ? transactions.error.response.body : 'ok'}`}
+            {transactions ? `Status: ${transactions.error ? transactions.error : 'ok'}` : ''}
           </Typography>
         </CardContent>
         <CardActions>
