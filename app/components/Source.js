@@ -35,7 +35,7 @@ class Source extends Component<Props> {
           <Typography type="body1" className={classes.subheader}>
             {`Last update: ${transactions ? new Date(transactions.lastUpdated || Date.now()).toTimeString() : 'Never'}`}
             <br/>
-            {transactions ? `Status: ${transactions.error ? transactions.error : 'ok'}` : ''}
+            {transactions && transactions.error ? <Typography color="error">{transactions.error}</Typography> : ''}
           </Typography>
         </CardContent>
         <CardActions>

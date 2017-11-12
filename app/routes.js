@@ -1,7 +1,7 @@
 /* eslint flowtype-errors/show-errors: 0 */
 import React from 'react';
 import { Route, Switch } from 'react-router';
-import AppPage from './containers/Layout';
+import Layout from './containers/Layout';
 import HomePage from './pages/PortfolioPage';
 import WalletPage from './pages/WalletPage';
 import SourcePage from './pages/SourcePage';
@@ -9,7 +9,7 @@ import TransactionPage from './pages/TransactionPage';
 import SettingsPage from './pages/SettingsPage';
 
 export default () => (
-  <AppPage>
+  <Layout>
     <Switch>
       <Route exact path="/" component={HomePage}/>
       <Route path="/transactions" component={TransactionPage}/>
@@ -17,5 +17,5 @@ export default () => (
       <Route path="/sources" component={SourcePage}/>
       <Route path="/settings" component={SettingsPage}/>
     </Switch>
-  </AppPage>
+  </Layout>
 );
