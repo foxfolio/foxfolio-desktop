@@ -1,7 +1,5 @@
 // @flow
-
 import React from 'react';
-import { Paper } from 'material-ui';
 import PortfolioPosition from './PortfolioPosition';
 import type { Transaction } from '../../reducers/transactions';
 

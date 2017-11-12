@@ -1,5 +1,5 @@
 // @flow
-import React, { Component } from 'react';
+import React from 'react';
 import { defaults, HorizontalBar } from 'react-chartjs-2';
 import getColor from '../../utils/colors';
 

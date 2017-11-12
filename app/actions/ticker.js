@@ -55,6 +55,9 @@ export function continuouslyUpdateTicker() {
 function getSymbolsFromTransactions(
   transactions, wallets: walletType[], fiatCurrency: string): { from: string[], to: string[] } {
   const walletSymbols = wallets.map(wallet => wallet.currency || '');
+
+  // eslint-disable-next-line flowtype-errors/show-errors
+  // $FlowFixMe
   const trans: Transaction[] = R.chain(source => R.concat(source.trades, source.transfers), R.values(transactions));
   const symbols = R.reduce((acc, transaction) => {
     if (transaction.type === 'BUY' || transaction.type === 'SELL') {

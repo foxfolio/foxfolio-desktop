@@ -40,7 +40,7 @@ export function getKrakenTransactions(source: sourceType): ThunkAction {
     try {
       const trades = await getTradesHistory(source);
       const transfers = await getTransferHistory(source);
-      return dispatch(receiveTransactions(SOURCE_NAME, trades, transfers));
+      return dispatch(receiveTransactions(SOURCE_NAME, trades, transfers)); // TODO Split into two separate actions
     } catch (error) {
       return dispatch(failedTransaction(source.name, error.message));
     }

@@ -9,7 +9,7 @@ type Props = {
   handleSubmit: (settings: SettingsType) => void
 };
 
-const characterCount = value => (value.length !== 3 ? `Has to be 3 characters long` : undefined);
+const characterCount = value => (value.length !== 3 ? 'Has to be 3 characters long' : undefined);
 
 class SettingsForm extends Component<Props> {
 

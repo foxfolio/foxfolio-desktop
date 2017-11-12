@@ -33,7 +33,7 @@
     "react/jsx-no-bind": "off",
     "react/jsx-tag-spacing": "off",
     "react/jsx-filename-extension": ["error", { "extensions": [".js", ".jsx"] }],
-    "react/prefer-stateless-function": "error"
+    "react/prefer-stateless-function": "off"
   },
   "plugins": [
     "flowtype",
