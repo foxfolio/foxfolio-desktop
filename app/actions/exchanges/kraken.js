@@ -79,8 +79,8 @@ function krakenRequest(endpoint: string, source: sourceType) {
     headers: {
       'API-Key': source.apiKey,
       'API-Sign': signatureDigest,
-      'Content-Type': 'application/x-www-form-urlencoded'
-    }
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
   }).then(result => result.json())
     .then(json => json.result);
 }
@@ -90,7 +90,7 @@ function tradesHistoryToTransactions(krakenTrades: KrakenTradeType[]): Trade[] {
 }
 
 function ledgerEntriesToTransfers(ledgerEntries: KrakenLedgerType[]): Transfer[] {
-  return ledgerEntries.filter(entry => ['deposit', 'withdraw'].includes(entry.type)).map(convertKrakenTransfer);
+  return ledgerEntries.filter(entry => ['deposit', 'withdrawal'].includes(entry.type)).map(convertKrakenTransfer);
 }
 
 function convertKrakenTrade(krakenTrade: KrakenTradeType): Trade {
@@ -105,7 +105,7 @@ function convertKrakenTrade(krakenTrade: KrakenTradeType): Trade {
     },
     amount: parseFloat(krakenTrade.vol),
     commission: parseFloat(krakenTrade.fee),
-    rate: parseFloat(krakenTrade.price)
+    rate: parseFloat(krakenTrade.price),
   };
 }
 

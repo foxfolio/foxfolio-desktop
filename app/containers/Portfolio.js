@@ -24,7 +24,7 @@ export default function Portfolio({ ticker, coinlist, transactions, wallets, set
     fiat: calculateSum(ticker, portfolio, settings.fiatCurrency),
   };
 
-  if (ticker.BTC) {
+  if (ticker.BTC) { // TODO What if the user has no BTC?
     return (
       <div>
         <Paper style={{ marginTop: 0, paddingBottom: 25, paddingTop: 25, textAlign: 'center' }}>
