@@ -17,7 +17,7 @@
     "lint-styles-fix": "stylefmt -r app/*.css app/components/*.css",
     "package": "npm run build && build --publish never",
     "package-all": "npm run build && build -mwl",
-    "package-linux-windows": "npm run build && build -wl --publish=never",
+    "package-linux-windows-ci": "build -wl --publish=never",
     "package-linux": "npm run build && build --linux",
     "package-win": "npm run build && build --win --x64",
     "postinstall": "concurrently \"npm run flow-typed\" \"npm run build-dll\" \"electron-builder install-app-deps\" \"node node_modules/fbjs-scripts/node/check-dev-engines.js package.json\"",
@@ -201,8 +201,7 @@
     "react": "^15.6.1",
     "react-chartjs-2": "^2.6.4",
     "react-dom": "^15.6.1",
-    "react-flexbox-grid": "^1.1.5",
-    "react-hot-loader": "3.0.0-beta.6",
+    "react-hot-loader": "3.0.0",
     "react-redux": "^5.0.5",
     "react-router": "^4.1.1",
     "react-router-dom": "^4.1.1",
@@ -213,6 +212,9 @@
     "redux-persist": "^4.10.1",
     "redux-thunk": "^2.2.0",
     "source-map-support": "^0.4.15"
+  },
+  "resolutions": {
+    "webpack-sources": "1.0.1"
   },
   "devEngines": {
     "node": ">=8.7",
