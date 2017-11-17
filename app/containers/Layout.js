@@ -18,7 +18,7 @@ const appThene = createMuiTheme({
   palette: {
     primary: deepOrange,
     secondary: green,
-  }
+  },
 });
 
 const styles = theme => ({
@@ -34,7 +34,7 @@ const styles = theme => ({
     marginLeft: drawerWidth,
   },
   toolbar: {
-    padding: 0
+    padding: 0,
   },
   drawerPaper: {
     width: drawerWidth,
