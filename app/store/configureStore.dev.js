@@ -3,7 +3,6 @@ import thunk from 'redux-thunk';
 import { createHashHistory } from 'history';
 import { routerActions, routerMiddleware } from 'react-router-redux';
 import { createLogger } from 'redux-logger';
-import { autoRehydrate } from 'redux-persist';
 import rootReducer from '../reducers';
 import * as bittrexActions from '../actions/exchanges/bittrex';
 import * as sourceActions from '../actions/sources';
@@ -48,7 +47,6 @@ const configureStore = (initialState?: any) => {
 
   // Apply Middleware & Compose Enhancers
   enhancers.push(applyMiddleware(...middleware));
-  enhancers.push(autoRehydrate());
   const enhancer = composeEnhancers(...enhancers);
 
   // Create Store
