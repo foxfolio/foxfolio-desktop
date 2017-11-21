@@ -3,7 +3,7 @@ import R from 'ramda';
 import type { Action } from '../actions/action.d';
 import type { Wallet } from '../actions/wallet.d';
 
-export default function wallets(state: Wallet[] = [], action: Action) {
+export default function wallets(state: Wallet[] = [], action: Action): Wallet[] {
   switch (action.type) {
     case 'ADD_WALLET':
       return [...state, action.wallet];

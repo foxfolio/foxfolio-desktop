@@ -8,12 +8,10 @@ describe('transactions reducer', () => {
 
   describe('REQUEST_TRANSACTIONS action', () => {
     it('should initialize an empty state', () => {
-      expect(
-        reducer(undefined, {
-          type: 'REQUEST_TRANSACTIONS',
-          source: { id: 'testexchange' },
-        }),
-      ).toEqual({
+      expect(reducer(undefined, {
+        type: 'REQUEST_TRANSACTIONS',
+        source: { id: 'testexchange' },
+      })).toEqual({
         testexchange: {
           openRequests: 1,
           trades: [],
@@ -31,12 +29,10 @@ describe('transactions reducer', () => {
         },
       };
 
-      expect(
-        reducer(state, {
-          type: 'REQUEST_TRANSACTIONS',
-          source: { id: 'testexchange' },
-        }),
-      ).toEqual({
+      expect(reducer(state, {
+        type: 'REQUEST_TRANSACTIONS',
+        source: { id: 'testexchange' },
+      })).toEqual({
         testexchange: {
           openRequests: 3,
           trades: [{ id: 'trade' }],

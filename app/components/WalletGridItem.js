@@ -23,7 +23,6 @@ type Props = {
 };
 
 class WalletGridItem extends Component<Props> {
-
   render() {
     const { classes, wallet, onEdit, onDelete } = this.props;
     return (

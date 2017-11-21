@@ -25,7 +25,6 @@ type Props = {
 };
 
 class Source extends Component<Props> {
-
   render() {
     const { classes, exchange, transactions, onEdit } = this.props;
     return (

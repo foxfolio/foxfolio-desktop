@@ -3,13 +3,13 @@ import { getBittrexTransactions, readBittrexTransactionsFromFile } from './excha
 import getBitstampTransactions from './exchanges/bitstamp';
 import { getKrakenTransactions } from './exchanges/kraken';
 import type { Trade, Transfer } from './transaction.d';
-import type { Action, Dispatch, GetState } from './action.d';
+import type { Action, Dispatch, GetState, ThunkAction } from './action.d';
 import type { Exchange } from './exchange.d';
 import startTimer from './timer';
 
 const REFRESH_TIME_IN_MS = 30000;
 
-function requestTransactions(exchange): Action {
+function requestTransactions(exchange: Exchange): Action {
   return {
     type: 'REQUEST_TRANSACTIONS',
     source: exchange,
@@ -53,8 +53,8 @@ function getConfiguredExchanges(state) {
   return state.sources;
 }
 
-function fetchTransactions(exchange: Exchange) {
-  return dispatch => {
+function fetchTransactions(exchange: Exchange): ThunkAction {
+  return (dispatch: Dispatch) => {
     dispatch(requestTransactions(exchange));
     switch (exchange.type) {
       case 'bittrex':
@@ -69,14 +69,14 @@ function fetchTransactions(exchange: Exchange) {
   };
 }
 
-export function fetchAllTransactions() {
+export function fetchAllTransactions(): ThunkAction {
   return (dispatch: Dispatch, getState: GetState) => {
     const sources = getConfiguredExchanges(getState());
     return sources.map(source => dispatch(fetchTransactions(source)));
   };
 }
 
-export function continuouslyFetchTransactions() {
+export function continuouslyFetchTransactions(): ThunkAction {
   return (dispatch: Dispatch, getState: GetState) => {
     if (!getState().timer.transactions) {
       const timer = setInterval(() => dispatch(fetchAllTransactions()), REFRESH_TIME_IN_MS);
@@ -85,7 +85,7 @@ export function continuouslyFetchTransactions() {
   };
 }
 
-export function readTransactionsFromFile(exchange: Exchange) {
+export function readTransactionsFromFile(exchange: Exchange): ThunkAction {
   return (dispatch: Dispatch) => {
     switch (exchange.type) {
       case 'bittrex':

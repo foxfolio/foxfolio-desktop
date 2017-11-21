@@ -12,7 +12,6 @@ type Props = {
 const characterCount = value => (value.length !== 3 ? 'Has to be 3 characters long' : undefined);
 
 class SettingsForm extends Component<Props> {
-
   handleSubmit(settings: SettingsType) {
     if (settings.fiatCurrency.length === 3) {
       throw new SubmissionError({ fiatCurrency: 'Required' });

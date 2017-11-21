@@ -46,7 +46,7 @@ function getOrderHistory(exchange: Bitstamp): Promise<[Trade[], Transfer[]]> {
 
 function bitstampRequest(endpoint: string, exchange: Bitstamp) {
   const nonce = Date.now().valueOf();
-  const hmac = crypto.createHmac('sha256', new Buffer(exchange.apiSecret, 'utf8'));
+  const hmac = crypto.createHmac('sha256', Buffer.from(exchange.apiSecret, 'utf8'));
   const signature = hmac.update(nonce + exchange.customerId + exchange.apiKey).digest('hex').toUpperCase();
 
   const uri = `https://www.bitstamp.net/api/v2/${endpoint}/`;

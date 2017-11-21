@@ -55,7 +55,6 @@ type Props = {
 };
 
 class App extends Component<Props> {
-
   componentDidMount() {
     this.props.dispatch(continuouslyFetchTransactions());
     this.props.dispatch(continuouslyUpdateTicker());

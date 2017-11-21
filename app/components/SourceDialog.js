@@ -98,83 +98,89 @@ export default class SourceDialog extends Component<Props> {
 const getFormForExchange = (exchange, state, handleChange) => {
   switch (exchange) {
     case 'bittrex':
-      return (<div>
-        <TextField
-          label="API Key"
-          id="apiKey"
-          value={state.apiKey}
-          onChange={handleChange('apiKey')}
-          fullWidth
-          margin="normal"
-        />
-        <TextField
-          label="API Secret"
-          id="apiSecret"
-          value={state.apiSecret}
-          onChange={handleChange('apiSecret')}
-          fullWidth
-          margin="normal"
-        />
-        <input
-          accept="csv"
-          style={{ display: 'none' }}
-          id="file"
-          type="file"
-          onChange={handleChange('transactionFile')}
-        />
-        <label htmlFor="file">
-          <Button raised component="span">
-            Add transactions from file
-          </Button>
-        </label>
-        {state.transactionFile}
-      </div>);
+      return (
+        <div>
+          <TextField
+            label="API Key"
+            id="apiKey"
+            value={state.apiKey}
+            onChange={handleChange('apiKey')}
+            fullWidth
+            margin="normal"
+          />
+          <TextField
+            label="API Secret"
+            id="apiSecret"
+            value={state.apiSecret}
+            onChange={handleChange('apiSecret')}
+            fullWidth
+            margin="normal"
+          />
+          <input
+            accept="csv"
+            style={{ display: 'none' }}
+            id="file"
+            type="file"
+            onChange={handleChange('transactionFile')}
+          />
+          <label htmlFor="file">
+            <Button raised component="span">
+              Add transactions from file
+            </Button>
+          </label>
+          {state.transactionFile}
+        </div>
+      );
     case 'kraken':
-      return (<div>
-        <TextField
-          label="API Key"
-          id="apiKey"
-          value={state.apiKey}
-          onChange={handleChange('apiKey')}
-          fullWidth
-          margin="normal"
-        />
-        <TextField
-          label="API Secret"
-          id="apiSecret"
-          value={state.apiSecret}
-          onChange={handleChange('apiSecret')}
-          fullWidth
-          margin="normal"
-        />
-      </div>);
+      return (
+        <div>
+          <TextField
+            label="API Key"
+            id="apiKey"
+            value={state.apiKey}
+            onChange={handleChange('apiKey')}
+            fullWidth
+            margin="normal"
+          />
+          <TextField
+            label="API Secret"
+            id="apiSecret"
+            value={state.apiSecret}
+            onChange={handleChange('apiSecret')}
+            fullWidth
+            margin="normal"
+          />
+        </div>
+      );
     case 'bitstamp':
-      return (<div>
-        <TextField
-          label="Customer ID"
-          id="customerId"
-          value={state.customerId}
-          onChange={handleChange('customerId')}
-          fullWidth
-          margin="normal"
-        />
-        <TextField
-          label="API Key"
-          id="apiKey"
-          value={state.apiKey}
-          onChange={handleChange('apiKey')}
-          fullWidth
-          margin="normal"
-        />
-        <TextField
-          label="API Secret"
-          id="apiSecret"
-          value={state.apiSecret}
-          onChange={handleChange('apiSecret')}
-          fullWidth
-          margin="normal"
-        />
-      </div>);
+      return (
+        <div>
+          <TextField
+            label="Customer ID"
+            id="customerId"
+            value={state.customerId}
+            onChange={handleChange('customerId')}
+            fullWidth
+            margin="normal"
+          />
+          <TextField
+            label="API Key"
+            id="apiKey"
+            value={state.apiKey}
+            onChange={handleChange('apiKey')}
+            fullWidth
+            margin="normal"
+          />
+          <TextField
+            label="API Secret"
+            id="apiSecret"
+            value={state.apiSecret}
+            onChange={handleChange('apiSecret')}
+            fullWidth
+            margin="normal"
+          />
+        </div>
+      );
     default:
       return '';
   }

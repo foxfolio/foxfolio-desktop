@@ -142,18 +142,21 @@ class PortfolioPosition extends Component<Props, State> {
 
   render() {
     const { asset, coinlist, ticker, transactions } = this.props;
-    return (<Card>
-      {this.rowCard(
-        <Avatar src={coinlist[asset]
-          ? `https://www.cryptocompare.com${coinlist[asset].ImageUrl}`
-          : ''}
-        />,
-      )}
-      <Collapse in={this.state.expanded}>
-        {transactions.map(transaction =>
-          <TransactionRow key={transaction.id} paddingLeft={50} transaction={transaction} ticker={ticker}/>)}
-      </Collapse>
-    </Card>);
+    return (
+      <Card>
+        {this.rowCard(
+          <Avatar
+            src={coinlist[asset]
+              ? `https://www.cryptocompare.com${coinlist[asset].ImageUrl}`
+              : ''}
+          />,
+        )}
+        <Collapse in={this.state.expanded}>
+          {transactions.map(transaction =>
+            <TransactionRow key={transaction.id} paddingLeft={50} transaction={transaction} ticker={ticker}/>)}
+        </Collapse>
+      </Card>
+    );
   }
 }
 

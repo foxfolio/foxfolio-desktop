@@ -65,7 +65,7 @@ function krakenRequest(endpoint: string, exchange: Kraken) {
   const path = `/${API_VERSION}/private/${endpoint}`;
 
   const hash = crypto.createHash('sha256');
-  const hmac = crypto.createHmac('sha512', new Buffer(exchange.apiSecret, 'base64'));
+  const hmac = crypto.createHmac('sha512', Buffer.from(exchange.apiSecret, 'base64'));
 
   const nonce = Date.now().valueOf();
   const body = querystring.stringify({ nonce });

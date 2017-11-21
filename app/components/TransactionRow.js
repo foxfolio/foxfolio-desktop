@@ -74,30 +74,32 @@ class TransactionRow extends Component<Props, State> {
 
   rowCard(avatar: Node, title: Node, subheader: Node) {
     const { classes } = this.props;
-    return (<CardContent className={classes.root} onClick={this.handleExpandClick}>
-      <div className={classes.avatar}>{avatar}</div>
-      <div className={classes.content}>
-        <Typography type="body2" component="span">
-          {title}
-        </Typography>
-        <Typography
-          type="body2"
-          component="span"
-          color="secondary"
-        >
-          {subheader}
-        </Typography>
-      </div>
-      <div>
-        <IconButton
-          className={classnames(classes.expand, {
-            [classes.expandOpen]: this.state.expanded,
-          })}
-        >
-          <ExpandMoreIcon/>
-        </IconButton>
-      </div>
-    </CardContent>);
+    return (
+      <CardContent className={classes.root} onClick={this.handleExpandClick}>
+        <div className={classes.avatar}>{avatar}</div>
+        <div className={classes.content}>
+          <Typography type="body2" component="span">
+            {title}
+          </Typography>
+          <Typography
+            type="body2"
+            component="span"
+            color="secondary"
+          >
+            {subheader}
+          </Typography>
+        </div>
+        <div>
+          <IconButton
+            className={classnames(classes.expand, {
+              [classes.expandOpen]: this.state.expanded,
+            })}
+          >
+            <ExpandMoreIcon/>
+          </IconButton>
+        </div>
+      </CardContent>
+    );
   }
 
   handleExpandClick = () => {

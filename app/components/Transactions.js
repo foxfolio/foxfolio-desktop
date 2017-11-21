@@ -9,7 +9,6 @@ type Props = {
 };
 
 export default class Transactions extends Component<Props> {
-
   render() {
     const transactions = flattenTransactions(this.props.transactions).sort((a, b) => b.date - a.date);
 
