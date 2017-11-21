@@ -43,7 +43,7 @@ export function receiveTrades(exchange: Exchange, trades: Trade[] = []): Action 
 
 export function failedTransaction(exchange: Exchange, error: string): Action {
   return {
-    type: 'FAILED_REQUEST',
+    type: 'FAILED_TRANSACTION_REQUEST',
     exchange,
     error,
   };

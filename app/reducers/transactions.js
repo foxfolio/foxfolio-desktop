@@ -36,7 +36,7 @@ export default function transactions(state: TransactionsState = {}, action: Acti
         [action.exchange.id]: {
           ...state[action.exchange.id],
           openRequests: state[action.exchange.id].openRequests - 1,
-          lastUpdated: Date.now().valueOf(),
+          lastUpdated: new Date(),
           trades: mergeTransactions(state[action.exchange.id].trades, action.trades),
           transfers: mergeTransactions(state[action.exchange.id].transfers, action.transfers),
         },
@@ -47,7 +47,7 @@ export default function transactions(state: TransactionsState = {}, action: Acti
         [action.exchange.id]: {
           ...state[action.exchange.id],
           openRequests: state[action.exchange.id].openRequests - 1,
-          lastUpdated: Date.now().valueOf(),
+          lastUpdated: new Date(),
           transfers: mergeTransactions(state[action.exchange.id].transfers, action.transfers),
         },
       };
@@ -57,17 +57,17 @@ export default function transactions(state: TransactionsState = {}, action: Acti
         [action.exchange.id]: {
           ...state[action.exchange.id],
           openRequests: state[action.exchange.id].openRequests - 1,
-          lastUpdated: Date.now().valueOf(),
+          lastUpdated: new Date(),
           trades: mergeTransactions(state[action.exchange.id].trades, action.trades),
         },
       };
-    case 'FAILED_REQUEST':
+    case 'FAILED_TRANSACTION_REQUEST':
       return {
         ...state,
         [action.exchange.id]: {
           ...state[action.exchange.id],
           openRequests: state[action.exchange.id].openRequests - 1,
-          lastUpdated: Date.now().valueOf(),
+          lastUpdated: new Date(),
           error: action.error,
         },
       };

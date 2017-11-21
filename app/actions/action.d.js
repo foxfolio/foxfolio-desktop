@@ -13,7 +13,7 @@ export type Action =
   | {| type: 'RECEIVE_TRANSACTIONS', exchange: Exchange, trades: Trade[], transfers: Transfer[] |}
   | {| type: 'RECEIVE_TRADES', exchange: Exchange, trades: Trade[] |}
   | {| type: 'RECEIVE_TRANSFERS', exchange: Exchange, transfers: Transfer[] |}
-  | {| type: 'FAILED_REQUEST', exchange: Exchange, error: string |}
+  | {| type: 'FAILED_TRANSACTION_REQUEST', exchange: Exchange, error: string |}
   | {| type: 'TICKER_UPDATE', ticker: Object |}
   | {| type: 'START_TIMER', name: string, timer: Object |}
   | {| type: 'RECEIVE_COIN_LIST', coinlist: Object |}
