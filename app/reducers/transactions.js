@@ -9,33 +9,25 @@ export type TransactionsState = {
 
 export type TransactionState = {|
   openRequests: number,
-  lastUpdated: Date,
+  lastUpdated?: Date,
   trades: Trade[],
   transfers: Transfer[]
 |};
 
-const initialSourceState = {
+const emptyExchangeState = {
   openRequests: 0,
-  lastUpdated: new Date(),
   trades: [],
   transfers: [],
 };
 
-// TODO More flexible state, not just one key per exchange type
-const initialState = {
-  bittrex: initialSourceState,
-  bitstamp: initialSourceState,
-  kraken: initialSourceState,
-};
-
-export default function transactions(state: TransactionsState = initialState, action: Action): TransactionsState {
+export default function transactions(state: TransactionsState = {}, action: Action): TransactionsState {
   switch (action.type) {
     case 'REQUEST_TRANSACTIONS':
       return {
         ...state,
         [action.source.id]: {
-          ...state[action.source.id],
-          openRequests: state[action.source.id].openRequests + 1,
+          ...(state[action.source.id] ? state[action.source.id] : emptyExchangeState),
+          openRequests: state[action.source.id] ? state[action.source.id].openRequests + 1 : 1,
         },
       };
     case 'RECEIVE_TRANSACTIONS':
@@ -84,6 +76,6 @@ export default function transactions(state: TransactionsState = initialState, ac
   }
 }
 
-function mergeTransactions<T: Transaction>(existingTransactions: T[], newTransactions: T[]) {
+function mergeTransactions<T: Transaction>(existingTransactions: T[], newTransactions: T[]): T[] {
   return R.unionWith(R.eqBy(R.prop('id')), existingTransactions, newTransactions);
 }
