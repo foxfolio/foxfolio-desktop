@@ -1,5 +1,5 @@
 // @flow
-import type { Dispatch, ThunkAction } from './types';
+import type { Dispatch, ThunkAction } from './action.d';
 import { requestTickerUpdate } from './ticker';
 import { fetchAllTransactions } from './transactions';
 

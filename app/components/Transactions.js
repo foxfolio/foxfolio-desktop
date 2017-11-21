@@ -1,6 +1,7 @@
 // @flow
 import React, { Component } from 'react';
 import TransactionTable from './TransactionTable';
+import { flattenTransactions } from '../helpers/transactions';
 
 type Props = {
   transactions: any,
@@ -10,7 +11,7 @@ type Props = {
 export default class Transactions extends Component<Props> {
 
   render() {
-    const transactions = flattenTransactions(this.props.transactions);
+    const transactions = flattenTransactions(this.props.transactions).sort((a, b) => b.date - a.date);
 
     return (
       <div className="container">
@@ -18,15 +19,4 @@ export default class Transactions extends Component<Props> {
       </div>
     );
   }
-}
-
-function flattenTransactions(transactions) {
-  let flattenedTransactions = [];
-  Object.keys(transactions)
-    .forEach(sourceName => {
-      flattenedTransactions = flattenedTransactions
-        .concat(transactions[sourceName].trades).concat(transactions[sourceName].transfers);
-    });
-  flattenedTransactions.sort((a, b) => b.date - a.date);
-  return flattenedTransactions;
 }

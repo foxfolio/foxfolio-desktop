@@ -2,9 +2,9 @@
 import crypto from 'crypto';
 import querystring from 'querystring';
 import { failedTransaction, receiveTransactions } from '../transactions';
-import type { Trade, Transfer } from '../../reducers/transactions';
-import type { sourceType } from '../../reducers/sources';
-import type { Dispatch, ThunkAction } from '../types';
+import type { Trade, Transfer } from '../transaction.d';
+import type { Bitstamp } from '../exchange.d';
+import type { Dispatch, ThunkAction } from '../action.d';
 
 type BitstampTransaction = {
   id: number,
@@ -31,27 +31,27 @@ type BitstampTransaction = {
 const currencies = ['btc', 'eth', 'eur', 'usd', 'ltc', 'xrp'];
 const markets = ['btc_usd', 'btc_eur', 'eth_usd', 'eth_eur', 'xrp_usd', 'xrp_eur', 'ltc_usd', 'ltc_eur'];
 
-export default function getBitstampTransactions(source: sourceType): ThunkAction {
+export default function getBitstampTransactions(exchange: Bitstamp): ThunkAction {
   return (dispatch: Dispatch) => {
-    getOrderHistory(source)
-      .then((results: [Trade[], Transfer[]]) => dispatch(receiveTransactions(source.name, results[0], results[1])))
-      .catch(error => dispatch(failedTransaction(source.name, error)));
+    getOrderHistory(exchange)
+      .then((results: [Trade[], Transfer[]]) => dispatch(receiveTransactions(exchange, results[0], results[1])))
+      .catch(error => dispatch(failedTransaction(exchange, error)));
   };
 }
 
-function getOrderHistory(source: sourceType): Promise<[Trade[], Transfer[]]> {
-  return bitstampRequest('user_transactions', source)
+function getOrderHistory(exchange: Bitstamp): Promise<[Trade[], Transfer[]]> {
+  return bitstampRequest('user_transactions', exchange)
     .then(orderHistoryToTradesAndTransfers);
 }
 
-function bitstampRequest(endpoint, source) {
+function bitstampRequest(endpoint: string, exchange: Bitstamp) {
   const nonce = Date.now().valueOf();
-  const hmac = crypto.createHmac('sha256', new Buffer(source.apiSecret, 'utf8'));
-  const signature = hmac.update(nonce + source.customerId + source.apiKey).digest('hex').toUpperCase();
+  const hmac = crypto.createHmac('sha256', new Buffer(exchange.apiSecret, 'utf8'));
+  const signature = hmac.update(nonce + exchange.customerId + exchange.apiKey).digest('hex').toUpperCase();
 
   const uri = `https://www.bitstamp.net/api/v2/${endpoint}/`;
   const form = {
-    key: source.apiKey,
+    key: exchange.apiKey,
     signature,
     nonce,
   };
@@ -60,8 +60,8 @@ function bitstampRequest(endpoint, source) {
     method: 'POST',
     body: querystring.stringify(form),
     headers: {
-      'Content-Type': 'application/x-www-form-urlencoded'
-    }
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
   }).then(result => result.json());
 }
 

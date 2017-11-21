@@ -2,11 +2,11 @@
 import crypto from 'crypto';
 import { Converter } from 'csvtojson';
 import { failedTransaction, receiveTransactions } from '../transactions';
-import type { Trade, Transfer } from '../../reducers/transactions';
-import type { sourceType } from '../../reducers/sources';
-import type { Dispatch, ThunkAction } from '../types';
+import type { Trade, Transfer } from '../transaction.d';
+import type { Bittrex } from '../exchange.d';
+import type { Dispatch, ThunkAction } from '../action.d';
 
-type bittrexTradeType = {
+type BittrexTrade = {
   +OrderUuid: string,
   +OrderType: string,
   +TimeStamp: string,
@@ -17,34 +17,34 @@ type bittrexTradeType = {
   +Commission: number | string
 };
 
-type bittrexDepositType = {
+type BittrexDeposit = {
   +Id: number,
   +LastUpdated: string,
   +Currency: string,
   +Amount: number | string
 };
 
-type bittrexWithdrawalType = {
+type BittrexWithdrawal = {
   +PaymentUuid: number,
   +Opened: string,
   +Currency: string,
   +Amount: number | string
 };
 
-export function getBittrexTransactions(source: sourceType): ThunkAction {
+export function getBittrexTransactions(exchange: Bittrex): ThunkAction {
   return (dispatch: Dispatch) => {
-    Promise.all([getOrderHistory(source), getTransferHistory(source)])
-      .then((results: [Trade[], Transfer[]]) => dispatch(receiveTransactions('bittrex', results[0], results[1])))
-      .catch(error => dispatch(failedTransaction(source.name, error)));
+    Promise.all([getOrderHistory(exchange), getTransferHistory(exchange)])
+      .then((results: [Trade[], Transfer[]]) => dispatch(receiveTransactions(exchange, results[0], results[1])))
+      .catch(error => dispatch(failedTransaction(exchange, error)));
   };
 }
 
-export function readBittrexTransactionsFromFile(source: sourceType): ThunkAction {
+export function readBittrexTransactionsFromFile(exchange: Bittrex): ThunkAction {
   return (dispatch: Dispatch) => {
-    if (source.transactionFile) {
-      const trades: bittrexTradeType[] = [];
+    if (exchange.transactionFile) {
+      const trades: BittrexTrade[] = [];
       new Converter()
-        .fromFile(source.transactionFile, { encoding: 'utf8' })
+        .fromFile(exchange.transactionFile, { encoding: 'utf8' })
         .preRawData((csvRawData, cb) => {
           cb(csvRawData.replace(/\0/g, ''));
         })
@@ -59,36 +59,36 @@ export function readBittrexTransactionsFromFile(source: sourceType): ThunkAction
           });
         })
         .on('done', () => {
-          dispatch(receiveTransactions('bittrex', orderHistoryToTransactions(trades), []));
+          dispatch(receiveTransactions(exchange, orderHistoryToTransactions(trades), []));
         });
     }
   };
 }
 
-function getOrderHistory(source): Promise<Array<Trade>> {
-  return bittrexRequest('getorderhistory', source)
+function getOrderHistory(exchange: Bittrex): Promise<Array<Trade>> {
+  return bittrexRequest('getorderhistory', exchange)
     .then(orderHistoryToTransactions);
 }
 
-function getTransferHistory(source): Promise<Array<Transfer>> {
-  return Promise.all([getDepositHistory(source), getWithdrawalHistory(source)])
+function getTransferHistory(exchange: Bittrex): Promise<Array<Transfer>> {
+  return Promise.all([getDepositHistory(exchange), getWithdrawalHistory(exchange)])
     .then((results: [Transfer[], Transfer[]]) => results[0].concat(results[1]));
 }
 
-function getDepositHistory(source): Promise<Array<Transfer>> {
-  return bittrexRequest('getdeposithistory', source)
+function getDepositHistory(exchange: Bittrex): Promise<Array<Transfer>> {
+  return bittrexRequest('getdeposithistory', exchange)
     .then(depositHistoryToTransactions);
 }
 
-function getWithdrawalHistory(source): Promise<Array<Transfer>> {
-  return bittrexRequest('getwithdrawalhistory', source)
+function getWithdrawalHistory(exchange: Bittrex): Promise<Array<Transfer>> {
+  return bittrexRequest('getwithdrawalhistory', exchange)
     .then(withdrawalHistoryToTransactions);
 }
 
-function bittrexRequest(endpoint, source) {
+function bittrexRequest(endpoint, exchange: Bittrex) {
   const nonce = Date.now().valueOf();
-  const uri = `https://bittrex.com/api/v1.1/account/${endpoint}?apikey=${source.apiKey}&nonce=${nonce}`;
-  const hmac = crypto.createHmac('sha512', source.apiSecret);
+  const uri = `https://bittrex.com/api/v1.1/account/${endpoint}?apikey=${exchange.apiKey}&nonce=${nonce}`;
+  const hmac = crypto.createHmac('sha512', exchange.apiSecret);
   const apisign = hmac.update(uri).digest('hex');
 
   const headers = new Headers({ apisign });
@@ -98,15 +98,15 @@ function bittrexRequest(endpoint, source) {
     .then(json => json.result);
 }
 
-function orderHistoryToTransactions(bittrexTrades: bittrexTradeType[]): Array<Trade> {
+function orderHistoryToTransactions(bittrexTrades: BittrexTrade[]): Array<Trade> {
   return bittrexTrades.map(convertBittrexTrade);
 }
 
-function depositHistoryToTransactions(bittrexDeposits: bittrexDepositType[]): Array<Transfer> {
+function depositHistoryToTransactions(bittrexDeposits: BittrexDeposit[]): Array<Transfer> {
   return bittrexDeposits.map(convertBittrexDeposit);
 }
 
-function withdrawalHistoryToTransactions(bittrexWithdrawals: bittrexWithdrawalType[]): Array<Transfer> {
+function withdrawalHistoryToTransactions(bittrexWithdrawals: BittrexWithdrawal[]): Array<Transfer> {
   return bittrexWithdrawals.map(convertBittrexWithdrawal);
 }
 
@@ -131,7 +131,7 @@ function convertBittrexTrade(bittrexTransaction): Trade {
   });
 }
 
-function convertBittrexDeposit(deposit: bittrexDepositType): Transfer {
+function convertBittrexDeposit(deposit: BittrexDeposit): Transfer {
   return {
     id: `${deposit.Id}`,
     date: new Date(deposit.LastUpdated),
@@ -142,7 +142,7 @@ function convertBittrexDeposit(deposit: bittrexDepositType): Transfer {
   };
 }
 
-function convertBittrexWithdrawal(deposit: bittrexWithdrawalType): Transfer {
+function convertBittrexWithdrawal(deposit: BittrexWithdrawal): Transfer {
   return {
     id: `${deposit.PaymentUuid}`,
     date: new Date(deposit.Opened),

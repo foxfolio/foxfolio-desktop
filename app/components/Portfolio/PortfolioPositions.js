@@ -1,7 +1,7 @@
 // @flow
 import React from 'react';
 import PortfolioPosition from './PortfolioPosition';
-import type { Transaction } from '../../reducers/transactions';
+import type { Transaction } from '../../actions/transaction.d';
 
 type Props = {
   portfolio: Object,

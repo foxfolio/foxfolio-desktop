@@ -1,15 +1,9 @@
 // @flow
 import R from 'ramda';
-import type { Action } from '../actions/types';
+import type { Action } from '../actions/action.d';
+import type { Wallet } from '../actions/wallet.d';
 
-export type walletType = {
-  currency: string,
-  address: string,
-  quantity: number,
-  note?: string
-};
-
-export default function wallets(state: walletType[] = [], action: Action) {
+export default function wallets(state: Wallet[] = [], action: Action) {
   switch (action.type) {
     case 'ADD_WALLET':
       return [...state, action.wallet];

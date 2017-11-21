@@ -15,7 +15,7 @@ import {
   RemoveCircleOutline as RemoveCircleIcon,
   SwapHoriz as SwapHorizIcon,
 } from 'material-ui-icons';
-import type { Trade, Transaction, Transfer } from '../reducers/transactions';
+import type { Trade, Transaction, Transfer } from '../actions/transaction.d';
 
 export const styles = (theme: Object) => ({
   root: {

@@ -5,7 +5,7 @@ import { Add } from 'material-ui-icons';
 import { withStyles } from 'material-ui/styles';
 import WalletGridItem from './WalletGridItem';
 import WalletDialog from './WalletDialog';
-import type { walletType } from '../reducers/wallets';
+import type { Wallet } from '../actions/wallet.d';
 
 const styles = theme => ({
   button: {
@@ -18,15 +18,15 @@ const styles = theme => ({
 
 type Props = {
   classes: any,
-  wallets: walletType[],
-  addWallet: (source: walletType) => void,
-  editWallet: (oldWallet: walletType, newWallet: walletType) => void
+  wallets: Wallet[],
+  addWallet: (source: Wallet) => void,
+  editWallet: (oldWallet: Wallet, newWallet: Wallet) => void
 };
 
 type State = {
   open: boolean,
   isNew: boolean,
-  currentWallet: walletType
+  currentWallet: Wallet
 };
 
 class WalletGrid extends Component<Props, State> {
@@ -40,7 +40,7 @@ class WalletGrid extends Component<Props, State> {
     this.setState({ open: true, isNew: true, currentWallet: { currency: '', address: '', quantity: 0 } });
   };
 
-  editDialog = (wallet: walletType) => {
+  editDialog = (wallet: Wallet) => {
     this.setState({ open: true, isNew: false, currentWallet: wallet });
   };
 

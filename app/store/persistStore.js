@@ -16,11 +16,12 @@ const dateTransform = createTransform(null, (outboundState, key) => {
   return outboundState;
 });
 
+// TODO Move to redux-persist 5
 export default function persistStore(store) {
   const persistor = reduxPersistStore(store, {
     transforms: [dateTransform],
     blacklist: ['router', 'timer'],
   }, () => store.dispatch(rehydrationComplete()));
-  // persistor.purge(['transactions']);
+  // persistor.purge(['transactions', 'sources']);
   return persistor;
 }

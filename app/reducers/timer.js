@@ -1,6 +1,6 @@
 // @flow
 
-import type { Action } from '../actions/types';
+import type { Action } from '../actions/action.d';
 
 export default function timer(state: Object = {}, action: Action) {
   switch (action.type) {

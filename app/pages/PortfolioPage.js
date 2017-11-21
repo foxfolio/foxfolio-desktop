@@ -3,7 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import * as TransactionActions from '../actions/transactions';
-import type { Dispatch } from '../actions/types';
+import type { Dispatch } from '../actions/action.d';
 import Portfolio from '../containers/Portfolio';
 
 function flattenTransactions(transactions) {
@@ -24,7 +24,7 @@ function mapStateToProps(state) {
     ticker: state.ticker,
     coinlist: state.coinlist,
     wallets: state.wallets,
-    settings: state.settings
+    settings: state.settings,
   };
 }
 

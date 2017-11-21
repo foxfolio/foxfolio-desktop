@@ -2,9 +2,9 @@
 import crypto from 'crypto';
 import querystring from 'querystring';
 import { failedTransaction, receiveTransactions } from '../transactions';
-import type { Trade, Transfer } from '../../reducers/transactions';
-import type { sourceType } from '../../reducers/sources';
-import type { Dispatch, ThunkAction } from '../types';
+import type { Trade, Transfer } from '../transaction.d';
+import type { Kraken } from '../exchange.d';
+import type { Dispatch, ThunkAction } from '../action.d';
 
 const objToArray = obj => Object.keys(obj).map(key => obj[key]);
 
@@ -35,37 +35,37 @@ type KrakenLedgerType = {
   balance: string
 };
 
-export function getKrakenTransactions(source: sourceType): ThunkAction {
+export function getKrakenTransactions(exchange: Kraken): ThunkAction {
   return async (dispatch: Dispatch) => {
     try {
-      const trades = await getTradesHistory(source);
-      const transfers = await getTransferHistory(source);
-      return dispatch(receiveTransactions(SOURCE_NAME, trades, transfers)); // TODO Split into two separate actions
+      const trades = await getTradesHistory(exchange);
+      const transfers = await getTransferHistory(exchange);
+      return dispatch(receiveTransactions(exchange, trades, transfers)); // TODO Split into two separate actions
     } catch (error) {
-      return dispatch(failedTransaction(source.name, error.message));
+      return dispatch(failedTransaction(exchange, error.message));
     }
   };
 }
 
-function getTradesHistory(source: sourceType): Promise<Trade[]> {
-  return krakenRequest('TradesHistory', source)
+function getTradesHistory(exchange: Kraken): Promise<Trade[]> {
+  return krakenRequest('TradesHistory', exchange)
     .then(result => result.trades)
     .then(objToArray)
     .then(tradesHistoryToTransactions);
 }
 
-function getTransferHistory(source: sourceType): Promise<Transfer[]> {
-  return krakenRequest('Ledgers', source)
+function getTransferHistory(exchange: Kraken): Promise<Transfer[]> {
+  return krakenRequest('Ledgers', exchange)
     .then(result => result.ledger)
     .then(obj => Object.keys(obj).map(key => obj[key]))
     .then(ledgerEntriesToTransfers);
 }
 
-function krakenRequest(endpoint: string, source: sourceType) {
+function krakenRequest(endpoint: string, exchange: Kraken) {
   const path = `/${API_VERSION}/private/${endpoint}`;
 
   const hash = crypto.createHash('sha256');
-  const hmac = crypto.createHmac('sha512', new Buffer(source.apiSecret, 'base64'));
+  const hmac = crypto.createHmac('sha512', new Buffer(exchange.apiSecret, 'base64'));
 
   const nonce = Date.now().valueOf();
   const body = querystring.stringify({ nonce });
@@ -77,7 +77,7 @@ function krakenRequest(endpoint: string, source: sourceType) {
     method: 'POST',
     body,
     headers: {
-      'API-Key': source.apiKey,
+      'API-Key': exchange.apiKey,
       'API-Sign': signatureDigest,
       'Content-Type': 'application/x-www-form-urlencoded',
     },

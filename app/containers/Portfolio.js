@@ -1,19 +1,19 @@
 // @flow
 import React from 'react';
 import { Paper } from 'material-ui';
-import type { Transaction } from '../reducers/transactions';
-import type { walletType } from '../reducers/wallets';
+import type { Transaction } from '../actions/transaction.d';
 import PortfolioChart from '../components/Portfolio/PortfolioChart';
 import type { SettingsType } from '../reducers/settings';
 import PortfolioPositions from '../components/Portfolio/PortfolioPositions';
 import PortfolioHeader from '../components/Portfolio/PortfolioHeader';
 import EmptyPortfolio from '../components/Portfolio/EmptyPortfolio';
+import type { Wallet } from '../actions/wallet.d';
 
 type Props = {
   transactions: Transaction[],
   ticker: Object,
   coinlist: Object,
-  wallets: walletType[],
+  wallets: Wallet[],
   settings: SettingsType
 };
 
@@ -53,7 +53,7 @@ export default function Portfolio({ ticker, coinlist, transactions, wallets, set
   );
 }
 
-function calculatePortfolio(transactions: Transaction[], wallets: walletType[], fiatCurrency: string): Object {
+function calculatePortfolio(transactions: Transaction[], wallets: Wallet[], fiatCurrency: string): Object {
   const portfolio = transactions.reduce((acc, transaction) => {
     switch (transaction.type) {
       case 'DEPOSIT':

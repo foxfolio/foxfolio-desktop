@@ -1,21 +1,17 @@
 // @flow
 import R from 'ramda';
-import type { Action } from '../actions/types';
+import type { Action } from '../actions/action.d';
+import type { Exchange } from '../actions/exchange.d';
 
-export type sourceType = {
-  name: string,
-  apiKey: string,
-  apiSecret: string,
-  customerId?: string,
-  transactionFile?: string
-};
-
-export default function sources(state: sourceType[] = [], action: Action) {
+export default function sources(state: Exchange[] = [], action: Action) {
   switch (action.type) {
     case 'ADD_SOURCE':
       return [...state, action.source];
     case 'EDIT_SOURCE':
-      return [...R.reject(R.equals(action.source), state), R.omit(['transactionFile'], action.newSource)];
+      return [
+        ...R.reject(R.equals(action.source), state),
+        action.newSource.transactionFile ? R.omit(['transactionFile'], action.newSource) : action.newSource,
+      ];
     default:
       return state;
   }

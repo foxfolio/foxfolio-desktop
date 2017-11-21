@@ -1,9 +1,11 @@
 // @flow
 import * as R from 'ramda';
-import type { Action, Dispatch, GetState, ThunkAction } from './types';
-import type { Transaction } from '../reducers/transactions';
+import type { Action, Dispatch, GetState, ThunkAction } from './action.d';
 import startTimer from './timer';
-import type { walletType } from '../reducers/wallets';
+import type { Transaction } from './transaction.d';
+import type { Wallet } from './wallet.d';
+import type { TransactionsState as TransactionState } from '../reducers/transactions';
+import { flattenTransactions } from '../helpers/transactions';
 
 const REFRESH_TIME_IN_MS = 10000;
 
@@ -27,10 +29,12 @@ export function requestTickerUpdate(): ThunkAction {
     const symbols = getSymbolsFromTransactions(state.transactions, state.wallets, state.settings.fiatCurrency);
     const fsyms = symbols.from.join(',');
     const tsyms = symbols.to.join(',');
-    fetch(`https://min-api.cryptocompare.com/data/pricemultifull?fsyms=${fsyms}&tsyms=${tsyms}`)
-      .then(result => result.json())
-      .then(result => dispatch(receiveTickerUpdate(result.RAW)))
-      .catch(error => console.error(error));
+    if (fsyms && tsyms) {
+      fetch(`https://min-api.cryptocompare.com/data/pricemultifull?fsyms=${fsyms}&tsyms=${tsyms}`)
+        .then(result => result.json())
+        .then(result => dispatch(receiveTickerUpdate(result.RAW)))
+        .catch(error => console.error(error));
+    }
   };
 }
 
@@ -53,10 +57,10 @@ export function continuouslyUpdateTicker() {
 }
 
 function getSymbolsFromTransactions(
-  transactions, wallets: walletType[], fiatCurrency: string): { from: string[], to: string[] } {
+  transactions: TransactionState, wallets: Wallet[], fiatCurrency: string): { from: string[], to: string[] } {
   const walletSymbols = wallets.map(wallet => wallet.currency) || [];
 
-  const trans: Transaction[] = R.pipe(R.values, source => R.concat(source.trades, source.transfers))(transactions);
+  const trans: Transaction[] = flattenTransactions(transactions);
   const symbols = R.reduce((acc, transaction) => {
     if (transaction.type === 'BUY' || transaction.type === 'SELL') {
       acc.from.push(transaction.market.minor);

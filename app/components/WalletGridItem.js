@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { Button, Card, CardActions, CardContent, Typography } from 'material-ui';
 import { withStyles } from 'material-ui/styles';
 import style from './Source.css';
-import type { walletType } from '../reducers/wallets';
+import type { Wallet } from '../actions/wallet.d';
 
 const styles = theme => ({
   subheader: {
@@ -17,9 +17,9 @@ const styles = theme => ({
 
 type Props = {
   classes: any,
-  wallet: walletType,
-  onEdit: (wallet: walletType) => void,
-  onDelete: (wallet: walletType) => void
+  wallet: Wallet,
+  onEdit: (wallet: Wallet) => void,
+  onDelete: (wallet: Wallet) => void
 };
 
 class WalletGridItem extends Component<Props> {
@@ -42,7 +42,7 @@ class WalletGridItem extends Component<Props> {
         </CardContent>
         <CardActions className="pull-right">
           <div className={classes.flexGrow}/>
-          <Button dense color="secondary" onClick={() => onDelete(wallet)}>Delete</Button>
+          <Button dense color="default" onClick={() => onDelete(wallet)}>Delete</Button>
           <Button dense color="primary" onClick={() => onEdit(wallet)}>Edit</Button>
         </CardActions>
       </Card>

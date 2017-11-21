@@ -5,7 +5,8 @@ import { Add } from 'material-ui-icons';
 import { withStyles } from 'material-ui/styles';
 import Source from './Source';
 import SourceDialog from './SourceDialog';
-import type { sourceType } from '../reducers/sources';
+import type { EmptyExchange, Exchange } from '../actions/exchange.d';
+import type { TransactionsState } from '../reducers/transactions';
 
 const styles = theme => ({
   button: {
@@ -18,43 +19,55 @@ const styles = theme => ({
 
 type Props = {
   classes: any,
-  sources: sourceType[],
-  transactions: Object,
-  addSource: (source: sourceType) => void,
-  editSource: (oldSource: sourceType, newSource: sourceType) => void
+  sources: Exchange[],
+  transactions: TransactionsState,
+  addSource: (source: Exchange) => void,
+  editSource: (oldSource: Exchange, newSource: Exchange) => void
 };
 
 type State = {
   open: boolean,
-  isNew: boolean,
-  currentSource: sourceType
+  dialog: NewDialog | ExistingDialog
 };
+
+type NewDialog = {|
+  isNew: true,
+  currentSource: Exchange | EmptyExchange
+|};
+
+type ExistingDialog = {|
+  isNew: false,
+  currentSource: Exchange
+|};
 
 class Sources extends Component<Props, State> {
   state = {
     open: false,
-    isNew: true,
-    currentSource: { name: '', apiKey: '', apiSecret: '' },
+    dialog: {
+      isNew: true,
+      currentSource: { id: '', type: '', apiKey: '', apiSecret: '' },
+    },
   };
 
-  addDialog = () => {
-    this.setState({ open: true, isNew: true, currentSource: { name: '', apiKey: '', apiSecret: '' } });
-  };
+  addDialog = () => this.setState({
+    open: true,
+    dialog: {
+      isNew: true,
+      currentSource: { id: '', type: '', apiKey: '', apiSecret: '' },
+    },
+  });
 
-  editDialog = (source: sourceType) => {
-    console.log(source);
-    this.setState({ open: true, isNew: false, currentSource: source });
-  };
+  editDialog = (source: Exchange) => this.setState({ open: true, dialog: { isNew: false, currentSource: source } });
 
   closeDialog = () => {
     this.setState({ open: false });
   };
 
   saveDialog = (source) => {
-    if (this.state.isNew) {
+    if (this.state.dialog.isNew) {
       this.props.addSource(source);
     } else {
-      this.props.editSource(this.state.currentSource, source);
+      this.props.editSource(this.state.dialog.currentSource, source);
     }
     this.closeDialog();
   };
@@ -67,8 +80,8 @@ class Sources extends Component<Props, State> {
         <h1>Sources</h1>
         <Grid container>
           {sources.map(source => (
-            <Grid item key={source.name + source.apiKey} sm={12} md={6}>
-              <Source source={source} transactions={transactions[source.name]} onEdit={this.editDialog}/>
+            <Grid item key={source.type + source.apiKey} sm={12} md={6}>
+              <Source source={source} transactions={transactions[source.type]} onEdit={this.editDialog}/>
             </Grid>
           ))}
         </Grid>
@@ -77,7 +90,7 @@ class Sources extends Component<Props, State> {
         </Button>
         <SourceDialog
           open={this.state.open}
-          source={this.state.currentSource}
+          source={this.state.dialog.currentSource}
           close={this.closeDialog}
           save={this.saveDialog}
         />

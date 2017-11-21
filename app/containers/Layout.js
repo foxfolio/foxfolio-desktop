@@ -9,7 +9,7 @@ import { AppBar, Avatar, createMuiTheme, List, MuiThemeProvider, Toolbar, Typogr
 import { AccountBalanceWallet, Cloud, Dashboard, Settings, SwapHoriz } from 'material-ui-icons';
 import { deepOrange, green } from 'material-ui/colors';
 import { continuouslyFetchTransactions } from '../actions/transactions';
-import type { Dispatch } from '../actions/types';
+import type { Dispatch } from '../actions/action.d';
 import { continuouslyUpdateTicker, requestCoinList } from '../actions/ticker';
 import { DrawerItem } from '../components/DrawerItem';
 

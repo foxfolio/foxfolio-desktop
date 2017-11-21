@@ -1,8 +1,8 @@
 // @flow
-import type { ThunkAction } from './types';
-import type { walletType } from '../reducers/wallets';
+import type { ThunkAction } from './action.d';
+import type { Wallet } from './wallet.d';
 
-export function addWallet(wallet: walletType): ThunkAction {
+export function addWallet(wallet: Wallet): ThunkAction {
   return (dispatch) => {
     dispatch({
       type: 'ADD_WALLET',
@@ -11,7 +11,7 @@ export function addWallet(wallet: walletType): ThunkAction {
   };
 }
 
-export function editWallet(wallet: walletType, newWallet: walletType): ThunkAction {
+export function editWallet(wallet: Wallet, newWallet: Wallet): ThunkAction {
   return dispatch => {
     dispatch({
       type: 'EDIT_WALLET',

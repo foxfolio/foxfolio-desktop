@@ -1,5 +1,5 @@
 // @flow
-import type { Action } from '../actions/types';
+import type { Action } from '../actions/action.d';
 
 export type SettingsType = {
   fiatCurrency: string

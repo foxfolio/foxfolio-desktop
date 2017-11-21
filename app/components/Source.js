@@ -3,7 +3,9 @@ import React, { Component } from 'react';
 import { Button, Card, CardActions, CardContent, Typography } from 'material-ui';
 import { withStyles } from 'material-ui/styles';
 import style from './Source.css';
-import type { sourceType } from '../reducers/sources';
+import type { Exchange } from '../actions/exchange.d';
+import type { TransactionState } from '../reducers/transactions';
+
 
 const styles = theme => ({
   subheader: {
@@ -17,23 +19,23 @@ const styles = theme => ({
 
 type Props = {
   classes: any,
-  source: sourceType,
-  transactions: Object,
-  onEdit: (source: sourceType) => void
+  exchange: Exchange,
+  transactions: TransactionState,
+  onEdit: (source: Exchange) => void
 };
 
 class Source extends Component<Props> {
 
   render() {
-    const { classes, source, transactions, onEdit } = this.props;
+    const { classes, exchange, transactions, onEdit } = this.props;
     return (
       <Card className={style.source}>
         <CardContent>
           <Typography type="headline" component="h2">
-            {source.name}
+            {exchange.type}
           </Typography>
           <Typography type="body1" className={classes.subheader}>
-            {`Key: ${source.apiKey}`}
+            {`Key: ${exchange.apiKey}`}
           </Typography>
           <Typography type="body1" className={classes.subheader}>
             {`Last update: ${transactions ? new Date(transactions.lastUpdated || Date.now()).toTimeString() : 'Never'}`}
@@ -43,7 +45,7 @@ class Source extends Component<Props> {
         </CardContent>
         <CardActions>
           <div className={classes.flexGrow}/>
-          <Button dense color="primary" onClick={() => onEdit(source)}>Edit</Button>
+          <Button dense color="primary" onClick={() => onEdit(exchange)}>Edit</Button>
         </CardActions>
       </Card>
     );

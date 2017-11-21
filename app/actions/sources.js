@@ -1,30 +1,30 @@
 // @flow
-import type { sourceType } from '../reducers/sources';
-import type { ThunkAction } from './types';
+import type { Exchange } from './exchange.d';
+import type { ThunkAction } from './action.d';
 import { fetchAllTransactions, readTransactionsFromFile } from './transactions';
 
-export function addSource(source: sourceType): ThunkAction {
+export function addSource(exchange: Exchange): ThunkAction {
   return (dispatch) => {
     dispatch({
       type: 'ADD_SOURCE',
-      source,
+      source: exchange,
     });
-    if (source.transactionFile) {
-      dispatch(readTransactionsFromFile(source));
+    if (exchange.transactionFile) {
+      dispatch(readTransactionsFromFile(exchange));
     }
     dispatch(fetchAllTransactions());
   };
 }
 
-export function editSource(source: sourceType, newSource: sourceType): ThunkAction {
+export function editSource(exchange: Exchange, newExchange: Exchange): ThunkAction {
   return dispatch => {
     dispatch({
       type: 'EDIT_SOURCE',
-      source,
-      newSource,
+      source: exchange,
+      newSource: newExchange,
     });
-    if (newSource.transactionFile) {
-      dispatch(readTransactionsFromFile(newSource));
+    if (newExchange.transactionFile) {
+      dispatch(readTransactionsFromFile(newExchange));
     }
     dispatch(fetchAllTransactions());
   };
