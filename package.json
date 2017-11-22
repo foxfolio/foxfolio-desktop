@@ -110,10 +110,7 @@
     ],
     "transform": {
       "^.+\\.js$": "babel-jest"
-    },
-    "setupFiles": [
-      "./internals/scripts/CheckBuiltsExist.js"
-    ]
+    }
   },
   "homepage": "https://gitlab.com/greimela/crypto-portfolio",
   "devDependencies": {
