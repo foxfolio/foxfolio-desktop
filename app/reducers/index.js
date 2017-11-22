@@ -13,9 +13,8 @@ import timer from './timer';
 import coinlist from './coinlist';
 import settings from './settings';
 
-const mapPath = R.curry((path, f, obj) =>
-  R.assocPath(path, f(R.path(path, obj)), obj),
-);
+// $FlowFixMe
+const mapPath = R.curry((path, f, obj) => R.assocPath(path, f(R.path(path, obj)), obj));
 
 const convertDate = R.map(mapPath(['date'], dateString => new Date(dateString)));
 const convertDateIn = key => R.map(mapPath([key], convertDate));

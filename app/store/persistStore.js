@@ -1,8 +1,5 @@
-import { createTransform, persistStore as reduxPersistStore } from 'redux-persist';
-import * as R from 'ramda';
+import { persistStore as reduxPersistStore } from 'redux-persist';
 import rehydrationComplete from '../actions/init';
-
-
 
 export default function persistStore(store) {
   const persistor = reduxPersistStore(store, null, () => store.dispatch(rehydrationComplete()));
