@@ -6,7 +6,6 @@ import style from './Source.css';
 import type { Exchange } from '../actions/exchange.d';
 import type { TransactionState } from '../reducers/transactions';
 
-
 const styles = theme => ({
   subheader: {
     marginBottom: 12,
@@ -21,12 +20,13 @@ type Props = {
   classes: any,
   exchange: Exchange,
   transactions: TransactionState,
-  onEdit: (source: Exchange) => void
+  onEdit: (source: Exchange) => void,
+  onDelete: (source: Exchange) => void
 };
 
 class Source extends Component<Props> {
   render() {
-    const { classes, exchange, transactions, onEdit } = this.props;
+    const { classes, exchange, transactions, onEdit, onDelete } = this.props;
     return (
       <Card className={style.source}>
         <CardContent>
@@ -44,6 +44,7 @@ class Source extends Component<Props> {
         </CardContent>
         <CardActions>
           <div className={classes.flexGrow}/>
+          <Button dense color="default" onClick={() => onDelete(exchange)}>Delete</Button>
           <Button dense color="primary" onClick={() => onEdit(exchange)}>Edit</Button>
         </CardActions>
       </Card>

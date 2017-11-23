@@ -22,7 +22,8 @@ type Props = {
   sources: Exchange[],
   transactions: TransactionsState,
   addSource: (source: Exchange) => void,
-  editSource: (oldSource: Exchange, newSource: Exchange) => void
+  editSource: (oldSource: Exchange, newSource: Exchange) => void,
+  deleteExchange: (exchange: Exchange) => void
 };
 
 type State = {
@@ -73,7 +74,7 @@ class Sources extends Component<Props, State> {
   };
 
   render() {
-    const { sources, transactions, classes } = this.props;
+    const { sources, transactions, classes, deleteExchange } = this.props;
 
     return (
       <div className="container">
@@ -81,7 +82,12 @@ class Sources extends Component<Props, State> {
         <Grid container>
           {sources.map(source => (
             <Grid item key={source.type + source.apiKey} sm={12} md={6}>
-              <Source source={source} transactions={transactions[source.type]} onEdit={this.editDialog}/>
+              <Source
+                source={source}
+                transactions={transactions[source.type]}
+                onEdit={this.editDialog}
+                onDelete={deleteExchange}
+              />
             </Grid>
           ))}
         </Grid>

@@ -9,6 +9,8 @@ export default function wallets(state: Wallet[] = [], action: Action): Wallet[] 
       return [...state, action.wallet];
     case 'EDIT_WALLET':
       return [...R.reject(R.equals(action.wallet), state), action.newWallet];
+    case 'DELETE_WALLET':
+      return R.reject(R.equals(action.wallet), state);
     default:
       return state;
   }

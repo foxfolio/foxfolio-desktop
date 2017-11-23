@@ -7,8 +7,10 @@ import type { Trade, Transfer } from './transaction.d';
 export type Action =
   | {| type: 'ADD_SOURCE', source: Exchange |}
   | {| type: 'EDIT_SOURCE', source: Exchange, newSource: Exchange |}
+  | {| type: 'DELETE_EXCHANGE', exchange: Exchange |}
   | {| type: 'ADD_WALLET', wallet: Wallet |}
   | {| type: 'EDIT_WALLET', wallet: Wallet, newWallet: Wallet |}
+  | {| type: 'DELETE_WALLET', wallet: Wallet |}
   | {| type: 'REQUEST_TRANSACTIONS', source: Exchange |}
   | {| type: 'RECEIVE_TRANSACTIONS', exchange: Exchange, trades: Trade[], transfers: Transfer[] |}
   | {| type: 'RECEIVE_TRADES', exchange: Exchange, trades: Trade[] |}

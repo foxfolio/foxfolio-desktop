@@ -20,7 +20,8 @@ type Props = {
   classes: any,
   wallets: Wallet[],
   addWallet: (source: Wallet) => void,
-  editWallet: (oldWallet: Wallet, newWallet: Wallet) => void
+  editWallet: (oldWallet: Wallet, newWallet: Wallet) => void,
+  deleteWallet: (source: Wallet) => void
 };
 
 type State = {
@@ -58,7 +59,7 @@ class WalletGrid extends Component<Props, State> {
   };
 
   render() {
-    const { wallets, classes } = this.props;
+    const { wallets, classes, deleteWallet } = this.props;
 
     return (
       <div className="container">
@@ -68,7 +69,7 @@ class WalletGrid extends Component<Props, State> {
             .sort((a, b) => a.address.localeCompare(b.address))
             .map(wallet => (
               <Grid item key={wallet.currency + wallet.address} sm={12} md={6}>
-                <WalletGridItem wallet={wallet} onEdit={this.editDialog}/>
+                <WalletGridItem wallet={wallet} onEdit={this.editDialog} onDelete={deleteWallet}/>
               </Grid>
             ))}
         </Grid>

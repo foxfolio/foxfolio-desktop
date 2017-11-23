@@ -12,6 +12,8 @@ export default function sources(state: Exchange[] = [], action: Action) {
         ...R.reject(R.equals(action.source), state),
         action.newSource.transactionFile ? R.omit(['transactionFile'], action.newSource) : action.newSource,
       ];
+    case 'DELETE_EXCHANGE':
+      return R.reject(R.equals(action.exchange), state);
     default:
       return state;
   }

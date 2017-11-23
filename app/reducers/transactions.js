@@ -20,7 +20,7 @@ const emptyExchangeState = {
   transfers: [],
 };
 
-export default function transactions(state: TransactionsState = {}, action: Action): TransactionsState {
+export default function transactions(state: $ReadOnly<TransactionsState> = {}, action: Action): TransactionsState {
   switch (action.type) {
     case 'REQUEST_TRANSACTIONS':
       return {
@@ -71,8 +71,10 @@ export default function transactions(state: TransactionsState = {}, action: Acti
           error: action.error,
         },
       };
+    case 'DELETE_EXCHANGE':
+      return R.omit([action.exchange.id], state);
     default:
-      return state;
+      return { ...state };
   }
 }
 

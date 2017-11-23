@@ -1,6 +1,6 @@
 // @flow
 import type { Exchange } from './exchange.d';
-import type { ThunkAction } from './action.d';
+import type { Action, ThunkAction } from './action.d';
 import { fetchAllTransactions, readTransactionsFromFile } from './transactions';
 
 export function addSource(exchange: Exchange): ThunkAction {
@@ -29,3 +29,11 @@ export function editSource(exchange: Exchange, newExchange: Exchange): ThunkActi
     dispatch(fetchAllTransactions());
   };
 }
+
+export function deleteExchange(exchange: Exchange): Action {
+  return {
+    type: 'DELETE_EXCHANGE',
+    exchange,
+  };
+}
+

@@ -3,6 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as WalletActions from '../actions/wallets';
 import WalletGrid from '../components/WalletGrid';
+import type { Dispatch } from '../actions/action.d';
 
 function mapStateToProps(state) {
   return {
@@ -10,7 +11,7 @@ function mapStateToProps(state) {
   };
 }
 
-function mapDispatchToProps(dispatch) {
+function mapDispatchToProps(dispatch: Dispatch) {
   return bindActionCreators(WalletActions, dispatch);
 }
 
