@@ -23,15 +23,15 @@ type Props = {
 
 export default class SourceDialog extends Component<Props> {
   state = {
-    name: '',
+    type: '',
     apiKey: '',
-    apiSecret: ''
+    apiSecret: '',
   };
 
   componentWillReceiveProps(nextProps) {
     if (this.props.open !== nextProps.open) {
       this.setState({
-        name: nextProps.source.name,
+        type: nextProps.source.type,
         customerId: nextProps.source.customerId,
         apiKey: nextProps.source.apiKey,
         apiSecret: nextProps.source.apiSecret,
@@ -41,7 +41,8 @@ export default class SourceDialog extends Component<Props> {
 
   save = () => {
     this.props.save({
-      name: this.state.name,
+      id: `${this.state.type}-${this.state.apiKey}`,
+      type: this.state.type,
       apiKey: this.state.apiKey,
       apiSecret: this.state.apiSecret,
       customerId: this.state.customerId,
@@ -62,24 +63,25 @@ export default class SourceDialog extends Component<Props> {
         title="New Source"
         open={open}
         onRequestClose={close}
+        fullWidth
       >
         <DialogTitle>New source</DialogTitle>
         <DialogContent>
           <form autoComplete="off">
             <FormControl fullWidth>
-              <InputLabel htmlFor="name">Exchange</InputLabel>
+              <InputLabel htmlFor="type">Exchange</InputLabel>
               <Select
-                value={this.state.name}
-                onChange={this.handleChange('name')}
+                value={this.state.type || ''}
+                onChange={this.handleChange('type')}
                 fullWidth
-                input={<Input id="name"/>}
+                input={<Input id="type"/>}
               >
                 <MenuItem value="bittrex">Bittrex</MenuItem>
                 <MenuItem value="bitstamp">Bitstamp</MenuItem>
                 <MenuItem value="kraken">Kraken</MenuItem>
               </Select>
             </FormControl>
-            {getFormForExchange(this.state.name, this.state, this.handleChange)}
+            {getFormForExchange(this.state.type, this.state, this.handleChange)}
             <DialogActions>
               <Button onClick={close} color="primary">
                 Cancel

@@ -81,10 +81,10 @@ class Sources extends Component<Props, State> {
         <Typography type="headline">Sources</Typography>
         <Grid container>
           {sources.map(source => (
-            <Grid item key={source.type + source.apiKey} sm={12} md={6}>
+            <Grid item key={source.id} sm={12} md={6}>
               <Source
-                source={source}
-                transactions={transactions[source.type]}
+                exchange={source}
+                transactions={transactions[source.id]}
                 onEdit={this.editDialog}
                 onDelete={deleteExchange}
               />
