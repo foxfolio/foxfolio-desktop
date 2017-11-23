@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { Button, Grid } from 'material-ui';
+import { Button, Grid, Typography } from 'material-ui';
 import { Add } from 'material-ui-icons';
 import { withStyles } from 'material-ui/styles';
 import WalletGridItem from './WalletGridItem';
@@ -62,7 +62,7 @@ class WalletGrid extends Component<Props, State> {
 
     return (
       <div className="container">
-        <h1>Wallets</h1>
+        <Typography type="headline">Wallets</Typography>
         <Grid container>
           {wallets
             .sort((a, b) => a.address.localeCompare(b.address))

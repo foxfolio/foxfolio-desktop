@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { Button, Grid } from 'material-ui';
+import { Button, Grid, Typography } from 'material-ui';
 import { Add } from 'material-ui-icons';
 import { withStyles } from 'material-ui/styles';
 import Source from './Source';
@@ -77,7 +77,7 @@ class Sources extends Component<Props, State> {
 
     return (
       <div className="container">
-        <h1>Sources</h1>
+        <Typography type="headline">Sources</Typography>
         <Grid container>
           {sources.map(source => (
             <Grid item key={source.type + source.apiKey} sm={12} md={6}>

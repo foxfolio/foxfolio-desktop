@@ -5,21 +5,14 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { withStyles } from 'material-ui/styles';
 import Drawer from 'material-ui/Drawer';
-import { AppBar, Avatar, createMuiTheme, List, MuiThemeProvider, Toolbar, Typography } from 'material-ui';
+import { AppBar, Avatar, List, Toolbar, Typography } from 'material-ui';
 import { AccountBalanceWallet, Cloud, Dashboard, Settings, SwapHoriz } from 'material-ui-icons';
-import { deepOrange, green } from 'material-ui/colors';
 import { continuouslyFetchTransactions } from '../actions/transactions';
 import type { Dispatch } from '../actions/action.d';
 import { continuouslyUpdateTicker, requestCoinList } from '../actions/ticker';
 import { DrawerItem } from '../components/DrawerItem';
 
 const drawerWidth = 250;
-const appThene = createMuiTheme({
-  palette: {
-    primary: deepOrange,
-    secondary: green,
-  },
-});
 
 const styles = theme => ({
   appFrame: {
@@ -30,7 +23,7 @@ const styles = theme => ({
   content: {
     backgroundColor: theme.palette.background.default,
     padding: theme.spacing.unit * 3,
-    height: 'calc(100% - 56px)',
+    height: 'calc(100% - 48px)',
     marginLeft: drawerWidth,
   },
   toolbar: {
@@ -64,32 +57,30 @@ class App extends Component<Props> {
   render() {
     const { classes, children } = this.props;
     return (
-      <MuiThemeProvider theme={appThene}>
-        <div className={classes.appFrame}>
-          <Drawer type="permanent" classes={{ paper: classes.drawerPaper }}>
-            <AppBar position="static" color="default" elevation={1}>
-              <Toolbar className={classes.toolbar}>
-                <Avatar src="./resources/icon.png" className={classes.avatar}/>
-                <Typography type="title" color="inherit">
-                  FuxFolio
-                </Typography>
-              </Toolbar>
-            </AppBar>
-            <List className={classes.topList}>
-              <DrawerItem label="Portfolio" route="/" icon={<Dashboard/>}/>
-              <DrawerItem label="Transactions" route="/transactions" icon={<SwapHoriz/>}/>
-            </List>
-            <List className={classes.bottomList}>
-              <DrawerItem label="Wallets" route="/wallets" icon={<AccountBalanceWallet/>}/>
-              <DrawerItem label="Sources" route="/sources" icon={<Cloud/>}/>
-              <DrawerItem label="Settings" route="/settings" icon={<Settings/>}/>
-            </List>
-          </Drawer>
-          <main className={classes.content}>
-            {children}
-          </main>
-        </div>
-      </MuiThemeProvider>
+      <div className={classes.appFrame}>
+        <Drawer type="permanent" classes={{ paper: classes.drawerPaper }}>
+          <AppBar position="static" color="default" elevation={1}>
+            <Toolbar className={classes.toolbar}>
+              <Avatar src="./resources/icon.png" className={classes.avatar}/>
+              <Typography type="title" color="inherit">
+                FuxFolio
+              </Typography>
+            </Toolbar>
+          </AppBar>
+          <List className={classes.topList}>
+            <DrawerItem label="Portfolio" route="/" icon={<Dashboard/>}/>
+            <DrawerItem label="Transactions" route="/transactions" icon={<SwapHoriz/>}/>
+          </List>
+          <List className={classes.bottomList}>
+            <DrawerItem label="Wallets" route="/wallets" icon={<AccountBalanceWallet/>}/>
+            <DrawerItem label="Sources" route="/sources" icon={<Cloud/>}/>
+            <DrawerItem label="Settings" route="/settings" icon={<Settings/>}/>
+          </List>
+        </Drawer>
+        <main className={classes.content}>
+          {children}
+        </main>
+      </div>
     );
   }
 }

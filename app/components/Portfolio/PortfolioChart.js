@@ -1,6 +1,7 @@
 // @flow
 import React from 'react';
 import { defaults, HorizontalBar } from 'react-chartjs-2';
+import { withTheme } from 'material-ui';
 import getColor from '../../utils/colors';
 
 // Disable animating charts by default.
@@ -9,10 +10,11 @@ defaults.global.animation = false;
 type Props = {
   ticker: Object,
   portfolio: Object,
-  sum: number
+  sum: number,
+  theme: Object
 };
 
-export default function PortfolioChart({ ticker, portfolio, sum }: Props) {
+function PortfolioChart({ ticker, portfolio, sum, theme }: Props) {
   const chartData = calculateChartData(ticker, portfolio, sum);
 
   return (
@@ -29,23 +31,32 @@ export default function PortfolioChart({ ticker, portfolio, sum }: Props) {
         },
         legend: {
           display: true,
+          labels: {
+            fontColor: theme.palette.text.secondary,
+          },
         },
         scales: {
-          xAxes: [{
-            stacked: true,
-            ticks: {
-              min: 0,
-              max: 100,
-            },
-          }],
-          yAxes: [{
-            stacked: true,
-          }],
+          xAxes: [
+            {
+              stacked: true,
+              fontColor: theme.palette.text.secondary,
+              ticks: {
+                min: 0,
+                max: 100,
+              },
+            }],
+          yAxes: [
+            {
+              stacked: true,
+              fontColor: theme.palette.text.secondary,
+            }],
         },
       }}
     />
   );
 }
+
+export default withTheme()(PortfolioChart);
 
 function calculateChartData(ticker: Object, portfolio: Object, sum: number) {
   const datasets = Object.keys(portfolio)
