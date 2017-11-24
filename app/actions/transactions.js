@@ -9,6 +9,14 @@ import startTimer from './timer';
 
 const REFRESH_TIME_IN_MS = 30000;
 
+function fetchingTransactions(): Action {
+  return {
+    type: 'LAST_UPDATED',
+    key: 'transactions',
+    time: new Date(),
+  };
+}
+
 function requestTransactions(exchange: Exchange): Action {
   return {
     type: 'REQUEST_TRANSACTIONS',
@@ -72,6 +80,7 @@ function fetchTransactions(exchange: Exchange): ThunkAction {
 export function fetchAllTransactions(): ThunkAction {
   return (dispatch: Dispatch, getState: GetState) => {
     const sources = getConfiguredExchanges(getState());
+    dispatch(fetchingTransactions());
     return sources.map(source => dispatch(fetchTransactions(source)));
   };
 }

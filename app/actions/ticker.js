@@ -7,7 +7,15 @@ import type { Wallet } from './wallet.d';
 import type { TransactionsState as TransactionState } from '../reducers/transactions';
 import { flattenTransactions } from '../helpers/transactions';
 
-const REFRESH_TIME_IN_MS = 10000;
+const REFRESH_TIME_IN_MS = 30000;
+
+function fetchingTickerUpdate(): Action {
+  return {
+    type: 'LAST_UPDATED',
+    key: 'ticker',
+    time: new Date(),
+  };
+}
 
 function receiveTickerUpdate(ticker: Object): Action {
   return {
@@ -25,6 +33,8 @@ function receiveCoinList(coinlist: Object): Action {
 
 export function requestTickerUpdate(): ThunkAction {
   return (dispatch: Dispatch, getState: GetState) => {
+    dispatch(fetchingTickerUpdate());
+
     const state = getState();
     const symbols = getSymbolsFromTransactions(state.transactions, state.wallets, state.settings.fiatCurrency);
     const fsyms = symbols.from.join(',');

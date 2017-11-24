@@ -11,6 +11,7 @@ import { continuouslyFetchTransactions } from '../actions/transactions';
 import type { Dispatch } from '../actions/action.d';
 import { continuouslyUpdateTicker, requestCoinList } from '../actions/ticker';
 import { DrawerItem } from '../components/DrawerItem';
+import LastUpdateBar from '../components/LastUpdateBar';
 
 const drawerWidth = 250;
 
@@ -24,6 +25,8 @@ const styles = theme => ({
     backgroundColor: theme.palette.background.default,
     padding: theme.spacing.unit * 3,
     height: 'calc(100% - 48px)',
+  },
+  marginLeft: {
     marginLeft: drawerWidth,
   },
   toolbar: {
@@ -77,9 +80,12 @@ class App extends Component<Props> {
             <DrawerItem label="Settings" route="/settings" icon={<Settings/>}/>
           </List>
         </Drawer>
-        <main className={classes.content}>
-          {children}
-        </main>
+        <div className={classes.marginLeft}>
+          <LastUpdateBar/>
+          <main className={classes.content}>
+            {children}
+          </main>
+        </div>
       </div>
     );
   }

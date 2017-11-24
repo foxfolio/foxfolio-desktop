@@ -11,6 +11,7 @@ export type Action =
   | {| type: 'ADD_WALLET', wallet: Wallet |}
   | {| type: 'EDIT_WALLET', wallet: Wallet, newWallet: Wallet |}
   | {| type: 'DELETE_WALLET', wallet: Wallet |}
+  | {| type: 'LAST_UPDATED', key: string, time: Date |}
   | {| type: 'REQUEST_TRANSACTIONS', source: Exchange |}
   | {| type: 'RECEIVE_TRANSACTIONS', exchange: Exchange, trades: Trade[], transfers: Transfer[] |}
   | {| type: 'RECEIVE_TRADES', exchange: Exchange, trades: Trade[] |}
