@@ -111,14 +111,15 @@ function convertBitstampTrade(bitstampTransaction: BitstampTransaction): Trade {
         minor: market.split('_')[0].toUpperCase(),
         major: market.split('_')[1].toUpperCase(),
       };
-      trade.amount = parseFloat(bitstampTransaction[trade.market.minor.toLowerCase()]);
-      trade.rate = parseFloat(bitstampTransaction[market]);
-      trade.commission = parseFloat(bitstampTransaction.fee);
-      if (trade.amount < 0 || bitstampTransaction[trade.market.minor.toLowerCase()] === '-0.00') {
+      if (parseFloat(bitstampTransaction[trade.market.minor.toLowerCase()]) < 0
+        || bitstampTransaction[trade.market.minor.toLowerCase()] === '-0.00') {
         trade.type = 'SELL';
       } else {
         trade.type = 'BUY';
       }
+      trade.amount = Math.abs(parseFloat(bitstampTransaction[trade.market.minor.toLowerCase()]));
+      trade.rate = Math.abs(parseFloat(bitstampTransaction[market]));
+      trade.commission = Math.abs(parseFloat(bitstampTransaction.fee));
     }
   });
   if (trade.market.major === '') {
