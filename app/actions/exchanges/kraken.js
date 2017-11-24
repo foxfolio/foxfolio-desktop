@@ -6,12 +6,10 @@ import type { Trade, Transfer } from '../transaction.d';
 import type { Kraken } from '../exchange.d';
 import type { Dispatch, ThunkAction } from '../action.d';
 
-const objToArray = obj => Object.keys(obj).map(key => obj[key]);
-
 const SOURCE_NAME = 'kraken';
+
 const API_VERSION = 0;
 const API_BASE_URL = 'https://api.kraken.com';
-
 type KrakenTradeType = {
   ordertxid: string,
   pair: string,
@@ -61,7 +59,7 @@ function getTransferHistory(exchange: Kraken): Promise<Transfer[]> {
     .then(ledgerEntriesToTransfers);
 }
 
-function krakenRequest(endpoint: string, exchange: Kraken) {
+async function krakenRequest(endpoint: string, exchange: Kraken) {
   const path = `/${API_VERSION}/private/${endpoint}`;
 
   const hash = crypto.createHash('sha256');
@@ -73,7 +71,7 @@ function krakenRequest(endpoint: string, exchange: Kraken) {
   const hashDigest = hash.update(nonce + body).digest('binary');
   const signatureDigest = hmac.update(path + hashDigest, 'binary').digest('base64');
 
-  return fetch(API_BASE_URL + path, {
+  const response = await fetch(API_BASE_URL + path, {
     method: 'POST',
     body,
     headers: {
@@ -81,8 +79,16 @@ function krakenRequest(endpoint: string, exchange: Kraken) {
       'API-Sign': signatureDigest,
       'Content-Type': 'application/x-www-form-urlencoded',
     },
-  }).then(result => result.json())
-    .then(json => json.result);
+  });
+  if (!response.ok || response.status >= 400) {
+    throw new Error(`Error ${response.status}`);
+  }
+  const json = await response.json();
+  if (json.error && json.error.length > 0) {
+    throw new Error(json.error[0]);
+  }
+  console.log(json);
+  return json.result;
 }
 
 function tradesHistoryToTransactions(krakenTrades: KrakenTradeType[]): Trade[] {
@@ -120,11 +126,13 @@ function convertKrakenTransfer(ledgerEntry: KrakenLedgerType): Transfer {
   };
 }
 
-function unifySymbols(symbol: string) {
+const objToArray = obj => Object.keys(obj).map(key => obj[key]);
+
+const unifySymbols = symbol => {
   switch (symbol) {
     case 'XBT':
       return 'BTC';
     default:
       return symbol;
   }
-}
+};

@@ -10,6 +10,7 @@ import type { Wallet } from '../actions/wallet.d';
 const styles = theme => ({
   button: {
     margin: theme.spacing.unit,
+    color: theme.palette.background.default,
     position: 'absolute',
     right: 40,
     bottom: 40,

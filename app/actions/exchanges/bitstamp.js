@@ -35,7 +35,7 @@ export default function getBitstampTransactions(exchange: Bitstamp): ThunkAction
   return (dispatch: Dispatch) => {
     getOrderHistory(exchange)
       .then((results: [Trade[], Transfer[]]) => dispatch(receiveTransactions(exchange, results[0], results[1])))
-      .catch(error => dispatch(failedTransaction(exchange, error)));
+      .catch(error => dispatch(failedTransaction(exchange, error.message)));
   };
 }
 
@@ -44,7 +44,7 @@ function getOrderHistory(exchange: Bitstamp): Promise<[Trade[], Transfer[]]> {
     .then(orderHistoryToTradesAndTransfers);
 }
 
-function bitstampRequest(endpoint: string, exchange: Bitstamp) {
+async function bitstampRequest(endpoint: string, exchange: Bitstamp): Promise<BitstampTransaction[]> {
   const nonce = Date.now().valueOf();
   const hmac = crypto.createHmac('sha256', Buffer.from(exchange.apiSecret, 'utf8'));
   const signature = hmac.update(nonce + exchange.customerId + exchange.apiKey).digest('hex').toUpperCase();
@@ -56,13 +56,19 @@ function bitstampRequest(endpoint: string, exchange: Bitstamp) {
     nonce,
   };
 
-  return fetch(uri, {
+  const result = await fetch(uri, {
     method: 'POST',
     body: querystring.stringify(form),
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
     },
-  }).then(result => result.json());
+  });
+  const json = await result.json();
+  if (json.status && json.status === 'error') {
+    throw new Error(json.reason);
+  } else {
+    return json;
+  }
 }
 
 function orderHistoryToTradesAndTransfers(transactions: BitstampTransaction[]): [Trade[], Transfer[]] {

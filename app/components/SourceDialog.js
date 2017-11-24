@@ -39,7 +39,8 @@ export default class SourceDialog extends Component<Props> {
     }
   }
 
-  save = () => {
+  onSubmit = event => {
+    event.preventDefault();
     this.props.save({
       id: `${this.state.type}-${this.state.apiKey}`,
       type: this.state.type,
@@ -67,7 +68,7 @@ export default class SourceDialog extends Component<Props> {
       >
         <DialogTitle>New source</DialogTitle>
         <DialogContent>
-          <form autoComplete="off">
+          <form autoComplete="off" onSubmit={this.onSubmit}>
             <FormControl fullWidth>
               <InputLabel htmlFor="type">Exchange</InputLabel>
               <Select
@@ -86,7 +87,7 @@ export default class SourceDialog extends Component<Props> {
               <Button onClick={close} color="primary">
                 Cancel
               </Button>
-              <Button onClick={this.save} color="primary">
+              <Button type="submit" color="primary">
                 Ok
               </Button>
             </DialogActions>

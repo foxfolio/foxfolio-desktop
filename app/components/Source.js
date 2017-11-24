@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { Button, Card, CardActions, CardContent, Typography } from 'material-ui';
+import { Button, Card, CardActions, CardContent, LinearProgress, Typography } from 'material-ui';
 import { withStyles } from 'material-ui/styles';
 import style from './Source.css';
 import type { Exchange } from '../actions/exchange.d';
@@ -13,6 +13,12 @@ const styles = theme => ({
   },
   flexGrow: {
     flex: '1 1 auto',
+  },
+  success: {
+    color: theme.palette.success[500],
+  },
+  error: {
+    color: theme.palette.error[500],
   },
 });
 
@@ -27,6 +33,15 @@ type Props = {
 class Source extends Component<Props> {
   render() {
     const { classes, exchange, transactions, onEdit, onDelete } = this.props;
+
+    let status = <span className={classes.success}>OK</span>;
+    if (transactions) {
+      if (transactions.error) {
+        status = <span className={classes.error}>{transactions.error}</span>;
+      } else if (transactions.openRequests > 0) {
+        status = <span>Fetching transactions</span>;
+      }
+    }
     return (
       <Card className={style.source}>
         <CardContent>
@@ -34,12 +49,10 @@ class Source extends Component<Props> {
             {exchange.type}
           </Typography>
           <Typography type="body1" className={classes.subheader}>
-            {`Key: ${exchange.apiKey}`}
+            {`Key: ${exchange.apiKey.substring(0, 20)}...`}
           </Typography>
           <Typography type="body1" className={classes.subheader}>
-            {`Last update: ${transactions ? new Date(transactions.lastUpdated || Date.now()).toTimeString() : 'Never'}`}
-            <br/>
-            {transactions && transactions.error ? <Typography color="error">{transactions.error}</Typography> : ''}
+            Status: {status}
           </Typography>
         </CardContent>
         <CardActions>
@@ -47,6 +60,7 @@ class Source extends Component<Props> {
           <Button dense color="default" onClick={() => onDelete(exchange)}>Delete</Button>
           <Button dense color="primary" onClick={() => onEdit(exchange)}>Edit</Button>
         </CardActions>
+        {transactions && transactions.openRequests > 0 ? <LinearProgress/> : ''}
       </Card>
     );
   }
