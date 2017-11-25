@@ -9,6 +9,7 @@ import { withStyles } from 'material-ui/styles';
 import { ExpandMore } from 'material-ui-icons';
 import TransactionRow from '../TransactionRow';
 import PriceChangeText from '../PriceChangeText';
+import PortfolioPositionWalletRow from './PortfolioPositionWalletRow';
 
 export const styles = (theme: Object) => ({
   root: {
@@ -41,7 +42,7 @@ type Props = {
   coinlist: Object,
   ticker: Object,
   transactions: Object[],
-  quantity: number,
+  portfolio: { total: number, transactions: number, wallets: number },
   classes: any,
   sumBTC: number,
   fiatCurrency: string
@@ -61,7 +62,8 @@ class PortfolioPosition extends Component<Props, State> {
   };
 
   rowCard(avatar: Node) {
-    const { asset, quantity, classes, coinlist, ticker, sumBTC, fiatCurrency } = this.props;
+    const { asset, portfolio, classes, coinlist, ticker, sumBTC, fiatCurrency } = this.props;
+    const quantity = portfolio.total;
     return (
       <CardContent className={classes.root} onClick={this.handleExpandClick}>
         <div className={classes.avatar}>{avatar}</div>
@@ -141,7 +143,7 @@ class PortfolioPosition extends Component<Props, State> {
   }
 
   render() {
-    const { asset, coinlist, ticker, transactions } = this.props;
+    const { asset, coinlist, ticker, transactions, portfolio } = this.props;
     return (
       <Card>
         {this.rowCard(
@@ -152,6 +154,7 @@ class PortfolioPosition extends Component<Props, State> {
           />,
         )}
         <Collapse in={this.state.expanded}>
+          {portfolio.wallets > 0 ? <PortfolioPositionWalletRow asset={asset} balance={portfolio.wallets}/> : ''}
           {transactions.map(transaction =>
             <TransactionRow key={transaction.id} paddingLeft={50} transaction={transaction} ticker={ticker}/>)}
         </Collapse>

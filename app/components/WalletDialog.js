@@ -13,7 +13,7 @@ export default class WalletDialog extends Component<Props> {
   state = {
     currency: '',
     address: '',
-    quantity: 0
+    quantity: 0,
   };
 
   componentWillReceiveProps(nextProps) {
@@ -27,7 +27,8 @@ export default class WalletDialog extends Component<Props> {
     }
   }
 
-  save = () => {
+  save = event => {
+    event.preventDefault();
     this.props.save({
       currency: this.state.currency,
       address: this.state.address,
@@ -51,7 +52,7 @@ export default class WalletDialog extends Component<Props> {
       >
         <DialogTitle>New wallet</DialogTitle>
         <DialogContent>
-          <form autoComplete="off">
+          <form autoComplete="off" onSubmit={this.save}>
             <TextField
               label="Currency"
               id="currency"
@@ -88,7 +89,7 @@ export default class WalletDialog extends Component<Props> {
               <Button onClick={close} color="primary">
                 Cancel
               </Button>
-              <Button onClick={this.save} color="primary">
+              <Button type="submit" color="primary">
                 Ok
               </Button>
             </DialogActions>

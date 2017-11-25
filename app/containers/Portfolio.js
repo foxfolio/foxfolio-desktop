@@ -1,5 +1,6 @@
 // @flow
 import React from 'react';
+import R from 'ramda';
 import { Paper } from 'material-ui';
 import type { Transaction } from '../actions/transaction.d';
 import PortfolioChart from '../components/Portfolio/PortfolioChart';
@@ -20,18 +21,18 @@ type Props = {
 export default function Portfolio({ ticker, coinlist, transactions, wallets, settings }: Props) {
   const portfolio = calculatePortfolio(transactions, wallets, settings.fiatCurrency);
   const sum = {
-    btc: calculateSum(ticker, portfolio, 'BTC'),
-    fiat: calculateSum(ticker, portfolio, settings.fiatCurrency),
+    btc: calculateSum(ticker, portfolio.total, 'BTC'),
+    fiat: calculateSum(ticker, portfolio.total, settings.fiatCurrency),
   };
 
-  if (ticker.BTC) { // TODO What if the user has no BTC?
+  if (ticker.BTC || ticker.ETH) { // TODO What if the user has no BTC?
     return (
       <div>
         <Paper style={{ marginTop: 0, paddingBottom: 25, paddingTop: 25, textAlign: 'center' }}>
           <PortfolioHeader fiatCurrency={settings.fiatCurrency} sum={sum} ticker={ticker}/>
         </Paper>
         <Paper style={{ marginTop: 30, paddingBottom: 20, paddingTop: 10 }}>
-          <PortfolioChart ticker={ticker} portfolio={portfolio} sum={sum.btc}/>
+          <PortfolioChart ticker={ticker} portfolio={portfolio.total} sum={sum.btc}/>
         </Paper>
         <Paper style={{ marginTop: 30 }}>
           <PortfolioPositions
@@ -54,7 +55,7 @@ export default function Portfolio({ ticker, coinlist, transactions, wallets, set
 }
 
 function calculatePortfolio(transactions: Transaction[], wallets: Wallet[], fiatCurrency: string): Object {
-  const portfolio = transactions.reduce((acc, transaction) => {
+  const transactionBalance = transactions.reduce((acc, transaction) => {
     switch (transaction.type) {
       case 'DEPOSIT':
       case 'WITHDRAW':
@@ -80,13 +81,17 @@ function calculatePortfolio(transactions: Transaction[], wallets: Wallet[], fiat
     }
     return acc;
   }, {});
+  delete transactionBalance[fiatCurrency];
 
-  wallets.forEach(wallet => {
-    portfolio[wallet.currency] = portfolio[wallet.currency] || 0;
-    portfolio[wallet.currency] += wallet.quantity;
-  });
-  delete portfolio[fiatCurrency];
-  return portfolio;
+  const walletBalance = wallets.reduce((acc, wallet) => ({
+    ...acc,
+    [wallet.currency]: (acc[wallet.currency] || 0) + wallet.quantity,
+  }), {});
+  return {
+    total: R.mergeWith((a, b) => a + b, transactionBalance, walletBalance),
+    transactions: transactionBalance,
+    wallets: walletBalance,
+  };
 }
 
 function calculateSum(ticker: Object, portfolio: Object, currency: string) {
