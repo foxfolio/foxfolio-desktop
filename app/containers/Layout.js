@@ -21,13 +21,13 @@ const styles = theme => ({
     height: '100%',
   },
   avatar: { margin: 10 },
+  padding: {
+    padding: theme.spacing.unit * 3,
+  },
   content: {
     backgroundColor: theme.palette.background.default,
-    padding: theme.spacing.unit * 3,
-    height: 'calc(100% - 48px)',
-  },
-  marginLeft: {
     marginLeft: drawerWidth,
+    height: '100%',
   },
   toolbar: {
     padding: 0,
@@ -80,12 +80,12 @@ class App extends Component<Props> {
             <DrawerItem label="Settings" route="/settings" icon={<Settings/>}/>
           </List>
         </Drawer>
-        <div className={classes.marginLeft}>
+        <main className={classes.content}>
           <LastUpdateBar/>
-          <main className={classes.content}>
+          <div className={classes.padding}>
             {children}
-          </main>
-        </div>
+          </div>
+        </main>
       </div>
     );
   }
