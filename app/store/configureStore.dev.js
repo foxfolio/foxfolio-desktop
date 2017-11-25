@@ -1,12 +1,13 @@
 import { applyMiddleware, compose, createStore } from 'redux';
 import thunk from 'redux-thunk';
+import { persistStore } from 'redux-persist';
 import { createHashHistory } from 'history';
 import { routerActions, routerMiddleware } from 'react-router-redux';
 import { createLogger } from 'redux-logger';
 import rootReducer from '../reducers';
 import * as bittrexActions from '../actions/exchanges/bittrex';
 import * as sourceActions from '../actions/sources';
-import persistStore from './persistStore';
+import rehydrationComplete from '../actions/init';
 
 const history = createHashHistory();
 
@@ -51,7 +52,7 @@ const configureStore = (initialState?: any) => {
 
   // Create Store
   const store = createStore(rootReducer, initialState, enhancer);
-  persistStore(store);
+  persistStore(store, null, () => store.dispatch(rehydrationComplete()));
 
   if (module.hot) {
     module.hot.accept('../reducers', () =>

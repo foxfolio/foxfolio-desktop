@@ -20,7 +20,7 @@ const emptyExchangeState = {
   transfers: [],
 };
 
-export default function transactions(state: $ReadOnly<TransactionsState> = {}, action: Action): TransactionsState {
+export default function transactions(state: TransactionsState = {}, action: Action): TransactionsState {
   switch (action.type) {
     case 'REQUEST_TRANSACTIONS':
       return {
@@ -35,6 +35,7 @@ export default function transactions(state: $ReadOnly<TransactionsState> = {}, a
         ...state,
         [action.exchange.id]: {
           ...state[action.exchange.id],
+          error: undefined,
           openRequests: state[action.exchange.id].openRequests - 1,
           lastUpdated: new Date(),
           trades: mergeTransactions(state[action.exchange.id].trades, action.trades),
@@ -46,6 +47,7 @@ export default function transactions(state: $ReadOnly<TransactionsState> = {}, a
         ...state,
         [action.exchange.id]: {
           ...state[action.exchange.id],
+          error: undefined,
           openRequests: state[action.exchange.id].openRequests - 1,
           lastUpdated: new Date(),
           transfers: mergeTransactions(state[action.exchange.id].transfers, action.transfers),
@@ -56,6 +58,7 @@ export default function transactions(state: $ReadOnly<TransactionsState> = {}, a
         ...state,
         [action.exchange.id]: {
           ...state[action.exchange.id],
+          error: undefined,
           openRequests: state[action.exchange.id].openRequests - 1,
           lastUpdated: new Date(),
           trades: mergeTransactions(state[action.exchange.id].trades, action.trades),
@@ -74,7 +77,7 @@ export default function transactions(state: $ReadOnly<TransactionsState> = {}, a
     case 'DELETE_EXCHANGE':
       return R.omit([action.exchange.id], state);
     default:
-      return { ...state };
+      return state;
   }
 }
 
