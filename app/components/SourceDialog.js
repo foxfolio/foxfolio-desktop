@@ -80,6 +80,7 @@ export default class SourceDialog extends Component<Props> {
                 <MenuItem value="bittrex">Bittrex</MenuItem>
                 <MenuItem value="bitstamp">Bitstamp</MenuItem>
                 <MenuItem value="kraken">Kraken</MenuItem>
+                <MenuItem value="binance">Binance</MenuItem>
               </Select>
             </FormControl>
             {getFormForExchange(this.state.type, this.state, this.handleChange)}
@@ -135,6 +136,27 @@ const getFormForExchange = (exchange, state, handleChange) => {
         </div>
       );
     case 'kraken':
+      return (
+        <div>
+          <TextField
+            label="API Key"
+            id="apiKey"
+            value={state.apiKey}
+            onChange={handleChange('apiKey')}
+            fullWidth
+            margin="normal"
+          />
+          <TextField
+            label="API Secret"
+            id="apiSecret"
+            value={state.apiSecret}
+            onChange={handleChange('apiSecret')}
+            fullWidth
+            margin="normal"
+          />
+        </div>
+      );
+    case 'binance':
       return (
         <div>
           <TextField

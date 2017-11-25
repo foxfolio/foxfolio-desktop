@@ -1,6 +1,7 @@
 // @flow
 export type Exchange =
   | Kraken
+  | Binance
   | Bittrex
   | Bitstamp;
 
@@ -18,6 +19,11 @@ export type EmptyExchange = {|
 export type Kraken = {|
   ...ExchangeBase,
   type: 'kraken'
+|};
+
+export type Binance = {|
+  ...ExchangeBase,
+  type: 'binance'
 |};
 
 export type Bittrex = {|

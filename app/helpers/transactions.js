@@ -8,3 +8,12 @@ export function flattenTransactions(transactions: TransactionsState): Transactio
     .reduce((acc, sourceName) => acc.concat(transactions[sourceName].trades).concat(transactions[sourceName].transfers),
       []);
 }
+
+export function unifySymbols(symbol: string): string {
+  switch (symbol) {
+    case 'XBT':
+      return 'BTC';
+    default:
+      return symbol;
+  }
+}

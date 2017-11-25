@@ -6,6 +6,7 @@ import type { Trade, Transfer } from './transaction.d';
 import type { Action, Dispatch, GetState, ThunkAction } from './action.d';
 import type { Exchange } from './exchange.d';
 import startTimer from './timer';
+import { getBinanceTransactions } from './exchanges/binance';
 
 const REFRESH_TIME_IN_MS = 30000;
 
@@ -71,6 +72,8 @@ function fetchTransactions(exchange: Exchange): ThunkAction {
         return dispatch(getBitstampTransactions(exchange));
       case 'kraken':
         return dispatch(getKrakenTransactions(exchange));
+      case 'binance':
+        return dispatch(getBinanceTransactions(exchange));
       default:
         return dispatch(receiveTransactions(exchange));
     }
