@@ -1,7 +1,7 @@
 // @flow
 import R from 'ramda';
 import type { Action } from '../actions/action.d';
-import type { Trade, Transaction, Transfer } from '../actions/transaction.d';
+import type { Balances, Trade, Transaction, Transfer } from '../actions/transaction.d';
 
 export type TransactionsState = {
   [string]: TransactionState
@@ -11,13 +11,15 @@ export type TransactionState = {|
   openRequests: number,
   lastUpdated?: Date,
   trades: Trade[],
-  transfers: Transfer[]
+  transfers: Transfer[],
+  balances: Balances
 |};
 
 const emptyExchangeState = {
   openRequests: 0,
   trades: [],
   transfers: [],
+  balances: {},
 };
 
 export default function transactions(state: TransactionsState = {}, action: Action): TransactionsState {
@@ -62,6 +64,14 @@ export default function transactions(state: TransactionsState = {}, action: Acti
           openRequests: state[action.exchange.id].openRequests - 1,
           lastUpdated: new Date(),
           trades: mergeTransactions(state[action.exchange.id].trades, action.trades),
+        },
+      };
+    case 'RECEIVE_BALANCES':
+      return {
+        ...state,
+        [action.exchange.id]: {
+          ...state[action.exchange.id],
+          balances: action.balances,
         },
       };
     case 'FAILED_TRANSACTION_REQUEST':

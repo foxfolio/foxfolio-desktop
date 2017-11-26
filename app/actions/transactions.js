@@ -2,7 +2,7 @@
 import { getBittrexTransactions, readBittrexTransactionsFromFile } from './exchanges/bittrex';
 import getBitstampTransactions from './exchanges/bitstamp';
 import { getKrakenTransactions } from './exchanges/kraken';
-import type { Trade, Transfer } from './transaction.d';
+import type { Balances, Trade, Transfer } from './transaction.d';
 import type { Action, Dispatch, GetState, ThunkAction } from './action.d';
 import type { Exchange } from './exchange.d';
 import startTimer from './timer';
@@ -34,7 +34,7 @@ export function receiveTransactions(exchange: Exchange, trades: Trade[] = [], tr
   };
 }
 
-export function receiveTransfers(exchange: Exchange, transfers: Transfer[] = []): Action {
+export function receiveTransfers(exchange: Exchange, transfers: Transfer[]): Action {
   return {
     type: 'RECEIVE_TRANSFERS',
     exchange,
@@ -42,7 +42,15 @@ export function receiveTransfers(exchange: Exchange, transfers: Transfer[] = [])
   };
 }
 
-export function receiveTrades(exchange: Exchange, trades: Trade[] = []): Action {
+export function receiveBalances(exchange: Exchange, balances: Balances): Action {
+  return {
+    type: 'RECEIVE_BALANCES',
+    exchange,
+    balances,
+  };
+}
+
+export function receiveTrades(exchange: Exchange, trades: Trade[]): Action {
   return {
     type: 'RECEIVE_TRADES',
     exchange,

@@ -1,8 +1,8 @@
 // @flow
 import crypto from 'crypto';
 import querystring from 'querystring';
-import { failedTransaction, receiveTransfers } from '../transactions';
-import type { Transfer } from '../transaction.d';
+import { failedTransaction, receiveBalances, receiveTransfers } from '../transactions';
+import type { Balances, Transfer } from '../transaction.d';
 import type { Binance } from '../exchange.d';
 import type { Dispatch, ThunkAction } from '../action.d';
 import { unifySymbols } from '../../helpers/transactions';
@@ -10,18 +10,6 @@ import { unifySymbols } from '../../helpers/transactions';
 const SOURCE_NAME = 'binance';
 
 const API_BASE_URL = ' https://api.binance.com';
-
-// type BinanceTrade = {
-//   +id: number,
-//   +price: string,
-//   +qty: string,
-//   +commission: string,
-//   +commissionAsset: string,
-//   +time: number,
-//   +isBuyer: boolean,
-//   +isMaker: boolean,
-//   +isBestMatch: boolean
-// };
 
 type BinanceDeposit = {
   +txId: string,
@@ -48,26 +36,32 @@ export function getBinanceTransactions(exchange: Binance): ThunkAction {
   return async (dispatch: Dispatch) => {
     try {
       const transfers = await getTransferHistory(exchange);
-      // const assets = R.pipe(R.map(transfer => transfer.currency), R.uniq)(transfers);
-      // const trades = await getTradesHistory(exchange, assets);
-      return dispatch(receiveTransfers(exchange, transfers));
+      dispatch(receiveTransfers(exchange, transfers));
+
+      const balances = await getBalances(exchange);
+      dispatch(receiveBalances(exchange, balances));
     } catch (error) {
       return dispatch(failedTransaction(exchange, error.message));
     }
   };
 }
 
-// function getTradesHistory(exchange: Binance, assets: string[]): Promise<Trade[]> {
-//   return Promise.all(
-//     assets.map(symbol =>
-//       binanceRequest('/api/v3/myTrades', exchange, { symbol }).then(trades => ({ symbol, trades }))))
-//     .then(tradeHistoryToTransactions);
-// }
-
 async function getTransferHistory(exchange: Binance): Promise<Array<Transfer>> {
   const deposits = await getDepositHistory(exchange);
   const withdrawals = await getWithdrawalHistory(exchange);
   return deposits.concat(withdrawals);
+}
+
+function getBalances(exchange: Binance): Promise<Balances> {
+  return binanceRequest('/api/v3/account', exchange)
+    .then(result => result.balances)
+    .then(balances => balances
+      .filter(balance => parseFloat(balance.free) > 0)
+      .reduce(
+        (acc, balance) => ({
+          ...acc,
+          [balance.asset]: parseFloat(balance.free),
+        }), {}));
 }
 
 function getDepositHistory(exchange: Binance): Promise<Array<Transfer>> {
@@ -107,10 +101,6 @@ async function binanceRequest(path: string, exchange: Binance, query: Object = {
   return json;
 }
 
-// function tradeHistoryToTransactions(trades: Array<{ symbol: string, trades: BinanceTrade[] }>): Array<Trade> {
-//   return R.flatten(trades.map(bla => bla.trades.map(trade => convertOrder(trade, bla.symbol))));
-// }
-
 function depositHistoryToTransactions(deposits: BinanceDeposit[]): Array<Transfer> {
   return deposits.map(convertDeposit);
 }
@@ -118,22 +108,6 @@ function depositHistoryToTransactions(deposits: BinanceDeposit[]): Array<Transfe
 function withdrawalHistoryToTransactions(withdrawals: BinanceWithdrawal[]): Array<Transfer> {
   return withdrawals.map(convertWithdrawal);
 }
-
-// function convertOrder(order: BinanceTrade, symbol: string): Trade {
-//   return ({
-//     id: `${order.id}`,
-//     date: new Date(order.time / 1000),
-//     source: SOURCE_NAME,
-//     type: order.isBuyer ? 'BUY' : 'SELL',
-//     market: {
-//       major: unifySymbols(order.co),
-//       minor: unifySymbols(symbol),
-//     },
-//     amount: parseFloat(order.Quantity) - parseFloat(order.QuantityRemaining),
-//     commission: parseFloat(order.Commission),
-//     rate: parseFloat(order.PricePerUnit),
-//   });
-// }
 
 function convertDeposit(deposit: BinanceDeposit): Transfer {
   return {

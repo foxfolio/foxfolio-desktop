@@ -23,3 +23,7 @@ export type Transfer = {|
   type: 'DEPOSIT' | 'WITHDRAW',
   amount: number
 |};
+
+export type Balances = {
+  [string]: number
+};

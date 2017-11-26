@@ -15,6 +15,7 @@ export type Action =
   | {| type: 'REQUEST_TRANSACTIONS', source: Exchange |}
   | {| type: 'RECEIVE_TRANSACTIONS', exchange: Exchange, trades: Trade[], transfers: Transfer[] |}
   | {| type: 'RECEIVE_TRADES', exchange: Exchange, trades: Trade[] |}
+  | {| type: 'RECEIVE_BALANCES', exchange: Exchange, balances: { [string]: number } |}
   | {| type: 'RECEIVE_TRANSFERS', exchange: Exchange, transfers: Transfer[] |}
   | {| type: 'FAILED_TRANSACTION_REQUEST', exchange: Exchange, error: string |}
   | {| type: 'TICKER_UPDATE', ticker: Object |}
