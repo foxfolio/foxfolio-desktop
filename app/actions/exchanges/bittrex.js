@@ -1,7 +1,8 @@
 // @flow
 import crypto from 'crypto';
 import { Converter } from 'csvtojson';
-import { failedTransaction, receiveTransactions } from '../transactions';
+import type { Balances } from '../../types/portfolio.d.ts';
+import { failedTransaction, receiveBalances, receiveTransactions } from '../transactions';
 import type { Trade, Transfer } from '../transaction.d';
 import type { Bittrex } from '../exchange.d';
 import type { Dispatch, ThunkAction } from '../action.d';
@@ -32,10 +33,17 @@ type BittrexWithdrawal = {
 };
 
 export function getBittrexTransactions(exchange: Bittrex): ThunkAction {
-  return (dispatch: Dispatch) => {
-    Promise.all([getOrderHistory(exchange), getTransferHistory(exchange)])
-      .then((results: [Trade[], Transfer[]]) => dispatch(receiveTransactions(exchange, results[0], results[1])))
-      .catch(error => dispatch(failedTransaction(exchange, error)));
+  return async (dispatch: Dispatch) => {
+    try {
+      const trades = await getOrderHistory(exchange);
+      const transfers = await getTransferHistory(exchange);
+      dispatch(receiveTransactions(exchange, trades, transfers));
+
+      const balances = await getBalances(exchange);
+      dispatch(receiveBalances(exchange, balances));
+    } catch (error) {
+      dispatch(failedTransaction(exchange, error.message));
+    }
   };
 }
 
@@ -85,7 +93,18 @@ function getWithdrawalHistory(exchange: Bittrex): Promise<Array<Transfer>> {
     .then(withdrawalHistoryToTransactions);
 }
 
-function bittrexRequest(endpoint, exchange: Bittrex) {
+function getBalances(exchange: Bittrex): Promise<Balances> {
+  return bittrexRequest('getbalances', exchange)
+    .then(balances =>
+      balances.filter(balance => parseFloat(balance.Balance) > 0)
+        .reduce(
+          (acc, balance) => ({
+            ...acc,
+            [balance.Currency]: parseFloat(balance.Balance),
+          }), {}));
+}
+
+function bittrexRequest(endpoint: string, exchange: Bittrex) {
   const nonce = Date.now().valueOf();
   const uri = `https://bittrex.com/api/v1.1/account/${endpoint}?apikey=${exchange.apiKey}&nonce=${nonce}`;
   const hmac = crypto.createHmac('sha512', exchange.apiSecret);
