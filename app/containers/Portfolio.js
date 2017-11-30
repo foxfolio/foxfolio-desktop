@@ -9,17 +9,19 @@ import PortfolioPositions from '../components/Portfolio/PortfolioPositions';
 import PortfolioHeader from '../components/Portfolio/PortfolioHeader';
 import EmptyPortfolio from '../components/Portfolio/EmptyPortfolio';
 import type { Wallet } from '../actions/wallet.d';
+import type { Balances, Portfolio } from '../types/portfolio.d.ts';
 
 type Props = {
-  transactions: Transaction[],
+  balances: { [string]: Balances },
   ticker: Object,
   coinlist: Object,
   wallets: Wallet[],
   settings: SettingsType
 };
 
-export default function Portfolio({ ticker, coinlist, transactions, wallets, settings }: Props) {
-  const portfolio = calculatePortfolio(transactions, wallets, settings.fiatCurrency);
+export default function PortfolioContainer(
+  { balances, ticker, coinlist, wallets, settings }: Props) {
+  const portfolio = calculatePortfolio(wallets, balances);
   const sum = {
     btc: calculateSum(ticker, portfolio.total, 'BTC'),
     fiat: calculateSum(ticker, portfolio.total, settings.fiatCurrency),
@@ -39,7 +41,6 @@ export default function Portfolio({ ticker, coinlist, transactions, wallets, set
             portfolio={portfolio}
             ticker={ticker}
             coinlist={coinlist}
-            transactions={transactions}
             fiatCurrency={settings.fiatCurrency}
             sumBTC={sum.btc}
           />
@@ -54,43 +55,20 @@ export default function Portfolio({ ticker, coinlist, transactions, wallets, set
   );
 }
 
-function calculatePortfolio(transactions: Transaction[], wallets: Wallet[], fiatCurrency: string): Object {
-  const transactionBalance = transactions.reduce((acc, transaction) => {
-    switch (transaction.type) {
-      case 'DEPOSIT':
-      case 'WITHDRAW':
-        acc[transaction.currency] = acc[transaction.currency] || 0;
-        acc[transaction.currency] += (transaction.type === 'WITHDRAW' ? -1 : 1) * transaction.amount;
-        break;
-      case 'BUY':
-        acc[transaction.market.major] = acc[transaction.market.major] || 0;
-        acc[transaction.market.minor] = acc[transaction.market.minor] || 0;
-
-        acc[transaction.market.major] -= (transaction.rate * transaction.amount) + transaction.commission;
-        acc[transaction.market.minor] += transaction.amount;
-        break;
-      case 'SELL':
-        acc[transaction.market.major] = acc[transaction.market.major] || 0;
-        acc[transaction.market.minor] = acc[transaction.market.minor] || 0;
-
-        acc[transaction.market.major] += (transaction.rate * transaction.amount) - transaction.commission;
-        acc[transaction.market.minor] -= transaction.amount;
-        break;
-      default:
-        break;
-    }
-    return acc;
-  }, {});
-  delete transactionBalance[fiatCurrency];
-
-  const walletBalance = wallets.reduce((acc, wallet) => ({
+function calculatePortfolio(wallets: Wallet[], balances: { [string]: Balances }): Portfolio {
+  const walletBalances = wallets.reduce((acc, wallet) => ({
     ...acc,
     [wallet.currency]: (acc[wallet.currency] || 0) + wallet.quantity,
   }), {});
+  let exchangeBalances = {};
+  Object.keys(balances).forEach(exchange => {
+    exchangeBalances = R.mergeWith((a, b) => a + b, exchangeBalances, balances[exchange]);
+  });
+
   return {
-    total: R.mergeWith((a, b) => a + b, transactionBalance, walletBalance),
-    transactions: transactionBalance,
-    wallets: walletBalance,
+    total: R.mergeWith((a, b) => a + b, exchangeBalances, walletBalances),
+    exchanges: balances,
+    wallets: walletBalances,
   };
 }
 

@@ -87,7 +87,7 @@ function getWithdrawalHistory(exchange: Binance): Promise<Array<Transfer>> {
 
 async function binanceRequest(path: string, exchange: Binance, query: Object = {}) {
   const timestamp = Date.now().valueOf();
-  const recvWindow = 5000;
+  const recvWindow = 60000;
   const queryString = querystring.stringify({ ...query, timestamp, recvWindow });
   const hmac = crypto.createHmac('sha256', exchange.apiSecret);
   const signature = hmac.update(queryString).digest('hex');

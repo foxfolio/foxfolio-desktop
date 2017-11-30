@@ -1,14 +1,14 @@
 // @flow
-
 import type { Node } from 'react';
+import R from 'ramda';
 import React, { Component } from 'react';
 import classnames from 'classnames';
 import { Avatar, Card, CardContent, Grid, IconButton, Typography } from 'material-ui';
 import Collapse from 'material-ui/transitions/Collapse';
 import { withStyles } from 'material-ui/styles';
 import { ExpandMore } from 'material-ui-icons';
-import TransactionRow from '../TransactionRow';
 import PriceChangeText from '../PriceChangeText';
+import PortfolioPositionExchangeRow from './PortfolioPositionExchangeRow';
 import PortfolioPositionWalletRow from './PortfolioPositionWalletRow';
 
 export const styles = (theme: Object) => ({
@@ -41,10 +41,8 @@ type Props = {
   asset: string,
   coinlist: Object,
   ticker: Object,
-  transactions: Object[],
-  portfolio: { total: number, transactions: number, wallets: number },
+  portfolio: { total: number, exchanges: { [id: string]: number }, wallets: number },
   classes: any,
-  sumBTC: number,
   fiatCurrency: string
 };
 
@@ -62,7 +60,7 @@ class PortfolioPosition extends Component<Props, State> {
   };
 
   rowCard(avatar: Node) {
-    const { asset, portfolio, classes, coinlist, ticker, sumBTC, fiatCurrency } = this.props;
+    const { asset, portfolio, classes, coinlist, ticker, fiatCurrency } = this.props;
     const quantity = portfolio.total;
     return (
       <CardContent className={classes.root} onClick={this.handleExpandClick}>
@@ -79,12 +77,6 @@ class PortfolioPosition extends Component<Props, State> {
                 color="secondary"
               >
                 {quantity.toPrecision(5)}
-              </Typography>
-            </Grid>
-            <Grid item xs={1} className={classes.right}>
-              <Typography type="body2" component="span" color={quantity > 0 ? 'default' : 'secondary'}>
-                <br/>
-                {`${((quantity * ticker[asset].BTC.PRICE * 100) / sumBTC).toFixed(1)} %`}
               </Typography>
             </Grid>
             <Grid item xs={2} className={classes.right}>
@@ -143,7 +135,7 @@ class PortfolioPosition extends Component<Props, State> {
   }
 
   render() {
-    const { asset, coinlist, ticker, transactions, portfolio } = this.props;
+    const { asset, coinlist, portfolio } = this.props;
     return (
       <Card>
         {this.rowCard(
@@ -154,9 +146,15 @@ class PortfolioPosition extends Component<Props, State> {
           />,
         )}
         <Collapse in={this.state.expanded}>
-          {portfolio.wallets > 0 ? <PortfolioPositionWalletRow asset={asset} balance={portfolio.wallets}/> : ''}
-          {transactions.map(transaction =>
-            <TransactionRow key={transaction.id} paddingLeft={50} transaction={transaction} ticker={ticker}/>)}
+          {portfolio.wallets ? <PortfolioPositionWalletRow asset={asset} balance={portfolio.wallets}/> : ''}
+          {Object.keys(portfolio.exchanges).map(key =>
+            (<PortfolioPositionExchangeRow
+              key={key}
+              asset={asset}
+              balance={portfolio.exchanges[key]}
+              exchange={key.split('-')[0]}
+            />))}
+
         </Collapse>
       </Card>
     );

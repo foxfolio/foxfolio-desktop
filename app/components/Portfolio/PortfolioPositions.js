@@ -8,12 +8,11 @@ type Props = {
   portfolio: Object,
   coinlist: Object,
   ticker: Object,
-  transactions: Transaction[],
   fiatCurrency: string,
   sumBTC: number
 };
 
-export default function PortfolioPositions({ portfolio, coinlist, ticker, fiatCurrency, transactions, sumBTC }: Props) {
+export default function PortfolioPositions({ portfolio, coinlist, ticker, fiatCurrency, sumBTC }: Props) {
   return (
     <div>
       {Object.keys(portfolio.total)
@@ -26,10 +25,9 @@ export default function PortfolioPositions({ portfolio, coinlist, ticker, fiatCu
           <PortfolioPosition
             key={asset}
             coinlist={coinlist}
-            transactions={transactions.filter(containsAsset(asset))}
             ticker={ticker}
             asset={asset}
-            portfolio={R.map(a => a[asset] || 0)(portfolio)}
+            portfolio={filterPortfolioForAsset(portfolio, asset)}
             sumBTC={sumBTC}
             fiatCurrency={fiatCurrency}
           />
@@ -37,17 +35,9 @@ export default function PortfolioPositions({ portfolio, coinlist, ticker, fiatCu
     </div>);
 }
 
-function containsAsset(asset: string) {
-  return transaction => {
-    switch (transaction.type) {
-      case 'DEPOSIT':
-      case 'WITHDRAW':
-        return transaction.currency === asset;
-      case 'BUY':
-      case 'SELL':
-        return transaction.market.minor === asset || transaction.market.major === asset;
-      default:
-        return false;
-    }
-  };
-}
+const filterPortfolioForAsset = (portfolio, asset) =>
+  R.mapObjIndexed((value, key) => (
+    key !== 'exchanges'
+      ? (value[asset] || 0)
+      : R.pipe(R.filter(balances => balances[asset]), R.map(balances => balances[asset]))(value)),
+  )(portfolio);

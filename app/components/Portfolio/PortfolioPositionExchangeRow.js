@@ -1,7 +1,7 @@
 // @flow
 import React from 'react';
 import { Avatar, Card, CardContent, Grid, Typography, withStyles } from 'material-ui';
-import { AccountBalanceWallet } from 'material-ui-icons';
+import { AccountBalanceWallet, TrendingUp } from 'material-ui-icons';
 
 const styles = theme => ({
   root: {
@@ -11,7 +11,6 @@ const styles = theme => ({
   avatar: {
     flex: '0 0 auto',
     marginRight: theme.spacing.unit * 2,
-    backgroundColor: theme.palette.primary,
   },
   content: {
     flex: '1 1 auto',
@@ -24,23 +23,24 @@ const styles = theme => ({
 type Props = {
   asset: string,
   balance: number,
+  exchange: string,
   classes: Object
 };
 
-function PortfolioPositionWalletRow({ asset, balance, classes }: Props) {
+function PortfolioPositionExchangeRow({ asset, balance, exchange, classes }: Props) {
   return (
     <Card style={{ paddingLeft: 50 }}>
       <CardContent className={classes.root} onClick={this.handleExpandClick}>
-        <div className={classes.avatar}>
-          <Avatar>
-            <AccountBalanceWallet/>
+        <div>
+          <Avatar className={classes.avatar}>
+            <TrendingUp/>
           </Avatar>
         </div>
         <div className={classes.content}>
           <Grid container>
             <Grid item xs={2}>
               <Typography type="body2" component="span">
-                Wallets
+                {exchange}
               </Typography>
             </Grid>
             <Grid item xs={2} className={classes.right}>
@@ -55,4 +55,4 @@ function PortfolioPositionWalletRow({ asset, balance, classes }: Props) {
   );
 }
 
-export default withStyles(styles)(PortfolioPositionWalletRow);
+export default withStyles(styles)(PortfolioPositionExchangeRow);

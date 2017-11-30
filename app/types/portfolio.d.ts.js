@@ -8,9 +8,6 @@ export type Portfolio = {
   },
   exchanges: {
     [string]: Balances
-  },
-  transactions: {
-    [string]: Balances
   }
 };
 
