@@ -1,20 +1,29 @@
 // @flow
-import { getBittrexTransactions, readBittrexTransactionsFromFile } from './exchanges/bittrex';
+import { getBittrexBalances, getBittrexTransactions, readBittrexTransactionsFromFile } from './exchanges/bittrex';
 import getBitstampTransactions from './exchanges/bitstamp';
 import { getKrakenTransactions } from './exchanges/kraken';
-import type { Balances, Trade, Transfer } from './transaction.d';
+import type { Trade, Transfer } from './transaction.d';
 import type { Action, Dispatch, GetState, ThunkAction } from './action.d';
 import type { Exchange } from './exchange.d';
 import startTimer from './timer';
-import { getBinanceTransactions } from './exchanges/binance';
+import { getBinanceBalances, getBinanceTransactions } from './exchanges/binance';
+import type { Balances } from '../types/portfolio.d.ts';
 
-const REFRESH_TIME_IN_MS = 30000;
+const BALANCE_REFRESH_MS = 30000;
+const TRANSACTION_REFRESH_MS = BALANCE_REFRESH_MS * 4;
 
-function fetchingTransactions(): Action {
+function setLastUpdate(): Action {
   return {
     type: 'LAST_UPDATED',
     key: 'transactions',
     time: new Date(),
+  };
+}
+
+function requestBalances(exchange: Exchange): Action {
+  return {
+    type: 'REQUEST_BALANCES',
+    source: exchange,
   };
 }
 
@@ -34,15 +43,7 @@ export function receiveTransactions(exchange: Exchange, trades: Trade[] = [], tr
   };
 }
 
-export function receiveTransfers(exchange: Exchange, transfers: Transfer[]): Action {
-  return {
-    type: 'RECEIVE_TRANSFERS',
-    exchange,
-    transfers,
-  };
-}
-
-export function receiveBalances(exchange: Exchange, balances: Balances): Action {
+export function receiveBalances(exchange: Exchange, balances: Balances = {}): Action {
   return {
     type: 'RECEIVE_BALANCES',
     exchange,
@@ -50,17 +51,17 @@ export function receiveBalances(exchange: Exchange, balances: Balances): Action 
   };
 }
 
-export function receiveTrades(exchange: Exchange, trades: Trade[]): Action {
+export function failedBalances(exchange: Exchange, error: string): Action {
   return {
-    type: 'RECEIVE_TRADES',
+    type: 'FAILED_BALANCES',
     exchange,
-    trades,
+    error,
   };
 }
 
 export function failedTransaction(exchange: Exchange, error: string): Action {
   return {
-    type: 'FAILED_TRANSACTION_REQUEST',
+    type: 'FAILED_TRANSACTIONS',
     exchange,
     error,
   };
@@ -68,6 +69,20 @@ export function failedTransaction(exchange: Exchange, error: string): Action {
 
 function getConfiguredExchanges(state) {
   return state.sources;
+}
+
+function fetchBalances(exchange: Exchange): ThunkAction {
+  return (dispatch: Dispatch) => {
+    dispatch(requestBalances(exchange));
+    switch (exchange.type) {
+      case 'binance':
+        return dispatch(getBinanceBalances(exchange));
+      case 'bittrex':
+        return dispatch(getBittrexBalances(exchange));
+      default:
+        return dispatch(receiveBalances(exchange));
+    }
+  };
 }
 
 function fetchTransactions(exchange: Exchange): ThunkAction {
@@ -88,19 +103,28 @@ function fetchTransactions(exchange: Exchange): ThunkAction {
   };
 }
 
+export function fetchAllBalances(): ThunkAction {
+  return (dispatch: Dispatch, getState: GetState) => {
+    const sources = getConfiguredExchanges(getState());
+    dispatch(setLastUpdate());
+    sources.forEach(source => dispatch(fetchBalances(source)));
+  };
+}
+
 export function fetchAllTransactions(): ThunkAction {
   return (dispatch: Dispatch, getState: GetState) => {
     const sources = getConfiguredExchanges(getState());
-    dispatch(fetchingTransactions());
-    return sources.map(source => dispatch(fetchTransactions(source)));
+    sources.forEach(source => dispatch(fetchTransactions(source)));
   };
 }
 
 export function continuouslyFetchTransactions(): ThunkAction {
   return (dispatch: Dispatch, getState: GetState) => {
     if (!getState().timer.transactions) {
-      const timer = setInterval(() => dispatch(fetchAllTransactions()), REFRESH_TIME_IN_MS);
-      dispatch(startTimer('transactions', timer));
+      const balanceTimer = setInterval(() => dispatch(fetchAllBalances()), BALANCE_REFRESH_MS);
+      const transactionTimer = setInterval(() => dispatch(fetchAllTransactions()), TRANSACTION_REFRESH_MS);
+      dispatch(startTimer('balances', balanceTimer));
+      dispatch(startTimer('transactions', transactionTimer));
     }
   };
 }

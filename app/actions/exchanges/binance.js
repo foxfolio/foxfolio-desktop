@@ -1,11 +1,12 @@
 // @flow
 import crypto from 'crypto';
 import querystring from 'querystring';
-import { failedTransaction, receiveBalances, receiveTransfers } from '../transactions';
-import type { Balances, Transfer } from '../transaction.d';
+import { failedBalances, failedTransaction, receiveBalances, receiveTransactions } from '../transactions';
+import type { Transfer } from '../transaction.d';
 import type { Binance } from '../exchange.d';
 import type { Dispatch, ThunkAction } from '../action.d';
 import { unifySymbols } from '../../helpers/transactions';
+import type { Balances } from '../../types/portfolio.d.ts';
 
 const SOURCE_NAME = 'binance';
 
@@ -32,14 +33,22 @@ type BinanceWithdrawal = {
   +status: number
 };
 
+export function getBinanceBalances(exchange: Binance): ThunkAction {
+  return async (dispatch: Dispatch) => {
+    try {
+      const balances = await getBalances(exchange);
+      dispatch(receiveBalances(exchange, balances));
+    } catch (error) {
+      return dispatch(failedBalances(exchange, error.message));
+    }
+  };
+}
+
 export function getBinanceTransactions(exchange: Binance): ThunkAction {
   return async (dispatch: Dispatch) => {
     try {
       const transfers = await getTransferHistory(exchange);
-      dispatch(receiveTransfers(exchange, transfers));
-
-      const balances = await getBalances(exchange);
-      dispatch(receiveBalances(exchange, balances));
+      dispatch(receiveTransactions(exchange, [], transfers));
     } catch (error) {
       return dispatch(failedTransaction(exchange, error.message));
     }

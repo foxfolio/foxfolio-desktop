@@ -12,12 +12,12 @@ export type Action =
   | {| type: 'EDIT_WALLET', wallet: Wallet, newWallet: Wallet |}
   | {| type: 'DELETE_WALLET', wallet: Wallet |}
   | {| type: 'LAST_UPDATED', key: string, time: Date |}
+  | {| type: 'REQUEST_BALANCES', source: Exchange |}
   | {| type: 'REQUEST_TRANSACTIONS', source: Exchange |}
-  | {| type: 'RECEIVE_TRANSACTIONS', exchange: Exchange, trades: Trade[], transfers: Transfer[] |}
-  | {| type: 'RECEIVE_TRADES', exchange: Exchange, trades: Trade[] |}
   | {| type: 'RECEIVE_BALANCES', exchange: Exchange, balances: { [string]: number } |}
-  | {| type: 'RECEIVE_TRANSFERS', exchange: Exchange, transfers: Transfer[] |}
-  | {| type: 'FAILED_TRANSACTION_REQUEST', exchange: Exchange, error: string |}
+  | {| type: 'RECEIVE_TRANSACTIONS', exchange: Exchange, trades: Trade[], transfers: Transfer[] |}
+  | {| type: 'FAILED_BALANCES', exchange: Exchange, error: string |}
+  | {| type: 'FAILED_TRANSACTIONS', exchange: Exchange, error: string |}
   | {| type: 'TICKER_UPDATE', ticker: Object |}
   | {| type: 'START_TIMER', name: string, timer: Object |}
   | {| type: 'RECEIVE_COIN_LIST', coinlist: Object |}

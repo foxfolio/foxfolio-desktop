@@ -30,6 +30,10 @@ type Props = {
   onDelete: (source: Exchange) => void
 };
 
+const hasOpenRequests = transactions =>
+  transactions.openRequests.balances > 0 ||
+  transactions.openRequests.transactions > 0;
+
 class Source extends Component<Props> {
   render() {
     const { classes, exchange, transactions, onEdit, onDelete } = this.props;
@@ -38,7 +42,7 @@ class Source extends Component<Props> {
     if (transactions) {
       if (transactions.error) {
         status = <span className={classes.error}>{transactions.error}</span>;
-      } else if (transactions.openRequests > 0) {
+      } else if (hasOpenRequests(transactions)) {
         status = <span>Fetching transactions</span>;
       }
     }
@@ -60,7 +64,7 @@ class Source extends Component<Props> {
           <Button dense color="default" onClick={() => onDelete(exchange)}>Delete</Button>
           <Button dense color="primary" onClick={() => onEdit(exchange)}>Edit</Button>
         </CardActions>
-        {transactions && transactions.openRequests > 0 ? <LinearProgress/> : ''}
+        {transactions && hasOpenRequests(transactions) ? <LinearProgress/> : ''}
       </Card>
     );
   }

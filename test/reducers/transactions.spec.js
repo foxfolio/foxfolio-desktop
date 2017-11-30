@@ -6,6 +6,25 @@ describe('transactions reducer', () => {
     expect(reducer(undefined, {})).toEqual({});
   });
 
+  describe('REQUEST_BALANCES action', () => {
+    it('should initialize an empty state', () => {
+      expect(reducer(undefined, {
+        type: 'REQUEST_BALANCES',
+        source: { id: 'testexchange' },
+      })).toEqual({
+        testexchange: {
+          openRequests: {
+            balances: 1,
+            transactions: 0,
+          },
+          balances: {},
+          trades: [],
+          transfers: [],
+        },
+      });
+    });
+  });
+
   describe('REQUEST_TRANSACTIONS action', () => {
     it('should initialize an empty state', () => {
       expect(reducer(undefined, {
@@ -13,7 +32,11 @@ describe('transactions reducer', () => {
         source: { id: 'testexchange' },
       })).toEqual({
         testexchange: {
-          openRequests: 1,
+          openRequests: {
+            balances: 0,
+            transactions: 1,
+          },
+          balances: {},
           trades: [],
           transfers: [],
         },
@@ -23,7 +46,10 @@ describe('transactions reducer', () => {
     it('should keep existing transactions', () => {
       const state = {
         testexchange: {
-          openRequests: 2,
+          openRequests: {
+            balances: 0,
+            transactions: 2,
+          },
           trades: [{ id: 'trade' }],
           transfers: [{ id: 'transfer' }],
         },
@@ -34,9 +60,85 @@ describe('transactions reducer', () => {
         source: { id: 'testexchange' },
       })).toEqual({
         testexchange: {
-          openRequests: 3,
+          openRequests: {
+            balances: 0,
+            transactions: 3,
+          },
           trades: [{ id: 'trade' }],
           transfers: [{ id: 'transfer' }],
+        },
+      });
+    });
+  });
+
+  describe('RECEIVE_BALANCES action', () => {
+    it('should reduce the number of open requests', () => {
+      const state = {
+        testexchange: {
+          openRequests: {
+            balances: 2,
+            transactions: 2,
+          },
+          trades: [],
+          transfers: [],
+        },
+      };
+
+      const action = {
+        type: 'RECEIVE_BALANCES',
+        exchange: { id: 'testexchange' },
+        balances: {
+          ETH: 5,
+          BTC: 2,
+        },
+      };
+
+      expect(reducer(state, action)).toMatchObject({
+        testexchange: {
+          openRequests: {
+            balances: 1,
+            transactions: 2,
+          },
+          balances: {
+            ETH: 5,
+            BTC: 2,
+          },
+        },
+      });
+    });
+
+    it('should update balances', () => {
+      const state = {
+        testexchange: {
+          openRequests: {
+            balances: 1,
+            transactions: 1,
+          },
+          balances: {
+            ETH: 2,
+          },
+        },
+      };
+
+      const action = {
+        type: 'RECEIVE_BALANCES',
+        exchange: { id: 'testexchange' },
+        balances: {
+          ETH: 5,
+          BTC: 2,
+        },
+      };
+
+      expect(reducer(state, action)).toMatchObject({
+        testexchange: {
+          openRequests: {
+            balances: 0,
+            transactions: 1,
+          },
+          balances: {
+            ETH: 5,
+            BTC: 2,
+          },
         },
       });
     });
@@ -46,7 +148,10 @@ describe('transactions reducer', () => {
     it('should reduce the number of open requests', () => {
       const state = {
         testexchange: {
-          openRequests: 2,
+          openRequests: {
+            balances: 0,
+            transactions: 2,
+          },
           trades: [],
           transfers: [],
         },
@@ -56,12 +161,15 @@ describe('transactions reducer', () => {
         type: 'RECEIVE_TRANSACTIONS',
         exchange: { id: 'testexchange' },
         trades: [],
-        transfers: []
+        transfers: [],
       };
 
       expect(reducer(state, action)).toMatchObject({
         testexchange: {
-          openRequests: 1,
+          openRequests: {
+            balances: 0,
+            transactions: 1,
+          },
           trades: [],
           transfers: [],
         },
@@ -71,7 +179,10 @@ describe('transactions reducer', () => {
     it('should add new transactions to initial state', () => {
       const state = {
         testexchange: {
-          openRequests: 1,
+          openRequests: {
+            balances: 0,
+            transactions: 1,
+          },
           trades: [],
           transfers: [],
         },
@@ -81,22 +192,28 @@ describe('transactions reducer', () => {
         type: 'RECEIVE_TRANSACTIONS',
         exchange: { id: 'testexchange' },
         trades: [{ id: 'trade 1' }],
-        transfers: [{ id: 'transfer 1' }]
+        transfers: [{ id: 'transfer 1' }],
       };
 
       expect(reducer(state, action)).toMatchObject({
         testexchange: {
-          openRequests: 0,
+          openRequests: {
+            balances: 0,
+            transactions: 0,
+          },
           trades: [{ id: 'trade 1' }],
-          transfers: [{ id: 'transfer 1' }]
-        }
+          transfers: [{ id: 'transfer 1' }],
+        },
       });
     });
 
     it('should merge existing state with new transactions', () => {
       const state = {
         testexchange: {
-          openRequests: 1,
+          openRequests: {
+            balances: 0,
+            transactions: 1,
+          },
           trades: [{ id: 'trade 1' }],
           transfers: [{ id: 'transfer 1' }],
         },
@@ -106,142 +223,84 @@ describe('transactions reducer', () => {
         type: 'RECEIVE_TRANSACTIONS',
         exchange: { id: 'testexchange' },
         trades: [{ id: 'trade 2' }],
-        transfers: [{ id: 'transfer 2' }]
+        transfers: [{ id: 'transfer 2' }],
       };
 
       expect(reducer(state, action)).toMatchObject({
         testexchange: {
-          openRequests: 0,
+          openRequests: {
+            balances: 0,
+            transactions: 0,
+          },
           trades: [{ id: 'trade 1' }, { id: 'trade 2' }],
-          transfers: [{ id: 'transfer 1' }, { id: 'transfer 2' }]
-        }
+          transfers: [{ id: 'transfer 1' }, { id: 'transfer 2' }],
+        },
       });
     });
   });
 
-  describe('RECEIVE_TRADES action', () => {
-    it('should add new trades to initial state', () => {
-      const state = {
-        testexchange: {
-          openRequests: 1,
-          trades: [],
-          transfers: [],
-        },
-      };
-
-      const action = {
-        type: 'RECEIVE_TRADES',
-        exchange: { id: 'testexchange' },
-        trades: [{ id: 'trade 1' }]
-      };
-
-      expect(reducer(state, action)).toMatchObject({
-        testexchange: {
-          openRequests: 0,
-          trades: [{ id: 'trade 1' }],
-          transfers: []
-        }
-      });
-    });
-
-    it('should merge existing state with new trades', () => {
-      const state = {
-        testexchange: {
-          openRequests: 1,
-          trades: [{ id: 'trade 1' }],
-          transfers: [],
-        },
-      };
-
-      const action: Action = {
-        type: 'RECEIVE_TRADES',
-        exchange: { id: 'testexchange' },
-        trades: [{ id: 'trade 2' }]
-      };
-
-      expect(reducer(state, action)).toMatchObject({
-        testexchange: {
-          openRequests: 0,
-          trades: [{ id: 'trade 1' }, { id: 'trade 2' }],
-          transfers: []
-        }
-      });
-    });
-  });
-
-  describe('RECEIVE_TRANSFERS action', () => {
-    it('should add new transfers to initial state', () => {
-      const state = {
-        testexchange: {
-          openRequests: 1,
-          trades: [],
-          transfers: [],
-        },
-      };
-
-      const action = {
-        type: 'RECEIVE_TRANSFERS',
-        exchange: { id: 'testexchange' },
-        transfers: [{ id: 'transfer 1' }]
-      };
-
-      expect(reducer(state, action)).toMatchObject({
-        testexchange: {
-          openRequests: 0,
-          trades: [],
-          transfers: [{ id: 'transfer 1' }]
-        }
-      });
-    });
-
-    it('should merge existing state with new transfers', () => {
-      const state = {
-        testexchange: {
-          openRequests: 1,
-          trades: [],
-          transfers: [{ id: 'transfer 1' }],
-        },
-      };
-
-      const action: Action = {
-        type: 'RECEIVE_TRANSFERS',
-        exchange: { id: 'testexchange' },
-        transfers: [{ id: 'transfer 2' }]
-      };
-
-      expect(reducer(state, action)).toMatchObject({
-        testexchange: {
-          openRequests: 0,
-          trades: [],
-          transfers: [{ id: 'transfer 1' }, { id: 'transfer 2' }]
-        }
-      });
-    });
-  });
-
-  describe('FAILED_TRANSACTION_REQUEST action', () => {
+  describe('FAILED_BALANCES action', () => {
     it('should add the error message to the state', () => {
       const state = {
         testexchange: {
-          openRequests: 1,
+          openRequests: {
+            balances: 1,
+            transactions: 1,
+          },
           trades: [],
           transfers: [],
         },
       };
 
       const action = {
-        type: 'FAILED_TRANSACTION_REQUEST',
+        type: 'FAILED_BALANCES',
         exchange: { id: 'testexchange' },
-        error: 'Request failed'
+        error: 'Request failed',
       };
 
       expect(reducer(state, action)).toMatchObject({
         testexchange: {
-          openRequests: 0,
+          openRequests: {
+            balances: 0,
+            transactions: 1,
+          },
           trades: [],
           transfers: [],
-          error: 'Request failed'
-        }
+          error: 'Request failed',
+        },
+      });
+    });
+  });
+
+  describe('FAILED_TRANSACTIONS action', () => {
+    it('should add the error message to the state', () => {
+      const state = {
+        testexchange: {
+          openRequests: {
+            balances: 0,
+            transactions: 1,
+          },
+          trades: [],
+          transfers: [],
+        },
+      };
+
+      const action = {
+        type: 'FAILED_TRANSACTIONS',
+        exchange: { id: 'testexchange' },
+        error: 'Request failed',
+      };
+
+      expect(reducer(state, action)).toMatchObject({
+        testexchange: {
+          openRequests: {
+            balances: 0,
+            transactions: 0,
+          },
+          trades: [],
+          transfers: [],
+          error: 'Request failed',
+        },
       });
     });
   });

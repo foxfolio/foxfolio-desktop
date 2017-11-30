@@ -2,7 +2,7 @@
 import crypto from 'crypto';
 import { Converter } from 'csvtojson';
 import type { Balances } from '../../types/portfolio.d.ts';
-import { failedTransaction, receiveBalances, receiveTransactions } from '../transactions';
+import { failedBalances, failedTransaction, receiveBalances, receiveTransactions } from '../transactions';
 import type { Trade, Transfer } from '../transaction.d';
 import type { Bittrex } from '../exchange.d';
 import type { Dispatch, ThunkAction } from '../action.d';
@@ -32,15 +32,23 @@ type BittrexWithdrawal = {
   +Amount: number | string
 };
 
+export function getBittrexBalances(exchange: Bittrex): ThunkAction {
+  return async (dispatch: Dispatch) => {
+    try {
+      const balances = await getBalances(exchange);
+      dispatch(receiveBalances(exchange, balances));
+    } catch (error) {
+      dispatch(failedBalances(exchange, error.message));
+    }
+  };
+}
+
 export function getBittrexTransactions(exchange: Bittrex): ThunkAction {
   return async (dispatch: Dispatch) => {
     try {
       const trades = await getOrderHistory(exchange);
       const transfers = await getTransferHistory(exchange);
       dispatch(receiveTransactions(exchange, trades, transfers));
-
-      const balances = await getBalances(exchange);
-      dispatch(receiveBalances(exchange, balances));
     } catch (error) {
       dispatch(failedTransaction(exchange, error.message));
     }

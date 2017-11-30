@@ -1,35 +1,68 @@
 // @flow
 import R from 'ramda';
 import type { Action } from '../actions/action.d';
-import type { Balances, Trade, Transaction, Transfer } from '../actions/transaction.d';
+import type { Trade, Transaction, Transfer } from '../actions/transaction.d';
+import type { Balances } from '../types/portfolio.d.ts';
 
 export type TransactionsState = {
   [string]: TransactionState
 };
 
 export type TransactionState = {|
-  openRequests: number,
+  openRequests: {
+    balances: number,
+    transactions: number
+  },
   lastUpdated?: Date,
+  balances: Balances,
   trades: Trade[],
-  transfers: Transfer[],
-  balances: Balances
+  transfers: Transfer[]
 |};
 
-const emptyExchangeState = {
-  openRequests: 0,
+const emptyExchangeState: TransactionState = {
+  openRequests: {
+    balances: 0,
+    transactions: 0,
+  },
+  balances: {},
   trades: [],
   transfers: [],
-  balances: {},
 };
 
 export default function transactions(state: TransactionsState = {}, action: Action): TransactionsState {
   switch (action.type) {
+    case 'REQUEST_BALANCES':
+      return {
+        ...state,
+        [action.source.id]: {
+          ...(state[action.source.id] ? state[action.source.id] : emptyExchangeState),
+          openRequests: {
+            ...(state[action.source.id] ? state[action.source.id].openRequests : { transactions: 0 }),
+            balances: state[action.source.id] ? state[action.source.id].openRequests.balances + 1 : 1,
+          },
+        },
+      };
     case 'REQUEST_TRANSACTIONS':
       return {
         ...state,
         [action.source.id]: {
           ...(state[action.source.id] ? state[action.source.id] : emptyExchangeState),
-          openRequests: state[action.source.id] ? state[action.source.id].openRequests + 1 : 1,
+          openRequests: {
+            ...(state[action.source.id] ? state[action.source.id].openRequests : { balances: 0 }),
+            transactions: state[action.source.id] ? state[action.source.id].openRequests.transactions + 1 : 1,
+          },
+        },
+      };
+    case 'RECEIVE_BALANCES':
+      return {
+        ...state,
+        [action.exchange.id]: {
+          ...state[action.exchange.id],
+          openRequests: {
+            ...state[action.exchange.id].openRequests,
+            balances: state[action.exchange.id].openRequests.balances - 1,
+          },
+          balances: action.balances,
         },
       };
     case 'RECEIVE_TRANSACTIONS':
@@ -38,48 +71,37 @@ export default function transactions(state: TransactionsState = {}, action: Acti
         [action.exchange.id]: {
           ...state[action.exchange.id],
           error: undefined,
-          openRequests: state[action.exchange.id].openRequests - 1,
+          openRequests: {
+            ...state[action.exchange.id].openRequests,
+            transactions: state[action.exchange.id].openRequests.transactions - 1,
+          },
           lastUpdated: new Date(),
           trades: mergeTransactions(state[action.exchange.id].trades, action.trades),
           transfers: mergeTransactions(state[action.exchange.id].transfers, action.transfers),
         },
       };
-    case 'RECEIVE_TRANSFERS':
+    case 'FAILED_BALANCES':
       return {
         ...state,
         [action.exchange.id]: {
           ...state[action.exchange.id],
-          error: undefined,
-          openRequests: state[action.exchange.id].openRequests - 1,
+          openRequests: {
+            ...state[action.exchange.id].openRequests,
+            balances: state[action.exchange.id].openRequests.balances - 1,
+          },
           lastUpdated: new Date(),
-          transfers: mergeTransactions(state[action.exchange.id].transfers, action.transfers),
+          error: action.error,
         },
       };
-    case 'RECEIVE_TRADES':
+    case 'FAILED_TRANSACTIONS':
       return {
         ...state,
         [action.exchange.id]: {
           ...state[action.exchange.id],
-          error: undefined,
-          openRequests: state[action.exchange.id].openRequests - 1,
-          lastUpdated: new Date(),
-          trades: mergeTransactions(state[action.exchange.id].trades, action.trades),
-        },
-      };
-    case 'RECEIVE_BALANCES':
-      return {
-        ...state,
-        [action.exchange.id]: {
-          ...state[action.exchange.id],
-          balances: action.balances,
-        },
-      };
-    case 'FAILED_TRANSACTION_REQUEST':
-      return {
-        ...state,
-        [action.exchange.id]: {
-          ...state[action.exchange.id],
-          openRequests: state[action.exchange.id].openRequests - 1,
+          openRequests: {
+            ...state[action.exchange.id].openRequests,
+            transactions: state[action.exchange.id].openRequests.transactions - 1,
+          },
           lastUpdated: new Date(),
           error: action.error,
         },
