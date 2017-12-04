@@ -69,6 +69,9 @@ export function continuouslyUpdateTicker() {
 function getSymbolsFromTransactions(
   transactions: TransactionState, wallets: Wallet[], fiatCurrency: string): { from: string[], to: string[] } {
   const walletSymbols = wallets.map(wallet => wallet.currency) || [];
+  const exchangeSymbols = R.values(transactions)
+    .map(exchange => exchange.balances)
+    .reduce((acc, balances) => acc.concat(R.keys(balances)), []);
 
   const trans: Transaction[] = flattenTransactions(transactions);
   const symbols = R.reduce((acc, transaction) => {
@@ -80,6 +83,6 @@ function getSymbolsFromTransactions(
       acc.from.push(transaction.currency);
     }
     return acc;
-  }, { from: walletSymbols, to: ['BTC', fiatCurrency] }, trans);
+  }, { from: ['BTC', ...walletSymbols, ...exchangeSymbols], to: ['BTC', fiatCurrency] }, trans);
   return R.map(R.uniq)(symbols);
 }
