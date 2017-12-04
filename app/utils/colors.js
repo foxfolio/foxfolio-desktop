@@ -104,6 +104,7 @@ export default function getColor(currency: string) {
     RBY: '#D31F26',
     RDD: '#ED1C24',
     REP: '#40a2cb',
+    REQ: '#0e3f55',
     RISE: '#43CEA2',
     SAR: '#1B72B8',
     SCOT: '#3498DB',
