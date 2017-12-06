@@ -1,6 +1,7 @@
 // @flow
 import crypto from 'crypto';
 import querystring from 'querystring';
+import type { Balances } from '../../types/portfolio.d.ts';
 import { failedBalances, failedTransaction, receiveBalances, receiveTransactions } from '../transactions';
 import type { Trade, Transfer } from '../transaction.d';
 import type { Kraken } from '../exchange.d';
@@ -58,7 +59,8 @@ export function getKrakenTransactions(exchange: Kraken): ThunkAction {
 
 function getBalances(exchange: Kraken): Promise<Balances> {
   return krakenRequest('Balance', exchange)
-    .then(result => console.log(result));
+    .then(result => console.log(result))
+    .then(() => ({}));
 }
 
 function getTradesHistory(exchange: Kraken): Promise<Trade[]> {

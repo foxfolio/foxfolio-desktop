@@ -1,7 +1,7 @@
 // @flow
 import React from 'react';
 import { Avatar, Card, CardContent, Grid, Typography, withStyles } from 'material-ui';
-import { AccountBalanceWallet, TrendingUp } from 'material-ui-icons';
+import { TrendingUp } from 'material-ui-icons';
 
 const styles = theme => ({
   root: {

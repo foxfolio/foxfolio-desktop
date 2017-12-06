@@ -2,7 +2,6 @@
 import React from 'react';
 import R from 'ramda';
 import { Paper } from 'material-ui';
-import type { Transaction } from '../actions/transaction.d';
 import PortfolioChart from '../components/Portfolio/PortfolioChart';
 import type { SettingsType } from '../reducers/settings';
 import PortfolioPositions from '../components/Portfolio/PortfolioPositions';

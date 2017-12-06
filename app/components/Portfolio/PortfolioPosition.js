@@ -1,6 +1,5 @@
 // @flow
 import type { Node } from 'react';
-import R from 'ramda';
 import React, { Component } from 'react';
 import classnames from 'classnames';
 import { Avatar, Card, CardContent, Grid, IconButton, Typography } from 'material-ui';

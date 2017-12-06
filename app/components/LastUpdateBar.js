@@ -26,7 +26,7 @@ class LastUpdateBar extends Component<Props> {
 
     let value = 0;
     if (lastUpdate) {
-      value = ((new Date()).getTime() - lastUpdate.getTime()) / 1000 / 30 * 100;
+      value = (((new Date()).getTime() - lastUpdate.getTime()) / 1000 / 30) * 100;
     }
     this.setState({ completed: value });
   };

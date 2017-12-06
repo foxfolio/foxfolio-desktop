@@ -2,7 +2,6 @@
 import React from 'react';
 import R from 'ramda';
 import PortfolioPosition from './PortfolioPosition';
-import type { Transaction } from '../../actions/transaction.d';
 
 type Props = {
   portfolio: Object,
