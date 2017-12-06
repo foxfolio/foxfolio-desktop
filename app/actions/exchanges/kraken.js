@@ -1,7 +1,7 @@
 // @flow
 import crypto from 'crypto';
 import querystring from 'querystring';
-import { failedTransaction, receiveTransactions } from '../transactions';
+import { failedBalances, failedTransaction, receiveBalances, receiveTransactions } from '../transactions';
 import type { Trade, Transfer } from '../transaction.d';
 import type { Kraken } from '../exchange.d';
 import type { Dispatch, ThunkAction } from '../action.d';
@@ -33,16 +33,32 @@ type KrakenLedgerType = {
   balance: string
 };
 
+export function getKrakenBalances(exchange: Kraken): ThunkAction {
+  return async (dispatch: Dispatch) => {
+    try {
+      const balances = await getBalances(exchange);
+      dispatch(receiveBalances(exchange, balances));
+    } catch (error) {
+      dispatch(failedBalances(exchange, error.message));
+    }
+  };
+}
+
 export function getKrakenTransactions(exchange: Kraken): ThunkAction {
   return async (dispatch: Dispatch) => {
     try {
       const trades = await getTradesHistory(exchange);
       const transfers = await getTransferHistory(exchange);
-      return dispatch(receiveTransactions(exchange, trades, transfers)); // TODO Split into two separate actions
+      return dispatch(receiveTransactions(exchange, trades, transfers));
     } catch (error) {
       return dispatch(failedTransaction(exchange, error.message));
     }
   };
+}
+
+function getBalances(exchange: Kraken): Promise<Balances> {
+  return krakenRequest('Balance', exchange)
+    .then(result => console.log(result));
 }
 
 function getTradesHistory(exchange: Kraken): Promise<Trade[]> {
