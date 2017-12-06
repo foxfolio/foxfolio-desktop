@@ -1,8 +1,19 @@
-# fuxfolio
+# Foxfolio
 
-### A portfolio for cryptocurrencies which extracts trades from exchange APIs
+[![standard-readme compliant](https://img.shields.io/badge/standard--readme-OK-green.svg?style=flat-square)](https://github.com/RichardLitt/standard-readme)
+TODO: Put more badges here.
 
-<br/>
+> Portfolio for cryptocurrencies which automatically retrieves balances and trades from exchange APIs
+
+TODO: Fill out this long description.
+
+## Table of Contents
+
+- [Install](#install)
+- [Usage](#usage)
+- [Maintainers](#maintainers)
+- [Contribute](#contribute)
+- [License](#license)
 
 ## Install
 
@@ -16,65 +27,33 @@ $ yarn
 ```
 **Note**: If you can't use [yarn](https://github.com/yarnpkg/yarn) for some reason, try `npm install`.
 
-## Run
+## Usage
 
-Start the app in the `dev` environment. This starts the renderer process in [**hot-module-replacement**](https://webpack.js.org/guides/hmr-react/) mode and starts a server that sends hot updates to the renderer process:
-
-```bash
-$ npm run dev
-```
-
-## Packaging
-
-To package apps for the local platform:
-
-```bash
-$ npm run package
-```
-
-To package apps for all platforms:
-
-First, refer to [Multi Platform Build](https://github.com/electron-userland/electron-builder/wiki/Multi-Platform-Build) for dependencies.
-
-Then,
-```bash
-$ npm run package-all
-```
-
-To package apps with options:
-
-```bash
-$ npm run package -- --[option]
-```
-
-:bulb: You can debug your production build with devtools by simply setting the `DEBUG_PROD` env variable:
-```
-DEBUG_PROD=true npm run package
-```
-
-## Further commands
-
-To run the application without packaging run
+To run the application without packaging use
 
 ```bash
 $ npm run build
 $ npm start
 ```
 
-To run End-to-End Test
+To run the app in the `dev` environment use
 
 ```bash
-$ npm run build
-$ npm run test-e2e
+$ npm run dev
 ```
 
-#### Options
+This starts the renderer process in [**hot-module-replacement**](https://webpack.js.org/guides/hmr-react/) mode and starts a server that sends hot updates to the renderer process
 
-See [electron-builder CLI Usage](https://github.com/electron-userland/electron-builder#cli-usage)
+## Maintainers
 
-## Maintainer
+[@greimela](https://github.com/greimela)
 
-- [Andreas Greimel](https://github.com/greimela)
+## Contribute
+
+PRs accepted.
+
+Small note: If editing the README, please conform to the [standard-readme](https://github.com/RichardLitt/standard-readme) specification.
 
 ## License
-MIT © [Andreas Greimel](https://github.com/greimela)
+
+MIT © 2017 Andreas Greimel

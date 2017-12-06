@@ -1,8 +1,8 @@
 {
-  "name": "fuxfolio",
-  "productName": "FuxFolio",
+  "name": "foxfolio",
+  "productname": "Foxfolio",
   "version": "0.0.1",
-  "description": "Crypto portfolio app",
+  "description": "Portfolio for cryptocurrencies which automatically retrieves balances and trades from exchange APIs",
   "scripts": {
     "build": "concurrently \"npm run build-main\" \"npm run build-renderer\"",
     "build-dll": "cross-env NODE_ENV=development node --trace-warnings -r babel-register ./node_modules/webpack/bin/webpack --config webpack.config.renderer.dev.dll.js --colors",
@@ -32,8 +32,8 @@
   },
   "browserslist": "electron 1.6",
   "build": {
-    "productName": "FuxFolio",
-    "appId": "de.greimel.FuxFolio",
+    "productName": "Foxfolio",
+    "appId": "de.foxfolio.foxfolio-desktop",
     "files": [
       "dist/",
       "node_modules/",
@@ -74,16 +74,16 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://gitlab.com/greimela/crypto-portfolio.git"
+    "url": "git+https://github.com/foxfolio/foxfolio-desktop.git"
   },
   "author": {
     "name": "Andreas Greimel",
     "email": "andreas@greimel.de",
-    "url": "https://gitlab.com/greimela"
+    "url": "https://github.com/greimela"
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://gitlab.com/greimela/crypto-portfolio/issues"
+    "url": "https://gitlab.com/foxfolio/foxfolio-desktop/issues"
   },
   "keywords": [
     "electron",
@@ -112,7 +112,7 @@
       "^.+\\.js$": "babel-jest"
     }
   },
-  "homepage": "https://gitlab.com/greimela/crypto-portfolio",
+  "homepage": "http://foxfol.io",
   "devDependencies": {
     "babel-core": "^6.24.1",
     "babel-eslint": "^7.2.3",
