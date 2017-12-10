@@ -1,10 +1,13 @@
 // @flow
 import crypto from 'crypto';
 import querystring from 'querystring';
-import { failedTransaction, receiveTransactions } from '../transactions';
+import R from 'ramda';
+import { failedBalances, failedTransaction, receiveBalances, receiveTransactions } from '../transactions';
 import type { Trade, Transfer } from '../transaction.d';
 import type { Bitstamp } from '../exchange.d';
 import type { Dispatch, ThunkAction } from '../action.d';
+import type { Balances } from '../../types/portfolio.d.ts';
+import { mapKeys } from '../../helpers/transactions';
 
 type BitstampTransaction = {
   id: number,
@@ -28,8 +31,20 @@ type BitstampTransaction = {
   fee: string
 };
 
+const cryptoCurrencies = ['btc', 'eth', 'ltc', 'xrp'];
 const currencies = ['btc', 'eth', 'eur', 'usd', 'ltc', 'xrp'];
 const markets = ['btc_usd', 'btc_eur', 'eth_usd', 'eth_eur', 'xrp_usd', 'xrp_eur', 'ltc_usd', 'ltc_eur'];
+
+export function getBitstampBalances(exchange: Bitstamp): ThunkAction {
+  return async (dispatch: Dispatch) => {
+    try {
+      const balances = await getBalances(exchange);
+      dispatch(receiveBalances(exchange, balances));
+    } catch (error) {
+      dispatch(failedBalances(exchange, error.message));
+    }
+  };
+}
 
 export default function getBitstampTransactions(exchange: Bitstamp): ThunkAction {
   return (dispatch: Dispatch) => {
@@ -39,12 +54,21 @@ export default function getBitstampTransactions(exchange: Bitstamp): ThunkAction
   };
 }
 
+function getBalances(exchange: Bitstamp): Promise<Balances> {
+  return bitstampRequest('balance', exchange)
+    .then(R.pick(cryptoCurrencies.map(val => `${val}_balance`)))
+    .then(mapKeys(R.pipe(key => key.split('_')[0], R.toUpper)))
+    .then(R.map(parseFloat))
+    .then(R.filter(bal => bal > 0));
+}
+
 function getOrderHistory(exchange: Bitstamp): Promise<[Trade[], Transfer[]]> {
   return bitstampRequest('user_transactions', exchange)
     .then(orderHistoryToTradesAndTransfers);
 }
 
-async function bitstampRequest(endpoint: string, exchange: Bitstamp): Promise<BitstampTransaction[]> {
+async function bitstampRequest(
+  endpoint: string, exchange: Bitstamp): Promise<*> {
   const nonce = Date.now().valueOf();
   const hmac = crypto.createHmac('sha256', Buffer.from(exchange.apiSecret, 'utf8'));
   const signature = hmac.update(nonce + exchange.customerId + exchange.apiKey).digest('hex').toUpperCase();

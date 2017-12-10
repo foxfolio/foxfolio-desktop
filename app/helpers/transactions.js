@@ -1,6 +1,9 @@
 // @flow
+import R from 'ramda';
 import type { Transaction } from '../actions/transaction.d';
 import type { TransactionsState } from '../reducers/transactions';
+
+export const mapKeys = R.curry((fn: Function, obj: Object) => R.zipObj(R.map(fn, R.keys(obj)), R.values(obj)));
 
 export function flattenTransactions(transactions: TransactionsState): Transaction[] {
   return Object

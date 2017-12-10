@@ -7,7 +7,7 @@ import SettingsForm from './SettingsForm';
 
 const styles = () => ({
   paper: { marginTop: 30, padding: 25 },
-  headline: { marginBottom: 30 }
+  headline: { marginBottom: 30 },
 });
 
 type Props = {

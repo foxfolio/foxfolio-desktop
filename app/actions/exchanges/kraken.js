@@ -1,11 +1,13 @@
 // @flow
 import crypto from 'crypto';
 import querystring from 'querystring';
+import R from 'ramda';
 import type { Balances } from '../../types/portfolio.d.ts';
 import { failedBalances, failedTransaction, receiveBalances, receiveTransactions } from '../transactions';
 import type { Trade, Transfer } from '../transaction.d';
 import type { Kraken } from '../exchange.d';
 import type { Dispatch, ThunkAction } from '../action.d';
+import { mapKeys, unifySymbols } from '../../helpers/transactions';
 
 const SOURCE_NAME = 'kraken';
 
@@ -59,8 +61,9 @@ export function getKrakenTransactions(exchange: Kraken): ThunkAction {
 
 function getBalances(exchange: Kraken): Promise<Balances> {
   return krakenRequest('Balance', exchange)
-    .then(result => console.log(result))
-    .then(() => ({}));
+    .then(R.map(parseFloat))
+    .then(mapKeys((key: string) => (key.length === 4 ? key.slice(1, 4) : key)))
+    .then(mapKeys(unifySymbols));
 }
 
 function getTradesHistory(exchange: Kraken): Promise<Trade[]> {
@@ -77,7 +80,7 @@ function getTransferHistory(exchange: Kraken): Promise<Transfer[]> {
     .then(ledgerEntriesToTransfers);
 }
 
-async function krakenRequest(endpoint: string, exchange: Kraken) {
+async function krakenRequest(endpoint: string, exchange: Kraken): Promise<Object> {
   const path = `/${API_VERSION}/private/${endpoint}`;
 
   const hash = crypto.createHash('sha256');
@@ -105,7 +108,6 @@ async function krakenRequest(endpoint: string, exchange: Kraken) {
   if (json.error && json.error.length > 0) {
     throw new Error(json.error[0]);
   }
-  console.log(json);
   return json.result;
 }
 
@@ -145,12 +147,3 @@ function convertKrakenTransfer(ledgerEntry: KrakenLedgerType): Transfer {
 }
 
 const objToArray = obj => Object.keys(obj).map(key => obj[key]);
-
-const unifySymbols = symbol => {
-  switch (symbol) {
-    case 'XBT':
-      return 'BTC';
-    default:
-      return symbol;
-  }
-};

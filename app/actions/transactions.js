@@ -1,7 +1,7 @@
 // @flow
 import { getBittrexBalances, getBittrexTransactions, readBittrexTransactionsFromFile } from './exchanges/bittrex';
-import getBitstampTransactions from './exchanges/bitstamp';
-import { getKrakenTransactions } from './exchanges/kraken';
+import getBitstampTransactions, { getBitstampBalances } from './exchanges/bitstamp';
+import { getKrakenBalances, getKrakenTransactions } from './exchanges/kraken';
 import type { Trade, Transfer } from './transaction.d';
 import type { Action, Dispatch, GetState, ThunkAction } from './action.d';
 import type { Exchange } from './exchange.d';
@@ -79,6 +79,10 @@ function fetchBalances(exchange: Exchange): ThunkAction {
         return dispatch(getBinanceBalances(exchange));
       case 'bittrex':
         return dispatch(getBittrexBalances(exchange));
+      case 'bitstamp':
+        return dispatch(getBitstampBalances(exchange));
+      case 'kraken':
+        return dispatch(getKrakenBalances(exchange));
       default:
         return dispatch(receiveBalances(exchange));
     }
