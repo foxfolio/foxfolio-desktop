@@ -25,12 +25,16 @@ export default function PortfolioContainer(
     btc: calculateSum(ticker, portfolio.total, 'BTC'),
     fiat: calculateSum(ticker, portfolio.total, settings.fiatCurrency),
   };
+  const change = {
+    btc: calculateChange(ticker, portfolio.total, sum.btc, 'BTC'),
+    fiat: calculateChange(ticker, portfolio.total, sum.fiat, settings.fiatCurrency),
+  };
 
   if (ticker.BTC || ticker.ETH) { // TODO What if the user has no BTC?
     return (
       <div>
         <Paper style={{ marginTop: 0, paddingBottom: 25, paddingTop: 25, textAlign: 'center' }}>
-          <PortfolioHeader fiatCurrency={settings.fiatCurrency} sum={sum} ticker={ticker}/>
+          <PortfolioHeader change={change} fiatCurrency={settings.fiatCurrency} sum={sum} ticker={ticker}/>
         </Paper>
         <Paper style={{ marginTop: 30, paddingBottom: 20, paddingTop: 10 }}>
           <PortfolioChart ticker={ticker} portfolio={portfolio.total} sum={sum.btc}/>
@@ -75,4 +79,17 @@ function calculateSum(ticker: Object, portfolio: Object, currency: string) {
   return Object.keys(portfolio)
     .filter(asset => ticker[asset])
     .reduce((acc, asset) => acc + (ticker[asset][currency.toUpperCase()].PRICE * portfolio[asset]), 0);
+}
+
+function calculateChange(
+  ticker: Object, portfolio: Object, sum: number, currency: string) {
+  return Object.keys(portfolio)
+    .filter(asset => ticker[asset])
+    .reduce(
+      (acc, asset) =>
+        acc + (
+          ticker[asset][currency.toUpperCase()].CHANGEPCT24HOUR
+          * ((ticker[asset][currency.toUpperCase()].PRICE * portfolio[asset]) / sum)
+        ),
+      0);
 }
