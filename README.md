@@ -5,8 +5,6 @@ TODO: Put more badges here.
 
 > Portfolio for cryptocurrencies which automatically retrieves balances and trades from exchange APIs
 
-TODO: Fill out this long description.
-
 ## Table of Contents
 
 - [Install](#install)
@@ -58,3 +56,5 @@ Small note: If editing the README, please conform to the [standard-readme](https
 ## License
 
 MIT © 2017 Andreas Greimel
+
+Icon made by [Pixel Perfect](https://www.flaticon.com/authors/pixel-perfect) from [www.flaticon.com](https://www.flaticon.com)
