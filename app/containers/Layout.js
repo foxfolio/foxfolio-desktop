@@ -67,7 +67,7 @@ class App extends Component<Props> {
             <Toolbar className={classes.toolbar}>
               <Avatar src={icon} className={classes.avatar}/>
               <Typography type="title" color="inherit">
-                FuxFolio
+                Foxfolio
               </Typography>
             </Toolbar>
           </AppBar>
