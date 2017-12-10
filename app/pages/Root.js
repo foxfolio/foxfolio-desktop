@@ -9,11 +9,12 @@ type RootType = {
   history: {}
 };
 
+// TODO Fix hot reloading (The random key removes local state)
 export default function Root({ store, history }: RootType) {
   return (
     <Provider store={store}>
-      <ConnectedRouter history={history}>
-        <Routes />
+      <ConnectedRouter history={history} key={Math.random()}>
+        <Routes/>
       </ConnectedRouter>
     </Provider>
   );

@@ -9,6 +9,7 @@ import WalletPage from './pages/WalletPage';
 import SourcePage from './pages/SourcePage';
 import TransactionPage from './pages/TransactionPage';
 import SettingsPage from './pages/SettingsPage';
+import AboutPage from './pages/AboutPage';
 
 const appTheme = createMuiTheme({
   palette: {
@@ -28,6 +29,7 @@ export default () => (
         <Route path="/wallets" component={WalletPage}/>
         <Route path="/sources" component={SourcePage}/>
         <Route path="/settings" component={SettingsPage}/>
+        <Route path="/about" component={AboutPage}/>
       </Switch>
     </Layout>
   </MuiThemeProvider>

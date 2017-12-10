@@ -6,12 +6,13 @@ import { withRouter } from 'react-router';
 import { withStyles } from 'material-ui/styles';
 import Drawer from 'material-ui/Drawer';
 import { AppBar, Avatar, List, Toolbar, Typography } from 'material-ui';
-import { AccountBalanceWallet, Cloud, Dashboard, Settings, SwapHoriz } from 'material-ui-icons';
+import { AccountBalanceWallet, Cloud, Dashboard, HelpOutline, Settings, SwapHoriz } from 'material-ui-icons';
 import { continuouslyFetchTransactions } from '../actions/transactions';
 import type { Dispatch } from '../actions/action.d';
 import { continuouslyUpdateTicker, requestCoinList } from '../actions/ticker';
 import { DrawerItem } from '../components/DrawerItem';
 import LastUpdateBar from '../components/LastUpdateBar';
+import icon from '../resources/icon.png';
 
 const drawerWidth = 250;
 
@@ -64,7 +65,7 @@ class App extends Component<Props> {
         <Drawer type="permanent" classes={{ paper: classes.drawerPaper }}>
           <AppBar position="static" color="default" elevation={1}>
             <Toolbar className={classes.toolbar}>
-              <Avatar src="./resources/icon.png" className={classes.avatar}/>
+              <Avatar src={icon} className={classes.avatar}/>
               <Typography type="title" color="inherit">
                 FuxFolio
               </Typography>
@@ -78,6 +79,7 @@ class App extends Component<Props> {
             <DrawerItem label="Wallets" route="/wallets" icon={<AccountBalanceWallet/>}/>
             <DrawerItem label="Sources" route="/sources" icon={<Cloud/>}/>
             <DrawerItem label="Settings" route="/settings" icon={<Settings/>}/>
+            <DrawerItem label="About" route="/about" icon={<HelpOutline/>}/>
           </List>
         </Drawer>
         <main className={classes.content}>
