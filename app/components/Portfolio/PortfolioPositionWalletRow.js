@@ -30,7 +30,7 @@ type Props = {
 function PortfolioPositionWalletRow({ asset, balance, classes }: Props) {
   return (
     <Card style={{ paddingLeft: 50 }}>
-      <CardContent className={classes.root} onClick={this.handleExpandClick}>
+      <CardContent className={classes.root}>
         <div className={classes.avatar}>
           <Avatar>
             <AccountBalanceWallet/>

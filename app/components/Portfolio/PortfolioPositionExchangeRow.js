@@ -30,7 +30,7 @@ type Props = {
 function PortfolioPositionExchangeRow({ asset, balance, exchange, classes }: Props) {
   return (
     <Card style={{ paddingLeft: 50 }}>
-      <CardContent className={classes.root} onClick={this.handleExpandClick}>
+      <CardContent className={classes.root}>
         <div>
           <Avatar className={classes.avatar}>
             <TrendingUp/>
