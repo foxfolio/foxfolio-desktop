@@ -17,7 +17,7 @@ TODO: Fill out this long description.
 
 ## Install
 
-* **Note: requires a node version >= 8.7 and an npm version >= 4.**
+* **Note: requires a node version >= 8.7 and an npm version >= 5.**
 
 Install dependencies with yarn.
 
@@ -32,9 +32,10 @@ $ yarn
 To run the application without packaging use
 
 ```bash
-$ npm run build
 $ npm start
 ```
+
+This builds the application using Webpack and launches it.
 
 To run the app in the `dev` environment use
 
