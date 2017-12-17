@@ -1,9 +1,11 @@
 # Foxfolio
 
 [![standard-readme compliant](https://img.shields.io/badge/standard--readme-OK-green.svg?style=flat-square)](https://github.com/RichardLitt/standard-readme)
-TODO: Put more badges here.
 
-> Portfolio for cryptocurrencies which automatically retrieves balances and trades from exchange APIs
+
+> Cryptocurrency portfolio management application which automatically retrieves balances and trades using exchange APIs
+
+![Foxfolio screenshot](resources/screenshots/foxfolio.png?raw=true)
 
 ## Table of Contents
 
@@ -50,8 +52,6 @@ This starts the renderer process in [**hot-module-replacement**](https://webpack
 ## Contribute
 
 PRs accepted.
-
-Small note: If editing the README, please conform to the [standard-readme](https://github.com/RichardLitt/standard-readme) specification.
 
 ## License
 

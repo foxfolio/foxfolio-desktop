@@ -2,7 +2,7 @@
   "name": "foxfolio",
   "productname": "Foxfolio",
   "version": "0.0.1",
-  "description": "Portfolio for cryptocurrencies which automatically retrieves balances and trades from exchange APIs",
+  "description": "Cryptocurrency portfolio management application which automatically retrieves balances and trades using exchange APIs",
   "scripts": {
     "build": "concurrently \"npm run build-main\" \"npm run build-renderer\"",
     "build-dll": "cross-env NODE_ENV=development node --trace-warnings -r babel-register ./node_modules/webpack/bin/webpack --config webpack.config.renderer.dev.dll.js --colors",
