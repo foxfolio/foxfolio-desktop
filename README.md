@@ -1,5 +1,6 @@
 # Foxfolio
 
+[![Travis](https://img.shields.io/travis/foxfolio/foxfolio-desktop.svg?style=flat-square)](https://travis-ci.org/foxfolio/foxfolio-desktop)
 [![standard-readme compliant](https://img.shields.io/badge/standard--readme-OK-green.svg?style=flat-square)](https://github.com/RichardLitt/standard-readme)
 
 
