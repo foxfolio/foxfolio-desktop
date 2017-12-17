@@ -1,23 +1,14 @@
 // @flow
 import type { SettingsType } from '../reducers/settings';
-import type { Exchange } from './exchange.d';
 import type { Wallet } from './wallet.d';
-import type { Trade, Transfer } from './transaction.d';
+import type { ExchangeActions } from '../reducers/exchanges/actions.d';
 
 export type Action =
-  | {| type: 'ADD_SOURCE', source: Exchange |}
-  | {| type: 'EDIT_SOURCE', source: Exchange, newSource: Exchange |}
-  | {| type: 'DELETE_EXCHANGE', exchange: Exchange |}
+  | ExchangeActions
   | {| type: 'ADD_WALLET', wallet: Wallet |}
   | {| type: 'EDIT_WALLET', wallet: Wallet, newWallet: Wallet |}
   | {| type: 'DELETE_WALLET', wallet: Wallet |}
   | {| type: 'LAST_UPDATED', key: string, time: Date |}
-  | {| type: 'REQUEST_BALANCES', source: Exchange |}
-  | {| type: 'REQUEST_TRANSACTIONS', source: Exchange |}
-  | {| type: 'RECEIVE_BALANCES', exchange: Exchange, balances: { [string]: number } |}
-  | {| type: 'RECEIVE_TRANSACTIONS', exchange: Exchange, trades: Trade[], transfers: Transfer[] |}
-  | {| type: 'FAILED_BALANCES', exchange: Exchange, error: string |}
-  | {| type: 'FAILED_TRANSACTIONS', exchange: Exchange, error: string |}
   | {| type: 'TICKER_UPDATE', ticker: Object |}
   | {| type: 'START_TIMER', name: string, timer: Object |}
   | {| type: 'RECEIVE_COIN_LIST', coinlist: Object |}

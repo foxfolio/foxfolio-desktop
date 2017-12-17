@@ -1,7 +1,6 @@
 // @flow
 import React, { Component } from 'react';
 import TransactionTable from './TransactionTable';
-import { flattenTransactions } from '../helpers/transactions';
 
 type Props = {
   transactions: any,
@@ -10,7 +9,7 @@ type Props = {
 
 export default class Transactions extends Component<Props> {
   render() {
-    const transactions = flattenTransactions(this.props.transactions).sort((a, b) => b.date - a.date);
+    const { transactions } = this.props;
 
     return (
       <div className="container">

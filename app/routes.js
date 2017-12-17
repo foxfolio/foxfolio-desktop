@@ -6,7 +6,7 @@ import { Route, Switch } from 'react-router';
 import Layout from './containers/Layout';
 import HomePage from './pages/PortfolioPage';
 import WalletPage from './pages/WalletPage';
-import SourcePage from './pages/SourcePage';
+import { ExchangePage } from './pages/ExchangePage';
 import TransactionPage from './pages/TransactionPage';
 import SettingsPage from './pages/SettingsPage';
 import AboutPage from './pages/AboutPage';
@@ -27,7 +27,7 @@ export default () => (
         <Route exact path="/" component={HomePage}/>
         <Route path="/transactions" component={TransactionPage}/>
         <Route path="/wallets" component={WalletPage}/>
-        <Route path="/sources" component={SourcePage}/>
+        <Route path="/exchanges" component={ExchangePage}/>
         <Route path="/settings" component={SettingsPage}/>
         <Route path="/about" component={AboutPage}/>
       </Switch>

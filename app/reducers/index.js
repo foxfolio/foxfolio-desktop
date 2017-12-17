@@ -1,12 +1,12 @@
 // @flow
+import type { PersistConfig } from 'redux-persist';
 import { createTransform, persistCombineReducers } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
-import type { PersistConfig } from 'redux-persist';
 import * as R from 'ramda';
 import { reducer as form } from 'redux-form';
 import { routerReducer as router } from 'react-router-redux';
-import transactions from './transactions';
-import sources from './sources';
+
+import { exchanges } from './exchanges';
 import wallets from './wallets';
 import ticker from './ticker';
 import timer from './timer';
@@ -35,13 +35,12 @@ const config: PersistConfig = {
 
 const rootReducer = persistCombineReducers(config, {
   coinlist,
+  exchanges,
   form,
   router,
   settings,
-  sources,
   ticker,
   timer,
-  transactions,
   wallets,
 });
 

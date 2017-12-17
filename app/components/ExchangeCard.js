@@ -2,11 +2,12 @@
 import React, { Component } from 'react';
 import { Button, Card, CardActions, CardContent, LinearProgress, Typography } from 'material-ui';
 import { withStyles } from 'material-ui/styles';
-import style from './Source.css';
 import type { Exchange } from '../actions/exchange.d';
-import type { TransactionState } from '../reducers/transactions';
 
 const styles = theme => ({
+  card: {
+    margin: '10px 0',
+  },
   subheader: {
     marginBottom: 12,
     color: theme.palette.text.secondary,
@@ -25,7 +26,7 @@ const styles = theme => ({
 type Props = {
   classes: any,
   exchange: Exchange,
-  transactions: TransactionState,
+  transactions: Object,
   onEdit: (source: Exchange) => void,
   onDelete: (source: Exchange) => void
 };
@@ -34,7 +35,7 @@ const hasOpenRequests = transactions =>
   transactions.openRequests.balances > 0 ||
   transactions.openRequests.transactions > 0;
 
-class Source extends Component<Props> {
+class ExchangeCard_ extends Component<Props> {
   render() {
     const { classes, exchange, transactions, onEdit, onDelete } = this.props;
 
@@ -47,7 +48,7 @@ class Source extends Component<Props> {
       }
     }
     return (
-      <Card className={style.source}>
+      <Card className={classes.card}>
         <CardContent>
           <Typography type="headline" component="h2">
             {exchange.type}
@@ -70,4 +71,4 @@ class Source extends Component<Props> {
   }
 }
 
-export default withStyles(styles)(Source);
+export const ExchangeCard = withStyles(styles)(ExchangeCard_);
