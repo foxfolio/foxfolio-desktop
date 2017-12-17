@@ -4,7 +4,6 @@ language: node_js
 
 node_js:
   - 8
-  - 7
 
 cache:
   yarn: true
@@ -37,6 +36,12 @@ before_script:
 script:
   - node --version
   - yarn lint
-  - yarn package
   - yarn test
-  - yarn test-e2e
+  - yarn package
+
+deploy:
+  provider: pages
+  skip_cleanup: true
+  github_token: $GITHUB_TOKEN
+  on:
+    branch: master
