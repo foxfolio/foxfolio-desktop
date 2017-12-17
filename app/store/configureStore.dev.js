@@ -5,8 +5,7 @@ import { createHashHistory } from 'history';
 import { routerActions, routerMiddleware } from 'react-router-redux';
 import { createLogger } from 'redux-logger';
 import rootReducer from '../reducers';
-import * as bittrexActions from '../actions/exchanges/bittrex';
-import * as sourceActions from '../actions/sources';
+import * as exchangeActions from '../actions/exchanges';
 import rehydrationComplete from '../actions/init';
 
 const history = createHashHistory();
@@ -32,8 +31,7 @@ const configureStore = (initialState?: any) => {
 
   // Redux DevTools Configuration
   const actionCreators = {
-    ...sourceActions,
-    ...bittrexActions,
+    ...exchangeActions,
     ...routerActions,
   };
   // If Redux DevTools Extension is installed use it, otherwise use Redux compose

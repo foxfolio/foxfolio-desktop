@@ -1,15 +1,13 @@
 // @flow
 import R from 'ramda';
-import type { Transaction } from '../actions/transaction.d';
-import type { TransactionsState } from '../reducers/transactions';
+import type { Exchanges, Trade } from '../reducers/exchanges/types.d';
 
 export const mapKeys = R.curry((fn: Function, obj: Object) => R.zipObj(R.map(fn, R.keys(obj)), R.values(obj)));
 
-export function flattenTransactions(transactions: TransactionsState): Transaction[] {
+export function flattenTransactions(exchanges: Exchanges): Trade[] {
   return Object
-    .keys(transactions)
-    .reduce((acc, sourceName) => acc.concat(transactions[sourceName].trades).concat(transactions[sourceName].transfers),
-      []);
+    .keys(exchanges)
+    .reduce((acc, id) => acc.concat(exchanges[id].trades), []);
 }
 
 export function unifySymbols(symbol: string): string {

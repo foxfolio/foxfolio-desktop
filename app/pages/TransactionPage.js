@@ -5,10 +5,11 @@ import { connect } from 'react-redux';
 import * as TransactionActions from '../actions/transactions';
 import type { Dispatch } from '../actions/action.d';
 import Transactions from '../components/Transactions';
+import { flattenTransactions } from '../helpers/transactions';
 
 function mapStateToProps(state) {
   return {
-    transactions: state.transactions,
+    transactions: flattenTransactions(state.exchanges),
     ticker: state.ticker,
   };
 }

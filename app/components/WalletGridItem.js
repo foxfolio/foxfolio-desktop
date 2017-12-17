@@ -2,10 +2,12 @@
 import React, { Component } from 'react';
 import { Button, Card, CardActions, CardContent, Typography } from 'material-ui';
 import { withStyles } from 'material-ui/styles';
-import style from './Source.css';
 import type { Wallet } from '../actions/wallet.d';
 
 const styles = theme => ({
+  card: {
+    margin: '10px 0',
+  },
   subheader: {
     marginBottom: 12,
     color: theme.palette.text.secondary,
@@ -26,7 +28,7 @@ class WalletGridItem extends Component<Props> {
   render() {
     const { classes, wallet, onEdit, onDelete } = this.props;
     return (
-      <Card className={style.source}>
+      <Card className={classes.card}>
         <CardContent>
           <Typography type="headline" component="h2">
             {wallet.currency}

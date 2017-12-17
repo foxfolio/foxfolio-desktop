@@ -1,11 +1,9 @@
 // @flow
 import * as R from 'ramda';
+import type { Exchanges } from '../reducers/exchanges/types.d';
 import type { Action, Dispatch, GetState, ThunkAction } from './action.d';
 import startTimer from './timer';
-import type { Transaction } from './transaction.d';
 import type { Wallet } from './wallet.d';
-import type { TransactionsState as TransactionState } from '../reducers/transactions';
-import { flattenTransactions } from '../helpers/transactions';
 
 const REFRESH_TIME_IN_MS = 30000;
 
@@ -36,7 +34,7 @@ export function requestTickerUpdate(): ThunkAction {
     dispatch(fetchingTickerUpdate());
 
     const state = getState();
-    const symbols = getSymbolsFromTransactions(state.transactions, state.wallets, state.settings.fiatCurrency);
+    const symbols = getSymbolsFromTransactions(state.exchanges, state.wallets, state.settings.fiatCurrency);
     const fsyms = symbols.from.join(',');
     const tsyms = symbols.to.join(',');
     if (fsyms && tsyms) {
@@ -67,22 +65,11 @@ export function continuouslyUpdateTicker() {
 }
 
 function getSymbolsFromTransactions(
-  transactions: TransactionState, wallets: Wallet[], fiatCurrency: string): { from: string[], to: string[] } {
+  exchanges: Exchanges, wallets: Wallet[], fiatCurrency: string): { from: string[], to: string[] } {
   const walletSymbols = wallets.map(wallet => wallet.currency) || [];
-  const exchangeSymbols = R.values(transactions)
+  const exchangeSymbols = R.values(exchanges)
     .map(exchange => exchange.balances)
     .reduce((acc, balances) => acc.concat(R.keys(balances)), []);
 
-  const trans: Transaction[] = flattenTransactions(transactions);
-  const symbols = R.reduce((acc, transaction) => {
-    if (transaction.type === 'BUY' || transaction.type === 'SELL') {
-      acc.from.push(transaction.market.minor);
-      acc.to.push(transaction.market.major);
-    } else if (transaction.type === 'DEPOSIT' || transaction.type === 'WITHDRAW') {
-      acc.to.push(transaction.currency);
-      acc.from.push(transaction.currency);
-    }
-    return acc;
-  }, { from: ['BTC', ...walletSymbols, ...exchangeSymbols], to: ['BTC', fiatCurrency] }, trans);
-  return R.map(R.uniq)(symbols);
+  return R.map(R.uniq)({ from: ['BTC', ...walletSymbols, ...exchangeSymbols], to: ['BTC', fiatCurrency] });
 }

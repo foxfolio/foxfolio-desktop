@@ -9,8 +9,8 @@ import Portfolio from '../containers/Portfolio';
 
 function mapStateToProps(state) {
   return {
-    balances: R.map(exchange => exchange.balances)(state.transactions),
-    sources: state.sources,
+    balances: R.map(exchange => exchange.balances)(state.exchanges),
+    exchanges: state.exchanges,
     ticker: state.ticker,
     coinlist: state.coinlist,
     wallets: state.wallets,
