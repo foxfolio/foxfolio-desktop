@@ -5,7 +5,7 @@ import { Button, Grid, Typography } from 'material-ui';
 import { Add } from 'material-ui-icons';
 import { withStyles } from 'material-ui/styles';
 
-import type { Exchanges } from '../reducers/exchanges/types.d';
+import type { Exchanges } from '../../../reducers/exchanges/types.d';
 import { ExchangeCard } from './ExchangeCard';
 
 const styles = theme => ({

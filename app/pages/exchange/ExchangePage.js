@@ -1,7 +1,7 @@
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { ExchangeGrid } from '../components/ExchangeGrid';
-import * as exchangeActions from '../actions/exchanges';
+import { ExchangeGrid } from './components/ExchangeGrid';
+import * as exchangeActions from '../../actions/exchanges';
 
 function mapStateToProps(state) {
   return {

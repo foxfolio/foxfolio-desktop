@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import { Button, Card, CardActions, CardContent, LinearProgress, Typography } from 'material-ui';
 import { withStyles } from 'material-ui/styles';
-import type { Exchange } from '../actions/exchange.d';
+import type { Exchange } from '../../../actions/exchange.d';
 
 const styles = theme => ({
   card: {
