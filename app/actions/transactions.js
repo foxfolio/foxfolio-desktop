@@ -1,6 +1,6 @@
 // @flow
 import ccxt from 'ccxt';
-import { forEachObjIndexed } from 'ramda';
+import { filter, forEachObjIndexed } from 'ramda';
 import type { UpdateExchangeBalancesAction } from '../reducers/exchanges/actions.d';
 
 import type { Balances, Exchange, Exchanges } from '../reducers/exchanges/types.d';
@@ -32,18 +32,23 @@ function getConfiguredExchanges(state): Exchanges {
 // TODO(greimela) Dispatch request start and error
 function fetchBalancesForExchange(exchange: Exchange): ThunkAction {
   return async (dispatch: Dispatch) => {
-    const connector = new ccxt[exchange.type]();
-    const balances = await connector.fetchTotalBalance();
-    dispatch(updateExchangeBalances(exchange.id, balances));
+    const connector = new ccxt[exchange.type](exchange.credentials);
+    try {
+      const balances = filter(balance => balance > 0)(await connector.fetchTotalBalance());
+
+      dispatch(updateExchangeBalances(exchange.id, balances));
+    } catch (e) {
+      // TODO(greimela) Dispatch error
+      console.log(e);
+    }
   };
 }
 
 export function fetchAllBalances(): ThunkAction {
   return (dispatch: Dispatch, getState: GetState) => {
     dispatch(setLastUpdate());
-
     const exchanges = getConfiguredExchanges(getState());
-    forEachObjIndexed(fetchBalancesForExchange)(exchanges);
+    forEachObjIndexed(exchange => dispatch(fetchBalancesForExchange(exchange)))(exchanges);
   };
 }
 

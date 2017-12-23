@@ -2,7 +2,8 @@
 import React, { Component } from 'react';
 import { Button, Card, CardActions, CardContent, LinearProgress, Typography } from 'material-ui';
 import { withStyles } from 'material-ui/styles';
-import type { Exchange } from '../../../actions/exchange.d';
+
+import type { Exchange } from '../../../reducers/exchanges/types.d';
 
 const styles = theme => ({
   card: {
@@ -27,8 +28,8 @@ type Props = {
   classes: any,
   exchange: Exchange,
   transactions: Object,
-  onEdit: (source: Exchange) => void,
-  onDelete: (source: Exchange) => void
+  onEdit: () => void,
+  onDelete: () => void
 };
 
 const hasOpenRequests = transactions =>
@@ -54,7 +55,7 @@ class ExchangeCard_ extends Component<Props> {
             {exchange.type}
           </Typography>
           <Typography type="body1" className={classes.subheader}>
-            {`Key: ${exchange.apiKey.substring(0, 20)}...`}
+            {`Key: ${exchange.credentials.apiKey.substring(0, 20)}...`}
           </Typography>
           <Typography type="body1" className={classes.subheader}>
             Status: {status}
@@ -62,8 +63,8 @@ class ExchangeCard_ extends Component<Props> {
         </CardContent>
         <CardActions>
           <div className={classes.flexGrow}/>
-          <Button dense color="default" onClick={() => onDelete(exchange)}>Delete</Button>
-          <Button dense color="primary" onClick={() => onEdit(exchange)}>Edit</Button>
+          <Button dense color="default" onClick={onDelete}>Delete</Button>
+          <Button dense color="primary" onClick={onEdit}>Edit</Button>
         </CardActions>
         {transactions && hasOpenRequests(transactions) ? <LinearProgress/> : ''}
       </Card>
