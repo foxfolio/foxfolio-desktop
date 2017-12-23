@@ -9,7 +9,9 @@ export type Exchange = {|
   credentials: ExchangeCredentials,
   balances: Balances,
   ledger: LedgerEntry[],
-  trades: Trade[]
+  trades: Trade[],
+  error?: string,
+  openRequests?: number
 |};
 
 export type ExchangeCredentials = {|

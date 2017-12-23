@@ -9,6 +9,7 @@ import type {
   AddExchangeAction,
   DeleteExchangeAction,
   ExchangeInstanceActions,
+  FailedExchangeRequestAction,
   UpdateExchangeBalancesAction,
   UpdateExchangeCredentialsAction,
   UpdateExchangeLedgerAction,
@@ -29,7 +30,10 @@ export function exchanges(state: Exchanges = {}, action: Action): Exchanges {
       return reduceInstance(state, action)(updateExchangeLedger);
     case 'UPDATE_EXCHANGE_TRADES':
       return reduceInstance(state, action)(updateExchangeTrades);
-
+    case 'INCREMENT_EXCHANGE_REQUEST_COUNTER':
+      return reduceInstance(state, action)(incrementExchangeRequestCounter);
+    case 'FAILED_EXCHANGE_REQUEST':
+      return reduceInstance(state, action)(failedRequest);
     default:
       return state;
   }
@@ -59,19 +63,38 @@ function updateExchangeCredentials(state: Exchange, action: UpdateExchangeCreden
 
 function updateExchangeBalances(state: Exchange, action: UpdateExchangeBalancesAction): Exchange {
   return assign(state, {
+    error: undefined,
+    openRequests: (state.openRequests ? state.openRequests : 0) - 1,
     balances: action.balances,
   });
 }
 
 function updateExchangeLedger(state: Exchange, action: UpdateExchangeLedgerAction): Exchange {
   return assign(state, {
+    error: undefined,
+    openRequests: (state.openRequests ? state.openRequests : 0) - 1,
     ledger: mergeArraysById(state.ledger, action.ledger),
   });
 }
 
 function updateExchangeTrades(state: Exchange, action: UpdateExchangeTradesAction): Exchange {
   return assign(state, {
+    error: undefined,
+    openRequests: (state.openRequests ? state.openRequests : 0) - 1,
     trades: mergeArraysById(state.ledger, action.trades),
+  });
+}
+
+function incrementExchangeRequestCounter(state: Exchange): Exchange {
+  return assign(state, {
+    openRequests: (state.openRequests ? state.openRequests : 0) + 1,
+  });
+}
+
+function failedRequest(state: Exchange, action: FailedExchangeRequestAction): Exchange {
+  return assign(state, {
+    error: action.error,
+    openRequests: (state.openRequests ? state.openRequests : 0) - 1,
   });
 }
 

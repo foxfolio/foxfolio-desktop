@@ -27,26 +27,21 @@ const styles = theme => ({
 type Props = {
   classes: any,
   exchange: Exchange,
-  transactions: Object,
   onEdit: () => void,
   onDelete: () => void
 };
 
-const hasOpenRequests = transactions =>
-  transactions.openRequests.balances > 0 ||
-  transactions.openRequests.transactions > 0;
+const hasOpenRequests = exchange => exchange.openRequests && exchange.openRequests > 0;
 
 class ExchangeCard_ extends Component<Props> {
   render() {
-    const { classes, exchange, transactions, onEdit, onDelete } = this.props;
+    const { classes, exchange, onEdit, onDelete } = this.props;
 
     let status = <span className={classes.success}>OK</span>;
-    if (transactions) {
-      if (transactions.error) {
-        status = <span className={classes.error}>{transactions.error}</span>;
-      } else if (hasOpenRequests(transactions)) {
-        status = <span>Fetching transactions</span>;
-      }
+    if (exchange.error) {
+      status = <span className={classes.error}>{exchange.error}</span>;
+    } else if (hasOpenRequests(exchange)) {
+      status = <span>Fetching transactions</span>;
     }
     return (
       <Card className={classes.card}>
@@ -66,7 +61,7 @@ class ExchangeCard_ extends Component<Props> {
           <Button dense color="default" onClick={onDelete}>Delete</Button>
           <Button dense color="primary" onClick={onEdit}>Edit</Button>
         </CardActions>
-        {transactions && hasOpenRequests(transactions) ? <LinearProgress/> : ''}
+        {hasOpenRequests(exchange) ? <LinearProgress/> : ''}
       </Card>
     );
   }
