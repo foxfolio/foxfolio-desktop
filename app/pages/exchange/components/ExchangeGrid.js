@@ -5,8 +5,10 @@ import { Button, Grid, Typography } from 'material-ui';
 import { Add } from 'material-ui-icons';
 import { withStyles } from 'material-ui/styles';
 
-import type { Exchanges } from '../../../reducers/exchanges/types.d';
+import type { Exchange, ExchangeCredentials, Exchanges } from '../../../reducers/exchanges/types.d';
 import { ExchangeCard } from './ExchangeCard';
+import type { DialogConfig } from './ExchangeDialog';
+import { ExchangeDialog } from './ExchangeDialog';
 
 const styles = theme => ({
   button: {
@@ -20,10 +22,47 @@ const styles = theme => ({
 
 type Props = {
   classes: any,
-  exchanges: Exchanges
+  exchanges: Exchanges,
+  addExchange: (type: string, credentials: ExchangeCredentials) => void,
+  updateExchangeCredentials: (id: string, credentials: ExchangeCredentials) => void,
+  deleteExchange: (id: string) => void
 };
 
-class ExchangeGrid_ extends Component<Props> {
+type State = {
+  open: boolean,
+  dialogConfig?: DialogConfig
+};
+
+class ExchangeGrid_ extends Component<Props, State> {
+  state = {
+    open: false,
+  };
+
+  handleEdit = exchange => () => {
+    this.setState({ open: true, dialogConfig: { action: 'edit', exchange } });
+  };
+
+  handleAdd = () => {
+    this.setState({ open: true, dialogConfig: { action: 'add' } });
+  };
+
+  saveExchange = (exchange: Exchange) => {
+    if (this.state.dialogConfig && this.state.dialogConfig.action === 'edit') {
+      this.props.updateExchangeCredentials(exchange.id, exchange.credentials);
+    } else {
+      this.props.addExchange(exchange.type, exchange.credentials);
+    }
+    this.setState({ open: false });
+  };
+
+  handleDelete = exchange => () => {
+    this.props.deleteExchange(exchange.id);
+  };
+
+  handleClose = () => {
+    this.setState({ open: false });
+  };
+
   render() {
     const { exchanges, classes } = this.props;
 
@@ -33,13 +72,23 @@ class ExchangeGrid_ extends Component<Props> {
         <Grid container>
           {values(exchanges).map(exchange => (
             <Grid item key={exchange.id} sm={12} md={6}>
-              <ExchangeCard exchange={exchange}/>
+              <ExchangeCard
+                exchange={exchange}
+                onEdit={this.handleEdit(exchange)}
+                onDelete={this.handleDelete(exchange)}
+              />
             </Grid>
           ))}
         </Grid>
-        <Button fab color="primary" aria-label="add" className={classes.button}>
+        <Button fab color="primary" aria-label="add" className={classes.button} onClick={this.handleAdd}>
           <Add/>
         </Button>
+        <ExchangeDialog
+          open={this.state.open}
+          config={this.state.dialogConfig ? this.state.dialogConfig : undefined}
+          onRequestClose={this.handleClose}
+          saveExchange={this.saveExchange}
+        />
       </div>
     );
   }

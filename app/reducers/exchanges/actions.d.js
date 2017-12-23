@@ -11,6 +11,7 @@ export type ExchangeClassActions =
 
 export type AddExchangeAction = {|
   type: 'ADD_EXCHANGE',
+  exchangeType: string,
   credentials: ExchangeCredentials
 |};
 

@@ -36,10 +36,12 @@ export function exchanges(state: Exchanges = {}, action: Action): Exchanges {
 }
 
 function addExchange(state: $ReadOnly<Exchanges>, action: AddExchangeAction): Exchanges {
-  const newExchange = {
+  const newExchange: Exchange = {
     id: generateId(Object.keys(state)),
+    type: action.exchangeType,
     credentials: action.credentials,
     balances: {},
+    ledger: [],
     trades: [],
   };
   return { ...state, [newExchange.id]: newExchange };
