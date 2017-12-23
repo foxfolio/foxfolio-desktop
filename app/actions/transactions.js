@@ -4,12 +4,12 @@ import { filter, forEachObjIndexed } from 'ramda';
 import type {
   FailedExchangeRequestAction,
   IncrementExchangeRequestCounterAction,
-  UpdateExchangeBalancesAction,
 } from '../reducers/exchanges/actions.d';
 
 import type { Balances, Exchange, Exchanges } from '../reducers/exchanges/types.d';
 import type { Action, Dispatch, GetState, ThunkAction } from './action.d';
 import startTimer from './timer';
+import { requestTickerUpdate } from './ticker';
 
 const BALANCE_REFRESH_MS = 30000;
 
@@ -21,11 +21,14 @@ function setLastUpdate(): Action {
   };
 }
 
-function updateExchangeBalances(id: string, balances: Balances): UpdateExchangeBalancesAction {
-  return {
-    type: 'UPDATE_EXCHANGE_BALANCES',
-    id,
-    balances,
+function updateExchangeBalances(id: string, balances: Balances): ThunkAction {
+  return (dispatch: Dispatch) => {
+    dispatch(requestTickerUpdate(Object.keys(balances)));
+    dispatch({
+      type: 'UPDATE_EXCHANGE_BALANCES',
+      id,
+      balances,
+    });
   };
 }
 
