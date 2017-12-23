@@ -1,7 +1,11 @@
 // @flow
 import ccxt from 'ccxt';
 import { filter, forEachObjIndexed } from 'ramda';
-import type { UpdateExchangeBalancesAction } from '../reducers/exchanges/actions.d';
+import type {
+  FailedExchangeRequestAction,
+  IncrementExchangeRequestCounterAction,
+  UpdateExchangeBalancesAction,
+} from '../reducers/exchanges/actions.d';
 
 import type { Balances, Exchange, Exchanges } from '../reducers/exchanges/types.d';
 import type { Action, Dispatch, GetState, ThunkAction } from './action.d';
@@ -25,21 +29,34 @@ function updateExchangeBalances(id: string, balances: Balances): UpdateExchangeB
   };
 }
 
+function incrementExchangeRequestCounter(id: string): IncrementExchangeRequestCounterAction {
+  return {
+    type: 'INCREMENT_EXCHANGE_REQUEST_COUNTER',
+    id,
+  };
+}
+
+function failedRequest(id: string, error: string): FailedExchangeRequestAction {
+  return {
+    type: 'FAILED_EXCHANGE_REQUEST',
+    id,
+    error,
+  };
+}
+
 function getConfiguredExchanges(state): Exchanges {
   return state.exchanges;
 }
 
-// TODO(greimela) Dispatch request start and error
 function fetchBalancesForExchange(exchange: Exchange): ThunkAction {
   return async (dispatch: Dispatch) => {
-    const connector = new ccxt[exchange.type](exchange.credentials);
+    dispatch(incrementExchangeRequestCounter(exchange.id));
     try {
+      const connector = new ccxt[exchange.type](exchange.credentials);
       const balances = filter(balance => balance > 0)(await connector.fetchTotalBalance());
-
       dispatch(updateExchangeBalances(exchange.id, balances));
     } catch (e) {
-      // TODO(greimela) Dispatch error
-      console.log(e);
+      dispatch(failedRequest(exchange.id, e.message));
     }
   };
 }

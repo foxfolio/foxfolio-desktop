@@ -24,7 +24,9 @@ export type ExchangeInstanceActions =
   | UpdateExchangeCredentialsAction
   | UpdateExchangeBalancesAction
   | UpdateExchangeLedgerAction
-  | UpdateExchangeTradesAction;
+  | UpdateExchangeTradesAction
+  | IncrementExchangeRequestCounterAction
+  | FailedExchangeRequestAction;
 
 export type UpdateExchangeCredentialsAction = {|
   type: 'UPDATE_EXCHANGE_CREDENTIALS', id: string, credentials: ExchangeCredentials
@@ -40,4 +42,12 @@ export type UpdateExchangeLedgerAction = {|
 
 export type UpdateExchangeTradesAction = {|
   type: 'UPDATE_EXCHANGE_TRADES', id: string, trades: Trade[]
+|};
+
+export type IncrementExchangeRequestCounterAction = {|
+  type: 'INCREMENT_EXCHANGE_REQUEST_COUNTER', id: string
+|};
+
+export type FailedExchangeRequestAction = {|
+  type: 'FAILED_EXCHANGE_REQUEST', id: string, error: string
 |};
