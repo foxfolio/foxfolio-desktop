@@ -17,6 +17,7 @@
     "lint-styles-fix": "stylefmt -r app/*.css app/components/*.css",
     "package": "npm run build && build --publish never",
     "package-all": "npm run build && build -mwl",
+    "package-deploy": "npm run build && build -wl",
     "package-linux-windows-ci": "build -wl --publish=never",
     "package-linux": "npm run build && build --linux",
     "package-win": "npm run build && build --win --x64",
