@@ -62,6 +62,7 @@
       ]
     },
     "linux": {
+      "category": "Finance",
       "target": [
         "deb",
         "AppImage"
