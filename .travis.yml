@@ -7,20 +7,26 @@ cache:
   directories:
   - node_modules
   - app/node_modules
+
+before_install:
+- sudo apt-get -qq update
+- sudo apt-get install -y --no-install-recommends mono-devel ca-certificates-mono
+
 script:
 - node --version
 - yarn lint
 - yarn test
-- yarn package
+- yarn build
+- yarn package-linux-windows-ci
 
 deploy:
   provider: releases
   api_key:
     secure: ja5gOM1SfBJPsbo6J4M9fEzL6xXpenSYJ2i/2x2EmzUw3uAstZIBqKNMEAhorHVZUfTm8P2E8i+HrqwtfcvWlh+ob/0e/R8UO4sZ6jLODZPPNppdg2oo8QiorTfuLW+G6y0rdBWrHASOCz7wws4iypJ14XB2EA1Wibatf4w2lULieYgaf4zyB2P/8pc9n9dCT89WLX0PdayMQtNpFNDncqgfMrG7mzyZqn5cUyw7ds1ocpS7k+oNDF2NtluR81i6iNW9GLFXKZER5YQiqH+Zik3Qh3GI8AfNKfmTyipA21YmJeMDd6K2jTB09OsLiW87SmdbP7XuM0u7sHUPapICFS0iY+Kf7n1clP6EZF+qSBFWeeNG3k8LpgyhkcyNosT9Wmgb4KFhkaue2CBIuHagmUscvrxlLXNqfTRUTXID6EhzPKS+fhqJwVkGIaMh6xnj813RClRwR4aqXeI1h6lzejTRkC5jQ3JPjglvr+YNZAgB/iqt5KWmdooboIrCwDuRIRrwTfzHombkUdjmG7CCmj86jvR65esEFUOjG3/Je2HWskEDkcgtj6xT3p76mfhANoHKs6X7q2a/qrT5Pl5BJrOHwB35aT7tpm5ytOZJTyzssM7xeL5IWeFuxflz3VHv9Q8p4BPYa/wopris4jWkBPzPIQVUt+mGY7tGc9BoH20=
-  file: 
-    - release/*.deb
-    - release/*.exe
-    - release/*.yml
+  file:
+  - release/*.deb
+  - release/*.exe
+  - release/*.yml
   skip_cleanup: true
   on:
     tags: true
