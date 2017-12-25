@@ -193,6 +193,7 @@
     "csvtojson": "^1.1.9",
     "devtron": "^1.4.0",
     "electron-debug": "^1.2.0",
+    "electron-updater": "^2.17.6",
     "font-awesome": "^4.7.0",
     "history": "^4.6.3",
     "material-ui": "^1.0.0-beta.11",

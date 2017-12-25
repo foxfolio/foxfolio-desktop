@@ -10,6 +10,7 @@
  * @flow
  */
 import { app, BrowserWindow } from 'electron';
+import { autoUpdater } from 'electron-updater';
 
 let mainWindow = null;
 
@@ -52,6 +53,10 @@ app.on('window-all-closed', () => {
 app.on('ready', async () => {
   if (process.env.NODE_ENV === 'development' || process.env.DEBUG_PROD === 'true') {
     await installExtensions();
+  }
+
+  if (process.env.NODE_ENV === 'production') {
+    autoUpdater.checkForUpdatesAndNotify();
   }
 
   mainWindow = new BrowserWindow({
