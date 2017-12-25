@@ -3,6 +3,7 @@ import type { Node } from 'react';
 import React, { Component } from 'react';
 import ccxt from 'ccxt';
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, MenuItem, TextField } from 'material-ui';
+import { withStyles } from 'material-ui/styles';
 
 import type { Exchange } from '../../../reducers/exchanges/types.d';
 
@@ -23,7 +24,8 @@ type Props = {
   open: boolean,
   onRequestClose: () => void,
   saveExchange: (exchange: Exchange) => void,
-  config?: DialogConfig
+  config?: DialogConfig,
+  classes: Object
 };
 
 type State = {
@@ -42,7 +44,7 @@ const emptyExchange: Exchange = {
   trades: [],
 };
 
-export class ExchangeDialog extends Component<Props, State> {
+class ExchangeDialog_ extends Component<Props, State> {
   state = {
     exchange: emptyExchange,
   };
@@ -162,10 +164,10 @@ export class ExchangeDialog extends Component<Props, State> {
   }
 
   render(): Node {
-    const { open, onRequestClose, config } = this.props;
+    const { open, onRequestClose, config, classes } = this.props;
 
     return (
-      <Dialog open={open} onRequestClose={onRequestClose}>
+      <Dialog open={open} onRequestClose={onRequestClose} classes={{ paper: classes.paper }}>
         {config
           ? this.createDialog(config)
           : ''}
@@ -173,3 +175,11 @@ export class ExchangeDialog extends Component<Props, State> {
     );
   }
 }
+
+const styles = {
+  paper: {
+    width: 500,
+  },
+};
+
+export const ExchangeDialog = withStyles(styles)(ExchangeDialog_);
