@@ -11,7 +11,6 @@ import { continuouslyFetchTransactions } from '../actions/transactions';
 import type { Dispatch } from '../actions/action.d';
 import { continuouslyUpdateTicker, requestCoinList } from '../actions/ticker';
 import { DrawerItem } from '../components/DrawerItem';
-import LastUpdateBar from '../components/LastUpdateBar';
 import icon from '../resources/icon.png';
 
 const drawerWidth = 250;
@@ -83,7 +82,6 @@ class App extends Component<Props> {
           </List>
         </Drawer>
         <main className={classes.content}>
-          <LastUpdateBar/>
           <div className={classes.padding}>
             {children}
           </div>
