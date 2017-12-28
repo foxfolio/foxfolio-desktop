@@ -26,10 +26,19 @@ const dateTransform = createTransform(null, (outboundState, key) => {
   return outboundState;
 });
 
+const exchangeTransform = createTransform(
+  (inboundState, key) => {
+    if (key === 'exchanges') {
+      return R.map(R.omit(['openRequests']))(inboundState);
+    }
+    return inboundState;
+  },
+);
+
 const config: PersistConfig = {
   key: 'primary',
   blacklist: ['router', 'timer'],
-  transforms: [dateTransform],
+  transforms: [dateTransform, exchangeTransform],
   storage,
 };
 

@@ -1,11 +1,11 @@
 // @flow
 import { applyMiddleware, compose, createStore } from 'redux';
 import thunk from 'redux-thunk';
-import { persistStore } from 'redux-persist';
 import { createHashHistory } from 'history';
 import { routerMiddleware } from 'react-router-redux';
+
 import rootReducer from '../reducers';
-import rehydrationComplete from '../actions/init';
+import { persistStore } from './persistStore';
 
 const history = createHashHistory();
 
@@ -14,7 +14,7 @@ const enhancer = compose(applyMiddleware(thunk, router));
 
 function configureStore(initialState?: any) {
   const store = createStore(rootReducer, initialState, enhancer);
-  persistStore(store, null, () => store.dispatch(rehydrationComplete()));
+  persistStore(store);
   return store;
 }
 
