@@ -14,13 +14,20 @@ const styles = theme => ({
   positive: {
     color: theme.palette.success[500],
   },
+  interval: {
+    fontSize: 12,
+    color: 'grey',
+  },
 });
 
 function PriceChangeText({ change, classes }: Props) {
   return (
-    <span className={change > 0 ? classes.positive : classes.negative}>
-      {`${change > 0 ? '+' : ''}${(change).toFixed(2)}%`}
-    </span>
+    <div style={{ display: 'inline-block' }}>
+      <span className={change > 0 ? classes.positive : classes.negative}>
+        {`${change > 0 ? '+' : ''}${(change).toFixed(2)}%`}
+      </span>
+      <span className={classes.interval}> /24h</span>
+    </div>
   );
 }
 
