@@ -61,71 +61,28 @@ class PortfolioPosition extends Component<Props, State> {
   rowCard(avatar: Node) {
     const { asset, portfolio, classes, coinlist, ticker, fiatCurrency } = this.props;
     const quantity = portfolio.total;
+
     return (
       <CardContent className={classes.root} onClick={this.handleExpandClick}>
         <div className={classes.avatar}>{avatar}</div>
         <div className={classes.content}>
           <Grid container>
             <Grid item xs={3}>
-              <Typography type="body2" component="span" color={quantity > 0 ? 'default' : 'secondary'}>
-                {coinlist[asset].FullName}
-              </Typography>
-              <Typography
-                type="body2"
-                component="span"
-                color="secondary"
-              >
-                {quantity.toPrecision(5)}
-              </Typography>
+              {PositionHeader(coinlist[asset].FullName, quantity)}
             </Grid>
             <Grid item xs={2} className={classes.right}>
-              <Typography type="body2" component="span" color={quantity > 0 ? 'default' : 'secondary'}>
-                {`${(ticker[asset][fiatCurrency].PRICE * quantity).toFixed(2)}  €`}
-              </Typography>
-              <Typography type="body2" component="span" color={quantity > 0 ? 'default' : 'secondary'}>
-                {`${(ticker[asset].BTC.PRICE * quantity).toPrecision(5)} BTC`}
-              </Typography>
+              {ticker[asset] ? PositionQuantity(ticker[asset], quantity, fiatCurrency) : ''}
             </Grid>
             <Grid item xs={3} className={classes.right}>
-              <Typography
-                type="body2"
-                component="span"
-                color={quantity > 0 ? 'default' : 'secondary'}
-              >
-                {`${(ticker[asset][fiatCurrency].PRICE).toPrecision(5)} €`}
-              </Typography>
-              <Typography
-                type="body2"
-                component="span"
-                color={quantity > 0 ? 'default' : 'secondary'}
-              >
-                {`${(ticker[asset].BTC.PRICE).toPrecision(5)} BTC`}
-              </Typography>
+              {ticker[asset] ? PositionPrice(ticker[asset], quantity, fiatCurrency) : ''}
             </Grid>
             <Grid item xs={2} className={classes.right}>
-              <Typography
-                type="body2"
-                component="span"
-                color={quantity > 0 ? 'default' : 'secondary'}
-              >
-                <PriceChangeText change={ticker[asset][fiatCurrency].CHANGEPCT24HOUR}/>
-              </Typography>
-              <Typography
-                type="body2"
-                component="span"
-                color={quantity > 0 ? 'default' : 'secondary'}
-              >
-                <PriceChangeText change={ticker[asset].BTC.CHANGEPCT24HOUR}/>
-              </Typography>
+              {ticker[asset] ? PositionPriceChange(ticker[asset], quantity, fiatCurrency) : ''}
             </Grid>
           </Grid>
         </div>
         <div>
-          <IconButton
-            className={classnames(classes.expand, {
-              [classes.expandOpen]: this.state.expanded,
-            })}
-          >
+          <IconButton className={classnames(classes.expand, { [classes.expandOpen]: this.state.expanded, })}>
             <ExpandMore/>
           </IconButton>
         </div>
@@ -159,5 +116,54 @@ class PortfolioPosition extends Component<Props, State> {
     );
   }
 }
+
+const PositionHeader = (name: string, quantity: number) => (
+  <div>
+    <Typography type="body2" component="span" color={quantity > 0 ? 'default' : 'secondary'}>
+      {name}
+    </Typography>
+    <Typography
+      type="body2"
+      component="span"
+      color="secondary"
+    >
+      {quantity.toPrecision(5)}
+    </Typography>
+  </div>
+);
+
+const PositionQuantity = (ticker: Object, quantity: number, fiatCurrency: string) => (
+  <div>
+    <Typography type="body2" component="span" color={quantity > 0 ? 'default' : 'secondary'}>
+      {`${(ticker[fiatCurrency].PRICE * quantity).toFixed(2)}  ${fiatCurrency}`}
+    </Typography>
+    <Typography type="body2" component="span" color={quantity > 0 ? 'default' : 'secondary'}>
+      {`${(ticker.BTC.PRICE * quantity).toPrecision(5)} BTC`}
+    </Typography>
+  </div>
+);
+
+const PositionPrice = (ticker: Object, quantity: number, fiatCurrency: string) => (
+  <div>
+    <Typography type="body2" component="span" color={quantity > 0 ? 'default' : 'secondary'}>
+      {`${(ticker[fiatCurrency].PRICE).toPrecision(5)} €`}
+    </Typography>
+    <Typography type="body2" component="span" color={quantity > 0 ? 'default' : 'secondary'}>
+      {`${(ticker.BTC.PRICE).toPrecision(5)} BTC`}
+    </Typography>
+
+  </div>
+);
+
+const PositionPriceChange = (ticker: Object, quantity: number, fiatCurrency: string) => (
+  <div>
+    <Typography type="body2" component="span" color={quantity > 0 ? 'default' : 'secondary'}>
+      <PriceChangeText change={ticker[fiatCurrency].CHANGEPCT24HOUR}/>
+    </Typography>
+    <Typography type="body2" component="span" color={quantity > 0 ? 'default' : 'secondary'}>
+      <PriceChangeText change={ticker.BTC.CHANGEPCT24HOUR}/>
+    </Typography>
+  </div>
+);
 
 export default withStyles(styles)(PortfolioPosition);
