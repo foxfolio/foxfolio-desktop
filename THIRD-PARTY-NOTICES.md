@@ -1,11 +1,7 @@
-# Third party licenses
+# Third party license notices
+Foxfolio includes the following third-party software/licensing:
 
-## electron-react-boilerplate
-
-- Used as a starting point for this project.
-- GitHub: https://github.com/chentsulin/electron-react-boilerplate
-
-### License
+##### License notice for electron-react-boilerplate (https://github.com/chentsulin/electron-react-boilerplate)
 >The MIT License (MIT)
 >
 >Copyright (c) 2015-present C. T. Lin
