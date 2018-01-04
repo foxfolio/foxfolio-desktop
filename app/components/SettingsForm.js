@@ -1,15 +1,13 @@
 // @flow
 import React, { Component } from 'react';
-import { Button, Grid } from 'material-ui';
+import { Button, Grid, MenuItem } from 'material-ui';
 import { reduxForm, Field, SubmissionError } from 'redux-form';
-import { TextField } from 'redux-form-material-ui';
+import { Select } from 'redux-form-material-ui';
 import type { SettingsType } from '../reducers/settings';
 
 type Props = {
   handleSubmit: (settings: SettingsType) => void
 };
-
-const characterCount = value => (value.length !== 3 ? 'Has to be 3 characters long' : undefined);
 
 class SettingsForm extends Component<Props> {
   handleSubmit(settings: SettingsType) {
@@ -26,7 +24,10 @@ class SettingsForm extends Component<Props> {
       <form onSubmit={handleSubmit}>
         <Grid container>
           <Grid item xs={12}>
-            <Field name="fiatCurrency" component={TextField} label="Fiat currency" validate={characterCount}/>
+            <Field name="fiatCurrency" component={Select} placeholder="Fiat currency">
+              <MenuItem value="USD">USD</MenuItem>
+              <MenuItem value="EUR">EUR</MenuItem>
+            </Field>
           </Grid>
           <Grid item xs={12}>
             <Button raised color="primary" type="submit">Save</Button>
