@@ -5,7 +5,7 @@ import classnames from 'classnames';
 import { Avatar, Card, CardContent, Grid, IconButton, Typography } from 'material-ui';
 import Collapse from 'material-ui/transitions/Collapse';
 import { withStyles } from 'material-ui/styles';
-import { ExpandMore } from 'material-ui-icons';
+import { ExpandMore, HelpOutline } from 'material-ui-icons';
 import PriceChangeText from '../PriceChangeText';
 import PortfolioPositionExchangeRow from './PortfolioPositionExchangeRow';
 import PortfolioPositionWalletRow from './PortfolioPositionWalletRow';
@@ -95,12 +95,9 @@ class PortfolioPosition extends Component<Props, State> {
     return (
       <Card>
         {this.rowCard(
-          <Avatar
-            src={coinlist[asset]
-              ? `https://www.cryptocompare.com${coinlist[asset].ImageUrl}`
-              : ''}
-          />,
-        )}
+          coinlist[asset]
+            ? <Avatar src={`https://www.cryptocompare.com${coinlist[asset].ImageUrl}`}/>
+            : <Avatar><HelpOutline/></Avatar>)}
         <Collapse in={this.state.expanded}>
           {portfolio.wallets ? <PortfolioPositionWalletRow asset={asset} balance={portfolio.wallets}/> : ''}
           {Object.keys(portfolio.exchanges).map(key =>
