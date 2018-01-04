@@ -49,7 +49,7 @@ export function requestTickerUpdate(extraSymbols: string[] = [], fiatCurrency?: 
 
 export function requestCoinList(): ThunkAction {
   return (dispatch: Dispatch) => {
-    fetch('https://www.cryptocompare.com/api/data/coinlist')
+    fetch('https://min-api.cryptocompare.com/data/all/coinlist')
       .then(result => result.json())
       .then(result => dispatch(receiveCoinList(result.Data)))
       .catch(error => console.error(error));
