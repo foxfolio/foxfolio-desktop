@@ -74,10 +74,10 @@ class PortfolioPosition extends Component<Props, State> {
               {ticker[asset] ? PositionQuantity(ticker[asset], quantity, fiatCurrency) : ''}
             </Grid>
             <Grid item xs={3} className={classes.right}>
-              {ticker[asset] ? PositionPrice(ticker[asset], quantity, fiatCurrency) : ''}
+              {ticker[asset] ? PositionPrice(ticker[asset], quantity, asset, fiatCurrency) : ''}
             </Grid>
             <Grid item xs={2} className={classes.right}>
-              {ticker[asset] ? PositionPriceChange(ticker[asset], quantity, fiatCurrency) : ''}
+              {ticker[asset] ? PositionPriceChange(ticker[asset], quantity, asset, fiatCurrency) : ''}
             </Grid>
           </Grid>
         </div>
@@ -135,33 +135,32 @@ const PositionHeader = (name: string, quantity: number) => (
 const PositionQuantity = (ticker: Object, quantity: number, fiatCurrency: string) => (
   <div>
     <Typography type="body2" component="span" color={quantity > 0 ? 'default' : 'secondary'}>
-      {`${(ticker[fiatCurrency].PRICE * quantity).toFixed(2)}  ${fiatCurrency}`}
+      {`${(parseFloat(ticker[fiatCurrency].PRICE) * quantity).toFixed(2)}  ${fiatCurrency}`}
     </Typography>
     <Typography type="body2" component="span" color={quantity > 0 ? 'default' : 'secondary'}>
-      {`${(ticker.BTC.PRICE * quantity).toPrecision(5)} BTC`}
+      {`${(parseFloat(ticker.BTC.PRICE) * quantity).toPrecision(5)} BTC`}
     </Typography>
   </div>
 );
 
-const PositionPrice = (ticker: Object, quantity: number, fiatCurrency: string) => (
+const PositionPrice = (ticker: Object, quantity: number, asset: string, fiatCurrency: string) => (
   <div>
     <Typography type="body2" component="span" color={quantity > 0 ? 'default' : 'secondary'}>
-      {`${(ticker[fiatCurrency].PRICE).toPrecision(5)} €`}
+      {asset !== fiatCurrency ? `${parseFloat(ticker[fiatCurrency].PRICE).toPrecision(5)} ${fiatCurrency}` : ''}
     </Typography>
     <Typography type="body2" component="span" color={quantity > 0 ? 'default' : 'secondary'}>
-      {`${(ticker.BTC.PRICE).toPrecision(5)} BTC`}
+      {asset !== 'BTC' ? `${parseFloat(ticker.BTC.PRICE).toPrecision(5)} BTC` : ''}
     </Typography>
-
   </div>
 );
 
-const PositionPriceChange = (ticker: Object, quantity: number, fiatCurrency: string) => (
+const PositionPriceChange = (ticker: Object, quantity: number, asset: string, fiatCurrency: string) => (
   <div>
     <Typography type="body2" component="span" color={quantity > 0 ? 'default' : 'secondary'}>
-      <PriceChangeText change={ticker[fiatCurrency].CHANGEPCT24HOUR}/>
+      {asset !== fiatCurrency ? <PriceChangeText change={ticker[fiatCurrency].CHANGEPCT24HOUR}/> : ''}
     </Typography>
     <Typography type="body2" component="span" color={quantity > 0 ? 'default' : 'secondary'}>
-      <PriceChangeText change={ticker.BTC.CHANGEPCT24HOUR}/>
+      {asset !== 'BTC' ? <PriceChangeText change={ticker.BTC.CHANGEPCT24HOUR}/> : ''}
     </Typography>
   </div>
 );
