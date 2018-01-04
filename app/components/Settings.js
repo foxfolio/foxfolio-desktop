@@ -13,18 +13,18 @@ const styles = () => ({
 type Props = {
   classes: Object,
   settings: SettingsType,
-  saveSettings: (settings: SettingsType) => void
+  saveSettingsAndUpdateTicker: (settings: SettingsType) => void
 };
 
 class Settings extends Component<Props> {
   render() {
-    const { settings, classes, saveSettings } = this.props;
+    const { settings, classes, saveSettingsAndUpdateTicker } = this.props;
 
     return (
       <div className="container">
         <Paper className={classes.paper}>
           <Typography type="display1" className={classes.headline}>Settings</Typography>
-          <SettingsForm onSubmit={saveSettings} initialValues={settings}/>
+          <SettingsForm onSubmit={saveSettingsAndUpdateTicker} initialValues={settings}/>
         </Paper>
       </div>
     );

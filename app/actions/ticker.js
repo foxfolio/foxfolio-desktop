@@ -29,13 +29,13 @@ function receiveCoinList(coinlist: Object): Action {
   };
 }
 
-export function requestTickerUpdate(extraSymbols: string[] = []): ThunkAction {
+export function requestTickerUpdate(extraSymbols: string[] = [], fiatCurrency?: string): ThunkAction {
   return (dispatch: Dispatch, getState: GetState) => {
     dispatch(fetchingTickerUpdate());
 
     const state = getState();
     const symbols = getSymbolsFromTransactions(
-      state.exchanges, state.wallets, state.settings.fiatCurrency, extraSymbols);
+      state.exchanges, state.wallets, fiatCurrency || state.settings.fiatCurrency, extraSymbols);
     const fsyms = symbols.from.join(',');
     const tsyms = symbols.to.join(',');
     if (fsyms && tsyms) {
