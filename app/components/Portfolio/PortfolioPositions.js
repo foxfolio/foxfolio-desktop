@@ -15,6 +15,7 @@ export default function PortfolioPositions({ portfolio, coinlist, ticker, fiatCu
   return (
     <div>
       {Object.keys(portfolio.total)
+        .filter(asset => coinlist[asset])
         .sort((a, b) =>
           (portfolio.total[b] * (ticker[b] ? ticker[b][fiatCurrency].PRICE : 0))
           - (portfolio.total[a] * (ticker[a] ? ticker[a][fiatCurrency].PRICE : 0)))
