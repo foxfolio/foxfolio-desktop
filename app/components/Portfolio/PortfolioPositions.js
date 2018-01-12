@@ -2,11 +2,12 @@
 import React from 'react';
 import R from 'ramda';
 import { getTickerPrice } from '../../helpers/transactions';
+import type { Coinlist } from '../../reducers/coinlist/types.d';
 import PortfolioPosition from './PortfolioPosition';
 
 type Props = {
   portfolio: Object,
-  coinlist: Object,
+  coinlist: Coinlist,
   ticker: Object,
   fiatCurrency: string,
   sumBTC: number

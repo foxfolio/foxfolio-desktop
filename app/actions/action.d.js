@@ -1,6 +1,7 @@
 // @flow
 import type { SettingsType } from '../reducers/settings';
 import type { Wallet } from './wallet.d';
+import type { Coinlist } from '../reducers/coinlist/types.d';
 import type { ExchangeActions } from '../reducers/exchanges/actions.d';
 
 export type Action =
@@ -11,7 +12,7 @@ export type Action =
   | {| type: 'LAST_UPDATED', key: string, time: Date |}
   | {| type: 'TICKER_UPDATE', ticker: Object |}
   | {| type: 'START_TIMER', name: string, timer: Object |}
-  | {| type: 'RECEIVE_COIN_LIST', coinlist: Object |}
+  | {| type: 'RECEIVE_COIN_LIST', coinlist: Coinlist |}
   | {| type: 'SAVE_SETTINGS', settings: SettingsType |};
 
 export type Dispatch = (action: Action | ThunkAction | PromiseAction | Array<Action>) => any;

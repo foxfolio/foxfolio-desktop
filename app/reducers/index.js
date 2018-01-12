@@ -10,7 +10,7 @@ import { exchanges } from './exchanges';
 import wallets from './wallets';
 import ticker from './ticker';
 import timer from './timer';
-import coinlist from './coinlist';
+import { coinlist } from './coinlist';
 import settings from './settings';
 
 // $FlowFixMe

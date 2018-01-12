@@ -7,6 +7,7 @@ import Collapse from 'material-ui/transitions/Collapse';
 import { withStyles } from 'material-ui/styles';
 import { AccountBalance, ExpandMore, HelpOutline } from 'material-ui-icons';
 import green from 'material-ui/colors/green';
+import type { Coinlist } from '../../reducers/coinlist/types.d';
 
 import { getFiatCurrencies } from '../../utils/fiatCurrencies';
 import PriceChangeText from '../PriceChangeText';
@@ -45,7 +46,7 @@ export const styles = (theme: Object) => ({
 
 type Props = {
   asset: string,
-  coinlist: Object,
+  coinlist: Coinlist,
   ticker: Object,
   portfolio: { total: number, exchanges: { [id: string]: number }, wallets: number },
   classes: any,

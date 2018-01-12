@@ -5,6 +5,7 @@ import { Paper } from 'material-ui';
 
 import PortfolioChart from '../components/Portfolio/PortfolioChart';
 import { getTickerPrice } from '../helpers/transactions';
+import type { Coinlist } from '../reducers/coinlist/types.d';
 import type { SettingsType } from '../reducers/settings';
 import PortfolioPositions from '../components/Portfolio/PortfolioPositions';
 import PortfolioHeader from '../components/Portfolio/PortfolioHeader';
@@ -15,7 +16,7 @@ import type { Balances, Portfolio } from '../types/portfolio.d.ts';
 type Props = {
   balances: { [string]: Balances },
   ticker: Object,
-  coinlist: Object,
+  coinlist: Coinlist,
   wallets: Wallet[],
   settings: SettingsType
 };
