@@ -1,8 +1,12 @@
 // @flow
 import React, { Component } from 'react';
-import { Button, Card, CardActions, CardContent, Typography } from 'material-ui';
+import { Button, Card, CardActions, CardContent, CardHeader, Typography } from 'material-ui';
 import { withStyles } from 'material-ui/styles';
+import green from 'material-ui/colors/green';
+
 import type { Wallet } from '../actions/wallet.d';
+import type { Coinlist } from '../reducers/coinlist/types.d';
+import { CurrencyAvatar } from './CurrencyAvatar';
 
 const styles = theme => ({
   card: {
@@ -12,6 +16,10 @@ const styles = theme => ({
     marginBottom: 12,
     color: theme.palette.text.secondary,
   },
+  fiatAvatar: {
+    color: '#fff',
+    backgroundColor: green[500],
+  },
   flexGrow: {
     flex: '1 1 auto',
   },
@@ -19,6 +27,7 @@ const styles = theme => ({
 
 type Props = {
   classes: any,
+  coinlist: Coinlist,
   wallet: Wallet,
   onEdit: (wallet: Wallet) => void,
   onDelete: (wallet: Wallet) => void
@@ -26,13 +35,17 @@ type Props = {
 
 class WalletGridItem extends Component<Props> {
   render() {
-    const { classes, wallet, onEdit, onDelete } = this.props;
+    const { classes, coinlist, wallet, onEdit, onDelete } = this.props;
     return (
       <Card className={classes.card}>
+        <CardHeader
+          avatar={<CurrencyAvatar asset={wallet.currency} coinlist={coinlist} fiatClass={classes.fiatAvatar}/>}
+          title={
+            <Typography type="headline" component="h2">
+              {coinlist[wallet.currency] ? coinlist[wallet.currency].FullName : wallet.currency}
+            </Typography>}
+        />
         <CardContent>
-          <Typography type="headline" component="h2">
-            {wallet.currency}
-          </Typography>
           <Typography type="body1" className={classes.subheader}>
             {`Address: ${wallet.address}`}
             <br/>

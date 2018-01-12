@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { Button, Grid, Typography } from 'material-ui';
 import { Add } from 'material-ui-icons';
 import { withStyles } from 'material-ui/styles';
+import type { Coinlist } from '../reducers/coinlist/types.d';
 import WalletGridItem from './WalletGridItem';
 import WalletDialog from './WalletDialog';
 import type { Wallet } from '../actions/wallet.d';
@@ -19,6 +20,7 @@ const styles = theme => ({
 
 type Props = {
   classes: any,
+  coinlist: Coinlist,
   wallets: Wallet[],
   addWallet: (source: Wallet) => void,
   editWallet: (oldWallet: Wallet, newWallet: Wallet) => void,
@@ -60,7 +62,7 @@ class WalletGrid extends Component<Props, State> {
   };
 
   render() {
-    const { wallets, classes, deleteWallet } = this.props;
+    const { wallets, classes, coinlist, deleteWallet } = this.props;
 
     return (
       <div className="container">
@@ -70,7 +72,7 @@ class WalletGrid extends Component<Props, State> {
             .sort((a, b) => a.address.localeCompare(b.address))
             .map(wallet => (
               <Grid item key={wallet.currency + wallet.address} sm={12} md={6}>
-                <WalletGridItem wallet={wallet} onEdit={this.editDialog} onDelete={deleteWallet}/>
+                <WalletGridItem wallet={wallet} onEdit={this.editDialog} onDelete={deleteWallet} coinlist={coinlist}/>
               </Grid>
             ))}
         </Grid>

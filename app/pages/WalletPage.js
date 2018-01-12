@@ -7,6 +7,7 @@ import type { Dispatch } from '../actions/action.d';
 
 function mapStateToProps(state) {
   return {
+    coinlist: state.coinlist,
     wallets: state.wallets,
   };
 }

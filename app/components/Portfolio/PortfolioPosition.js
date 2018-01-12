@@ -2,15 +2,15 @@
 import type { Node } from 'react';
 import React, { Component } from 'react';
 import classnames from 'classnames';
-import { Avatar, Card, CardContent, Grid, IconButton, Typography } from 'material-ui';
+import { Card, CardContent, Grid, IconButton, Typography } from 'material-ui';
 import Collapse from 'material-ui/transitions/Collapse';
 import { withStyles } from 'material-ui/styles';
-import { AccountBalance, ExpandMore, HelpOutline } from 'material-ui-icons';
+import { ExpandMore } from 'material-ui-icons';
 import green from 'material-ui/colors/green';
 import type { Coinlist } from '../../reducers/coinlist/types.d';
 import type { Ticker } from '../../reducers/ticker/types.d';
 
-import { getFiatCurrencies } from '../../utils/fiatCurrencies';
+import { CurrencyAvatar } from '../CurrencyAvatar';
 import PriceChangeText from '../PriceChangeText';
 import PortfolioPositionExchangeRow from './PortfolioPositionExchangeRow';
 import PortfolioPositionWalletRow from './PortfolioPositionWalletRow';
@@ -67,19 +67,6 @@ class PortfolioPosition extends Component<Props, State> {
     this.setState({ expanded: !this.state.expanded });
   };
 
-  getAvatarForAsset(asset: string) {
-    const { classes, coinlist } = this.props;
-
-    let avatar = <Avatar><HelpOutline/></Avatar>;
-    if (coinlist[asset]) {
-      avatar = <Avatar src={`https://www.cryptocompare.com${coinlist[asset].ImageUrl}`}/>;
-    } else if (getFiatCurrencies().includes(asset)) {
-      avatar = <Avatar className={classes.fiatAvatar}><AccountBalance/></Avatar>;
-    }
-
-    return avatar;
-  }
-
   rowCard(avatar: Node) {
     const { asset, portfolio, classes, coinlist, ticker, fiatCurrency } = this.props;
     const quantity = portfolio.total;
@@ -113,10 +100,10 @@ class PortfolioPosition extends Component<Props, State> {
   }
 
   render() {
-    const { asset, portfolio } = this.props;
+    const { asset, classes, coinlist, portfolio } = this.props;
     return (
       <Card>
-        {this.rowCard(this.getAvatarForAsset(asset))}
+        {this.rowCard(<CurrencyAvatar asset={asset} coinlist={coinlist} fiatClass={classes.fiatAvatar}/>)}
         <Collapse in={this.state.expanded}>
           {portfolio.wallets ? <PortfolioPositionWalletRow asset={asset} balance={portfolio.wallets}/> : ''}
           {Object.keys(portfolio.exchanges).map(key =>
