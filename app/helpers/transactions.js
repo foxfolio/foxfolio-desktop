@@ -18,3 +18,7 @@ export function unifySymbols(symbol: string): string {
       return symbol;
   }
 }
+
+export function getTickerPrice(ticker: Object, fsym: string, tsym: string): number {
+  return fsym !== tsym ? ticker[fsym][tsym].PRICE : 1;
+}

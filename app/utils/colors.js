@@ -46,6 +46,7 @@ export default function getColor(currency: string) {
     BSD: '#1186E7',
     BTA: '#210094',
     BTC: '#F7931A',
+    BTG: '#F7931A',
     BCH: '#F7931A',
     BCC: '#F7931A',
     BTCD: '#2A72DC',
@@ -169,6 +170,10 @@ export default function getColor(currency: string) {
     YBC: '#D6C154',
     ZEC: '#e5a93d',
     ZEIT: '#ACACAC',
+
+    // Fiat currencies
+    EUR: '#4caf50',
+    USD: '#4caf50',
   };
 
   return colors[currency] || '#888';

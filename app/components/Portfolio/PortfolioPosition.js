@@ -5,7 +5,10 @@ import classnames from 'classnames';
 import { Avatar, Card, CardContent, Grid, IconButton, Typography } from 'material-ui';
 import Collapse from 'material-ui/transitions/Collapse';
 import { withStyles } from 'material-ui/styles';
-import { ExpandMore, HelpOutline } from 'material-ui-icons';
+import { AccountBalance, ExpandMore, HelpOutline } from 'material-ui-icons';
+import green from 'material-ui/colors/green';
+
+import { getFiatCurrencies } from '../../utils/fiatCurrencies';
 import PriceChangeText from '../PriceChangeText';
 import PortfolioPositionExchangeRow from './PortfolioPositionExchangeRow';
 import PortfolioPositionWalletRow from './PortfolioPositionWalletRow';
@@ -18,6 +21,10 @@ export const styles = (theme: Object) => ({
   avatar: {
     flex: '0 0 auto',
     marginRight: theme.spacing.unit * 2,
+  },
+  fiatAvatar: {
+    color: '#fff',
+    backgroundColor: green[500],
   },
   content: {
     flex: '1 1 auto',
@@ -58,6 +65,19 @@ class PortfolioPosition extends Component<Props, State> {
     this.setState({ expanded: !this.state.expanded });
   };
 
+  getAvatarForAsset(asset: string) {
+    const { classes, coinlist } = this.props;
+
+    let avatar = <Avatar><HelpOutline/></Avatar>;
+    if (coinlist[asset]) {
+      avatar = <Avatar src={`https://www.cryptocompare.com${coinlist[asset].ImageUrl}`}/>;
+    } else if (getFiatCurrencies().includes(asset)) {
+      avatar = <Avatar className={classes.fiatAvatar}><AccountBalance/></Avatar>;
+    }
+
+    return avatar;
+  }
+
   rowCard(avatar: Node) {
     const { asset, portfolio, classes, coinlist, ticker, fiatCurrency } = this.props;
     const quantity = portfolio.total;
@@ -68,10 +88,10 @@ class PortfolioPosition extends Component<Props, State> {
         <div className={classes.content}>
           <Grid container>
             <Grid item xs={3}>
-              {PositionHeader(coinlist[asset].FullName, quantity)}
+              {PositionHeader(coinlist[asset] ? coinlist[asset].FullName : asset, quantity)}
             </Grid>
             <Grid item xs={2} className={classes.right}>
-              {ticker[asset] ? PositionQuantity(ticker[asset], quantity, fiatCurrency) : ''}
+              {ticker[asset] ? PositionQuantity(ticker[asset], quantity, asset, fiatCurrency) : ''}
             </Grid>
             <Grid item xs={3} className={classes.right}>
               {ticker[asset] ? PositionPrice(ticker[asset], quantity, asset, fiatCurrency) : ''}
@@ -91,13 +111,10 @@ class PortfolioPosition extends Component<Props, State> {
   }
 
   render() {
-    const { asset, coinlist, portfolio } = this.props;
+    const { asset, portfolio } = this.props;
     return (
       <Card>
-        {this.rowCard(
-          coinlist[asset]
-            ? <Avatar src={`https://www.cryptocompare.com${coinlist[asset].ImageUrl}`}/>
-            : <Avatar><HelpOutline/></Avatar>)}
+        {this.rowCard(this.getAvatarForAsset(asset))}
         <Collapse in={this.state.expanded}>
           {portfolio.wallets ? <PortfolioPositionWalletRow asset={asset} balance={portfolio.wallets}/> : ''}
           {Object.keys(portfolio.exchanges).map(key =>
@@ -129,13 +146,13 @@ const PositionHeader = (name: string, quantity: number) => (
   </div>
 );
 
-const PositionQuantity = (ticker: Object, quantity: number, fiatCurrency: string) => (
+const PositionQuantity = (ticker: Object, quantity: number, asset: string, currency: string) => (
   <div>
     <Typography type="body2" component="span" color={quantity > 0 ? 'default' : 'secondary'}>
-      {`${(parseFloat(ticker[fiatCurrency].PRICE) * quantity).toFixed(2)}  ${fiatCurrency}`}
+      {`${(parseFloat(asset !== currency ? ticker[currency].PRICE : 1) * quantity).toFixed(2)}  ${currency}`}
     </Typography>
     <Typography type="body2" component="span" color={quantity > 0 ? 'default' : 'secondary'}>
-      {`${(parseFloat(ticker.BTC.PRICE) * quantity).toPrecision(5)} BTC`}
+      {`${(parseFloat(asset !== 'BTC' ? ticker.BTC.PRICE : 1) * quantity).toPrecision(5)} BTC`}
     </Typography>
   </div>
 );

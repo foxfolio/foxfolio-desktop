@@ -2,6 +2,7 @@
 import React from 'react';
 import { defaults, HorizontalBar } from 'react-chartjs-2';
 import { withTheme } from 'material-ui';
+import { getTickerPrice } from '../../helpers/transactions';
 import getColor from '../../utils/colors';
 
 // Disable animating charts by default.
@@ -62,13 +63,14 @@ function calculateChartData(ticker: Object, portfolio: Object, sum: number) {
   const datasets = Object.keys(portfolio)
     .filter(asset => portfolio[asset] > 0)
     .filter(asset => ticker[asset])
-    .sort((a, b) => (ticker[b].BTC.PRICE * portfolio[b]) - (ticker[a].BTC.PRICE * portfolio[a]))
+    .sort((a, b) =>
+      (getTickerPrice(ticker, b, 'BTC') * portfolio[b]) - (getTickerPrice(ticker, a, 'BTC') * portfolio[a]))
     .map(asset => ({
       label: asset.toUpperCase(),
       backgroundColor: getColor(asset),
       borderColor: '#fff',
       borderWidth: 1,
-      data: [((ticker[asset].BTC.PRICE * portfolio[asset] * 100) / sum).toFixed(2)],
+      data: [((getTickerPrice(ticker, asset, 'BTC') * portfolio[asset] * 100) / sum).toFixed(2)],
     }));
 
   return { datasets };

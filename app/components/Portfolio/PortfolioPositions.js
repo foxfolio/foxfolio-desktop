@@ -1,6 +1,7 @@
 // @flow
 import React from 'react';
 import R from 'ramda';
+import { getTickerPrice } from '../../helpers/transactions';
 import PortfolioPosition from './PortfolioPosition';
 
 type Props = {
@@ -15,10 +16,9 @@ export default function PortfolioPositions({ portfolio, coinlist, ticker, fiatCu
   return (
     <div>
       {Object.keys(portfolio.total)
-        .filter(asset => coinlist[asset])
         .sort((a, b) =>
-          (portfolio.total[b] * (ticker[b] ? ticker[b][fiatCurrency].PRICE : 0))
-          - (portfolio.total[a] * (ticker[a] ? ticker[a][fiatCurrency].PRICE : 0)))
+          (portfolio.total[b] * (ticker[b] ? getTickerPrice(ticker, b, fiatCurrency) : 0))
+          - (portfolio.total[a] * (ticker[a] ? getTickerPrice(ticker, a, fiatCurrency) : 0)))
         .map(asset => (
           <PortfolioPosition
             key={asset}

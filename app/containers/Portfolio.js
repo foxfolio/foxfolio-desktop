@@ -2,7 +2,9 @@
 import React from 'react';
 import R from 'ramda';
 import { Paper } from 'material-ui';
+
 import PortfolioChart from '../components/Portfolio/PortfolioChart';
+import { getTickerPrice } from '../helpers/transactions';
 import type { SettingsType } from '../reducers/settings';
 import PortfolioPositions from '../components/Portfolio/PortfolioPositions';
 import PortfolioHeader from '../components/Portfolio/PortfolioHeader';
@@ -78,13 +80,14 @@ function calculatePortfolio(wallets: Wallet[], balances: { [string]: Balances })
 function calculateSum(ticker: Object, portfolio: Object, currency: string) {
   return Object.keys(portfolio)
     .filter(asset => ticker[asset])
-    .reduce((acc, asset) => acc + (ticker[asset][currency.toUpperCase()].PRICE * portfolio[asset]), 0);
+    .reduce((acc, asset) => acc + (getTickerPrice(ticker, asset, currency) * portfolio[asset]), 0);
 }
 
 function calculateChange(
   ticker: Object, portfolio: Object, sum: number, currency: string) {
   return Object.keys(portfolio)
     .filter(asset => ticker[asset])
+    .filter(asset => asset !== currency)
     .reduce(
       (acc, asset) =>
         acc + (
