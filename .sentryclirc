@@ -1,0 +1,4 @@
+[defaults]
+url=https://sentry.foxfol.io/
+org=foxfolio
+project=foxfolio-desktop

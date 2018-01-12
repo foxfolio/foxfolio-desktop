@@ -11,6 +11,9 @@ cache:
   - $HOME/.cache/electron
   - $HOME/.cache/electron-builder
 
+env:
+- RELEASE_HASH=$TRAVIS_COMMIT
+
 script:
 - node --version
 - yarn lint

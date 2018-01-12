@@ -44,9 +44,7 @@ export default {
   plugins: [
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'production'),
-      'process.env.SENTRY_URL': JSON.stringify(process.env.SENTRY_URL || ''),
-      // eslint-disable-next-line global-require
-      'process.env.RELEASE': JSON.stringify(process.env.RELEASE || require('./package.json').version),
+      'process.env.SENTRY_DSN': JSON.stringify(process.env.SENTRY_DSN || ''),
     }),
 
     new webpack.NamedModulesPlugin(),

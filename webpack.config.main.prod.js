@@ -5,6 +5,7 @@
 import webpack from 'webpack';
 import merge from 'webpack-merge';
 import BabiliPlugin from 'babili-webpack-plugin';
+import SentryCliPlugin from '@sentry/webpack-plugin';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 import baseConfig from './webpack.config.base';
 import CheckNodeEnv from './internals/scripts/CheckNodeEnv';
@@ -21,7 +22,7 @@ export default merge.smart(baseConfig, {
   // 'main.js' in root
   output: {
     path: __dirname,
-    filename: './app/main.prod.js'
+    filename: './app/main.prod.js',
   },
 
   plugins: [
@@ -32,7 +33,7 @@ export default merge.smart(baseConfig, {
 
     new BundleAnalyzerPlugin({
       analyzerMode: process.env.OPEN_ANALYZER === 'true' ? 'server' : 'disabled',
-      openAnalyzer: process.env.OPEN_ANALYZER === 'true'
+      openAnalyzer: process.env.OPEN_ANALYZER === 'true',
     }),
 
     /**
@@ -46,8 +47,15 @@ export default merge.smart(baseConfig, {
      */
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'production'),
-      'process.env.DEBUG_PROD': JSON.stringify(process.env.DEBUG_PROD || 'false')
-    })
+      'process.env.DEBUG_PROD': JSON.stringify(process.env.DEBUG_PROD || 'false'),
+      'process.env.RELEASE_HASH': JSON.stringify(process.env.RELEASE_HASH || ''),
+    }),
+
+    new SentryCliPlugin({
+      include: ['./app/dist'],
+      urlPrefix: '/',
+      release: process.env.RELEASE_HASH || '',
+    }),
   ],
 
   /**
@@ -57,6 +65,6 @@ export default merge.smart(baseConfig, {
    */
   node: {
     __dirname: false,
-    __filename: false
+    __filename: false,
   },
 });

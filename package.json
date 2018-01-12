@@ -116,6 +116,7 @@
   },
   "homepage": "http://foxfol.io",
   "devDependencies": {
+    "@sentry/webpack-plugin": "^1.2.0",
     "babel-core": "^6.24.1",
     "babel-eslint": "^7.2.3",
     "babel-jest": "^20.0.3",
