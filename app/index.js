@@ -3,7 +3,7 @@ import { render } from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
 import Root from './pages/Root';
 import { configureStore, history } from './store/configureStore';
-import { configureSentry } from './utils/configureSentry';
+import { configureSentry } from './helpers/sentry';
 import './app.global.css';
 
 configureSentry();

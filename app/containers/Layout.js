@@ -6,12 +6,13 @@ import { withRouter } from 'react-router';
 import { withStyles } from 'material-ui/styles';
 import Drawer from 'material-ui/Drawer';
 import { AppBar, Avatar, List, Toolbar, Typography } from 'material-ui';
-import { AccountBalanceWallet, Cloud, Dashboard, HelpOutline, Settings, SwapHoriz } from 'material-ui-icons';
+import { AccountBalanceWallet, Cloud, Dashboard, HelpOutline, Settings, /* SwapHoriz */ } from 'material-ui-icons';
 import { continuouslyFetchTransactions } from '../actions/transactions';
 import type { Dispatch } from '../actions/action.d';
 import { continuouslyUpdateTicker, requestCoinList } from '../actions/ticker';
 import { DrawerItem } from '../components/DrawerItem';
 import icon from '../resources/icon.png';
+import { getRaven } from '../helpers/sentry';
 
 const drawerWidth = 250;
 
@@ -47,14 +48,36 @@ const styles = theme => ({
 type Props = {
   dispatch: Dispatch,
   children: Node,
-  classes: any
+  classes: any,
+  location: {
+    pathname: string
+  }
 };
 
-class App extends Component<Props> {
+type State = {
+  hasError: boolean
+};
+
+class App extends Component<Props, State> {
+  state = {
+    hasError: false,
+  };
+
   componentDidMount() {
     this.props.dispatch(continuouslyFetchTransactions());
     this.props.dispatch(continuouslyUpdateTicker());
     this.props.dispatch(requestCoinList());
+  }
+
+  componentWillReceiveProps(nextProps: Props) {
+    if (this.props.location.pathname !== nextProps.location.pathname) {
+      this.setState({ hasError: false });
+    }
+  }
+
+  componentDidCatch(error, errorInfo) {
+    this.setState({ hasError: true });
+    getRaven().captureException(error, { extra: errorInfo });
   }
 
   render() {
@@ -83,7 +106,10 @@ class App extends Component<Props> {
         </Drawer>
         <main className={classes.content}>
           <div className={classes.padding}>
-            {children}
+            {this.state.hasError ?
+              <div style={{ textAlign: 'center', paddingTop: 25, paddingBottom: 25 }}>
+                <Typography type="title">An unknown error occurred.</Typography>
+              </div> : children}
           </div>
         </main>
       </div>
