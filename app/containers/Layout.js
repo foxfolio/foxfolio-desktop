@@ -72,7 +72,7 @@ class App extends Component<Props> {
           </AppBar>
           <List className={classes.topList}>
             <DrawerItem label="Portfolio" route="/" icon={<Dashboard/>}/>
-            <DrawerItem label="Transactions" route="/transactions" icon={<SwapHoriz/>}/>
+            {/* <DrawerItem label="Transactions" route="/transactions" icon={<SwapHoriz/>}/> */}
           </List>
           <List className={classes.bottomList}>
             <DrawerItem label="Wallets" route="/wallets" icon={<AccountBalanceWallet/>}/>
