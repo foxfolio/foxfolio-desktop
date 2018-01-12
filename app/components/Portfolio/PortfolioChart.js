@@ -3,13 +3,14 @@ import React from 'react';
 import { defaults, HorizontalBar } from 'react-chartjs-2';
 import { withTheme } from 'material-ui';
 import { getTickerPrice } from '../../helpers/transactions';
+import type { Ticker } from '../../reducers/ticker/types.d';
 import getColor from '../../utils/colors';
 
 // Disable animating charts by default.
 defaults.global.animation = false;
 
 type Props = {
-  ticker: Object,
+  ticker: Ticker,
   portfolio: Object,
   sum: number,
   theme: Object
@@ -59,7 +60,7 @@ function PortfolioChart({ ticker, portfolio, sum, theme }: Props) {
 
 export default withTheme()(PortfolioChart);
 
-function calculateChartData(ticker: Object, portfolio: Object, sum: number) {
+function calculateChartData(ticker: Ticker, portfolio: Object, sum: number) {
   const datasets = Object.keys(portfolio)
     .filter(asset => portfolio[asset] > 0)
     .filter(asset => ticker[asset])

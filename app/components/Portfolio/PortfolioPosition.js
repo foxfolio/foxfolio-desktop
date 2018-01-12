@@ -8,6 +8,7 @@ import { withStyles } from 'material-ui/styles';
 import { AccountBalance, ExpandMore, HelpOutline } from 'material-ui-icons';
 import green from 'material-ui/colors/green';
 import type { Coinlist } from '../../reducers/coinlist/types.d';
+import type { Ticker } from '../../reducers/ticker/types.d';
 
 import { getFiatCurrencies } from '../../utils/fiatCurrencies';
 import PriceChangeText from '../PriceChangeText';
@@ -47,7 +48,7 @@ export const styles = (theme: Object) => ({
 type Props = {
   asset: string,
   coinlist: Coinlist,
-  ticker: Object,
+  ticker: Ticker,
   portfolio: { total: number, exchanges: { [id: string]: number }, wallets: number },
   classes: any,
   fiatCurrency: string
@@ -147,7 +148,7 @@ const PositionHeader = (name: string, quantity: number) => (
   </div>
 );
 
-const PositionQuantity = (ticker: Object, quantity: number, asset: string, currency: string) => (
+const PositionQuantity = (ticker: Ticker, quantity: number, asset: string, currency: string) => (
   <div>
     <Typography type="body2" component="span" color={quantity > 0 ? 'default' : 'secondary'}>
       {`${(parseFloat(asset !== currency ? ticker[currency].PRICE : 1) * quantity).toFixed(2)}  ${currency}`}
@@ -158,7 +159,7 @@ const PositionQuantity = (ticker: Object, quantity: number, asset: string, curre
   </div>
 );
 
-const PositionPrice = (ticker: Object, quantity: number, asset: string, fiatCurrency: string) => (
+const PositionPrice = (ticker: Ticker, quantity: number, asset: string, fiatCurrency: string) => (
   <div>
     <Typography type="body2" component="span" color={quantity > 0 ? 'default' : 'secondary'}>
       {asset !== fiatCurrency ? `${parseFloat(ticker[fiatCurrency].PRICE).toPrecision(5)} ${fiatCurrency}` : ''}
@@ -169,7 +170,7 @@ const PositionPrice = (ticker: Object, quantity: number, asset: string, fiatCurr
   </div>
 );
 
-const PositionPriceChange = (ticker: Object, quantity: number, asset: string, fiatCurrency: string) => (
+const PositionPriceChange = (ticker: Ticker, quantity: number, asset: string, fiatCurrency: string) => (
   <div>
     <Typography type="body2" component="span" color={quantity > 0 ? 'default' : 'secondary'}>
       {asset !== fiatCurrency ? <PriceChangeText change={ticker[fiatCurrency].CHANGEPCT24HOUR}/> : ''}

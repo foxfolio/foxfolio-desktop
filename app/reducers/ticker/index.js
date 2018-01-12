@@ -1,7 +1,7 @@
 // @flow
-import type { Action } from '../actions/action.d';
+import type { Action } from '../../actions/action.d';
 
-export default function ticker(state: Object = {}, action: Action) {
+export function ticker(state: Object = {}, action: Action) {
   switch (action.type) {
     case 'TICKER_UPDATE':
       return action.ticker;

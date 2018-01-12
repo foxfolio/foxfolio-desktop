@@ -8,7 +8,7 @@ import { routerReducer as router } from 'react-router-redux';
 
 import { exchanges } from './exchanges';
 import wallets from './wallets';
-import ticker from './ticker';
+import { ticker } from './ticker';
 import timer from './timer';
 import { coinlist } from './coinlist';
 import settings from './settings';

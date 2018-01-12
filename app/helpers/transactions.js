@@ -1,6 +1,7 @@
 // @flow
 import R from 'ramda';
 import type { Exchanges, Trade } from '../reducers/exchanges/types.d';
+import type { Ticker } from '../reducers/ticker/types.d';
 
 export const mapKeys = R.curry((fn: Function, obj: Object) => R.zipObj(R.map(fn, R.keys(obj)), R.values(obj)));
 
@@ -19,6 +20,6 @@ export function unifySymbols(symbol: string): string {
   }
 }
 
-export function getTickerPrice(ticker: Object, fsym: string, tsym: string): number {
+export function getTickerPrice(ticker: Ticker, fsym: string, tsym: string): number {
   return fsym !== tsym ? ticker[fsym][tsym].PRICE : 1;
 }

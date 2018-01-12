@@ -1,5 +1,6 @@
 // @flow
 import React from 'react';
+import type { Node } from 'react';
 import R from 'ramda';
 import { Paper } from 'material-ui';
 
@@ -11,18 +12,19 @@ import PortfolioPositions from '../components/Portfolio/PortfolioPositions';
 import PortfolioHeader from '../components/Portfolio/PortfolioHeader';
 import EmptyPortfolio from '../components/Portfolio/EmptyPortfolio';
 import type { Wallet } from '../actions/wallet.d';
+import type { Ticker } from '../reducers/ticker/types.d';
 import type { Balances, Portfolio } from '../types/portfolio.d.ts';
 
 type Props = {
   balances: { [string]: Balances },
-  ticker: Object,
+  ticker: Ticker,
   coinlist: Coinlist,
   wallets: Wallet[],
   settings: SettingsType
 };
 
 export default function PortfolioContainer(
-  { balances, ticker, coinlist, wallets, settings }: Props) {
+  { balances, ticker, coinlist, wallets, settings }: Props): Node {
   const portfolio = calculatePortfolio(wallets, balances);
   const sum = {
     btc: calculateSum(ticker, portfolio.total, 'BTC'),
@@ -78,22 +80,21 @@ function calculatePortfolio(wallets: Wallet[], balances: { [string]: Balances })
   };
 }
 
-function calculateSum(ticker: Object, portfolio: Object, currency: string) {
+function calculateSum(ticker: Ticker, portfolio: Object, currency: string) {
   return Object.keys(portfolio)
     .filter(asset => ticker[asset])
     .reduce((acc, asset) => acc + (getTickerPrice(ticker, asset, currency) * portfolio[asset]), 0);
 }
 
-function calculateChange(
-  ticker: Object, portfolio: Object, sum: number, currency: string) {
+function calculateChange(ticker: Ticker, portfolio: Object, sum: number, currency: string) {
   return Object.keys(portfolio)
     .filter(asset => ticker[asset])
     .filter(asset => asset !== currency)
     .reduce(
       (acc, asset) =>
         acc + (
-          ticker[asset][currency.toUpperCase()].CHANGEPCT24HOUR
-          * ((ticker[asset][currency.toUpperCase()].PRICE * portfolio[asset]) / sum)
+          ticker[asset][currency].CHANGEPCT24HOUR
+          * ((getTickerPrice(ticker, asset, currency) * portfolio[asset]) / sum)
         ),
       0);
 }

@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { Paper, Typography } from 'material-ui';
+import type { Ticker } from '../reducers/ticker/types.d';
 import TransactionRow from './TransactionRow';
 
 type Props = {
   transactions: Transaction[],
-  ticker: Object[],
+  ticker: Ticker[],
   paddingLeft?: number
 };
 
