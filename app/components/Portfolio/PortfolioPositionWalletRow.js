@@ -9,9 +9,12 @@ const styles = theme => ({
     alignItems: 'center',
   },
   avatar: {
+    backgroundColor: theme.palette.text.secondary,
     flex: '0 0 auto',
+    margin: 5,
     marginRight: theme.spacing.unit * 2,
-    backgroundColor: theme.palette.primary,
+    width: 30,
+    height: 30,
   },
   content: {
     flex: '1 1 auto',
@@ -29,16 +32,16 @@ type Props = {
 
 function PortfolioPositionWalletRow({ asset, balance, classes }: Props) {
   return (
-    <Card style={{ paddingLeft: 50 }}>
+    <Card>
       <CardContent className={classes.root}>
-        <div className={classes.avatar}>
-          <Avatar>
+        <div>
+          <Avatar className={classes.avatar}>
             <AccountBalanceWallet/>
           </Avatar>
         </div>
         <div className={classes.content}>
           <Grid container>
-            <Grid item xs={2}>
+            <Grid item xs={3}>
               <Typography type="body2" component="span">
                 Wallets
               </Typography>
@@ -50,6 +53,7 @@ function PortfolioPositionWalletRow({ asset, balance, classes }: Props) {
             </Grid>
           </Grid>
         </div>
+        <div style={{ width: 48 }}/>
       </CardContent>
     </Card>
   );

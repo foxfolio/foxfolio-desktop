@@ -28,11 +28,13 @@ const styles = theme => ({
   content: {
     backgroundColor: theme.palette.background.default,
     marginLeft: drawerWidth,
+    minHeight: '100%',
   },
   toolbar: {
     padding: 0,
   },
   drawerPaper: {
+    borderRight: theme.palette.type === 'light' ? '1px solid rgba(0, 0, 0, 0.12)' : 0,
     width: drawerWidth,
   },
   topList: {

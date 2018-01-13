@@ -17,7 +17,7 @@ type Props = {
 };
 
 function PortfolioChart({ ticker, portfolio, sum, theme }: Props) {
-  const chartData = calculateChartData(ticker, portfolio, sum);
+  const chartData = calculateChartData(ticker, portfolio, sum, theme);
 
   return (
     <HorizontalBar
@@ -34,15 +34,19 @@ function PortfolioChart({ ticker, portfolio, sum, theme }: Props) {
         legend: {
           display: true,
           labels: {
-            fontColor: theme.palette.text.secondary,
+            fontColor: theme.palette.text.primary,
           },
         },
         scales: {
           xAxes: [
             {
               stacked: true,
-              fontColor: theme.palette.text.secondary,
+              gridLines: {
+                display: false,
+                color: theme.palette.text.secondary,
+              },
               ticks: {
+                fontColor: theme.palette.text.primary,
                 min: 0,
                 max: 100,
               },
@@ -50,7 +54,9 @@ function PortfolioChart({ ticker, portfolio, sum, theme }: Props) {
           yAxes: [
             {
               stacked: true,
-              fontColor: theme.palette.text.secondary,
+              gridLines: {
+                color: theme.palette.text.secondary,
+              },
             }],
         },
       }}
@@ -60,7 +66,7 @@ function PortfolioChart({ ticker, portfolio, sum, theme }: Props) {
 
 export default withTheme()(PortfolioChart);
 
-function calculateChartData(ticker: Ticker, portfolio: Object, sum: number) {
+function calculateChartData(ticker: Ticker, portfolio: Object, sum: number, theme: Object) {
   const datasets = Object.keys(portfolio)
     .filter(asset => portfolio[asset] > 0)
     .filter(asset => ticker[asset])
@@ -69,7 +75,7 @@ function calculateChartData(ticker: Ticker, portfolio: Object, sum: number) {
     .map(asset => ({
       label: asset.toUpperCase(),
       backgroundColor: getColor(asset),
-      borderColor: '#fff',
+      borderColor: theme.palette.background.default,
       borderWidth: 1,
       data: [((getTickerPrice(ticker, asset, 'BTC') * portfolio[asset] * 100) / sum).toFixed(2)],
     }));

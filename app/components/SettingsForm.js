@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { Button, FormControl, Grid, InputLabel, MenuItem } from 'material-ui';
+import { Button, FormControl, Grid, InputLabel, MenuItem, Typography } from 'material-ui';
 import { reduxForm, Field, SubmissionError } from 'redux-form';
 import { Select } from 'redux-form-material-ui';
 import type { SettingsType } from '../reducers/settings';
@@ -25,7 +25,7 @@ class SettingsForm extends Component<Props> {
         <Grid container>
           <Grid item xs={12}>
             <Grid item xs={4}>
-              <FormControl margin="normal" fullWidth>
+              <FormControl fullWidth>
                 <InputLabel htmlFor="fiatCurrency">Fiat currency</InputLabel>
                 <Field name="fiatCurrency" component={Select}>
                   <MenuItem value="USD">USD</MenuItem>
@@ -36,7 +36,7 @@ class SettingsForm extends Component<Props> {
           </Grid>
           <Grid item xs={12}>
             <Grid item xs={4}>
-              <FormControl margin="normal" fullWidth>
+              <FormControl fullWidth>
                 <InputLabel htmlFor="currencyFocus">Currency focus</InputLabel>
                 <Field name="currencyFocus" component={Select}>
                   <MenuItem value="crypto">Crypto</MenuItem>
@@ -44,6 +44,18 @@ class SettingsForm extends Component<Props> {
                   <MenuItem value="equal">Equal</MenuItem>
                 </Field>
               </FormControl>
+            </Grid>
+          </Grid>
+          <Grid item xs={12}>
+            <Grid item xs={4}>
+              <FormControl fullWidth>
+                <InputLabel htmlFor="theme">Theme</InputLabel>
+                <Field name="theme" component={Select}>
+                  <MenuItem value="light">Light</MenuItem>
+                  <MenuItem value="dark">Dark</MenuItem>
+                </Field>
+              </FormControl>
+              <Typography type="caption">Switch page after changing the theme</Typography>
             </Grid>
           </Grid>
           <Grid item xs={12}>
