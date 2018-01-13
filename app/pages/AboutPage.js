@@ -3,9 +3,10 @@ import React from 'react';
 import { Paper, Typography, withStyles } from 'material-ui';
 import { openInBrowser } from '../helpers/electron';
 
+const version = process.env.VERSION || '';
+
 const styles = () => ({
   paper: { marginTop: 30, padding: 25 },
-  headline: { marginBottom: 30 },
 });
 
 type Props = {
@@ -16,7 +17,8 @@ function AboutPage({ classes }: Props) {
   return (
     <div className="container">
       <Paper className={classes.paper}>
-        <Typography type="display1" className={classes.headline}>About Foxfolio</Typography>
+        <Typography type="display1">About Foxfolio</Typography>
+        <Typography type="caption" paragraph>Version {version}</Typography>
         <Typography type="body2">
           Portfolio management application for cryptocurrencies&nbsp;
           which automatically retrieves balances and trades using exchange APIs.
