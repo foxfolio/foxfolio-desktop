@@ -28,7 +28,6 @@ const styles = theme => ({
   content: {
     backgroundColor: theme.palette.background.default,
     marginLeft: drawerWidth,
-    height: '100%',
   },
   toolbar: {
     padding: 0,
