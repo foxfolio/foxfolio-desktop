@@ -2,11 +2,13 @@
 import type { Action } from '../actions/action.d';
 
 export type SettingsType = {
-  fiatCurrency: string
+  fiatCurrency: string,
+  currencyFocus: 'crypto' | 'fiat' | 'equal'
 };
 
 const initialSettings: SettingsType = {
-  fiatCurrency: 'EUR'
+  fiatCurrency: 'EUR',
+  currencyFocus: 'fiat',
 };
 
 export default function settings(state: SettingsType = initialSettings, action: Action) {

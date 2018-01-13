@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { Button, Grid, MenuItem } from 'material-ui';
+import { Button, FormControl, Grid, InputLabel, MenuItem } from 'material-ui';
 import { reduxForm, Field, SubmissionError } from 'redux-form';
 import { Select } from 'redux-form-material-ui';
 import type { SettingsType } from '../reducers/settings';
@@ -24,10 +24,27 @@ class SettingsForm extends Component<Props> {
       <form onSubmit={handleSubmit}>
         <Grid container>
           <Grid item xs={12}>
-            <Field name="fiatCurrency" component={Select} placeholder="Fiat currency">
-              <MenuItem value="USD">USD</MenuItem>
-              <MenuItem value="EUR">EUR</MenuItem>
-            </Field>
+            <Grid item xs={4}>
+              <FormControl margin="normal" fullWidth>
+                <InputLabel htmlFor="fiatCurrency">Fiat currency</InputLabel>
+                <Field name="fiatCurrency" component={Select}>
+                  <MenuItem value="USD">USD</MenuItem>
+                  <MenuItem value="EUR">EUR</MenuItem>
+                </Field>
+              </FormControl>
+            </Grid>
+          </Grid>
+          <Grid item xs={12}>
+            <Grid item xs={4}>
+              <FormControl margin="normal" fullWidth>
+                <InputLabel htmlFor="currencyFocus">Currency focus</InputLabel>
+                <Field name="currencyFocus" component={Select}>
+                  <MenuItem value="crypto">Crypto</MenuItem>
+                  <MenuItem value="fiat">Fiat</MenuItem>
+                  <MenuItem value="equal">Equal</MenuItem>
+                </Field>
+              </FormControl>
+            </Grid>
           </Grid>
           <Grid item xs={12}>
             <Button raised color="primary" type="submit">Save</Button>
