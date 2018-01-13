@@ -8,6 +8,7 @@ import { withStyles } from 'material-ui/styles';
 import { ExpandMore } from 'material-ui-icons';
 import green from 'material-ui/colors/green';
 import type { Coinlist } from '../../reducers/coinlist/types.d';
+import type { SettingsType } from '../../reducers/settings';
 import type { Ticker } from '../../reducers/ticker/types.d';
 
 import { CurrencyAvatar } from '../CurrencyAvatar';
@@ -51,7 +52,7 @@ type Props = {
   ticker: Ticker,
   portfolio: { total: number, exchanges: { [id: string]: number }, wallets: number },
   classes: any,
-  fiatCurrency: string
+  settings: SettingsType
 };
 
 type State = {
@@ -68,7 +69,7 @@ class PortfolioPosition extends Component<Props, State> {
   };
 
   rowCard(avatar: Node) {
-    const { asset, portfolio, classes, coinlist, ticker, fiatCurrency } = this.props;
+    const { asset, portfolio, classes, coinlist, ticker, settings } = this.props;
     const quantity = portfolio.total;
 
     return (
@@ -80,13 +81,13 @@ class PortfolioPosition extends Component<Props, State> {
               {PositionHeader(coinlist[asset] ? coinlist[asset].FullName : asset, quantity)}
             </Grid>
             <Grid item xs={2} className={classes.right}>
-              {ticker[asset] ? PositionQuantity(ticker[asset], quantity, asset, fiatCurrency) : ''}
+              {ticker[asset] ? PositionQuantity(ticker[asset], quantity, asset, settings) : ''}
             </Grid>
             <Grid item xs={3} className={classes.right}>
-              {ticker[asset] ? PositionPrice(ticker[asset], quantity, asset, fiatCurrency) : ''}
+              {ticker[asset] ? PositionPrice(ticker[asset], quantity, asset, settings) : ''}
             </Grid>
             <Grid item xs={2} className={classes.right}>
-              {ticker[asset] ? PositionPriceChange(ticker[asset], quantity, asset, fiatCurrency) : ''}
+              {ticker[asset] ? PositionPriceChange(ticker[asset], quantity, asset, settings) : ''}
             </Grid>
           </Grid>
         </div>
@@ -135,37 +136,97 @@ const PositionHeader = (name: string, quantity: number) => (
   </div>
 );
 
-const PositionQuantity = (ticker: Ticker, quantity: number, asset: string, currency: string) => (
-  <div>
-    <Typography type="body2" component="span" color={quantity > 0 ? 'default' : 'secondary'}>
-      {`${(parseFloat(asset !== currency ? ticker[currency].PRICE : 1) * quantity).toFixed(2)}  ${currency}`}
-    </Typography>
-    <Typography type="body2" component="span" color={quantity > 0 ? 'default' : 'secondary'}>
-      {`${(parseFloat(asset !== 'BTC' ? ticker.BTC.PRICE : 1) * quantity).toPrecision(5)} BTC`}
-    </Typography>
-  </div>
-);
+const PositionQuantity = (ticker: Ticker, quantity: number, asset: string, settings: SettingsType) => {
+  const { currencyFocus, fiatCurrency } = settings;
 
-const PositionPrice = (ticker: Ticker, quantity: number, asset: string, fiatCurrency: string) => (
-  <div>
-    <Typography type="body2" component="span" color={quantity > 0 ? 'default' : 'secondary'}>
-      {asset !== fiatCurrency ? `${parseFloat(ticker[fiatCurrency].PRICE).toPrecision(5)} ${fiatCurrency}` : ''}
-    </Typography>
-    <Typography type="body2" component="span" color={quantity > 0 ? 'default' : 'secondary'}>
-      {asset !== 'BTC' ? `${parseFloat(ticker.BTC.PRICE).toPrecision(5)} BTC` : ''}
-    </Typography>
-  </div>
-);
+  if (currencyFocus === 'equal') {
+    return (
+      <div>
+        <Typography type="body2" component="span" color={quantity > 0 ? 'default' : 'secondary'}>
+          {`${(parseFloat(asset !== fiatCurrency ? ticker[fiatCurrency].PRICE : 1)
+            * quantity).toFixed(2)}  ${fiatCurrency}`}
+        </Typography>
+        <Typography type="body2" component="span" color={quantity > 0 ? 'default' : 'secondary'}>
+          {`${(parseFloat(asset !== 'BTC' ? ticker.BTC.PRICE : 1) * quantity).toPrecision(5)} BTC`}
+        </Typography>
+      </div>
+    );
+  }
+  const fiatEntry =
+    `${(parseFloat(asset !== fiatCurrency ? ticker[fiatCurrency].PRICE : 1) * quantity).toFixed(2)}  ${fiatCurrency}`;
+  const cryptoEntry = `${(parseFloat(asset !== 'BTC' ? ticker.BTC.PRICE : 1) * quantity).toPrecision(5)} BTC`;
 
-const PositionPriceChange = (ticker: Ticker, quantity: number, asset: string, fiatCurrency: string) => (
-  <div>
-    <Typography type="body2" component="span" color={quantity > 0 ? 'default' : 'secondary'}>
-      {asset !== fiatCurrency ? <PriceChangeText change={ticker[fiatCurrency].CHANGEPCT24HOUR}/> : ''}
-    </Typography>
-    <Typography type="body2" component="span" color={quantity > 0 ? 'default' : 'secondary'}>
-      {asset !== 'BTC' ? <PriceChangeText change={ticker.BTC.CHANGEPCT24HOUR}/> : ''}
-    </Typography>
-  </div>
-);
+  return (
+    <div>
+      <Typography type="subheading" component="span" color={quantity > 0 ? 'default' : 'secondary'}>
+        {currencyFocus === 'crypto' ? cryptoEntry : fiatEntry}
+      </Typography>
+      <Typography type="body1" component="span" color="secondary">
+        {currencyFocus === 'crypto' ? fiatEntry : cryptoEntry}
+      </Typography>
+    </div>
+  );
+};
+
+const PositionPrice = (ticker: Ticker, quantity: number, asset: string, settings: SettingsType) => {
+  const { currencyFocus, fiatCurrency } = settings;
+
+  if (currencyFocus === 'equal') {
+    return (
+      <div>
+        <Typography type="body2" component="span" color={quantity > 0 ? 'default' : 'secondary'}>
+          {asset !== fiatCurrency ? `${parseFloat(ticker[fiatCurrency].PRICE).toPrecision(5)} ${fiatCurrency}` : '-'}
+        </Typography>
+        <Typography type="body2" component="span" color={quantity > 0 ? 'default' : 'secondary'}>
+          {asset !== 'BTC' ? `${parseFloat(ticker.BTC.PRICE).toPrecision(5)} BTC` : '-'}
+        </Typography>
+      </div>
+    );
+  }
+  const fiatEntry =
+    asset !== fiatCurrency ? `${parseFloat(ticker[fiatCurrency].PRICE).toPrecision(5)} ${fiatCurrency}` : '-';
+  const cryptoEntry = asset !== 'BTC' ? `${parseFloat(ticker.BTC.PRICE).toPrecision(5)} BTC` : '-';
+  return (
+    <div>
+      <Typography type="subheading" component="span" color={quantity > 0 ? 'default' : 'secondary'}>
+        {currencyFocus === 'crypto' ? cryptoEntry : fiatEntry}
+      </Typography>
+      <Typography type="body1" component="span" color="secondary">
+        {currencyFocus === 'crypto' ? fiatEntry : cryptoEntry}
+      </Typography>
+    </div>
+  );
+};
+
+const PositionPriceChange = (ticker: Ticker, quantity: number, asset: string, settings: SettingsType) => {
+  const { currencyFocus, fiatCurrency } = settings;
+
+  if (currencyFocus === 'equal') {
+    return (
+      <div>
+        <Typography type="body2" component="span" color={quantity > 0 ? 'default' : 'secondary'}>
+          {asset !== fiatCurrency ? <PriceChangeText change={ticker[fiatCurrency].CHANGEPCT24HOUR}/> : '-'}
+        </Typography>
+        <Typography type="body2" component="span" color={quantity > 0 ? 'default' : 'secondary'}>
+          {asset !== 'BTC' ? <PriceChangeText change={ticker.BTC.CHANGEPCT24HOUR}/> : '-'}
+        </Typography>
+      </div>
+    );
+  }
+  const fiatEntry = asset !== fiatCurrency ?
+    <PriceChangeText change={ticker[fiatCurrency].CHANGEPCT24HOUR} muted={currencyFocus !== 'fiat'}/> : '-';
+  const cryptoEntry = asset !== 'BTC' ?
+    <PriceChangeText change={ticker.BTC.CHANGEPCT24HOUR} muted={currencyFocus !== 'crypto'}/> : '-';
+  return (
+    <div>
+      <Typography type="subheading" component="span" color={quantity > 0 ? 'default' : 'secondary'}>
+        {currencyFocus === 'crypto' ? cryptoEntry : fiatEntry}
+      </Typography>
+      <Typography type="body1" component="span" color="secondary">
+        {currencyFocus === 'crypto' ? fiatEntry : cryptoEntry}
+      </Typography>
+    </div>
+  );
+};
 
 export default withStyles(styles)(PortfolioPosition);

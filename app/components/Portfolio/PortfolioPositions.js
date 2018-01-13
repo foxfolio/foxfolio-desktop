@@ -3,24 +3,27 @@ import React from 'react';
 import R from 'ramda';
 import { getTickerPrice } from '../../helpers/transactions';
 import type { Coinlist } from '../../reducers/coinlist/types.d';
+import type { SettingsType } from '../../reducers/settings';
 import type { Ticker } from '../../reducers/ticker/types.d';
 import PortfolioPosition from './PortfolioPosition';
+import { PortfolioPositionHeader } from './PortfolioPositionHeader';
 
 type Props = {
   portfolio: Object,
   coinlist: Coinlist,
   ticker: Ticker,
-  fiatCurrency: string,
+  settings: SettingsType,
   sumBTC: number
 };
 
-export default function PortfolioPositions({ portfolio, coinlist, ticker, fiatCurrency, sumBTC }: Props) {
+export default function PortfolioPositions({ portfolio, coinlist, ticker, settings, sumBTC }: Props) {
   return (
     <div>
+      <PortfolioPositionHeader/>
       {Object.keys(portfolio.total)
         .sort((a, b) =>
-          (portfolio.total[b] * (ticker[b] ? getTickerPrice(ticker, b, fiatCurrency) : 0))
-          - (portfolio.total[a] * (ticker[a] ? getTickerPrice(ticker, a, fiatCurrency) : 0)))
+          (portfolio.total[b] * (ticker[b] ? getTickerPrice(ticker, b, settings.fiatCurrency) : 0))
+          - (portfolio.total[a] * (ticker[a] ? getTickerPrice(ticker, a, settings.fiatCurrency) : 0)))
         .map(asset => (
           <PortfolioPosition
             key={asset}
@@ -29,7 +32,7 @@ export default function PortfolioPositions({ portfolio, coinlist, ticker, fiatCu
             asset={asset}
             portfolio={filterPortfolioForAsset(portfolio, asset)}
             sumBTC={sumBTC}
-            fiatCurrency={fiatCurrency}
+            settings={settings}
           />
         ))}
     </div>);

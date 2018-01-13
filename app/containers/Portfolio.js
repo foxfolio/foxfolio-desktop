@@ -49,7 +49,7 @@ export default function PortfolioContainer(
             portfolio={portfolio}
             ticker={ticker}
             coinlist={coinlist}
-            fiatCurrency={settings.fiatCurrency}
+            settings={settings}
             sumBTC={sum.btc}
           />
         </Paper>
