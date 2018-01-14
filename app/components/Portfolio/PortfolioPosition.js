@@ -110,9 +110,9 @@ class PortfolioPosition extends Component<Props, State> {
           {Object.keys(portfolio.exchanges).map(key =>
             (<PortfolioPositionExchangeRow
               key={key}
+              exchangeKey={key}
               asset={asset}
               balance={portfolio.exchanges[key]}
-              exchange={key.split('-')[0]}
             />))}
 
         </Collapse>

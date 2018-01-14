@@ -2,6 +2,9 @@
 import React from 'react';
 import { Avatar, Card, CardContent, Grid, Typography, withStyles } from 'material-ui';
 import { TrendingUp } from 'material-ui-icons';
+import { connect } from 'react-redux';
+import type { MapStateToProps } from 'react-redux';
+import type { Exchanges } from '../../reducers/exchanges/types.d';
 
 const styles = theme => ({
   root: {
@@ -27,11 +30,12 @@ const styles = theme => ({
 type Props = {
   asset: string,
   balance: number,
-  exchange: string,
-  classes: Object
+  classes: Object,
+  exchangeKey: string,
+  exchanges: Exchanges
 };
 
-function PortfolioPositionExchangeRow({ asset, balance, exchange, classes }: Props) {
+function PortfolioPositionExchangeRow({ asset, balance, classes, exchangeKey, exchanges }: Props) {
   return (
     <Card>
       <CardContent className={classes.root}>
@@ -44,7 +48,7 @@ function PortfolioPositionExchangeRow({ asset, balance, exchange, classes }: Pro
           <Grid container>
             <Grid item xs={3}>
               <Typography type="body2" component="span">
-                {exchange}
+                {exchanges[exchangeKey].type}
               </Typography>
             </Grid>
             <Grid item xs={2} className={classes.right}>
@@ -60,4 +64,10 @@ function PortfolioPositionExchangeRow({ asset, balance, exchange, classes }: Pro
   );
 }
 
-export default withStyles(styles)(PortfolioPositionExchangeRow);
+const styledComponent = withStyles(styles)(PortfolioPositionExchangeRow);
+
+const mapStateToProps: MapStateToProps<*, *, *> = (state) => ({
+  exchanges: state.exchanges,
+});
+
+export default connect(mapStateToProps)(styledComponent);
