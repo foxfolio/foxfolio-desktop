@@ -1,6 +1,6 @@
 // @flow
 import ccxt from 'ccxt';
-import { filter, forEachObjIndexed } from 'ramda';
+import { keys, equals, filter, forEachObjIndexed } from 'ramda';
 import type {
   FailedExchangeRequestAction,
   IncrementExchangeRequestCounterAction,
@@ -22,8 +22,11 @@ function setLastUpdate(): Action {
 }
 
 function updateExchangeBalances(id: string, balances: Balances): ThunkAction {
-  return (dispatch: Dispatch) => {
-    dispatch(requestTickerUpdate(Object.keys(balances)));
+  return (dispatch: Dispatch, getState: GetState) => {
+    const stateBalance = getState().exchanges[id].balances;
+    if (!equals(keys(stateBalance), keys(balances))) {
+      dispatch(requestTickerUpdate(Object.keys(balances)));
+    }
     dispatch({
       type: 'UPDATE_EXCHANGE_BALANCES',
       id,
