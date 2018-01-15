@@ -31,4 +31,3 @@ export function deleteExchange(id: string): Action {
     id,
   };
 }
-
