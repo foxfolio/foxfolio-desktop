@@ -1,6 +1,6 @@
 // @flow
 import type { Action, ThunkAction } from './action.d';
-import type { Wallet } from './wallet.d';
+import type { Wallet } from '../reducers/wallets/types.d';
 import { requestTickerUpdate } from './ticker';
 
 export function addWallet(wallet: Wallet): ThunkAction {

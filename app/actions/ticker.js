@@ -3,7 +3,7 @@ import * as R from 'ramda';
 import type { Exchanges } from '../reducers/exchanges/types.d';
 import type { Action, Dispatch, GetState, ThunkAction } from './action.d';
 import startTimer from './timer';
-import type { Wallet } from './wallet.d';
+import type { Wallet } from '../reducers/wallets/types.d';
 
 const REFRESH_TIME_IN_MS = 30000;
 

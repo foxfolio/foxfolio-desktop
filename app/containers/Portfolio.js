@@ -11,7 +11,7 @@ import type { SettingsType } from '../reducers/settings';
 import PortfolioPositions from '../components/Portfolio/PortfolioPositions';
 import PortfolioHeader from '../components/Portfolio/PortfolioHeader';
 import EmptyPortfolio from '../components/Portfolio/EmptyPortfolio';
-import type { Wallet } from '../actions/wallet.d';
+import type { Wallet } from '../reducers/wallets/types.d';
 import type { Ticker } from '../reducers/ticker/types.d';
 import type { Balances, Portfolio } from '../types/portfolio.d.ts';
 

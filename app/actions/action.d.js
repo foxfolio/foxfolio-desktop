@@ -1,7 +1,7 @@
 // @flow
 import type { SettingsType } from '../reducers/settings';
 import type { Ticker } from '../reducers/ticker/types.d';
-import type { Wallet } from './wallet.d';
+import type { Wallet } from '../reducers/wallets/types.d';
 import type { Coinlist } from '../reducers/coinlist/types.d';
 import type { ExchangeActions } from '../reducers/exchanges/actions.d';
 

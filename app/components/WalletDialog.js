@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField, } from 'material-ui';
-import type { walletType } from '../reducers/wallets';
+import type { Wallet } from '../reducers/wallets/types.d';
 
 type Props = {
-  wallet: walletType,
+  wallet: Wallet,
   open: boolean,
   close: () => void,
   save: (source: walletType) => void

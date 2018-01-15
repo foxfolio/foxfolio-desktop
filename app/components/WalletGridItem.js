@@ -4,7 +4,7 @@ import { Button, Card, CardActions, CardContent, CardHeader, Typography } from '
 import { withStyles } from 'material-ui/styles';
 import green from 'material-ui/colors/green';
 
-import type { Wallet } from '../actions/wallet.d';
+import type { Wallet } from '../reducers/wallets/types.d';
 import type { Coinlist } from '../reducers/coinlist/types.d';
 import { CurrencyAvatar } from './CurrencyAvatar';
 
