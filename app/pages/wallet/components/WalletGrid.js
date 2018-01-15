@@ -3,10 +3,10 @@ import React, { Component } from 'react';
 import { Button, Grid, Typography } from 'material-ui';
 import { Add } from 'material-ui-icons';
 import { withStyles } from 'material-ui/styles';
-import type { Coinlist } from '../reducers/coinlist/types.d';
+import type { Coinlist } from '../../../reducers/coinlist/types.d';
 import WalletGridItem from './WalletGridItem';
 import WalletDialog from './WalletDialog';
-import type { Wallet } from '../reducers/wallets/types.d';
+import type { Wallet } from '../../../reducers/wallets/types.d';
 
 const styles = theme => ({
   button: {

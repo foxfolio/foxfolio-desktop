@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField, } from 'material-ui';
-import type { Wallet } from '../reducers/wallets/types.d';
+import type { Wallet } from '../../../reducers/wallets/types.d';
 
 type Props = {
   wallet: Wallet,

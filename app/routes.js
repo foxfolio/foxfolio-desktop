@@ -5,7 +5,7 @@ import { green, orange } from 'material-ui/colors';
 import { Route, Switch } from 'react-router';
 import Layout from './containers/Layout';
 import HomePage from './pages/portfolio/PortfolioPage';
-import WalletPage from './pages/WalletPage';
+import WalletPage from './pages/wallet/WalletPage';
 import { ExchangePage } from './pages/exchange/ExchangePage';
 import SettingsPage from './pages/SettingsPage';
 import AboutPage from './pages/AboutPage';

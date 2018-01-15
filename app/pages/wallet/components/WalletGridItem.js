@@ -4,9 +4,9 @@ import { Button, Card, CardActions, CardContent, CardHeader, Typography } from '
 import { withStyles } from 'material-ui/styles';
 import green from 'material-ui/colors/green';
 
-import type { Wallet } from '../reducers/wallets/types.d';
-import type { Coinlist } from '../reducers/coinlist/types.d';
-import { CurrencyAvatar } from './CurrencyAvatar';
+import type { Wallet } from '../../../reducers/wallets/types.d';
+import type { Coinlist } from '../../../reducers/coinlist/types.d';
+import { CurrencyAvatar } from '../../../components/CurrencyAvatar';
 
 const styles = theme => ({
   card: {
