@@ -12,11 +12,29 @@
 
 - [Install](#install)
 - [Usage](#usage)
+- [Build from source](#build-from-source)
 - [Maintainers](#maintainers)
 - [Contribute](#contribute)
 - [License](#license)
 
+
 ## Install
+
+You can find binaries for the latest release under [releases](https://github.com/foxfolio/foxfolio-desktop/releases).
+
+Currently available for
+- Windows (`.exe`)
+- Linux (`.AppImage`, `.deb`)
+
+## Usage
+
+- Add the credentials for your exchanges under **Exchanges**. 
+Foxfolio will then retrieve the current balances and update the portfolio.
+  - **Note**: Create new API credentials for Foxfolio and only configure the necessary permissions (i.e. no trading, no withdrawals)
+- **Wallets** can be used to add balances that can not be retrieved automatically.
+
+
+## Build from source
 
 * **Note: requires a node version >= 8.7 and an npm version >= 5.**
 
@@ -28,7 +46,13 @@ $ yarn
 ```
 **Note**: If you can't use [yarn](https://github.com/yarnpkg/yarn) for some reason, try `npm install`.
 
-## Usage
+To run the app in the `dev` environment use
+
+```bash
+$ npm run dev
+```
+
+This starts the renderer process in [**hot-module-replacement**](https://webpack.js.org/guides/hmr-react/) mode and starts a server that sends hot updates to the renderer process
 
 To run the application without packaging use
 
@@ -38,22 +62,22 @@ $ npm start
 
 This builds the application using Webpack and launches it.
 
-To run the app in the `dev` environment use
-
-```bash
-$ npm run dev
-```
-
-This starts the renderer process in [**hot-module-replacement**](https://webpack.js.org/guides/hmr-react/) mode and starts a server that sends hot updates to the renderer process
-
 ## Maintainers
 
 [@greimela](https://github.com/greimela)
 
 ## Contribute
+Feel free to add issues/PRs/comments.
 
-PRs accepted.
+## Donations
+If you appreciate my work, you can buy me a coffee using your favourite cryptocurrencies! 
 
+```
+BTC 3E8yR2viEgLpErjfmFkMTZ9ntVP66KBLGD
+ETH 0x588fFcb52d43fe7Def5D4F45Bb7c324ECAA79010
+LTC MQTha8UbFoagdrM4RWKvrNvzJFFUat4jN3
+ARK AXkXn8h18dYKQMfkE3Va8WJ9SPQqCrATc3
+```
 ## License
 
 MIT © 2017 Andreas Greimel
