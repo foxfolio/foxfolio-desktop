@@ -1,10 +1,10 @@
 // @flow
 import React from 'react';
 import R from 'ramda';
-import { getTickerPrice } from '../../helpers/transactions';
-import type { Coinlist } from '../../reducers/coinlist/types.d';
-import type { SettingsType } from '../../reducers/settings';
-import type { Ticker } from '../../reducers/ticker/types.d';
+import { getTickerPrice } from '../../../helpers/transactions';
+import type { Coinlist } from '../../../reducers/coinlist/types.d';
+import type { SettingsType } from '../../../reducers/settings';
+import type { Ticker } from '../../../reducers/ticker/types.d';
 import PortfolioPosition from './PortfolioPosition';
 import { PortfolioPositionHeader } from './PortfolioPositionHeader';
 

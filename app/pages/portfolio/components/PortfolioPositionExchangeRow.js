@@ -4,7 +4,7 @@ import { Avatar, Card, CardContent, Grid, Typography, withStyles } from 'materia
 import { TrendingUp } from 'material-ui-icons';
 import { connect } from 'react-redux';
 import type { MapStateToProps } from 'react-redux';
-import type { Exchanges } from '../../reducers/exchanges/types.d';
+import type { Exchanges } from '../../../reducers/exchanges/types.d';
 
 const styles = theme => ({
   root: {

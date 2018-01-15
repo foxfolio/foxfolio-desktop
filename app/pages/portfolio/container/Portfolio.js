@@ -4,16 +4,16 @@ import type { Node } from 'react';
 import R from 'ramda';
 import { Paper } from 'material-ui';
 
-import PortfolioChart from '../components/Portfolio/PortfolioChart';
-import { getTickerPrice } from '../helpers/transactions';
-import type { Coinlist } from '../reducers/coinlist/types.d';
-import type { SettingsType } from '../reducers/settings';
-import PortfolioPositions from '../components/Portfolio/PortfolioPositions';
-import PortfolioHeader from '../components/Portfolio/PortfolioHeader';
-import EmptyPortfolio from '../components/Portfolio/EmptyPortfolio';
-import type { Wallet } from '../reducers/wallets/types.d';
-import type { Ticker } from '../reducers/ticker/types.d';
-import type { Balances, Portfolio } from '../types/portfolio.d.ts';
+import PortfolioChart from '../components/PortfolioChart';
+import { getTickerPrice } from '../../../helpers/transactions';
+import type { Coinlist } from '../../../reducers/coinlist/types.d';
+import type { SettingsType } from '../../../reducers/settings';
+import PortfolioPositions from '../components/PortfolioPositions';
+import PortfolioHeader from '../components/PortfolioHeader';
+import EmptyPortfolio from '../components/EmptyPortfolio';
+import type { Wallet } from '../../../reducers/wallets/types.d';
+import type { Ticker } from '../../../reducers/ticker/types.d';
+import type { Balances, Portfolio } from '../types/portfolio.d';
 
 type Props = {
   balances: { [string]: Balances },

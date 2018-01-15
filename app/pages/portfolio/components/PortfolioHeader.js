@@ -1,7 +1,7 @@
 // @flow
 import React from 'react';
 import { Grid, Typography } from 'material-ui';
-import PriceChangeText from '../PriceChangeText';
+import PriceChangeText from './PriceChangeText';
 
 type Props = {
   fiatCurrency: string,

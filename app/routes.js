@@ -4,7 +4,7 @@ import { createMuiTheme, MuiThemeProvider } from 'material-ui';
 import { green, orange } from 'material-ui/colors';
 import { Route, Switch } from 'react-router';
 import Layout from './containers/Layout';
-import HomePage from './pages/PortfolioPage';
+import HomePage from './pages/portfolio/PortfolioPage';
 import WalletPage from './pages/WalletPage';
 import { ExchangePage } from './pages/exchange/ExchangePage';
 import SettingsPage from './pages/SettingsPage';

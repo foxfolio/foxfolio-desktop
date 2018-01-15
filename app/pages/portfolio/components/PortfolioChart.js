@@ -2,9 +2,9 @@
 import React from 'react';
 import { defaults, HorizontalBar } from 'react-chartjs-2';
 import { withTheme } from 'material-ui';
-import { getTickerPrice } from '../../helpers/transactions';
-import type { Ticker } from '../../reducers/ticker/types.d';
-import getColor from '../../utils/colors';
+import { getTickerPrice } from '../../../helpers/transactions';
+import type { Ticker } from '../../../reducers/ticker/types.d';
+import getColor from '../../../utils/colors';
 
 // Disable animating charts by default.
 defaults.global.animation = false;

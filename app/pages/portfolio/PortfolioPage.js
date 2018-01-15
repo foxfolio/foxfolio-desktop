@@ -3,9 +3,9 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import R from 'ramda';
 
-import * as TransactionActions from '../actions/transactions';
-import type { Dispatch } from '../actions/action.d';
-import Portfolio from '../containers/Portfolio';
+import * as TransactionActions from '../../actions/transactions';
+import type { Dispatch } from '../../actions/action.d';
+import Portfolio from './container/Portfolio';
 
 function mapStateToProps(state) {
   return {

@@ -7,12 +7,12 @@ import Collapse from 'material-ui/transitions/Collapse';
 import { withStyles } from 'material-ui/styles';
 import { ExpandMore } from 'material-ui-icons';
 import green from 'material-ui/colors/green';
-import type { Coinlist } from '../../reducers/coinlist/types.d';
-import type { SettingsType } from '../../reducers/settings';
-import type { Ticker } from '../../reducers/ticker/types.d';
+import type { Coinlist } from '../../../reducers/coinlist/types.d';
+import type { SettingsType } from '../../../reducers/settings';
+import type { Ticker } from '../../../reducers/ticker/types.d';
 
-import { CurrencyAvatar } from '../CurrencyAvatar';
-import PriceChangeText from '../PriceChangeText';
+import { CurrencyAvatar } from '../../../components/CurrencyAvatar';
+import PriceChangeText from './PriceChangeText';
 import PortfolioPositionExchangeRow from './PortfolioPositionExchangeRow';
 import PortfolioPositionWalletRow from './PortfolioPositionWalletRow';
 
