@@ -1,8 +1,8 @@
 // @flow
 import React, { Component } from 'react';
-import { Button, FormControl, Grid, InputLabel, MenuItem, Typography } from 'material-ui';
+import { Button, FormControl, FormControlLabel, Grid, InputLabel, MenuItem, Typography } from 'material-ui';
 import { reduxForm, Field, SubmissionError } from 'redux-form';
-import { Select } from 'redux-form-material-ui';
+import { Checkbox, Select } from 'redux-form-material-ui';
 import type { SettingsType } from '../reducers/settings';
 
 type Props = {
@@ -24,7 +24,7 @@ class SettingsForm extends Component<Props> {
       <form onSubmit={handleSubmit}>
         <Grid container>
           <Grid item xs={12}>
-            <Grid item xs={4}>
+            <Grid item lg={4} md={6} sm={12}>
               <FormControl fullWidth>
                 <InputLabel htmlFor="fiatCurrency">Fiat currency</InputLabel>
                 <Field name="fiatCurrency" component={Select}>
@@ -33,9 +33,15 @@ class SettingsForm extends Component<Props> {
                 </Field>
               </FormControl>
             </Grid>
+            <Grid item lg={4} md={6} sm={12}>
+              <FormControlLabel
+                control={<Field name="includeFiat" component={Checkbox}/>}
+                label="Include fiat in portfolio"
+              />
+            </Grid>
           </Grid>
           <Grid item xs={12}>
-            <Grid item xs={4}>
+            <Grid item lg={4} md={6} sm={12}>
               <FormControl fullWidth>
                 <InputLabel htmlFor="currencyFocus">Currency focus</InputLabel>
                 <Field name="currencyFocus" component={Select}>
@@ -47,7 +53,7 @@ class SettingsForm extends Component<Props> {
             </Grid>
           </Grid>
           <Grid item xs={12}>
-            <Grid item xs={4}>
+            <Grid item lg={4} md={6} sm={12}>
               <FormControl fullWidth>
                 <InputLabel htmlFor="theme">Theme</InputLabel>
                 <Field name="theme" component={Select}>

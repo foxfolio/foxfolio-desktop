@@ -25,7 +25,7 @@ type Props = {
 
 export default function PortfolioContainer(
   { balances, ticker, coinlist, wallets, settings }: Props): Node {
-  const portfolio = calculatePortfolio(wallets, balances);
+  const portfolio = calculatePortfolio(wallets, balances, settings);
   const sum = {
     btc: calculateSum(ticker, portfolio.total, 'BTC'),
     fiat: calculateSum(ticker, portfolio.total, settings.fiatCurrency),
@@ -63,19 +63,23 @@ export default function PortfolioContainer(
   );
 }
 
-function calculatePortfolio(wallets: Wallet[], balances: { [string]: Balances }): Portfolio {
-  const walletBalances = wallets.reduce((acc, wallet) => ({
-    ...acc,
-    [wallet.currency]: (acc[wallet.currency] || 0) + wallet.quantity,
-  }), {});
+function calculatePortfolio(wallets: Wallet[], balances: { [string]: Balances }, settings: SettingsType): Portfolio {
+  const walletBalances = wallets
+    .filter(wallet => !(wallet.currency === settings.fiatCurrency && settings.includeFiat))
+    .reduce((acc, wallet) => ({
+      ...acc,
+      [wallet.currency]: (acc[wallet.currency] || 0) + wallet.quantity,
+    }), {});
+
+  const filteredBalances = R.map(settings.includeFiat ? R.identity : R.omit([settings.fiatCurrency]))(balances);
   let exchangeBalances = {};
-  Object.keys(balances).forEach(exchange => {
-    exchangeBalances = R.mergeWith((a, b) => a + b, exchangeBalances, balances[exchange]);
+  Object.keys(filteredBalances).forEach(exchange => {
+    exchangeBalances = R.mergeWith((a, b) => a + b, exchangeBalances, filteredBalances[exchange]);
   });
 
   return {
     total: R.mergeWith((a, b) => a + b, exchangeBalances, walletBalances),
-    exchanges: balances,
+    exchanges: filteredBalances,
     wallets: walletBalances,
   };
 }

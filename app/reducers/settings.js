@@ -3,12 +3,14 @@ import type { Action } from '../actions/action.d';
 
 export type SettingsType = {
   fiatCurrency: string,
+  includeFiat: boolean,
   currencyFocus: 'crypto' | 'fiat' | 'equal',
   theme: 'light' | 'dark'
 };
 
 const initialSettings: SettingsType = {
   fiatCurrency: 'EUR',
+  includeFiat: true,
   currencyFocus: 'fiat',
   theme: 'light',
 };
