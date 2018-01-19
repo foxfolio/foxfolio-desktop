@@ -1,6 +1,9 @@
 // @flow
 import React, { Component } from 'react';
-import { Button, Card, CardActions, CardContent, LinearProgress, Typography } from 'material-ui';
+import {
+  Button, Card, CardActions, CardContent, Collapse, Divider, Grid, LinearProgress,
+  Typography,
+} from 'material-ui';
 import { withStyles } from 'material-ui/styles';
 
 import type { Exchange } from '../../../reducers/exchanges/types.d';
@@ -22,6 +25,9 @@ const styles = theme => ({
   error: {
     color: theme.palette.error[500],
   },
+  collapse: {
+    padding: 16,
+  },
 });
 
 type Props = {
@@ -31,9 +37,21 @@ type Props = {
   onDelete: () => void
 };
 
+type State = {
+  expanded: boolean
+};
+
 const hasOpenRequests = exchange => exchange.openRequests && exchange.openRequests > 0;
 
-class ExchangeCard_ extends Component<Props> {
+class ExchangeCard_ extends Component<Props, State> {
+  state = {
+    expanded: false,
+  };
+
+  handleExpandClick = () => {
+    this.setState({ expanded: !this.state.expanded });
+  };
+
   render() {
     const { classes, exchange, onEdit, onDelete } = this.props;
 
@@ -57,10 +75,24 @@ class ExchangeCard_ extends Component<Props> {
           </Typography>
         </CardContent>
         <CardActions>
+          <Button dense onClick={this.handleExpandClick}>
+            {this.state.expanded ? 'Hide' : 'Show'} balances
+          </Button>
           <div className={classes.flexGrow}/>
-          <Button dense color="default" onClick={onDelete}>Delete</Button>
-          <Button dense color="primary" onClick={onEdit}>Edit</Button>
+          <Button dense className={classes.error} onClick={onDelete}>Delete</Button>
+          <Button dense onClick={onEdit}>Edit</Button>
         </CardActions>
+        <Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
+          <Divider/>
+          <div className={classes.collapse}>
+            {Object.keys(exchange.balances).sort().map(asset => (
+              <Grid container key={asset}>
+                <Grid item xs={4}><Typography>{asset}</Typography></Grid>
+                <Grid item xs={8}><Typography>{exchange.balances[asset]}</Typography></Grid>
+              </Grid>
+            ))}
+          </div>
+        </Collapse>
         {hasOpenRequests(exchange) ? <LinearProgress/> : ''}
       </Card>
     );
