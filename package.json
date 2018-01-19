@@ -188,7 +188,7 @@
     "webpack-sources": "1.0.1"
   },
   "dependencies": {
-    "ccxt": "^1.10.397",
+    "ccxt": "^1.10.775",
     "chart.js": "^2.7.1",
     "classnames": "^2.2.5",
     "csvtojson": "^1.1.9",
