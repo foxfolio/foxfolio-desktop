@@ -22,6 +22,15 @@ function receiveTickerUpdate(ticker: Object): Action {
   };
 }
 
+function receiveHistory(fsym: string, tsym: string, history: [{ close: number }]): Action {
+  return {
+    type: 'HISTORY_UPDATE',
+    fsym,
+    tsym,
+    history,
+  };
+}
+
 function receiveCoinList(coinlist: Object): Action {
   return {
     type: 'RECEIVE_COIN_LIST',
@@ -42,6 +51,22 @@ export function requestTickerUpdate(extraSymbols: string[] = [], fiatCurrency?: 
       fetch(`https://min-api.cryptocompare.com/data/pricemultifull?fsyms=${fsyms}&tsyms=${tsyms}`)
         .then(result => result.json())
         .then(result => dispatch(receiveTickerUpdate(result.RAW)))
+        .catch(error => console.error(error));
+    }
+  };
+}
+
+export function requestHistory(fsym: string, tsym: string, forceRequest: boolean = false): ThunkAction {
+  return (dispatch: Dispatch, getState: GetState) => {
+    const twoMinutesAgo = new Date((new Date()).getTime() - (1000 * 60 * 2));
+    if (forceRequest
+      || !(getState().ticker.history[fsym]
+        && getState().ticker.history[fsym][tsym]
+        && getState().ticker.history[fsym][tsym].lastUpdate >= twoMinutesAgo)
+    ) {
+      fetch(`https://min-api.cryptocompare.com/data/histominute?fsym=${fsym}&tsym=${tsym}`)
+        .then(result => result.json())
+        .then(result => dispatch(receiveHistory(fsym, tsym, result.Data)))
         .catch(error => console.error(error));
     }
   };

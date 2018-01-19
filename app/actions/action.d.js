@@ -1,6 +1,6 @@
 // @flow
 import type { SettingsType } from '../reducers/settings';
-import type { Ticker } from '../reducers/ticker/types.d';
+import type { Ticker, History } from '../reducers/ticker/types.d';
 import type { Wallet } from '../reducers/wallets/types.d';
 import type { Coinlist } from '../reducers/coinlist/types.d';
 import type { ExchangeActions } from '../reducers/exchanges/actions.d';
@@ -12,6 +12,7 @@ export type Action =
   | {| type: 'DELETE_WALLET', wallet: Wallet |}
   | {| type: 'LAST_UPDATED', key: string, time: Date |}
   | {| type: 'TICKER_UPDATE', ticker: Ticker |}
+  | {| type: 'HISTORY_UPDATE', fsym: string, tsym: string, history: History |}
   | {| type: 'START_TIMER', name: string, timer: Object |}
   | {| type: 'RECEIVE_COIN_LIST', coinlist: Coinlist |}
   | {| type: 'SAVE_SETTINGS', settings: SettingsType |};

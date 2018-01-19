@@ -11,7 +11,7 @@ function mapStateToProps(state) {
   return {
     balances: R.map(exchange => exchange.balances)(state.exchanges),
     exchanges: state.exchanges,
-    ticker: state.ticker,
+    ticker: state.ticker.ticker,
     coinlist: state.coinlist,
     wallets: state.wallets,
     settings: state.settings,

@@ -7,14 +7,13 @@ import Collapse from 'material-ui/transitions/Collapse';
 import { withStyles } from 'material-ui/styles';
 import { ExpandMore } from 'material-ui-icons';
 import green from 'material-ui/colors/green';
+import { TokenLineChart } from '../../../components/TokenLineChart';
 import type { Coinlist } from '../../../reducers/coinlist/types.d';
 import type { SettingsType } from '../../../reducers/settings';
 import type { Ticker } from '../../../reducers/ticker/types.d';
 
 import { CurrencyAvatar } from '../../../components/CurrencyAvatar';
 import PriceChangeText from './PriceChangeText';
-import PortfolioPositionExchangeRow from './PortfolioPositionExchangeRow';
-import PortfolioPositionWalletRow from './PortfolioPositionWalletRow';
 
 export const styles = (theme: Object) => ({
   root: {
@@ -43,6 +42,9 @@ export const styles = (theme: Object) => ({
   },
   right: {
     textAlign: 'right',
+  },
+  collapse: {
+    padding: 10,
   },
 });
 
@@ -101,20 +103,17 @@ class PortfolioPosition extends Component<Props, State> {
   }
 
   render() {
-    const { asset, classes, coinlist, portfolio } = this.props;
+    const { asset, classes, coinlist, settings } = this.props;
     return (
       <Card>
         {this.rowCard(<CurrencyAvatar asset={asset} coinlist={coinlist} fiatClass={classes.fiatAvatar}/>)}
-        <Collapse in={this.state.expanded}>
-          {portfolio.wallets ? <PortfolioPositionWalletRow asset={asset} balance={portfolio.wallets}/> : ''}
-          {Object.keys(portfolio.exchanges).map(key =>
-            (<PortfolioPositionExchangeRow
-              key={key}
-              exchangeKey={key}
-              asset={asset}
-              balance={portfolio.exchanges[key]}
-            />))}
-
+        <Collapse in={this.state.expanded} timeout="auto" mountOnEnter unmountOnExit>
+          <div className={classes.collapse}>
+            <TokenLineChart
+              fsym={asset}
+              tsym={settings.currencyFocus === 'crypto' && asset !== 'BTC' ? 'BTC' : settings.fiatCurrency}
+            />
+          </div>
         </Collapse>
       </Card>
     );
