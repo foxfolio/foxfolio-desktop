@@ -1,6 +1,6 @@
 // @flow
-import React from 'react';
 import type { Node } from 'react';
+import React from 'react';
 import R from 'ramda';
 import { Paper } from 'material-ui';
 
@@ -35,7 +35,7 @@ export default function PortfolioContainer(
     fiat: calculateChange(ticker, portfolio.total, sum.fiat, settings.fiatCurrency),
   };
 
-  if (ticker.BTC || ticker.ETH) { // TODO What if the user has no BTC?
+  if (ticker.BTC && !R.isEmpty(portfolio.total)) {
     return (
       <div>
         <Paper style={{ marginTop: 0, paddingBottom: 25, paddingTop: 25, textAlign: 'center' }}>
