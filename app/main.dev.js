@@ -9,8 +9,12 @@
  *
  * @flow
  */
-import { app, BrowserWindow } from 'electron';
+import { app, BrowserWindow, dialog } from 'electron';
 import { autoUpdater } from 'electron-updater';
+import log from 'electron-log';
+
+autoUpdater.logger = log;
+autoUpdater.logger.transports.file.level = 'info';
 
 let mainWindow = null;
 
@@ -48,6 +52,19 @@ app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
     app.quit();
   }
+});
+
+autoUpdater.on('update-downloaded', (info) => {
+  dialog.showMessageBox(mainWindow, {
+    title: 'Update ready to install',
+    message: `A new version (${info.version}) has been downloaded and will be installed after you close Foxfolio.` +
+    ' Do you want to install it now?',
+    buttons: ['No', 'Yes'],
+  }, (response) => {
+    if (response === 1) {
+      autoUpdater.quitAndInstall();
+    }
+  });
 });
 
 app.on('ready', async () => {
