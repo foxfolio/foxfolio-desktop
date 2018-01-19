@@ -160,7 +160,7 @@
     "extract-text-webpack-plugin": "^3.0.2",
     "fbjs-scripts": "^0.8.0",
     "file-loader": "^0.11.1",
-    "flow-bin": "^0.59.0",
+    "flow-bin": "^0.63.1",
     "flow-runtime": "^0.16.0",
     "flow-typed": "^2.2.3",
     "html-webpack-plugin": "^2.29.0",
