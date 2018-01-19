@@ -86,7 +86,7 @@ class ExchangeGrid_ extends Component<Props, State> {
         <ExchangeDialog
           open={this.state.open}
           config={this.state.dialogConfig ? this.state.dialogConfig : undefined}
-          onRequestClose={this.handleClose}
+          onClose={this.handleClose}
           saveExchange={this.saveExchange}
         />
       </div>

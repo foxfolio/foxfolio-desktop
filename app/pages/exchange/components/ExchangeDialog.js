@@ -22,7 +22,7 @@ type EditConfig = {
 
 type Props = {
   open: boolean,
-  onRequestClose: () => void,
+  onClose: () => void,
   saveExchange: (exchange: Exchange) => void,
   config?: DialogConfig,
   classes: Object
@@ -150,7 +150,7 @@ class ExchangeDialog_ extends Component<Props, State> {
               )
               : ''}
             <DialogActions>
-              <Button onClick={this.props.onRequestClose} color="primary">
+              <Button onClick={this.props.onClose} color="primary">
                 Cancel
               </Button>
               <Button type="submit" color="primary">
@@ -164,10 +164,10 @@ class ExchangeDialog_ extends Component<Props, State> {
   }
 
   render(): Node {
-    const { open, onRequestClose, config, classes } = this.props;
+    const { open, onClose, config, classes } = this.props;
 
     return (
-      <Dialog open={open} onRequestClose={onRequestClose} classes={{ paper: classes.paper }}>
+      <Dialog open={open} onClose={onClose} classes={{ paper: classes.paper }}>
         {config
           ? this.createDialog(config)
           : ''}

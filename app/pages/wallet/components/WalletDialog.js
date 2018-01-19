@@ -48,7 +48,7 @@ export default class WalletDialog extends Component<Props> {
       <Dialog
         title="New Wallet"
         open={open}
-        onRequestClose={close}
+        onClose={close}
       >
         <DialogTitle>New wallet</DialogTitle>
         <DialogContent>
