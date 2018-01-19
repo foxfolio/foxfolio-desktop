@@ -10,7 +10,7 @@ import green from 'material-ui/colors/green';
 import { TokenLineChart } from '../../../components/TokenLineChart';
 import type { Coinlist } from '../../../reducers/coinlist/types.d';
 import type { SettingsType } from '../../../reducers/settings';
-import type { Ticker } from '../../../reducers/ticker/types.d';
+import type { Ticker, TickerEntry } from '../../../reducers/ticker/types.d';
 
 import { CurrencyAvatar } from '../../../components/CurrencyAvatar';
 import PriceChangeText from './PriceChangeText';
@@ -59,6 +59,10 @@ type Props = {
 
 type State = {
   expanded: boolean
+};
+
+type TickerForSymbol = {
+  [tsym: string]: TickerEntry
 };
 
 class PortfolioPosition extends Component<Props, State> {
@@ -135,7 +139,7 @@ const PositionHeader = (name: string, quantity: number) => (
   </div>
 );
 
-const PositionQuantity = (ticker: Ticker, quantity: number, asset: string, settings: SettingsType) => {
+const PositionQuantity = (ticker: TickerForSymbol, quantity: number, asset: string, settings: SettingsType) => {
   const { currencyFocus, fiatCurrency } = settings;
 
   if (currencyFocus === 'equal') {
@@ -167,7 +171,7 @@ const PositionQuantity = (ticker: Ticker, quantity: number, asset: string, setti
   );
 };
 
-const PositionPrice = (ticker: Ticker, quantity: number, asset: string, settings: SettingsType) => {
+const PositionPrice = (ticker: TickerForSymbol, quantity: number, asset: string, settings: SettingsType) => {
   const { currencyFocus, fiatCurrency } = settings;
 
   if (currencyFocus === 'equal') {
@@ -197,7 +201,7 @@ const PositionPrice = (ticker: Ticker, quantity: number, asset: string, settings
   );
 };
 
-const PositionPriceChange = (ticker: Ticker, quantity: number, asset: string, settings: SettingsType) => {
+const PositionPriceChange = (ticker: TickerForSymbol, quantity: number, asset: string, settings: SettingsType) => {
   const { currencyFocus, fiatCurrency } = settings;
 
   if (currencyFocus === 'equal') {
