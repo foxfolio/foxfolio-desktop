@@ -1,7 +1,7 @@
 /* eslint flowtype-errors/show-errors: 0 */
 import React, { Component } from 'react';
 import { createMuiTheme, MuiThemeProvider } from 'material-ui';
-import { green, orange } from 'material-ui/colors';
+import { green, orange, red } from 'material-ui/colors';
 import { Route, Switch } from 'react-router';
 import Layout from './containers/Layout';
 import HomePage from './pages/portfolio/PortfolioPage';
@@ -21,6 +21,7 @@ export class Routes extends Component<Props> {
       palette: {
         type: settings.theme === 'light' ? 'light' : 'dark',
         primary: orange,
+        error: red,
         success: green,
       },
     });
