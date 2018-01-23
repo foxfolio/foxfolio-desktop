@@ -12,11 +12,10 @@ type Props = {
   portfolio: Object,
   coinlist: Coinlist,
   ticker: Ticker,
-  settings: SettingsType,
-  sumBTC: number
+  settings: SettingsType
 };
 
-export default function PortfolioPositions({ portfolio, coinlist, ticker, settings, sumBTC }: Props) {
+export default function PortfolioPositions({ portfolio, coinlist, ticker, settings }: Props) {
   return (
     <div>
       <PortfolioPositionHeader/>
@@ -31,7 +30,6 @@ export default function PortfolioPositions({ portfolio, coinlist, ticker, settin
             ticker={ticker}
             asset={asset}
             portfolio={filterPortfolioForAsset(portfolio, asset)}
-            sumBTC={sumBTC}
             settings={settings}
           />
         ))}

@@ -43,6 +43,17 @@ class SettingsForm extends Component<Props> {
           <Grid item xs={12}>
             <Grid item lg={4} md={6} sm={12}>
               <FormControl fullWidth>
+                <InputLabel htmlFor="cryptoCurrency">Main crypto currency</InputLabel>
+                <Field name="cryptoCurrency" component={Select}>
+                  <MenuItem value="BTC">BTC</MenuItem>
+                  <MenuItem value="ETH">ETH</MenuItem>
+                </Field>
+              </FormControl>
+            </Grid>
+          </Grid>
+          <Grid item xs={12}>
+            <Grid item lg={4} md={6} sm={12}>
+              <FormControl fullWidth>
                 <InputLabel htmlFor="currencyFocus">Currency focus</InputLabel>
                 <Field name="currencyFocus" component={Select}>
                   <MenuItem value="crypto">Crypto</MenuItem>

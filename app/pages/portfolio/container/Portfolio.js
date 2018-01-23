@@ -27,22 +27,22 @@ export default function PortfolioContainer(
   { balances, ticker, coinlist, wallets, settings }: Props): Node {
   const portfolio = calculatePortfolio(wallets, balances, settings);
   const sum = {
-    btc: calculateSum(ticker, portfolio.total, 'BTC'),
+    crypto: calculateSum(ticker, portfolio.total, settings.cryptoCurrency),
     fiat: calculateSum(ticker, portfolio.total, settings.fiatCurrency),
   };
   const change = {
-    btc: calculateChange(ticker, portfolio.total, sum.btc, 'BTC'),
+    crypto: calculateChange(ticker, portfolio.total, sum.crypto, settings.cryptoCurrency),
     fiat: calculateChange(ticker, portfolio.total, sum.fiat, settings.fiatCurrency),
   };
 
-  if (ticker.BTC && !R.isEmpty(portfolio.total)) {
+  if (ticker[settings.cryptoCurrency] && !R.isEmpty(portfolio.total)) {
     return (
       <div>
         <Paper style={{ marginTop: 0, paddingBottom: 25, paddingTop: 25, textAlign: 'center' }}>
-          <PortfolioHeader change={change} fiatCurrency={settings.fiatCurrency} sum={sum} ticker={ticker}/>
+          <PortfolioHeader change={change} settings={settings} sum={sum}/>
         </Paper>
         <Paper style={{ marginTop: 30, paddingBottom: 20, paddingTop: 10 }}>
-          <PortfolioChart ticker={ticker} portfolio={portfolio.total} sum={sum.btc}/>
+          <PortfolioChart ticker={ticker} portfolio={portfolio.total} sum={sum.crypto} settings={settings}/>
         </Paper>
         <Paper style={{ marginTop: 30 }}>
           <PortfolioPositions
@@ -50,7 +50,6 @@ export default function PortfolioContainer(
             ticker={ticker}
             coinlist={coinlist}
             settings={settings}
-            sumBTC={sum.btc}
           />
         </Paper>
       </div>

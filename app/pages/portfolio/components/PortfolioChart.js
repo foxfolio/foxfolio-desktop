@@ -3,6 +3,7 @@ import React from 'react';
 import { defaults, HorizontalBar } from 'react-chartjs-2';
 import { withTheme } from 'material-ui';
 import { getTickerPrice } from '../../../helpers/transactions';
+import type { SettingsType } from '../../../reducers/settings';
 import type { Ticker } from '../../../reducers/ticker/types.d';
 import getColor from '../../../utils/colors';
 
@@ -12,12 +13,13 @@ defaults.global.animation = false;
 type Props = {
   ticker: Ticker,
   portfolio: Object,
+  settings: SettingsType,
   sum: number,
   theme: Object
 };
 
-function PortfolioChart({ ticker, portfolio, sum, theme }: Props) {
-  const chartData = calculateChartData(ticker, portfolio, sum, theme);
+function PortfolioChart({ ticker, portfolio, settings, sum, theme }: Props) {
+  const chartData = calculateChartData(ticker, portfolio, settings, sum, theme);
 
   return (
     <HorizontalBar
@@ -66,18 +68,21 @@ function PortfolioChart({ ticker, portfolio, sum, theme }: Props) {
 
 export default withTheme()(PortfolioChart);
 
-function calculateChartData(ticker: Ticker, portfolio: Object, sum: number, theme: Object) {
+function calculateChartData(ticker: Ticker, portfolio: Object, settings: SettingsType, sum: number, theme: Object) {
+  const { cryptoCurrency } = settings;
+
   const datasets = Object.keys(portfolio)
     .filter(asset => portfolio[asset] > 0)
     .filter(asset => ticker[asset])
     .sort((a, b) =>
-      (getTickerPrice(ticker, b, 'BTC') * portfolio[b]) - (getTickerPrice(ticker, a, 'BTC') * portfolio[a]))
+      (getTickerPrice(ticker, b, cryptoCurrency) * portfolio[b])
+      - (getTickerPrice(ticker, a, cryptoCurrency) * portfolio[a]))
     .map(asset => ({
       label: asset.toUpperCase(),
       backgroundColor: getColor(asset),
       borderColor: theme.palette.background.default,
       borderWidth: 1,
-      data: [((getTickerPrice(ticker, asset, 'BTC') * portfolio[asset] * 100) / sum).toFixed(2)],
+      data: [((getTickerPrice(ticker, asset, cryptoCurrency) * portfolio[asset] * 100) / sum).toFixed(2)],
     }));
 
   return { datasets };

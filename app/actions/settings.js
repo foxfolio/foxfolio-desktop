@@ -13,6 +13,6 @@ function saveSettings(settings: SettingsType): Action {
 export function saveSettingsAndUpdateTicker(settings: SettingsType): ThunkAction {
   return (dispatch: Dispatch) => {
     dispatch(saveSettings(settings));
-    dispatch(requestTickerUpdate([], settings.fiatCurrency));
+    dispatch(requestTickerUpdate([], settings.fiatCurrency, settings.cryptoCurrency));
   };
 }

@@ -3,6 +3,7 @@ import type { Action } from '../actions/action.d';
 
 export type SettingsType = {
   fiatCurrency: string,
+  cryptoCurrency: 'BTC' | 'ETH',
   includeFiat: boolean,
   currencyFocus: 'crypto' | 'fiat' | 'equal',
   theme: 'light' | 'dark'
@@ -10,6 +11,7 @@ export type SettingsType = {
 
 const initialSettings: SettingsType = {
   fiatCurrency: 'EUR',
+  cryptoCurrency: 'BTC',
   includeFiat: true,
   currencyFocus: 'fiat',
   theme: 'light',

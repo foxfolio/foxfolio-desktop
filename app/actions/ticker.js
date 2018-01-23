@@ -38,13 +38,18 @@ function receiveCoinList(coinlist: Object): Action {
   };
 }
 
-export function requestTickerUpdate(extraSymbols: string[] = [], fiatCurrency?: string): ThunkAction {
+export function requestTickerUpdate(
+  extraSymbols: string[] = [], fiatCurrency?: string, cryptoCurrency?: string): ThunkAction {
   return (dispatch: Dispatch, getState: GetState) => {
     dispatch(fetchingTickerUpdate());
 
     const state = getState();
     const symbols = getSymbolsFromTransactions(
-      state.exchanges, state.wallets, fiatCurrency || state.settings.fiatCurrency, extraSymbols);
+      state.exchanges,
+      state.wallets,
+      fiatCurrency || state.settings.fiatCurrency,
+      cryptoCurrency || state.settings.cryptoCurrency,
+      extraSymbols);
     const fsyms = symbols.from.join(',');
     const tsyms = symbols.to.join(',');
     if (fsyms && tsyms) {
@@ -94,6 +99,7 @@ function getSymbolsFromTransactions(
   exchanges: Exchanges,
   wallets: Wallet[],
   fiatCurrency: string,
+  cryptoCurrency: string,
   extraSymbols: string[]): { from: string[], to: string[] } {
   const walletSymbols = wallets.map(wallet => wallet.currency) || [];
   const exchangeSymbols = R.values(exchanges)
@@ -101,5 +107,8 @@ function getSymbolsFromTransactions(
     .reduce((acc, balances) => acc.concat(R.keys(balances)), []);
 
   return R.map(R.uniq)(
-    { from: ['BTC', ...walletSymbols, ...exchangeSymbols, ...extraSymbols], to: ['BTC', fiatCurrency] });
+    {
+      from: [cryptoCurrency, ...walletSymbols, ...exchangeSymbols, ...extraSymbols],
+      to: [cryptoCurrency, fiatCurrency],
+    });
 }
