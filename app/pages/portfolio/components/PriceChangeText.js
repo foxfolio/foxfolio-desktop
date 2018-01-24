@@ -1,6 +1,7 @@
 // @flow
 import React from 'react';
 import { withStyles } from 'material-ui';
+import { green, grey, red } from 'material-ui/colors';
 
 type Props = {
   change: number,
@@ -8,26 +9,26 @@ type Props = {
   classes: Object
 };
 
-const styles = theme => ({
+const styles = () => ({
   negative: {
-    color: theme.palette.error[500],
+    color: red[500],
   },
   negativeMuted: {
-    color: theme.palette.error[300],
+    color: red[300],
   },
   positive: {
-    color: theme.palette.success[500],
+    color: green[500],
   },
   positiveMuted: {
-    color: theme.palette.success[300],
+    color: green[300],
   },
   interval: {
     fontSize: 12,
-    color: theme.palette.grey[700],
+    color: grey[700],
   },
   intervalMuted: {
     fontSize: 12,
-    color: theme.palette.grey[500],
+    color: grey[500],
   },
 });
 

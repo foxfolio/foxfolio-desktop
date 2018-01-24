@@ -1,0 +1,43 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Negative change 1`] = `
+<div
+  style={
+    Object {
+      "display": "inline-block",
+    }
+  }
+>
+  <span
+    className="PriceChangeText-negative-1"
+  >
+    -5.00%
+  </span>
+  <span
+    className="PriceChangeText-interval-5"
+  >
+     /24h
+  </span>
+</div>
+`;
+
+exports[`Positive change 1`] = `
+<div
+  style={
+    Object {
+      "display": "inline-block",
+    }
+  }
+>
+  <span
+    className="PriceChangeText-positive-3"
+  >
+    +5.00%
+  </span>
+  <span
+    className="PriceChangeText-interval-5"
+  >
+     /24h
+  </span>
+</div>
+`;

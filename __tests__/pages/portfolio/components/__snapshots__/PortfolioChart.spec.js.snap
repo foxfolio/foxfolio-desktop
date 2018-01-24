@@ -1,0 +1,72 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Render portfolio chart 1`] = `
+<HorizontalBar
+  data={
+    Object {
+      "datasets": Array [
+        Object {
+          "backgroundColor": "#F7931A",
+          "borderColor": "#fafafa",
+          "borderWidth": 1,
+          "data": Array [
+            "83.33",
+          ],
+          "label": "BTC",
+        },
+        Object {
+          "backgroundColor": "#282828",
+          "borderColor": "#fafafa",
+          "borderWidth": 1,
+          "data": Array [
+            "16.67",
+          ],
+          "label": "ETH",
+        },
+      ],
+    }
+  }
+  options={
+    Object {
+      "legend": Object {
+        "display": true,
+        "labels": Object {
+          "fontColor": "rgba(0, 0, 0, 0.87)",
+        },
+      },
+      "maintainAspectRatio": false,
+      "responsive": true,
+      "scales": Object {
+        "xAxes": Array [
+          Object {
+            "gridLines": Object {
+              "color": "rgba(0, 0, 0, 0.54)",
+              "display": false,
+            },
+            "stacked": true,
+            "ticks": Object {
+              "fontColor": "rgba(0, 0, 0, 0.87)",
+              "max": 100,
+              "min": 0,
+            },
+          },
+        ],
+        "yAxes": Array [
+          Object {
+            "gridLines": Object {
+              "color": "rgba(0, 0, 0, 0.54)",
+            },
+            "stacked": true,
+          },
+        ],
+      },
+      "tooltips": Object {
+        "callbacks": Object {
+          "label": [Function],
+        },
+        "mode": "x",
+      },
+    }
+  }
+/>
+`;

@@ -26,9 +26,10 @@
     "start": "cross-env NODE_ENV=production electron ./app/",
     "start-main-dev": "cross-env HOT=1 NODE_ENV=development electron -r babel-register ./app/main.dev",
     "start-renderer-dev": "cross-env NODE_ENV=development node --trace-warnings -r babel-register ./node_modules/webpack-dev-server/bin/webpack-dev-server --config webpack.config.renderer.dev.js",
-    "test": "cross-env NODE_ENV=test BABEL_DISABLE_CACHE=1 node --trace-warnings ./test/runTests.js",
-    "test-all": "npm run lint && npm run flow && npm run build && npm run test && npm run test-e2e",
-    "test-e2e": "cross-env NODE_ENV=test BABEL_DISABLE_CACHE=1 node --trace-warnings ./test/runTests.js e2e",
+    "test": "cross-env NODE_ENV=test BABEL_DISABLE_CACHE=1 ./node_modules/.bin/jest",
+    "test:coverage": "npm test -- --coverage",
+    "test:coverage-ci": "npm test -- --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
+    "test-all": "npm run lint && npm run flow && npm run build && npm run test",
     "test-watch": "npm test -- --watch"
   },
   "browserslist": "electron 1.6",
@@ -103,12 +104,25 @@
       "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/internals/mocks/fileMock.js",
       "\\.(css|less|sass|scss)$": "identity-obj-proxy"
     },
+    "collectCoverageFrom": [
+      "app/**/*.js",
+      "!**/*.prod.js"
+    ],
     "moduleFileExtensions": [
       "js"
     ],
     "moduleDirectories": [
       "node_modules",
       "app/node_modules"
+    ],
+    "snapshotSerializers": [
+      "enzyme-to-json/serializer"
+    ],
+    "setupFiles": [
+      "<rootDir>/__tests__/jestsetup.js"
+    ],
+    "testMatch": [
+      "**/__tests__/**/*.spec.js?(x)"
     ],
     "transform": {
       "^.+\\.js$": "babel-jest"
@@ -136,6 +150,7 @@
     "babili-webpack-plugin": "^0.1.2",
     "chalk": "^2.0.1",
     "concurrently": "^3.5.0",
+    "coveralls": "^3.0.0",
     "cross-env": "^5.0.0",
     "cross-spawn": "^5.1.0",
     "css-loader": "^0.28.3",
@@ -143,6 +158,7 @@
     "electron-builder": "^19.52.1",
     "electron-devtools-installer": "^2.2.0",
     "enzyme": "^3.3.0",
+    "enzyme-adapter-react-16": "^1.1.1",
     "enzyme-to-json": "^3.3.0",
     "eslint": "^4.11.0",
     "eslint-config-airbnb": "^16.1.0",

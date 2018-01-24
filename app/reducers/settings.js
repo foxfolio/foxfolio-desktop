@@ -9,8 +9,8 @@ export type SettingsType = {
   theme: 'light' | 'dark'
 };
 
-const initialSettings: SettingsType = {
-  fiatCurrency: 'EUR',
+export const initialSettings: SettingsType = {
+  fiatCurrency: 'USD',
   cryptoCurrency: 'BTC',
   includeFiat: true,
   currencyFocus: 'fiat',

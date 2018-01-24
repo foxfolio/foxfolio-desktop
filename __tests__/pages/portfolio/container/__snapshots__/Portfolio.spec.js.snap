@@ -1,0 +1,122 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Render portfolio page 1`] = `
+<div>
+  <WithStyles(Paper)
+    style={
+      Object {
+        "marginTop": 0,
+        "paddingBottom": 25,
+        "paddingTop": 25,
+        "textAlign": "center",
+      }
+    }
+  >
+    <PortfolioHeader
+      change={
+        Object {
+          "crypto": 0,
+          "fiat": 2,
+        }
+      }
+      settings={
+        Object {
+          "cryptoCurrency": "BTC",
+          "currencyFocus": "fiat",
+          "fiatCurrency": "USD",
+          "includeFiat": true,
+          "theme": "light",
+        }
+      }
+      sum={
+        Object {
+          "crypto": 6,
+          "fiat": 6000,
+        }
+      }
+    />
+  </WithStyles(Paper)>
+  <WithStyles(Paper)
+    style={
+      Object {
+        "marginTop": 30,
+        "paddingBottom": 20,
+        "paddingTop": 10,
+      }
+    }
+  >
+    <WithTheme(PortfolioChart)
+      portfolio={
+        Object {
+          "BTC": 6,
+        }
+      }
+      settings={
+        Object {
+          "cryptoCurrency": "BTC",
+          "currencyFocus": "fiat",
+          "fiatCurrency": "USD",
+          "includeFiat": true,
+          "theme": "light",
+        }
+      }
+      sum={6}
+      ticker={
+        Object {
+          "BTC": Object {
+            "USD": Object {
+              "CHANGEPCT24HOUR": 2,
+              "PRICE": 1000,
+            },
+          },
+        }
+      }
+    />
+  </WithStyles(Paper)>
+  <WithStyles(Paper)
+    style={
+      Object {
+        "marginTop": 30,
+      }
+    }
+  >
+    <PortfolioPositions
+      coinlist={Object {}}
+      portfolio={
+        Object {
+          "exchanges": Object {
+            "exchange": Object {
+              "BTC": 5,
+            },
+          },
+          "total": Object {
+            "BTC": 6,
+          },
+          "wallets": Object {
+            "BTC": 1,
+          },
+        }
+      }
+      settings={
+        Object {
+          "cryptoCurrency": "BTC",
+          "currencyFocus": "fiat",
+          "fiatCurrency": "USD",
+          "includeFiat": true,
+          "theme": "light",
+        }
+      }
+      ticker={
+        Object {
+          "BTC": Object {
+            "USD": Object {
+              "CHANGEPCT24HOUR": 2,
+              "PRICE": 1000,
+            },
+          },
+        }
+      }
+    />
+  </WithStyles(Paper)>
+</div>
+`;
