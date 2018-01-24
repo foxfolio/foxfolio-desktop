@@ -3,6 +3,8 @@
 [![Travis](https://img.shields.io/travis/foxfolio/foxfolio-desktop/master.svg?style=flat-square)](https://travis-ci.org/foxfolio/foxfolio-desktop)
 [![GitHub release](https://img.shields.io/github/release/foxfolio/foxfolio-desktop/all.svg?style=flat-square)](https://github.com/foxfolio/foxfolio-desktop/releases)
 [![GitHub license](https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square)](https://github.com/foxfolio/foxfolio-desktop)
+[![CodeFactor](https://www.codefactor.io/repository/github/foxfolio/foxfolio-desktop/badge)](https://www.codefactor.io/repository/github/foxfolio/foxfolio-desktop)
+[![Coveralls github](https://img.shields.io/coveralls/github/foxfolio/foxfolio-desktop.svg?style=flat-square)](https://coveralls.io/github/foxfolio/foxfolio-desktop)
 
 > Cryptocurrency portfolio management application which automatically retrieves balances and trades using exchange APIs
 
