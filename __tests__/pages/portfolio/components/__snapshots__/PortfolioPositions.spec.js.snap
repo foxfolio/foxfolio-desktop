@@ -1,0 +1,101 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Render portfolio positions 1`] = `
+<div>
+  <WithStyles(header) />
+  <WithStyles(PortfolioPosition)
+    asset="BTC"
+    coinlist={Object {}}
+    key="BTC"
+    portfolio={
+      Object {
+        "exchanges": Object {
+          "key": 1,
+        },
+        "total": 5,
+        "wallets": 4,
+      }
+    }
+    settings={
+      Object {
+        "cryptoCurrency": "BTC",
+        "currencyFocus": "fiat",
+        "fiatCurrency": "USD",
+        "includeFiat": true,
+        "theme": "light",
+      }
+    }
+    ticker={
+      Object {
+        "BTC": Object {
+          "BTC": Object {
+            "CHANGEPCT24HOUR": 0,
+            "PRICE": 1,
+          },
+          "USD": Object {
+            "CHANGEPCT24HOUR": 1.1,
+            "PRICE": 10000,
+          },
+        },
+        "ETH": Object {
+          "BTC": Object {
+            "CHANGEPCT24HOUR": 2,
+            "PRICE": 0.1,
+          },
+          "USD": Object {
+            "CHANGEPCT24HOUR": 5.2,
+            "PRICE": 1000,
+          },
+        },
+      }
+    }
+  />
+  <WithStyles(PortfolioPosition)
+    asset="ETH"
+    coinlist={Object {}}
+    key="ETH"
+    portfolio={
+      Object {
+        "exchanges": Object {
+          "key": 2,
+        },
+        "total": 10,
+        "wallets": 8,
+      }
+    }
+    settings={
+      Object {
+        "cryptoCurrency": "BTC",
+        "currencyFocus": "fiat",
+        "fiatCurrency": "USD",
+        "includeFiat": true,
+        "theme": "light",
+      }
+    }
+    ticker={
+      Object {
+        "BTC": Object {
+          "BTC": Object {
+            "CHANGEPCT24HOUR": 0,
+            "PRICE": 1,
+          },
+          "USD": Object {
+            "CHANGEPCT24HOUR": 1.1,
+            "PRICE": 10000,
+          },
+        },
+        "ETH": Object {
+          "BTC": Object {
+            "CHANGEPCT24HOUR": 2,
+            "PRICE": 0.1,
+          },
+          "USD": Object {
+            "CHANGEPCT24HOUR": 5.2,
+            "PRICE": 1000,
+          },
+        },
+      }
+    }
+  />
+</div>
+`;
