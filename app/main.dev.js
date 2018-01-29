@@ -80,6 +80,7 @@ app.on('ready', async () => {
     show: false,
     width: 1280,
     height: 800,
+    icon: `${__dirname}/resources/64x64.png`
   });
 
   mainWindow.loadURL(`file://${__dirname}/app.html`);
