@@ -16,7 +16,7 @@ type Props = {
   theme: Object
 };
 
-class TokenLineChart_ extends Component<Props> {
+export class RawTokenLineChart extends Component<Props> {
   componentWillMount() {
     const { requestHistory, fsym, tsym } = this.props;
     requestHistory(fsym, tsym);
@@ -68,4 +68,4 @@ const mapStateToProps: MapStateToProps<*, *, *> = state => ({
 });
 const mapActionsToProps = (dispatch: Dispatch) => bindActionCreators(TickerActions, dispatch);
 
-export const TokenLineChart = connect(mapStateToProps, mapActionsToProps)(withTheme()(TokenLineChart_));
+export const TokenLineChart = connect(mapStateToProps, mapActionsToProps)(withTheme()(RawTokenLineChart));

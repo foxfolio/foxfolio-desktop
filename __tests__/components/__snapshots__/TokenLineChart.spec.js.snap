@@ -1,0 +1,156 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Render token line chart 1`] = `
+<RawTokenLineChart
+  fsym="ETH"
+  history={
+    Object {
+      "ETH": Object {
+        "USD": Object {
+          "data": Array [
+            Object {
+              "close": 10,
+              "time": 1000000,
+            },
+          ],
+        },
+      },
+    }
+  }
+  requestHistory={[Function]}
+  theme={
+    Object {
+      "palette": Object {
+        "background": Object {
+          "paper": "",
+        },
+        "text": Object {
+          "divider": "",
+          "secondary": "",
+        },
+      },
+    }
+  }
+  tsym="USD"
+>
+  <ResponsiveContainer
+    debounce={0}
+    height={300}
+    width="100%"
+  >
+    <div
+      className="recharts-responsive-container"
+      style={
+        Object {
+          "height": 300,
+          "maxHeight": undefined,
+          "minHeight": undefined,
+          "minWidth": undefined,
+          "width": "100%",
+        }
+      }
+    >
+      <AreaChart
+        barCategoryGap="10%"
+        barGap={4}
+        data={
+          Array [
+            Object {
+              "close": 10,
+              "time": 1000000,
+            },
+          ]
+        }
+        height={300}
+        layout="horizontal"
+        margin={
+          Object {
+            "bottom": 5,
+            "left": 40,
+            "right": 5,
+            "top": 5,
+          }
+        }
+        reverseStackOrder={false}
+        stackOffset="none"
+        width={0}
+      />
+      <ResizeDetector
+        handleHeight={true}
+        handleWidth={true}
+        onResize={[Function]}
+      >
+        <div
+          style={
+            Object {
+              "bottom": 0,
+              "left": 0,
+              "overflow": "hidden",
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+              "visibility": "hidden",
+              "zIndex": -1,
+            }
+          }
+        >
+          <div
+            onScroll={[Function]}
+            style={
+              Object {
+                "bottom": 0,
+                "left": 0,
+                "overflow": "hidden",
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+                "visibility": "hidden",
+                "zIndex": -1,
+              }
+            }
+          >
+            <div
+              style={
+                Object {
+                  "height": 10,
+                  "left": 0,
+                  "position": "absolute",
+                  "top": 0,
+                  "width": 10,
+                }
+              }
+            />
+          </div>
+          <div
+            onScroll={[Function]}
+            style={
+              Object {
+                "bottom": 0,
+                "left": 0,
+                "overflow": "hidden",
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+                "visibility": "hidden",
+                "zIndex": -1,
+              }
+            }
+          >
+            <div
+              style={
+                Object {
+                  "height": "200%",
+                  "left": 0,
+                  "position": "absolute",
+                  "top": 0,
+                  "width": "200%",
+                }
+              }
+            />
+          </div>
+        </div>
+      </ResizeDetector>
+    </div>
+  </ResponsiveContainer>
+</RawTokenLineChart>
+`;

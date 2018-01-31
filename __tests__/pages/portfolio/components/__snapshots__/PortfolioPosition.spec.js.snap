@@ -135,7 +135,7 @@ exports[`Render portfolio position 1`] = `
     <div
       className="PortfolioPosition-collapse-8"
     >
-      <Connect(WithTheme(TokenLineChart_))
+      <Connect(WithTheme(RawTokenLineChart))
         fsym="ETH"
         tsym="USD"
       />
