@@ -2,10 +2,11 @@
 import type { Node } from 'react';
 import React, { Component } from 'react';
 import ccxt from 'ccxt';
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, MenuItem, TextField } from 'material-ui';
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField } from 'material-ui';
 import { withStyles } from 'material-ui/styles';
 
 import type { Exchange } from '../../../reducers/exchanges/types.d';
+import { Autocomplete } from '../../../components/Autocomplete';
 
 export type DialogConfig =
   | AddConfig
@@ -58,8 +59,8 @@ class ExchangeDialog_ extends Component<Props, State> {
     }
   }
 
-  changeExchange = (event: Object) => {
-    this.setState({ exchange: { ...this.state.exchange, type: event.target.value } });
+  changeExchange = (type: string) => {
+    this.setState({ exchange: { ...this.state.exchange, type } });
   };
 
   changeCredentials = (name: string) => (event: Object) => {
@@ -83,21 +84,12 @@ class ExchangeDialog_ extends Component<Props, State> {
         <DialogTitle>{config.action === 'add' ? 'Add' : 'Edit '} exchange </DialogTitle>
         <DialogContent>
           <form autoComplete="off" onSubmit={this.handleSubmit}>
-            <TextField
+            <Autocomplete
               label="Exchange"
-              id="exchange"
-              value={this.state.exchange.type}
               onChange={this.changeExchange}
-              fullWidth
-              margin="normal"
-              select
-            >
-              {ccxt.exchanges.map(exchange => (
-                <MenuItem key={exchange} value={exchange}>
-                  {exchange}
-                </MenuItem>
-              ))}
-            </TextField>
+              value={this.state.exchange.type}
+              items={ccxt.exchanges.filter(exchange => exchange.charAt(0) !== '_')}
+            />
             {this.state.exchange.type !== ''
               ? (
                 <div>
