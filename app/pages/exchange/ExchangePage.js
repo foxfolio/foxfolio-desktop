@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { ExchangeGrid } from './components/ExchangeGrid';
 import * as exchangeActions from '../../actions/exchanges';
 
-function mapStateToProps(state) {
+function mapStateToProps(state: GlobalState): { exchanges: Exchanges } {
   return {
     exchanges: state.exchanges,
   };

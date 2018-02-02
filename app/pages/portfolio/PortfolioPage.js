@@ -5,12 +5,13 @@ import R from 'ramda';
 
 import * as TransactionActions from '../../actions/transactions';
 import type { Dispatch } from '../../actions/action.d';
+import type { PortfolioProps } from './container/Portfolio';
 import Portfolio from './container/Portfolio';
+import type { GlobalState } from '../../reducers';
 
-function mapStateToProps(state) {
+function mapStateToProps(state: GlobalState): PortfolioProps {
   return {
     balances: R.map(exchange => exchange.balances)(state.exchanges),
-    exchanges: state.exchanges,
     ticker: state.ticker.ticker,
     coinlist: state.coinlist,
     wallets: state.wallets,

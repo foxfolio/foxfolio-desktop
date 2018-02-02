@@ -1,3 +1,5 @@
+// @flow
+import type { Node } from 'react';
 import React, { Component } from 'react';
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField, } from 'material-ui';
 import type { Wallet } from '../../../reducers/wallets/types.d';
@@ -6,17 +8,17 @@ type Props = {
   wallet: Wallet,
   open: boolean,
   close: () => void,
-  save: (source: walletType) => void
+  save: (source: Wallet) => void
 };
 
-export default class WalletDialog extends Component<Props> {
+export default class WalletDialog extends Component<Props, Wallet> {
   state = {
     currency: '',
     address: '',
     quantity: 0,
   };
 
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps(nextProps: Props) {
     if (this.props.open !== nextProps.open) {
       this.setState({
         currency: nextProps.wallet.currency,
@@ -27,21 +29,21 @@ export default class WalletDialog extends Component<Props> {
     }
   }
 
-  save = event => {
+  save = (event: Event) => {
     event.preventDefault();
     this.props.save({
       currency: this.state.currency,
       address: this.state.address,
       quantity: parseFloat(this.state.quantity),
-      note: this.state.note,
+      note: this.state.note ? this.state.note : '',
     });
   };
 
-  handleChange = name => event => {
+  handleChange = (name: string) => (event: any) => {
     this.setState({ [name]: event.target.value });
   };
 
-  render() {
+  render(): Node {
     const { open, close } = this.props;
 
     return (
@@ -80,7 +82,7 @@ export default class WalletDialog extends Component<Props> {
             <TextField
               label="Note"
               id="note"
-              value={this.state.note}
+              value={this.state.note ? this.state.note : ''}
               onChange={this.handleChange('note')}
               fullWidth
               margin="normal"

@@ -2,14 +2,14 @@
 
 import type { Action } from '../actions/action.d';
 
-type State = {
+export type Timer = {
   [string]: number,
   lastUpdated?: {
     [string]: Date
   }
 };
 
-export default function timer(state: $ReadOnly<State> = {}, action: Action) {
+export default function timer(state: Timer = {}, action: Action): Timer {
   switch (action.type) {
     case 'START_TIMER':
       return {

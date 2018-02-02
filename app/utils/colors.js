@@ -25,7 +25,7 @@ SOFTWARE.
 
 // @flow
 
-export default function getColor(currency: string) {
+export default function getColor(currency: string): string {
   const colors = {
     ADC: '#3CB0E5',
     AEON: '#164450',

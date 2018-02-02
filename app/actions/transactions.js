@@ -1,6 +1,6 @@
 // @flow
 import ccxt from 'ccxt';
-import { keys, equals, filter, forEachObjIndexed } from 'ramda';
+import { equals, filter, forEachObjIndexed, keys } from 'ramda';
 import type {
   FailedExchangeRequestAction,
   IncrementExchangeRequestCounterAction,
@@ -10,6 +10,7 @@ import type { Balances, Exchange, Exchanges } from '../reducers/exchanges/types.
 import type { Action, Dispatch, GetState, ThunkAction } from './action.d';
 import startTimer from './timer';
 import { requestTickerUpdate } from './ticker';
+import type { GlobalState } from '../reducers';
 
 const BALANCE_REFRESH_MS = 30000;
 
@@ -50,7 +51,7 @@ function failedRequest(id: string, error: string): FailedExchangeRequestAction {
   };
 }
 
-function getConfiguredExchanges(state): Exchanges {
+function getConfiguredExchanges(state: GlobalState): Exchanges {
   return state.exchanges;
 }
 

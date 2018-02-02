@@ -4,6 +4,8 @@ import type { Exchanges } from '../reducers/exchanges/types.d';
 import type { Action, Dispatch, GetState, ThunkAction } from './action.d';
 import startTimer from './timer';
 import type { Wallet } from '../reducers/wallets/types.d';
+import type { Coinlist } from '../reducers/coinlist/types.d';
+import type { Ticker } from '../reducers/ticker/types.d';
 
 const REFRESH_TIME_IN_MS = 30000;
 
@@ -15,7 +17,7 @@ function fetchingTickerUpdate(): Action {
   };
 }
 
-function receiveTickerUpdate(ticker: Object): Action {
+function receiveTickerUpdate(ticker: Ticker): Action {
   return {
     type: 'TICKER_UPDATE',
     ticker,
@@ -31,7 +33,7 @@ function receiveHistory(fsym: string, tsym: string, history: [{ close: number }]
   };
 }
 
-function receiveCoinList(coinlist: Object): Action {
+function receiveCoinList(coinlist: Coinlist): Action {
   return {
     type: 'RECEIVE_COIN_LIST',
     coinlist,
@@ -86,7 +88,7 @@ export function requestCoinList(): ThunkAction {
   };
 }
 
-export function continuouslyUpdateTicker() {
+export function continuouslyUpdateTicker(): ThunkAction {
   return (dispatch: Dispatch, getState: GetState) => {
     if (!getState().timer.ticker) {
       const timer = setInterval(() => dispatch(requestTickerUpdate()), REFRESH_TIME_IN_MS);

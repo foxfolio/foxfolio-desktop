@@ -1,8 +1,8 @@
 // @flow
 import type { Action } from '../../actions/action.d';
-import type { Ticker } from './types.d';
+import type { TickerAndHistory } from './types.d';
 
-export function ticker(state: Ticker = { ticker: {}, history: {} }, action: Action) {
+export function ticker(state: TickerAndHistory = { ticker: {}, history: {} }, action: Action): TickerAndHistory {
   switch (action.type) {
     case 'TICKER_UPDATE':
       return { ...state, ticker: action.ticker };

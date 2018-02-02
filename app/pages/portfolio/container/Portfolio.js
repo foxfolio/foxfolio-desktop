@@ -15,7 +15,7 @@ import type { Wallet } from '../../../reducers/wallets/types.d';
 import type { Ticker } from '../../../reducers/ticker/types.d';
 import type { Balances, Portfolio } from '../types/portfolio.d';
 
-type Props = {
+export type PortfolioProps = {
   balances: { [string]: Balances },
   ticker: Ticker,
   coinlist: Coinlist,
@@ -24,7 +24,7 @@ type Props = {
 };
 
 export default function PortfolioContainer(
-  { balances, ticker, coinlist, wallets, settings }: Props): Node {
+  { balances, ticker, coinlist, wallets, settings }: PortfolioProps): Node {
   const portfolio = calculatePortfolio(wallets, balances, settings);
   const sum = {
     crypto: calculateSum(ticker, portfolio.total, settings.cryptoCurrency),
@@ -72,9 +72,10 @@ function calculatePortfolio(wallets: Wallet[], balances: { [string]: Balances },
 
   const filteredBalances = R.map(settings.includeFiat ? R.identity : R.omit([settings.fiatCurrency]))(balances);
   let exchangeBalances = {};
-  Object.keys(filteredBalances).forEach(exchange => {
-    exchangeBalances = R.mergeWith((a, b) => a + b, exchangeBalances, filteredBalances[exchange]);
-  });
+  Object.keys(filteredBalances)
+    .forEach(exchange => {
+      exchangeBalances = R.mergeWith((a, b) => a + b, exchangeBalances, filteredBalances[exchange]);
+    });
 
   return {
     total: R.mergeWith((a, b) => a + b, exchangeBalances, walletBalances),

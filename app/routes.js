@@ -9,9 +9,10 @@ import WalletPage from './pages/wallet/WalletPage';
 import { ExchangePage } from './pages/exchange/ExchangePage';
 import SettingsPage from './pages/SettingsPage';
 import AboutPage from './pages/AboutPage';
+import type { GlobalState } from './reducers';
 
 type Props = {
-  getState: () => Object
+  getState: () => GlobalState
 };
 
 export class Routes extends Component<Props> {

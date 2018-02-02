@@ -17,7 +17,7 @@ export const initialSettings: SettingsType = {
   theme: 'light',
 };
 
-export default function settings(state: SettingsType = initialSettings, action: Action) {
+export default function settings(state: SettingsType = initialSettings, action: Action): SettingsType {
   switch (action.type) {
     case 'SAVE_SETTINGS':
       return action.settings;

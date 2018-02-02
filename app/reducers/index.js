@@ -1,48 +1,25 @@
 // @flow
-import type { PersistConfig } from 'redux-persist';
-import { createTransform, persistCombineReducers } from 'redux-persist';
-import storage from 'redux-persist/lib/storage';
-import * as R from 'ramda';
+import { persistCombineReducers } from 'redux-persist';
 import { reducer as form } from 'redux-form';
 import { routerReducer as router } from 'react-router-redux';
+
+import { configureReduxPersist } from '../store/configureReduxPersist';
 
 import { exchanges } from './exchanges';
 import { wallets } from './wallets';
 import { ticker } from './ticker';
+import type { Timer } from './timer';
 import timer from './timer';
 import { coinlist } from './coinlist';
+import type { SettingsType } from './settings';
 import settings from './settings';
+import type { Exchanges } from './exchanges/types.d';
+import type { TickerAndHistory } from './ticker/types.d';
+import type { Coinlist } from './coinlist/types.d';
+import type { Wallet } from './wallets/types.d';
 
-// $FlowFixMe
-const mapPath = R.curry((path, f, obj) => R.assocPath(path, f(R.path(path, obj)), obj));
-
-const convertDate = R.map(mapPath(['date'], dateString => new Date(dateString)));
-const convertDateIn = key => R.map(mapPath([key], convertDate));
-
-const dateTransform = createTransform(null, (outboundState, key) => {
-  if (key === 'transactions' && Object.keys(outboundState).length > 0) {
-    return R.pipe(convertDateIn('transfers'), convertDateIn('trades'))(outboundState);
-  }
-  return outboundState;
-});
-
-const exchangeTransform = createTransform(
-  (inboundState, key) => {
-    if (key === 'exchanges') {
-      return R.map(R.omit(['openRequests']))(inboundState);
-    }
-    return inboundState;
-  },
-);
-
-const config: PersistConfig = {
-  key: 'primary',
-  blacklist: ['router', 'timer'],
-  transforms: [dateTransform, exchangeTransform],
-  storage,
-};
-
-const rootReducer = persistCombineReducers(config, {
+const config = configureReduxPersist();
+export default persistCombineReducers(config, {
   coinlist,
   exchanges,
   form,
@@ -53,4 +30,11 @@ const rootReducer = persistCombineReducers(config, {
   wallets,
 });
 
-export default rootReducer;
+export type GlobalState = {
+  coinlist: Coinlist,
+  exchanges: Exchanges,
+  settings: SettingsType,
+  ticker: TickerAndHistory,
+  timer: Timer,
+  wallets: Wallet[]
+};
