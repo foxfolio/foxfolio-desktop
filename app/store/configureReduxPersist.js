@@ -1,16 +1,14 @@
-// @flow
 import * as R from 'ramda';
-import { createTransform, PersistConfig } from 'redux-persist';
+import { createMigrate, createTransform, PersistConfig } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 
-export const configureReduxPersist = (): PersistConfig => {
-  return {
-    key: 'primary',
-    blacklist: ['router', 'timer'],
-    transforms: [createDateTransform(), createExchangeTransform()],
-    storage,
-  };
-};
+export const configureReduxPersist = (): PersistConfig => ({
+  key: 'primary',
+  blacklist: ['router', 'timer'],
+  transforms: [createDateTransform(), createExchangeTransform()],
+  migrate: createMigrate(migrations, { debug: false }),
+  storage,
+});
 
 const createExchangeTransform = () => createTransform(
   (inboundState, key) => {
@@ -34,4 +32,11 @@ const createDateTransform = () => {
     }
     return outboundState;
   });
+};
+
+const migrations = {
+  0: (state) => ({
+    ...state,
+    wallets: {},
+  }),
 };
