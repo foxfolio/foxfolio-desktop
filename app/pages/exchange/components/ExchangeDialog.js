@@ -84,63 +84,65 @@ class ExchangeDialog_ extends Component<Props, State> {
         <DialogTitle>{config.action === 'add' ? 'Add' : 'Edit '} exchange </DialogTitle>
         <DialogContent>
           <form autoComplete="off" onSubmit={this.handleSubmit}>
-            <Autocomplete
-              label="Exchange"
-              onChange={this.changeExchange}
-              value={this.state.exchange.type}
-              items={ccxt.exchanges.filter(exchange => exchange.charAt(0) !== '_')}
-            />
-            {this.state.exchange.type !== ''
-              ? (
-                <div>
-                  {requiredCredentials.apiKey
-                    ? <TextField
-                      label="API Key"
-                      id="apiKey"
-                      value={this.state.exchange.credentials.apiKey}
-                      onChange={this.changeCredentials('apiKey')}
-                      fullWidth
-                      margin="normal"
-                    /> : ''}
-                  {requiredCredentials.secret
-                    ? <TextField
-                      label="Secret"
-                      id="secret"
-                      value={this.state.exchange.credentials.secret}
-                      onChange={this.changeCredentials('secret')}
-                      fullWidth
-                      margin="normal"
-                    /> : ''}
-                  {requiredCredentials.uid
-                    ? <TextField
-                      label="User ID"
-                      id="uid"
-                      value={this.state.exchange.credentials.uid}
-                      onChange={this.changeCredentials('uid')}
-                      fullWidth
-                      margin="normal"
-                    /> : ''}
-                  {requiredCredentials.login
-                    ? <TextField
-                      label="Login"
-                      id="login"
-                      value={this.state.exchange.credentials.login}
-                      onChange={this.changeCredentials('login')}
-                      fullWidth
-                      margin="normal"
-                    /> : ''}
-                  {requiredCredentials.password
-                    ? <TextField
-                      label="Password"
-                      id="password"
-                      value={this.state.exchange.credentials.password}
-                      onChange={this.changeCredentials('password')}
-                      fullWidth
-                      margin="normal"
-                    /> : ''}
-                </div>
-              )
-              : ''}
+            <div style={{ minHeight: 250 }}>
+              <Autocomplete
+                label="Exchange"
+                onChange={this.changeExchange}
+                value={this.state.exchange.type}
+                items={ccxt.exchanges.filter(exchange => exchange.charAt(0) !== '_')}
+              />
+              {this.state.exchange.type !== ''
+                ? (
+                  <div>
+                    {requiredCredentials.apiKey
+                      ? <TextField
+                        label="API Key"
+                        id="apiKey"
+                        value={this.state.exchange.credentials.apiKey}
+                        onChange={this.changeCredentials('apiKey')}
+                        fullWidth
+                        margin="normal"
+                      /> : ''}
+                    {requiredCredentials.secret
+                      ? <TextField
+                        label="Secret"
+                        id="secret"
+                        value={this.state.exchange.credentials.secret}
+                        onChange={this.changeCredentials('secret')}
+                        fullWidth
+                        margin="normal"
+                      /> : ''}
+                    {requiredCredentials.uid
+                      ? <TextField
+                        label="User ID"
+                        id="uid"
+                        value={this.state.exchange.credentials.uid}
+                        onChange={this.changeCredentials('uid')}
+                        fullWidth
+                        margin="normal"
+                      /> : ''}
+                    {requiredCredentials.login
+                      ? <TextField
+                        label="Login"
+                        id="login"
+                        value={this.state.exchange.credentials.login}
+                        onChange={this.changeCredentials('login')}
+                        fullWidth
+                        margin="normal"
+                      /> : ''}
+                    {requiredCredentials.password
+                      ? <TextField
+                        label="Password"
+                        id="password"
+                        value={this.state.exchange.credentials.password}
+                        onChange={this.changeCredentials('password')}
+                        fullWidth
+                        margin="normal"
+                      /> : ''}
+                  </div>
+                )
+                : ''}
+            </div>
             <DialogActions>
               <Button onClick={this.props.onClose} color="primary">
                 Cancel

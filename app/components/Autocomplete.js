@@ -3,19 +3,20 @@ import React from 'react';
 import Downshift from 'downshift';
 import { MenuItem, Paper, TextField, withStyles } from 'material-ui';
 
-const styles = {};
+const styles = { container: { height: 50 }, paper: { position: 'absolute', width: 452, zIndex: 9999 } };
 
 type Props = {
   id: string,
   label: string,
-  classes: Object,
+  classes: typeof styles,
   onChange: (string) => void,
   value: string,
   items: string[]
 };
 
 const isSelected = (selection: string, item: string) =>
-  !selection || item.toLowerCase().includes(selection.toLowerCase());
+  !selection || item.toLowerCase()
+    .includes(selection.toLowerCase());
 
 function UnstyledAutocomplete(props: Props) {
   const { classes, id, label, items, onChange, value } = props;
@@ -23,7 +24,7 @@ function UnstyledAutocomplete(props: Props) {
   return (
     <Downshift onChange={onChange} defaultSelectedItem={value}>
       {({ getInputProps, getItemProps, isOpen, inputValue, highlightedIndex }) => (
-        <div>
+        <div className={classes.container}>
           <TextField
             fullWidth
             autoFocus
