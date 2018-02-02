@@ -84,6 +84,7 @@ class WalletGrid extends Component<Props, State> {
           wallet={this.state.currentWallet}
           close={this.closeDialog}
           save={this.saveDialog}
+          coinlist={coinlist}
         />
       </div>
     );

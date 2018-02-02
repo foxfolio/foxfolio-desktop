@@ -3,9 +3,12 @@ import type { Node } from 'react';
 import React, { Component } from 'react';
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField, } from 'material-ui';
 import type { Wallet } from '../../../reducers/wallets/types.d';
+import type { Coinlist } from '../../../reducers/coinlist/types.d';
+import { Autocomplete } from '../../../components/Autocomplete';
 
 type Props = {
   wallet: Wallet,
+  coinlist: Coinlist,
   open: boolean,
   close: () => void,
   save: (source: Wallet) => void
@@ -39,12 +42,18 @@ export default class WalletDialog extends Component<Props, Wallet> {
     });
   };
 
+  changeCurrency = (fullName: string) => {
+    const extractSymbol = fullName.match(/\(([^)]+)\)/);
+    const symbol = extractSymbol && extractSymbol.length > 1 ? extractSymbol[1] : '';
+    this.setState({ currency: symbol });
+  };
+
   handleChange = (name: string) => (event: any) => {
     this.setState({ [name]: event.target.value });
   };
 
   render(): Node {
-    const { open, close } = this.props;
+    const { open, close, coinlist } = this.props;
 
     return (
       <Dialog
@@ -55,13 +64,12 @@ export default class WalletDialog extends Component<Props, Wallet> {
         <DialogTitle>New wallet</DialogTitle>
         <DialogContent>
           <form autoComplete="off" onSubmit={this.save}>
-            <TextField
+            <Autocomplete
               label="Currency"
-              id="currency"
+              onChange={this.changeCurrency}
               value={this.state.currency}
-              onChange={this.handleChange('currency')}
-              fullWidth
-              margin="normal"
+              items={Object.keys(coinlist)
+                .map(key => coinlist[key].FullName)}
             />
             <TextField
               label="Address"

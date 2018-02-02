@@ -3,7 +3,10 @@ import React from 'react';
 import Downshift from 'downshift';
 import { MenuItem, Paper, TextField, withStyles } from 'material-ui';
 
-const styles = { container: { height: 50 }, paper: { position: 'absolute', width: 452, zIndex: 9999 } };
+const styles = {
+  container: { height: 50, position: 'relative' },
+  paper: { position: 'absolute', width: '100%', zIndex: 9999 },
+};
 
 type Props = {
   id: string,
