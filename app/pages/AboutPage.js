@@ -31,13 +31,6 @@ function AboutPage({ classes }: Props) {
           Sources on <a href="https://github.com/foxfolio" onClick={openInBrowser}>GitHub</a>
         </Typography>
         <Typography paragraph>
-          Icon made by&nbsp;
-          <a href="https://www.flaticon.com/authors/pixel-perfect" onClick={openInBrowser}>
-            Pixel Perfect
-          </a>&nbsp;
-          from <a href="https://www.flaticon.com" onClick={openInBrowser}>www.flaticon.com</a>
-        </Typography>
-        <Typography paragraph>
           Price data retrieved using the&nbsp;
           <a href="https://www.cryptocompare.com/api/" onClick={openInBrowser}>
             CryptoCompare API

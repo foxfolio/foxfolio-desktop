@@ -83,5 +83,3 @@ ARK AXkXn8h18dYKQMfkE3Va8WJ9SPQqCrATc3
 ## License
 
 MIT © 2017 Andreas Greimel
-
-Icon made by [Pixel Perfect](https://www.flaticon.com/authors/pixel-perfect) from [www.flaticon.com](https://www.flaticon.com)
