@@ -168,6 +168,7 @@ export default function getColor(currency: string): string {
     XTZ: '#A6DF00',
     XVG: '#42AFB2',
     YBC: '#D6C154',
+    ZCL: '#c76e35',
     ZEC: '#e5a93d',
     ZEIT: '#ACACAC',
 
