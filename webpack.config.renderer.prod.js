@@ -22,7 +22,7 @@ export default merge.smart(baseConfig, {
   output: {
     path: path.join(__dirname, 'app/dist'),
     publicPath: '../dist/',
-    filename: 'renderer.prod.js'
+    filename: 'renderer.prod.js',
   },
 
   module: {
@@ -33,7 +33,7 @@ export default merge.smart(baseConfig, {
         use: ExtractTextPlugin.extract({
           use: 'css-loader',
           fallback: 'style-loader',
-        })
+        }),
       },
       // Pipe other styles through css modules and append to style.css
       {
@@ -45,8 +45,8 @@ export default merge.smart(baseConfig, {
               modules: true,
               importLoaders: 1,
               localIdentName: '[name]__[local]__[hash:base64:5]',
-            }
-          }
+            },
+          },
         }),
       },
       // Add SASS support  - compile all .global.scss files and pipe it to style.css
@@ -55,14 +55,14 @@ export default merge.smart(baseConfig, {
         use: ExtractTextPlugin.extract({
           use: [
             {
-              loader: 'css-loader'
+              loader: 'css-loader',
             },
             {
-              loader: 'sass-loader'
-            }
+              loader: 'sass-loader',
+            },
           ],
           fallback: 'style-loader',
-        })
+        }),
       },
       // Add SASS support  - compile all other .scss files and pipe it to style.css
       {
@@ -74,11 +74,11 @@ export default merge.smart(baseConfig, {
               modules: true,
               importLoaders: 1,
               localIdentName: '[name]__[local]__[hash:base64:5]',
-            }
+            },
           },
-          {
-            loader: 'sass-loader'
-          }]
+            {
+              loader: 'sass-loader',
+            }],
         }),
       },
       // WOFF Font
@@ -89,7 +89,7 @@ export default merge.smart(baseConfig, {
           options: {
             limit: 10000,
             mimetype: 'application/font-woff',
-          }
+          },
         },
       },
       // WOFF2 Font
@@ -100,8 +100,8 @@ export default merge.smart(baseConfig, {
           options: {
             limit: 10000,
             mimetype: 'application/font-woff',
-          }
-        }
+          },
+        },
       },
       // TTF Font
       {
@@ -110,9 +110,9 @@ export default merge.smart(baseConfig, {
           loader: 'url-loader',
           options: {
             limit: 10000,
-            mimetype: 'application/octet-stream'
-          }
-        }
+            mimetype: 'application/octet-stream',
+          },
+        },
       },
       // EOT Font
       {
@@ -127,15 +127,15 @@ export default merge.smart(baseConfig, {
           options: {
             limit: 10000,
             mimetype: 'image/svg+xml',
-          }
-        }
+          },
+        },
       },
       // Common Image Formats
       {
         test: /\.(?:ico|gif|png|jpg|jpeg|webp)$/,
         use: 'url-loader',
-      }
-    ]
+      },
+    ],
   },
 
   plugins: [
@@ -149,7 +149,7 @@ export default merge.smart(baseConfig, {
      * development checks
      */
     new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'production')
+      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'production'),
     }),
 
     /**
@@ -162,7 +162,7 @@ export default merge.smart(baseConfig, {
 
     new BundleAnalyzerPlugin({
       analyzerMode: process.env.OPEN_ANALYZER === 'true' ? 'server' : 'disabled',
-      openAnalyzer: process.env.OPEN_ANALYZER === 'true'
+      openAnalyzer: process.env.OPEN_ANALYZER === 'true',
     }),
   ],
 });

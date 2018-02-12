@@ -35,6 +35,9 @@ app/node_modules
 flow-typed/npm/*
 !flow-typed/npm/module_vx.x.x.js
 
+# typescript
+ts-build/
+
 # App packaged
 release
 app/main.prod.js

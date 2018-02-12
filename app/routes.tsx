@@ -1,15 +1,14 @@
-/* eslint flowtype-errors/show-errors: 0 */
-import React, { Component } from 'react';
-import { createMuiTheme, MuiThemeProvider } from 'material-ui';
-import { green, orange, red } from 'material-ui/colors';
-import { Route, Switch } from 'react-router';
+import React, {Component} from 'react';
+import {createMuiTheme, MuiThemeProvider} from 'material-ui';
+import {orange, red} from 'material-ui/colors';
+import {Route, Switch} from 'react-router';
 import Layout from './containers/Layout';
 import HomePage from './pages/portfolio/PortfolioPage';
 import WalletPage from './pages/wallet/WalletPage';
-import { ExchangePage } from './pages/exchange/ExchangePage';
+import {ExchangePage} from './pages/exchange/ExchangePage';
 import SettingsPage from './pages/SettingsPage';
 import AboutPage from './pages/AboutPage';
-import type { GlobalState } from './reducers';
+import {GlobalState} from './reducers';
 
 type Props = {
   getState: () => GlobalState
@@ -17,13 +16,12 @@ type Props = {
 
 export class Routes extends Component<Props> {
   render() {
-    const { settings } = this.props.getState();
+    const {settings} = this.props.getState();
     const appTheme = createMuiTheme({
       palette: {
         type: settings.theme === 'light' ? 'light' : 'dark',
         primary: orange,
-        error: red,
-        success: green,
+        error: red
       },
     });
     console.log(appTheme);

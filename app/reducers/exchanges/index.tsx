@@ -1,11 +1,10 @@
-// @flow
-import R, { omit } from 'ramda';
+import R, {omit} from 'ramda';
 
-import { generateId } from '../../helpers/reducers';
+import {generateId} from '../../helpers/reducers';
 
-import type { Action } from '../../actions/action.d';
-import type { Exchange, Exchanges } from './types.d';
-import type {
+import {Action} from '../../actions/action.d';
+import {Exchange, Exchanges} from './types.d';
+import {
   AddExchangeAction,
   DeleteExchangeAction,
   ExchangeInstanceActions,
@@ -39,7 +38,7 @@ export function exchanges(state: Exchanges = {}, action: Action): Exchanges {
   }
 }
 
-function addExchange(state: $ReadOnly<Exchanges>, action: AddExchangeAction): Exchanges {
+function addExchange(state: Exchanges, action: AddExchangeAction): Exchanges {
   const newExchange: Exchange = {
     id: generateId(Object.keys(state)),
     type: action.exchangeType,
@@ -48,10 +47,10 @@ function addExchange(state: $ReadOnly<Exchanges>, action: AddExchangeAction): Ex
     ledger: [],
     trades: [],
   };
-  return { ...state, [newExchange.id]: newExchange };
+  return {...state, [newExchange.id]: newExchange};
 }
 
-function deleteExchange(state: $ReadOnly<Exchanges>, action: DeleteExchangeAction): Exchanges {
+function deleteExchange(state: Exchanges, action: DeleteExchangeAction): Exchanges {
   return omit([action.id], state);
 }
 
@@ -99,13 +98,12 @@ function failedRequest(state: Exchange, action: FailedExchangeRequestAction): Ex
 }
 
 // TODO(greimela) Add exact typing
-function reduceInstance(state: $ReadOnly<Exchanges>, action: ExchangeInstanceActions): Function => Exchanges {
-  return instanceReducer => ({ ...state, [action.id]: instanceReducer(state[action.id], action) });
+function reduceInstance(state: Exchanges, action: ExchangeInstanceActions): (Function) => Exchanges {
+  return instanceReducer => ({...state, [action.id]: instanceReducer(state[action.id], action)});
 }
 
-function mergeArraysById<T>(array: T[], newArray: T[]): T[] {
+function mergeArraysById<T extends { id }>(array: T[], newArray: T[]): T[] {
   return R.unionWith(R.eqBy(R.prop('id')), array, newArray);
 }
 
-// Required until the issue with spread operator typing is resolved: https://github.com/facebook/flow/issues/2405
-const assign = <T>(a: T, ...b: $Shape<T>[]): T => Object.assign({}, a, ...b);
+const assign: <T>(a: T, ...b: T[]) => T = (a, ...b) => Object.assign({}, a, ...b);

@@ -4,6 +4,7 @@ import {
   Button, Card, CardActions, CardContent, Collapse, Divider, Grid, LinearProgress,
   Typography,
 } from 'material-ui';
+import green from 'material-ui/colors/green';
 import { withStyles } from 'material-ui/styles';
 
 import type { Exchange } from '../../../reducers/exchanges/types.d';
@@ -20,7 +21,7 @@ const styles = theme => ({
     flex: '1 1 auto',
   },
   success: {
-    color: theme.palette.success[500],
+    color: green[500],
   },
   error: {
     color: theme.palette.error[500],
