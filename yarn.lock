@@ -46,6 +46,16 @@
   dependencies:
     "@sentry/cli" "^1.28.0"
 
+"@types/d3-path@*":
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/@types/d3-path/-/d3-path-1.0.6.tgz#c1a7d2dc07b295fdd1c84dabe4404df991b48693"
+
+"@types/d3-shape@*":
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/@types/d3-shape/-/d3-shape-1.2.2.tgz#f8dcdff7772a7ae37858bf04abd43848a78e590e"
+  dependencies:
+    "@types/d3-path" "*"
+
 "@types/history@*", "@types/history@^4.6.2":
   version "4.6.2"
   resolved "https://registry.yarnpkg.com/@types/history/-/history-4.6.2.tgz#12cfaba693ba20f114ed5765467ff25fdf67ddb0"
@@ -110,6 +120,13 @@
 "@types/react@*", "@types/react@^16.0.36":
   version "16.0.36"
   resolved "https://registry.yarnpkg.com/@types/react/-/react-16.0.36.tgz#ceb5639013bdb92a94147883052e69bb2c22c69b"
+
+"@types/recharts@^1.0.14":
+  version "1.0.14"
+  resolved "https://registry.yarnpkg.com/@types/recharts/-/recharts-1.0.14.tgz#68555d83a0ec1b085791a8baa43bc4b5691f5240"
+  dependencies:
+    "@types/d3-shape" "*"
+    "@types/react" "*"
 
 JSONStream@^0.8.4:
   version "0.8.4"

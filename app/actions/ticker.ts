@@ -1,11 +1,10 @@
-// @flow
 import * as R from 'ramda';
-import type { Exchanges } from '../reducers/exchanges/types.d';
-import type { Action, Dispatch, GetState, ThunkAction } from './action.d';
+import { Exchanges } from '../reducers/exchanges/types.d';
+import { Action, Dispatch, GetState, ThunkAction } from './action';
 import startTimer from './timer';
-import type { Wallet } from '../reducers/wallets/types.d';
-import type { Coinlist } from '../reducers/coinlist/types.d';
-import type { Ticker } from '../reducers/ticker/types.d';
+import { Wallet } from '../reducers/wallets';
+import { Coinlist } from 'reducers/coinlist';
+import { Ticker } from 'reducers/ticker';
 
 const REFRESH_TIME_IN_MS = 30000;
 
@@ -108,9 +107,8 @@ function getSymbolsFromTransactions(
     .map(exchange => exchange.balances)
     .reduce((acc, balances) => acc.concat(R.keys(balances)), []);
 
-  return R.map(R.uniq)(
-    {
-      from: [cryptoCurrency, ...walletSymbols, ...exchangeSymbols, ...extraSymbols],
-      to: [cryptoCurrency, fiatCurrency],
-    });
+  return {
+    from: R.uniq([cryptoCurrency, ...walletSymbols, ...exchangeSymbols, ...extraSymbols]),
+    to: [cryptoCurrency, fiatCurrency],
+  };
 }

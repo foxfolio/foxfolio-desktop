@@ -1,6 +1,14 @@
-// @flow
-import type { Action } from '../../actions/action.d';
-import type { Coinlist } from './types.d';
+import {Action} from 'actions/action.d';
+
+export interface Coinlist {
+  [symbol: string]: CoinlistEntry
+}
+
+export interface CoinlistEntry {
+  FullName: string,
+  ImageUrl: string
+}
+
 
 export function coinlist(state: Coinlist = {}, action: Action): Coinlist {
   switch (action.type) {

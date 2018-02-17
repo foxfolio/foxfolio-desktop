@@ -1,10 +1,12 @@
-// @flow
-import type { Action, ThunkAction } from './action.d';
-import type { Wallet } from '../reducers/wallets/types.d';
+import 'redux-thunk';
+import { Dispatch } from 'redux';
+import { Action, ThunkAction } from './action';
+import { Wallet } from 'reducers/wallets';
 import { requestTickerUpdate } from './ticker';
+import { GlobalState } from '../reducers';
 
 export function addWallet(wallet: Wallet): ThunkAction {
-  return (dispatch: Dispatch) => {
+  return (dispatch: Dispatch<GlobalState>) => {
     dispatch(requestTickerUpdate([wallet.currency]));
     dispatch({
       type: 'ADD_WALLET',
@@ -14,7 +16,7 @@ export function addWallet(wallet: Wallet): ThunkAction {
 }
 
 export function editWallet(wallet: Wallet, newWallet: Wallet): ThunkAction {
-  return (dispatch: Dispatch) => {
+  return (dispatch: Dispatch<GlobalState>) => {
     dispatch(requestTickerUpdate([wallet.currency]));
     dispatch({
       type: 'EDIT_WALLET',

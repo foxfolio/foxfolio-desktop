@@ -2,14 +2,17 @@
 import React from 'react';
 import R from 'ramda';
 import { getTickerPrice } from '../../../helpers/transactions';
-import type { Coinlist } from '../../../reducers/coinlist/types.d';
-import type { SettingsType } from '../../../reducers/settings';
-import type { Ticker } from '../../../reducers/ticker/types.d';
-import PortfolioPosition from './PortfolioPosition';
+import { Coinlist } from 'reducers/coinlist';
+import { SettingsType } from '../../../reducers/settings';
+import { Ticker } from 'reducers/ticker';
+import { PortfolioPosition } from './PortfolioPosition';
 import { PortfolioPositionHeader } from './PortfolioPositionHeader';
+import { Portfolio } from '../types/portfolio.d';
+
+export type PortfolioForAsset = { total: number, exchanges: { [id: string]: number }, wallets: number };
 
 type Props = {
-  portfolio: Object,
+  portfolio: Portfolio,
   coinlist: Coinlist,
   ticker: Ticker,
   settings: SettingsType
@@ -36,9 +39,9 @@ export default function PortfolioPositions({ portfolio, coinlist, ticker, settin
     </div>);
 }
 
-const filterPortfolioForAsset = (portfolio, asset) =>
-  R.mapObjIndexed((value, key) => (
+const filterPortfolioForAsset = (portfolio: Portfolio, asset: string): PortfolioForAsset =>
+  R.mapObjIndexed((value: any, key) => (
     key !== 'exchanges'
       ? (value[asset] || 0)
-      : R.pipe(R.filter(balances => balances[asset]), R.map(balances => balances[asset]))(value)),
-  )(portfolio);
+      : R.pipe(R.filter(balances => balances[asset]), R.mapObjIndexed(balances => balances[asset]))(value)),
+  )(portfolio) as PortfolioForAsset;

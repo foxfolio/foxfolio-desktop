@@ -1,30 +1,28 @@
-// @flow
-import type { Node } from 'react';
 import React from 'react';
 import R from 'ramda';
 import { Paper } from 'material-ui';
 
-import PortfolioChart from '../components/PortfolioChart';
+import { PortfolioChart } from '../components/PortfolioChart';
 import { getTickerPrice } from '../../../helpers/transactions';
-import type { Coinlist } from '../../../reducers/coinlist/types.d';
-import type { SettingsType } from '../../../reducers/settings';
+import { Coinlist } from 'reducers/coinlist';
+import { SettingsType } from '../../../reducers/settings';
 import PortfolioPositions from '../components/PortfolioPositions';
 import PortfolioHeader from '../components/PortfolioHeader';
 import EmptyPortfolio from '../components/EmptyPortfolio';
-import type { Wallet } from '../../../reducers/wallets/types.d';
-import type { Ticker } from '../../../reducers/ticker/types.d';
-import type { Balances, Portfolio } from '../types/portfolio.d';
+import { Wallet } from 'reducers/wallets';
+import { Ticker } from 'reducers/ticker';
+import { Balances, Portfolio } from '../types/portfolio.d';
+import { getFiatCurrencies } from '../../../utils/fiatCurrencies';
 
 export type PortfolioProps = {
-  balances: { [string]: Balances },
+  balances: { [asset: string]: Balances },
   ticker: Ticker,
   coinlist: Coinlist,
   wallets: Wallet[],
   settings: SettingsType
 };
 
-export default function PortfolioContainer(
-  { balances, ticker, coinlist, wallets, settings }: PortfolioProps): Node {
+export default function PortfolioContainer({ balances, ticker, coinlist, wallets, settings }: PortfolioProps) {
   const portfolio = calculatePortfolio(wallets, balances, settings);
   const sum = {
     crypto: calculateSum(ticker, portfolio.total, settings.cryptoCurrency),
@@ -62,7 +60,10 @@ export default function PortfolioContainer(
   );
 }
 
-function calculatePortfolio(wallets: Wallet[], balances: { [string]: Balances }, settings: SettingsType): Portfolio {
+function calculatePortfolio(
+  wallets: Wallet[],
+  balances: { [asset: string]: Balances },
+  settings: SettingsType): Portfolio {
   const walletBalances = wallets
     .filter(wallet => !(wallet.currency === settings.fiatCurrency && settings.includeFiat))
     .reduce((acc, wallet) => ({
@@ -70,7 +71,7 @@ function calculatePortfolio(wallets: Wallet[], balances: { [string]: Balances },
       [wallet.currency]: (acc[wallet.currency] || 0) + wallet.quantity,
     }), {});
 
-  const filteredBalances = R.map(settings.includeFiat ? R.identity : R.omit([settings.fiatCurrency]))(balances);
+  const filteredBalances = R.mapObjIndexed(settings.includeFiat ? R.identity : R.omit(getFiatCurrencies()))(balances);
   let exchangeBalances = {};
   Object.keys(filteredBalances)
     .forEach(exchange => {

@@ -1,21 +1,24 @@
-// @flow
-import type { Node } from 'react';
-import React, { Component } from 'react';
+import React, { Component, ComponentType } from 'react';
 import classnames from 'classnames';
-import { Card, CardContent, Grid, IconButton, Typography } from 'material-ui';
-import Collapse from 'material-ui/transitions/Collapse';
-import { withStyles } from 'material-ui/styles';
+import { Card, CardContent, Grid, IconButton, Typography, WithStyles } from 'material-ui';
+import MaterialCollapse from 'material-ui/transitions/Collapse';
+import { StyleRulesCallback, Theme, withStyles } from 'material-ui/styles';
 import { ExpandMore } from 'material-ui-icons';
 import green from 'material-ui/colors/green';
-import { TokenLineChart } from '../../../components/TokenLineChart';
-import type { Coinlist } from '../../../reducers/coinlist/types.d';
-import type { SettingsType } from '../../../reducers/settings';
-import type { Ticker, TickerEntry } from '../../../reducers/ticker/types.d';
+import { CollapseProps } from 'material-ui/transitions';
 
+import { TokenLineChart } from '../../../components/TokenLineChart';
+import { Coinlist } from 'reducers/coinlist';
+import { SettingsType } from '../../../reducers/settings';
+import { Ticker, TickerEntry } from 'reducers/ticker';
 import { CurrencyAvatar } from '../../../components/CurrencyAvatar';
 import PriceChangeText from './PriceChangeText';
+import { PortfolioForAsset } from './PortfolioPositions';
 
-export const styles = (theme: Object) => ({
+// TODO Remove after update to material-ui@1.0.0-beta.33
+const Collapse = (MaterialCollapse as any as ComponentType<CollapseProps & { mountOnEnter: any }>);
+
+export const styles: StyleRulesCallback = (theme: Theme) => ({
   root: {
     display: 'flex',
     alignItems: 'center',
@@ -48,12 +51,12 @@ export const styles = (theme: Object) => ({
   },
 });
 
+// TODO Use connect to get coinlist, ticker and settings
 type Props = {
   asset: string,
   coinlist: Coinlist,
   ticker: Ticker,
-  portfolio: { total: number, exchanges: { [id: string]: number }, wallets: number },
-  classes: any,
+  portfolio: PortfolioForAsset,
   settings: SettingsType
 };
 
@@ -65,65 +68,67 @@ type TickerForSymbol = {
   [tsym: string]: TickerEntry
 };
 
-class PortfolioPosition extends Component<Props, State> {
-  state = {
-    expanded: false,
-  };
+export const PortfolioPosition = withStyles(styles)(
+  class extends Component<Props & WithStyles, State> {
+    state = {
+      expanded: false,
+    };
 
-  handleExpandClick = () => {
-    this.setState({ expanded: !this.state.expanded });
-  };
+    handleExpandClick = () => {
+      this.setState({ expanded: !this.state.expanded });
+    };
 
-  rowCard(avatar: Node) {
-    const { asset, portfolio, classes, coinlist, ticker, settings } = this.props;
-    const quantity = portfolio.total;
+    rowCard(avatar) {
+      const { asset, portfolio, classes, coinlist, ticker, settings } = this.props;
+      const quantity = portfolio.total;
 
-    return (
-      <CardContent className={classes.root} onClick={this.handleExpandClick}>
-        <div className={classes.avatar}>{avatar}</div>
-        <div className={classes.content}>
-          <Grid container>
-            <Grid item xs={3}>
-              {PositionHeader(coinlist[asset] ? coinlist[asset].FullName : asset, quantity)}
+      return (
+        <CardContent className={classes.root} onClick={this.handleExpandClick}>
+          <div className={classes.avatar}>{avatar}</div>
+          <div className={classes.content}>
+            <Grid container>
+              <Grid item xs={3}>
+                {PositionHeader(coinlist[asset] ? coinlist[asset].FullName : asset, quantity)}
+              </Grid>
+              <Grid item xs={2} className={classes.right}>
+                {ticker[asset] ? PositionQuantity(ticker[asset], quantity, asset, settings) : ''}
+              </Grid>
+              <Grid item xs={3} className={classes.right}>
+                {ticker[asset] ? PositionPrice(ticker[asset], quantity, asset, settings) : ''}
+              </Grid>
+              <Grid item xs={2} className={classes.right}>
+                {ticker[asset] ? PositionPriceChange(ticker[asset], quantity, asset, settings) : ''}
+              </Grid>
             </Grid>
-            <Grid item xs={2} className={classes.right}>
-              {ticker[asset] ? PositionQuantity(ticker[asset], quantity, asset, settings) : ''}
-            </Grid>
-            <Grid item xs={3} className={classes.right}>
-              {ticker[asset] ? PositionPrice(ticker[asset], quantity, asset, settings) : ''}
-            </Grid>
-            <Grid item xs={2} className={classes.right}>
-              {ticker[asset] ? PositionPriceChange(ticker[asset], quantity, asset, settings) : ''}
-            </Grid>
-          </Grid>
-        </div>
-        <div>
-          <IconButton className={classnames(classes.expand, { [classes.expandOpen]: this.state.expanded, })}>
-            <ExpandMore/>
-          </IconButton>
-        </div>
-      </CardContent>
-    );
-  }
-
-  render() {
-    const { asset, classes, coinlist, settings } = this.props;
-    return (
-      <Card>
-        {this.rowCard(<CurrencyAvatar asset={asset} coinlist={coinlist} fiatClass={classes.fiatAvatar}/>)}
-        <Collapse in={this.state.expanded} timeout="auto" mountOnEnter unmountOnExit>
-          <div className={classes.collapse}>
-            <TokenLineChart
-              fsym={asset}
-              tsym={settings.currencyFocus === 'crypto'
-              && asset !== settings.cryptoCurrency ? settings.cryptoCurrency : settings.fiatCurrency}
-            />
           </div>
-        </Collapse>
-      </Card>
-    );
+          <div>
+            <IconButton className={classnames(classes.expand, { [classes.expandOpen]: this.state.expanded, })}>
+              <ExpandMore/>
+            </IconButton>
+          </div>
+        </CardContent>
+      );
+    }
+
+    render() {
+      const { asset, classes, coinlist, settings } = this.props;
+      return (
+        <Card>
+          {this.rowCard(<CurrencyAvatar asset={asset} coinlist={coinlist} fiatClass={classes.fiatAvatar}/>)}
+          <Collapse in={this.state.expanded} timeout="auto" mountOnEnter unmountOnExit>
+            <div className={classes.collapse}>
+              <TokenLineChart
+                fsym={asset}
+                tsym={settings.currencyFocus === 'crypto'
+                && asset !== settings.cryptoCurrency ? settings.cryptoCurrency : settings.fiatCurrency}
+              />
+            </div>
+          </Collapse>
+        </Card>
+      );
+    }
   }
-}
+);
 
 const PositionHeader = (name: string, quantity: number) => (
   <div>
@@ -147,21 +152,22 @@ const PositionQuantity = (ticker: TickerForSymbol, quantity: number, asset: stri
     return (
       <div>
         <Typography type="body2" component="span" color={quantity > 0 ? 'default' : 'secondary'}>
-          {`${(parseFloat(asset !== fiatCurrency ? ticker[fiatCurrency].PRICE : 1)
+          {`${((asset !== fiatCurrency ? parseFloat(ticker[fiatCurrency].PRICE) : 1)
             * quantity).toFixed(2)}  ${fiatCurrency}`}
         </Typography>
         <Typography type="body2" component="span" color={quantity > 0 ? 'default' : 'secondary'}>
           {`${
-            (parseFloat(asset !== cryptoCurrency ? ticker[cryptoCurrency].PRICE : 1) * quantity).toPrecision(5)
+            ((asset !== cryptoCurrency ? parseFloat(ticker[cryptoCurrency].PRICE) : 1)
+              * quantity).toPrecision(5)
             } ${cryptoCurrency}`}
         </Typography>
       </div>
     );
   }
   const fiatEntry =
-    `${(parseFloat(asset !== fiatCurrency ? ticker[fiatCurrency].PRICE : 1) * quantity).toFixed(2)}  ${fiatCurrency}`;
+    `${((asset !== fiatCurrency ? parseFloat(ticker[fiatCurrency].PRICE) : 1) * quantity).toFixed(2)}  ${fiatCurrency}`;
   const cryptoEntry =
-    `${(parseFloat(asset !== cryptoCurrency ? ticker[cryptoCurrency].PRICE : 1) * quantity).toPrecision(5)} `
+    `${((asset !== cryptoCurrency ? parseFloat(ticker[cryptoCurrency].PRICE) : 1) * quantity).toPrecision(5)} `
     + `${cryptoCurrency}`;
 
   return (
@@ -238,5 +244,3 @@ const PositionPriceChange = (ticker: TickerForSymbol, quantity: number, asset: s
     </div>
   );
 };
-
-export default withStyles(styles)(PortfolioPosition);

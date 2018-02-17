@@ -1,9 +1,8 @@
-// @flow
 import R from 'ramda';
-import type { Exchanges, Trade } from '../reducers/exchanges/types.d';
-import type { Ticker } from '../reducers/ticker/types.d';
+import { Exchanges, Trade } from '../reducers/exchanges/types.d';
+import { Ticker } from 'reducers/ticker';
 
-export const mapKeys = R.curry((fn: Function, obj: Object) => R.zipObj(R.map(fn, R.keys(obj)), R.values(obj)));
+export const mapKeys = R.curry((fn: any, obj: Object) => R.zipObj(R.map(fn, R.keys(obj)), R.values(obj)));
 
 export function flattenTransactions(exchanges: Exchanges): Trade[] {
   return Object
@@ -21,5 +20,5 @@ export function unifySymbols(symbol: string): string {
 }
 
 export function getTickerPrice(ticker: Ticker, fsym: string, tsym: string): number {
-  return fsym !== tsym ? ticker[fsym][tsym].PRICE : 1;
+  return fsym !== tsym ? parseFloat(ticker[fsym][tsym].PRICE) : 1;
 }

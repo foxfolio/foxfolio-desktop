@@ -1,24 +1,24 @@
-// @flow
 import React from 'react';
 import { defaults, HorizontalBar } from 'react-chartjs-2';
 import { withTheme } from 'material-ui';
+import { Theme } from 'material-ui/styles';
+
 import { getTickerPrice } from '../../../helpers/transactions';
-import type { SettingsType } from '../../../reducers/settings';
-import type { Ticker } from '../../../reducers/ticker/types.d';
+import { SettingsType } from '../../../reducers/settings';
+import { Ticker } from 'reducers/ticker';
 import getColor from '../../../utils/colors';
 
 // Disable animating charts by default.
-defaults.global.animation = false;
+(defaults as any).global.animation = false;
 
 type Props = {
   ticker: Ticker,
   portfolio: Object,
   settings: SettingsType,
-  sum: number,
-  theme: Object
+  sum: number
 };
 
-function PortfolioChart({ ticker, portfolio, settings, sum, theme }: Props) {
+export const PortfolioChart = withTheme()<Props>(({ticker, portfolio, settings, sum, theme}) => {
   const chartData = calculateChartData(ticker, portfolio, settings, sum, theme);
 
   return (
@@ -64,12 +64,10 @@ function PortfolioChart({ ticker, portfolio, settings, sum, theme }: Props) {
       }}
     />
   );
-}
+});
 
-export default withTheme()(PortfolioChart);
-
-function calculateChartData(ticker: Ticker, portfolio: Object, settings: SettingsType, sum: number, theme: Object) {
-  const { cryptoCurrency } = settings;
+function calculateChartData(ticker: Ticker, portfolio: Object, settings: SettingsType, sum: number, theme: Theme) {
+  const {cryptoCurrency} = settings;
 
   const datasets = Object.keys(portfolio)
     .filter(asset => portfolio[asset] > 0)
@@ -85,5 +83,5 @@ function calculateChartData(ticker: Ticker, portfolio: Object, settings: Setting
       data: [((getTickerPrice(ticker, asset, cryptoCurrency) * portfolio[asset] * 100) / sum).toFixed(2)],
     }));
 
-  return { datasets };
+  return {datasets};
 }

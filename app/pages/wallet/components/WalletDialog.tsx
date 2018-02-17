@@ -1,9 +1,7 @@
-// @flow
-import type { Node } from 'react';
-import React, { Component } from 'react';
+import React, { Component, FormEvent } from 'react';
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField, } from 'material-ui';
-import type { Wallet } from '../../../reducers/wallets/types.d';
-import type { Coinlist } from '../../../reducers/coinlist/types.d';
+import { Wallet } from 'reducers/wallets';
+import { Coinlist } from 'reducers/coinlist';
 import { Autocomplete } from '../../../components/Autocomplete';
 
 type Props = {
@@ -15,7 +13,7 @@ type Props = {
 };
 
 export default class WalletDialog extends Component<Props, Wallet> {
-  state = {
+  state: Wallet = {
     currency: '',
     address: '',
     quantity: 0,
@@ -32,12 +30,12 @@ export default class WalletDialog extends Component<Props, Wallet> {
     }
   }
 
-  save = (event: Event) => {
+  save = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     this.props.save({
       currency: this.state.currency,
       address: this.state.address,
-      quantity: parseFloat(this.state.quantity),
+      quantity: this.state.quantity,
       note: this.state.note ? this.state.note : '',
     });
   };
@@ -48,11 +46,15 @@ export default class WalletDialog extends Component<Props, Wallet> {
     this.setState({ currency: symbol });
   };
 
-  handleChange = (name: string) => (event: any) => {
-    this.setState({ [name]: event.target.value });
+  handleChange = (name: keyof Wallet) => (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (name === 'quantity') {
+      this.setState({ quantity: parseFloat(event.target.value) });
+    } else {
+      this.setState({ [name]: event.target.value } as any);
+    }
   };
 
-  render(): Node {
+  render() {
     const { open, close, coinlist } = this.props;
 
     return (
@@ -83,7 +85,7 @@ export default class WalletDialog extends Component<Props, Wallet> {
               label="Quantity"
               id="quantity"
               value={this.state.quantity}
-              onChange={this.handleChange('quantity')}
+              onChange={this.handleChange('address')}
               fullWidth
               margin="normal"
             />
