@@ -1,12 +1,11 @@
-// @flow
-import type { ExchangeCredentials } from '../reducers/exchanges/types.d';
-import type { Action, ThunkAction } from './action.d';
+import { ExchangeCredentials, ExchangeTypeKeys } from 'reducers/exchangeTypes';
+import { Action, ThunkAction } from './action';
 import { fetchAllBalances } from './transactions';
 
 export function addExchange(type: string, credentials: ExchangeCredentials): ThunkAction {
   return async dispatch => {
     await dispatch({
-      type: 'ADD_EXCHANGE',
+      type: ExchangeTypeKeys.ADD_EXCHANGE,
       exchangeType: type,
       credentials,
     });
@@ -17,7 +16,7 @@ export function addExchange(type: string, credentials: ExchangeCredentials): Thu
 export function updateExchangeCredentials(id: string, credentials: ExchangeCredentials): ThunkAction {
   return async dispatch => {
     await dispatch({
-      type: 'UPDATE_EXCHANGE_CREDENTIALS',
+      type: ExchangeTypeKeys.UPDATE_EXCHANGE_CREDENTIALS,
       id,
       credentials,
     });
@@ -27,7 +26,7 @@ export function updateExchangeCredentials(id: string, credentials: ExchangeCrede
 
 export function deleteExchange(id: string): Action {
   return {
-    type: 'DELETE_EXCHANGE',
+    type: ExchangeTypeKeys.DELETE_EXCHANGE,
     id,
   };
 }

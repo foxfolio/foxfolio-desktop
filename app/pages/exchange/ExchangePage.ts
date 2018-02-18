@@ -2,9 +2,10 @@
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { ExchangeGrid } from './components/ExchangeGrid';
-import * as exchangeActions from '../../actions/exchanges';
-import type { GlobalState } from '../../reducers';
-import type { Exchanges } from '../../reducers/exchanges/types.d';
+import * as exchangeActions from 'actions/exchanges';
+import { GlobalState } from 'reducers';
+import { Exchanges } from 'reducers/exchangeTypes';
+import { Dispatch } from "actions/action";
 
 function mapStateToProps(state: GlobalState): { exchanges: Exchanges } {
   return {

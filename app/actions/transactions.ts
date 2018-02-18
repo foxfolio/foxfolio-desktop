@@ -1,16 +1,15 @@
-// @flow
 import ccxt from 'ccxt';
-import { equals, filter, forEachObjIndexed, keys } from 'ramda';
-import type {
-  FailedExchangeRequestAction,
-  IncrementExchangeRequestCounterAction,
-} from '../reducers/exchanges/actions.d';
+import R, { equals, filter, forEachObjIndexed, keys } from 'ramda';
+import {
+  ExchangeTypeKeys, FailedExchangeRequestAction,
+  IncrementExchangeRequestCounterAction
+} from 'reducers/exchangeTypes';
 
-import type { Balances, Exchange, Exchanges } from '../reducers/exchanges/types.d';
-import type { Action, Dispatch, GetState, ThunkAction } from './action.d';
+import { Balances, Exchange, Exchanges } from 'reducers/exchangeTypes';
+import { Action, Dispatch, GetState, ThunkAction } from './action';
 import startTimer from './timer';
 import { requestTickerUpdate } from './ticker';
-import type { GlobalState } from '../reducers';
+import { GlobalState } from 'reducers';
 
 const BALANCE_REFRESH_MS = 30000;
 
@@ -29,7 +28,7 @@ function updateExchangeBalances(id: string, balances: Balances): ThunkAction {
       dispatch(requestTickerUpdate(Object.keys(balances)));
     }
     dispatch({
-      type: 'UPDATE_EXCHANGE_BALANCES',
+      type: ExchangeTypeKeys.UPDATE_EXCHANGE_BALANCES,
       id,
       balances,
     });
@@ -38,14 +37,14 @@ function updateExchangeBalances(id: string, balances: Balances): ThunkAction {
 
 function incrementExchangeRequestCounter(id: string): IncrementExchangeRequestCounterAction {
   return {
-    type: 'INCREMENT_EXCHANGE_REQUEST_COUNTER',
+    type: ExchangeTypeKeys.INCREMENT_EXCHANGE_REQUEST_COUNTER,
     id,
   };
 }
 
 function failedRequest(id: string, error: string): FailedExchangeRequestAction {
   return {
-    type: 'FAILED_EXCHANGE_REQUEST',
+    type: ExchangeTypeKeys.FAILED_EXCHANGE_REQUEST,
     id,
     error,
   };
@@ -60,7 +59,7 @@ function fetchBalancesForExchange(exchange: Exchange): ThunkAction {
     dispatch(incrementExchangeRequestCounter(exchange.id));
     try {
       const connector = new ccxt[exchange.type](exchange.credentials);
-      const balances = filter(balance => balance > 0)(await connector.fetchTotalBalance());
+      const balances: Balances = R.pickBy(balance => balance > 0)(await connector.fetchTotalBalance());
       dispatch(updateExchangeBalances(exchange.id, balances));
     } catch (e) {
       dispatch(failedRequest(exchange.id, e.message));

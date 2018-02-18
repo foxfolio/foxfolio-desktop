@@ -1,4 +1,4 @@
-// @flow
+import R from 'ramda';
 import { Action } from 'actions/action.d';
 
 export interface TickerAndHistory {
@@ -26,12 +26,12 @@ export interface History {
   }
 }
 
-export type HistoryEntry = [{ close: number }];
+export type HistoryEntry = { close: number }[];
 
-export function ticker(state: TickerAndHistory = {ticker: {}, history: {}}, action: Action): TickerAndHistory {
+export function ticker(state: TickerAndHistory = { ticker: {}, history: {} }, action: Action): TickerAndHistory {
   switch (action.type) {
     case 'TICKER_UPDATE':
-      return {...state, ticker: action.ticker};
+      return { ...state, ticker: action.ticker };
     case 'HISTORY_UPDATE':
       return {
         ...state,
@@ -39,7 +39,10 @@ export function ticker(state: TickerAndHistory = {ticker: {}, history: {}}, acti
           ...state.history,
           [action.fsym]: {
             ...state.history[action.fsym],
-            [action.tsym]: {lastUpdate: new Date(), data: action.history.filter((val, i) => i % 5 === 0)},
+            [action.tsym]: {
+              lastUpdate: new Date(),
+              data: action.history.filter((val, i) => i % 5 === 0)
+            },
           },
         },
       };

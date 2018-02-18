@@ -1,9 +1,9 @@
-import R, {omit} from 'ramda';
+import R, { omit } from 'ramda';
 
-import {generateId} from '../../helpers/reducers';
+import { generateId } from '../helpers/reducers';
 
-import {Action} from '../../actions/action.d';
-import {Exchange, Exchanges} from './types.d';
+import { Action } from '../actions/action';
+import { Exchange, Exchanges, ExchangeTypeKeys } from 'reducers/exchangeTypes';
 import {
   AddExchangeAction,
   DeleteExchangeAction,
@@ -13,25 +13,25 @@ import {
   UpdateExchangeCredentialsAction,
   UpdateExchangeLedgerAction,
   UpdateExchangeTradesAction,
-} from './actions.d';
+} from 'reducers/exchangeTypes';
 
 export function exchanges(state: Exchanges = {}, action: Action): Exchanges {
   switch (action.type) {
-    case 'ADD_EXCHANGE':
+    case ExchangeTypeKeys.ADD_EXCHANGE:
       return addExchange(state, action);
-    case 'DELETE_EXCHANGE':
+    case ExchangeTypeKeys.DELETE_EXCHANGE:
       return deleteExchange(state, action);
-    case 'UPDATE_EXCHANGE_CREDENTIALS':
+    case ExchangeTypeKeys.UPDATE_EXCHANGE_CREDENTIALS:
       return reduceInstance(state, action)(updateExchangeCredentials);
-    case 'UPDATE_EXCHANGE_BALANCES':
+    case ExchangeTypeKeys.UPDATE_EXCHANGE_BALANCES:
       return reduceInstance(state, action)(updateExchangeBalances);
-    case 'UPDATE_EXCHANGE_LEDGER':
+    case ExchangeTypeKeys.UPDATE_EXCHANGE_LEDGER:
       return reduceInstance(state, action)(updateExchangeLedger);
-    case 'UPDATE_EXCHANGE_TRADES':
+    case ExchangeTypeKeys.UPDATE_EXCHANGE_TRADES:
       return reduceInstance(state, action)(updateExchangeTrades);
-    case 'INCREMENT_EXCHANGE_REQUEST_COUNTER':
+    case ExchangeTypeKeys.INCREMENT_EXCHANGE_REQUEST_COUNTER:
       return reduceInstance(state, action)(incrementExchangeRequestCounter);
-    case 'FAILED_EXCHANGE_REQUEST':
+    case ExchangeTypeKeys.FAILED_EXCHANGE_REQUEST:
       return reduceInstance(state, action)(failedRequest);
     default:
       return state;
@@ -47,7 +47,7 @@ function addExchange(state: Exchanges, action: AddExchangeAction): Exchanges {
     ledger: [],
     trades: [],
   };
-  return {...state, [newExchange.id]: newExchange};
+  return { ...state, [newExchange.id]: newExchange };
 }
 
 function deleteExchange(state: Exchanges, action: DeleteExchangeAction): Exchanges {
@@ -61,27 +61,33 @@ function updateExchangeCredentials(state: Exchange, action: UpdateExchangeCreden
 }
 
 function updateExchangeBalances(state: Exchange, action: UpdateExchangeBalancesAction): Exchange {
-  return assign(state, {
-    error: undefined,
-    openRequests: (state.openRequests ? state.openRequests : 0) - 1,
-    balances: action.balances,
-  });
+  return assign(state,
+    noError,
+    decrementOpenRequests(state),
+    {
+      balances: action.balances
+    }
+  );
 }
 
 function updateExchangeLedger(state: Exchange, action: UpdateExchangeLedgerAction): Exchange {
-  return assign(state, {
-    error: undefined,
-    openRequests: (state.openRequests ? state.openRequests : 0) - 1,
-    ledger: mergeArraysById(state.ledger, action.ledger),
-  });
+  return assign(state,
+    noError,
+    decrementOpenRequests(state),
+    {
+      ledger: mergeArraysById(state.ledger, action.ledger)
+    }
+  );
 }
 
 function updateExchangeTrades(state: Exchange, action: UpdateExchangeTradesAction): Exchange {
-  return assign(state, {
-    error: undefined,
-    openRequests: (state.openRequests ? state.openRequests : 0) - 1,
-    trades: mergeArraysById(state.ledger, action.trades),
-  });
+  return assign(state,
+    noError,
+    decrementOpenRequests(state),
+    {
+      trades: mergeArraysById(state.ledger, action.trades),
+    }
+  );
 }
 
 function incrementExchangeRequestCounter(state: Exchange): Exchange {
@@ -91,19 +97,29 @@ function incrementExchangeRequestCounter(state: Exchange): Exchange {
 }
 
 function failedRequest(state: Exchange, action: FailedExchangeRequestAction): Exchange {
-  return assign(state, {
-    error: action.error,
-    openRequests: (state.openRequests ? state.openRequests : 0) - 1,
-  });
+  return assign(state,
+    decrementOpenRequests(state),
+    {
+      error: action.error
+    }
+  );
 }
 
-// TODO(greimela) Add exact typing
-function reduceInstance(state: Exchanges, action: ExchangeInstanceActions): (Function) => Exchanges {
-  return instanceReducer => ({...state, [action.id]: instanceReducer(state[action.id], action)});
+const noError: Partial<Exchange> = {
+  error: undefined
+};
+
+const decrementOpenRequests: ((state: Exchange) => Partial<Exchange>)
+  = (state: Exchange) => ({ openRequests: (state.openRequests ? state.openRequests : 0) - 1 });
+
+type InstanceReducer<A extends ExchangeInstanceActions> = (state: Exchange, action: A) => Exchange;
+
+function reduceInstance<A extends ExchangeInstanceActions>(state: Exchanges, action: A): (reducer: InstanceReducer<A>) => Exchanges {
+  return instanceReducer => ({ ...state, [action.id]: instanceReducer(state[action.id], action) });
 }
 
 function mergeArraysById<T extends { id }>(array: T[], newArray: T[]): T[] {
   return R.unionWith(R.eqBy(R.prop('id')), array, newArray);
 }
 
-const assign: <T>(a: T, ...b: T[]) => T = (a, ...b) => Object.assign({}, a, ...b);
+const assign: <T>(a: T, ...b: Partial<T>[]) => T = (a, ...b) => Object.assign({}, a, ...b);

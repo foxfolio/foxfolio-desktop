@@ -2,7 +2,7 @@ import { SettingsType } from '../reducers/settings';
 import { HistoryEntry, Ticker } from 'reducers/ticker';
 import { Wallet } from 'reducers/wallets';
 import { Coinlist } from 'reducers/coinlist';
-import { ExchangeActions } from '../reducers/exchanges/actions.d';
+import { ExchangeActions } from 'reducers/exchangeTypes';
 import { GlobalState } from '../reducers';
 import { ThunkAction as ReduxThunkAction } from 'redux-thunk';
 import { Dispatch as ReduxDispatch } from 'redux'

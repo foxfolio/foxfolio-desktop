@@ -1,5 +1,5 @@
 import * as R from 'ramda';
-import { Exchanges } from '../reducers/exchanges/types.d';
+import { Balances, Exchange, Exchanges } from 'reducers/exchangeTypes';
 import { Action, Dispatch, GetState, ThunkAction } from './action';
 import startTimer from './timer';
 import { Wallet } from '../reducers/wallets';
@@ -23,7 +23,7 @@ function receiveTickerUpdate(ticker: Ticker): Action {
   };
 }
 
-function receiveHistory(fsym: string, tsym: string, history: [{ close: number }]): Action {
+function receiveHistory(fsym: string, tsym: string, history: { close: number }[]): Action {
   return {
     type: 'HISTORY_UPDATE',
     fsym,
@@ -103,9 +103,12 @@ function getSymbolsFromTransactions(
   cryptoCurrency: string,
   extraSymbols: string[]): { from: string[], to: string[] } {
   const walletSymbols = wallets.map(wallet => wallet.currency) || [];
-  const exchangeSymbols = R.values(exchanges)
-    .map(exchange => exchange.balances)
-    .reduce((acc, balances) => acc.concat(R.keys(balances)), []);
+  const exchangeSymbols = R.pipe(
+    R.values,
+    R.map(exchange => exchange.balances),
+    R.map(R.keys),
+    R.reduce((acc, keys) => acc.concat(keys), [] as string[])
+  )(exchanges);
 
   return {
     from: R.uniq([cryptoCurrency, ...walletSymbols, ...exchangeSymbols, ...extraSymbols]),
