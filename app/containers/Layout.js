@@ -8,7 +8,7 @@ import Drawer from 'material-ui/Drawer';
 import { AppBar, Avatar, List, Toolbar, Typography } from 'material-ui';
 import { AccountBalanceWallet, Cloud, Dashboard, HelpOutline, Settings, /* SwapHoriz */ } from 'material-ui-icons';
 import { continuouslyFetchTransactions } from '../actions/transactions';
-import type { Dispatch } from '../actions/action.d';
+import type { Dispatch } from '../actions/actions.types';
 import { continuouslyUpdateTicker, requestCoinList } from '../actions/ticker';
 import { DrawerItem } from '../components/DrawerItem';
 import icon from '../resources/icon.png';

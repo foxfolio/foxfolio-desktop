@@ -3,10 +3,10 @@ import R, { equals, filter, forEachObjIndexed, keys } from 'ramda';
 import {
   ExchangeTypeKeys, FailedExchangeRequestAction,
   IncrementExchangeRequestCounterAction
-} from 'reducers/exchangeTypes';
+} from 'reducers/exchanges.types';
 
-import { Balances, Exchange, Exchanges } from 'reducers/exchangeTypes';
-import { Action, Dispatch, GetState, ThunkAction } from './action';
+import { Balances, Exchange, Exchanges } from 'reducers/exchanges.types';
+import { Action, Dispatch, GetState, ThunkAction } from './actions.types';
 import startTimer from './timer';
 import { requestTickerUpdate } from './ticker';
 import { GlobalState } from 'reducers';

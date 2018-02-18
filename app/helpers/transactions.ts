@@ -1,5 +1,5 @@
 import R from 'ramda';
-import { Exchanges, Trade } from 'reducers/exchangeTypes';
+import { Exchanges, Trade } from 'reducers/exchanges.types';
 import { Ticker } from 'reducers/ticker';
 
 export const mapKeys = R.curry((fn: any, obj: Object) => R.zipObj(R.map(fn, R.keys(obj)), R.values(obj)));

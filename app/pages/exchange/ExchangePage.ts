@@ -4,8 +4,8 @@ import { connect } from 'react-redux';
 import { ExchangeGrid } from './components/ExchangeGrid';
 import * as exchangeActions from 'actions/exchanges';
 import { GlobalState } from 'reducers';
-import { Exchanges } from 'reducers/exchangeTypes';
-import { Dispatch } from "actions/action";
+import { Exchanges } from 'reducers/exchanges.types';
+import { Dispatch } from "actions/actions.types";
 
 function mapStateToProps(state: GlobalState): { exchanges: Exchanges } {
   return {

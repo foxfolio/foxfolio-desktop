@@ -1,5 +1,5 @@
-import { ExchangeCredentials, ExchangeTypeKeys } from 'reducers/exchangeTypes';
-import { Action, ThunkAction } from './action';
+import { ExchangeCredentials, ExchangeTypeKeys } from 'reducers/exchanges.types';
+import { Action, ThunkAction } from './actions.types';
 import { fetchAllBalances } from './transactions';
 
 export function addExchange(type: string, credentials: ExchangeCredentials): ThunkAction {

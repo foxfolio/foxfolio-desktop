@@ -1,6 +1,6 @@
 import 'redux-thunk';
 import { Dispatch } from 'redux';
-import { Action, ThunkAction } from './action';
+import { Action, ThunkAction } from './actions.types';
 import { Wallet } from 'reducers/wallets';
 import { requestTickerUpdate } from './ticker';
 import { GlobalState } from '../reducers';

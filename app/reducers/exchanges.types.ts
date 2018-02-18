@@ -1,38 +1,37 @@
 export interface Exchanges {
-  [key: string]: Exchange
+  [key: string]: Exchange;
 }
 
 export interface Exchange {
-  id: string,
-  type: string,
-  credentials: ExchangeCredentials,
-  balances: Balances,
-  ledger: LedgerEntry[],
-  trades: Trade[],
-  error?: string,
-  openRequests?: number
+  id: string;
+  type: string;
+  credentials: ExchangeCredentials;
+  balances: Balances;
+  ledger: LedgerEntry[];
+  trades: Trade[];
+  error?: string;
+  openRequests?: number;
 }
 
 export interface ExchangeCredentials {
-  apiKey: string,
-  secret: string,
-  uid?: string,
-  login?: string,
-  password?: string
+  apiKey: string;
+  secret: string;
+  uid?: string;
+  login?: string;
+  password?: string;
 }
 
 export interface Balances {
-  [asset: string]: number
+  [asset: string]: number;
 }
 
 export interface Trade {
-  id: string
+  id: string;
 }
 
 export interface LedgerEntry {
-  id: string
+  id: string;
 }
-
 
 export enum ExchangeTypeKeys {
   ADD_EXCHANGE = 'ADD_EXCHANGE',
@@ -55,14 +54,14 @@ export type ExchangeClassActions =
   | DeleteExchangeAction;
 
 export type AddExchangeAction = {
-  type: ExchangeTypeKeys.ADD_EXCHANGE,
-  exchangeType: string,
-  credentials: ExchangeCredentials
+  type: ExchangeTypeKeys.ADD_EXCHANGE;
+  exchangeType: string;
+  credentials: ExchangeCredentials;
 };
 
 export type DeleteExchangeAction = {
-  type: ExchangeTypeKeys.DELETE_EXCHANGE,
-  id: string
+  type: ExchangeTypeKeys.DELETE_EXCHANGE;
+  id: string;
 };
 
 export type ExchangeInstanceActions =
@@ -74,36 +73,36 @@ export type ExchangeInstanceActions =
   | FailedExchangeRequestAction;
 
 export interface UpdateExchangeCredentialsAction {
-  type: ExchangeTypeKeys.UPDATE_EXCHANGE_CREDENTIALS,
-  id: string,
-  credentials: ExchangeCredentials
+  type: ExchangeTypeKeys.UPDATE_EXCHANGE_CREDENTIALS;
+  id: string;
+  credentials: ExchangeCredentials;
 }
 
 export interface UpdateExchangeBalancesAction {
-  type: ExchangeTypeKeys.UPDATE_EXCHANGE_BALANCES,
-  id: string,
-  balances: Balances
+  type: ExchangeTypeKeys.UPDATE_EXCHANGE_BALANCES;
+  id: string;
+  balances: Balances;
 }
 
 export interface UpdateExchangeLedgerAction {
-  type: ExchangeTypeKeys.UPDATE_EXCHANGE_LEDGER,
-  id: string,
-  ledger: LedgerEntry[]
+  type: ExchangeTypeKeys.UPDATE_EXCHANGE_LEDGER;
+  id: string;
+  ledger: LedgerEntry[];
 }
 
 export interface UpdateExchangeTradesAction {
-  type: ExchangeTypeKeys.UPDATE_EXCHANGE_TRADES,
-  id: string,
-  trades: Trade[]
+  type: ExchangeTypeKeys.UPDATE_EXCHANGE_TRADES;
+  id: string;
+  trades: Trade[];
 }
 
 export interface IncrementExchangeRequestCounterAction {
-  type: ExchangeTypeKeys.INCREMENT_EXCHANGE_REQUEST_COUNTER,
-  id: string
+  type: ExchangeTypeKeys.INCREMENT_EXCHANGE_REQUEST_COUNTER;
+  id: string;
 }
 
 export interface FailedExchangeRequestAction {
-  type: ExchangeTypeKeys.FAILED_EXCHANGE_REQUEST,
-  id: string,
-  error: string
+  type: ExchangeTypeKeys.FAILED_EXCHANGE_REQUEST;
+  id: string;
+  error: string;
 }

@@ -1,5 +1,5 @@
 import R from 'ramda';
-import { Action } from 'actions/action.d';
+import { Action } from 'actions/actions.types';
 
 export interface TickerAndHistory {
   ticker: Ticker,

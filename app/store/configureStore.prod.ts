@@ -4,7 +4,7 @@ import {createHashHistory} from 'history';
 import {routerMiddleware} from 'react-router-redux';
 
 import rootReducer, {GlobalState} from 'reducers';
-import {Dispatch} from 'actions/action.d';
+import {Dispatch} from 'actions/actions.types';
 import {persistStore} from 'store/persistStore';
 
 const history = createHashHistory();

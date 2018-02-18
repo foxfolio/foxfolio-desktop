@@ -1,6 +1,6 @@
 import * as R from 'ramda';
-import { Balances, Exchange, Exchanges } from 'reducers/exchangeTypes';
-import { Action, Dispatch, GetState, ThunkAction } from './action';
+import { Balances, Exchange, Exchanges } from 'reducers/exchanges.types';
+import { Action, Dispatch, GetState, ThunkAction } from './actions.types';
 import startTimer from './timer';
 import { Wallet } from '../reducers/wallets';
 import { Coinlist } from 'reducers/coinlist';

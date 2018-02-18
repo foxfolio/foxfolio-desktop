@@ -6,7 +6,7 @@ import {
 import green from 'material-ui/colors/green';
 import { StyleRulesCallback, withStyles } from 'material-ui/styles';
 
-import { Exchange } from 'reducers/exchangeTypes';
+import { Exchange } from 'reducers/exchanges.types';
 
 const styles: StyleRulesCallback = theme => ({
   card: {

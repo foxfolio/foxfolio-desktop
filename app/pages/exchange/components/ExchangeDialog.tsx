@@ -4,7 +4,7 @@ import ccxt from 'ccxt';
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField, WithStyles } from 'material-ui';
 import { StyleRules, withStyles } from 'material-ui/styles';
 
-import { Exchange } from 'reducers/exchangeTypes';
+import { Exchange } from 'reducers/exchanges.types';
 import { Autocomplete } from 'components/Autocomplete';
 
 export type DialogConfig =

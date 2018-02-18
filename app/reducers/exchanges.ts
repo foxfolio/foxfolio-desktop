@@ -2,8 +2,8 @@ import R, { omit } from 'ramda';
 
 import { generateId } from '../helpers/reducers';
 
-import { Action } from '../actions/action';
-import { Exchange, Exchanges, ExchangeTypeKeys } from 'reducers/exchangeTypes';
+import { Action } from '../actions/actions.types';
+import { Exchange, Exchanges, ExchangeTypeKeys } from 'reducers/exchanges.types';
 import {
   AddExchangeAction,
   DeleteExchangeAction,
@@ -13,7 +13,7 @@ import {
   UpdateExchangeCredentialsAction,
   UpdateExchangeLedgerAction,
   UpdateExchangeTradesAction,
-} from 'reducers/exchangeTypes';
+} from 'reducers/exchanges.types';
 
 export function exchanges(state: Exchanges = {}, action: Action): Exchanges {
   switch (action.type) {
@@ -100,13 +100,13 @@ function failedRequest(state: Exchange, action: FailedExchangeRequestAction): Ex
   return assign(state,
     decrementOpenRequests(state),
     {
-      error: action.error
+      error: action.error,
     }
   );
 }
 
 const noError: Partial<Exchange> = {
-  error: undefined
+  error: undefined,
 };
 
 const decrementOpenRequests: ((state: Exchange) => Partial<Exchange>)
@@ -114,12 +114,14 @@ const decrementOpenRequests: ((state: Exchange) => Partial<Exchange>)
 
 type InstanceReducer<A extends ExchangeInstanceActions> = (state: Exchange, action: A) => Exchange;
 
-function reduceInstance<A extends ExchangeInstanceActions>(state: Exchanges, action: A): (reducer: InstanceReducer<A>) => Exchanges {
+function reduceInstance<A extends ExchangeInstanceActions>(
+  state: Exchanges,
+  action: A): (reducer: InstanceReducer<A>) => Exchanges {
   return instanceReducer => ({ ...state, [action.id]: instanceReducer(state[action.id], action) });
 }
 
-function mergeArraysById<T extends { id }>(array: T[], newArray: T[]): T[] {
+function mergeArraysById<T extends { id: any }>(array: T[], newArray: T[]): T[] {
   return R.unionWith(R.eqBy(R.prop('id')), array, newArray);
 }
 
-const assign: <T>(a: T, ...b: Partial<T>[]) => T = (a, ...b) => Object.assign({}, a, ...b);
+const assign: <T>(a: T, ...b: Array<Partial<T>>) => T = (a, ...b) => Object.assign({}, a, ...b);

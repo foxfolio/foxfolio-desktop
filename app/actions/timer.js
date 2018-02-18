@@ -1,5 +1,5 @@
 // @flow
-import type { Action } from './action.d';
+import type { Action } from './actions.types';
 
 export default function startTimer(name: string, timer: IntervalID): Action {
   return {

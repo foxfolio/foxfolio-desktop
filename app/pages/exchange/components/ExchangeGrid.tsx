@@ -4,7 +4,7 @@ import { Button, Grid, Typography, WithStyles } from 'material-ui';
 import { Add } from 'material-ui-icons';
 import { StyleRulesCallback, withStyles } from 'material-ui/styles';
 
-import { Exchange, ExchangeCredentials, Exchanges } from 'reducers/exchangeTypes';
+import { Exchange, ExchangeCredentials, Exchanges } from 'reducers/exchanges.types';
 import { ExchangeCard } from './ExchangeCard';
 import { DialogConfig } from './ExchangeDialog';
 import { ExchangeDialog } from './ExchangeDialog';

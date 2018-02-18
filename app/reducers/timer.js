@@ -1,6 +1,6 @@
 // @flow
 
-import type { Action } from '../actions/action.d';
+import type { Action } from '../actions/actions.types';
 
 export type Timer = {
   [string]: number,

@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import R from 'ramda';
 
 import * as TransactionActions from '../../actions/transactions';
-import type { Dispatch } from '../../actions/action.d';
+import type { Dispatch } from '../../actions/actions.types';
 import type { PortfolioProps } from './container/Portfolio';
 import Portfolio from './container/Portfolio';
 import type { GlobalState } from '../../reducers';

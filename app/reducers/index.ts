@@ -10,7 +10,7 @@ import { Wallet, wallets } from './wallets';
 import { ticker, TickerAndHistory } from './ticker';
 import timer, { Timer } from './timer';
 import settings, { SettingsType } from './settings';
-import { Exchanges } from './exchangeTypes';
+import { Exchanges } from './exchanges.types';
 
 const config = configureReduxPersist();
 export default persistCombineReducers(config, {

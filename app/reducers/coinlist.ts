@@ -1,4 +1,4 @@
-import {Action} from 'actions/action.d';
+import {Action} from 'actions/actions.types';
 
 export interface Coinlist {
   [symbol: string]: CoinlistEntry
