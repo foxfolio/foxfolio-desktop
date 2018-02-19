@@ -1,14 +1,13 @@
-import {Action} from 'actions/actions.types';
+import { Action } from '../actions/actions.types';
 
 export interface Coinlist {
-  [symbol: string]: CoinlistEntry
+  [symbol: string]: CoinlistEntry;
 }
 
 export interface CoinlistEntry {
-  FullName: string,
-  ImageUrl: string
+  FullName: string;
+  ImageUrl: string;
 }
-
 
 export function coinlist(state: Coinlist = {}, action: Action): Coinlist {
   switch (action.type) {

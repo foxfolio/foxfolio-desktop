@@ -1,16 +1,14 @@
-import { persistCombineReducers } from 'redux-persist';
-import { reducer as form } from 'redux-form';
 import { routerReducer as router } from 'react-router-redux';
-
+import { reducer as form } from 'redux-form';
+import { persistCombineReducers } from 'redux-persist';
 import { configureReduxPersist } from '../store/configureReduxPersist';
-
 import { coinlist, Coinlist } from './coinlist';
 import { exchanges } from './exchanges';
-import { Wallet, wallets } from './wallets';
-import { ticker, TickerAndHistory } from './ticker';
-import timer, { Timer } from './timer';
-import settings, { SettingsType } from './settings';
 import { Exchanges } from './exchanges.types';
+import settings, { SettingsType } from './settings';
+import { ticker, TickerAndHistory } from './ticker';
+import timers, { Timers } from './timer';
+import { Wallet, wallets } from './wallets';
 
 const config = configureReduxPersist();
 export default persistCombineReducers(config, {
@@ -20,15 +18,15 @@ export default persistCombineReducers(config, {
   router,
   settings,
   ticker,
-  timer,
+  timers,
   wallets,
 });
 
-export type GlobalState = {
-  coinlist: Coinlist,
-  exchanges: Exchanges,
-  settings: SettingsType,
-  ticker: TickerAndHistory,
-  timer: Timer,
-  wallets: Wallet[]
-};
+export interface GlobalState {
+  coinlist: Coinlist;
+  exchanges: Exchanges;
+  settings: SettingsType;
+  ticker: TickerAndHistory;
+  timers: Timers;
+  wallets: Wallet[];
+}

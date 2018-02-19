@@ -1,25 +1,25 @@
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField } from 'material-ui';
 import React, { Component, FormEvent } from 'react';
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField, } from 'material-ui';
-import { Wallet } from 'reducers/wallets';
-import { Coinlist } from 'reducers/coinlist';
 import { Autocomplete } from '../../../components/Autocomplete';
+import { Coinlist } from '../../../reducers/coinlist';
+import { Wallet } from '../../../reducers/wallets';
 
-type Props = {
-  wallet: Wallet,
-  coinlist: Coinlist,
-  open: boolean,
-  close: () => void,
-  save: (source: Wallet) => void
-};
+interface Props {
+  wallet: Wallet;
+  coinlist: Coinlist;
+  open: boolean;
+  close: () => void;
+  save: (source: Wallet) => void;
+}
 
 export default class WalletDialog extends Component<Props, Wallet> {
-  state: Wallet = {
+  public state: Wallet = {
     currency: '',
     address: '',
     quantity: 0,
   };
 
-  componentWillReceiveProps(nextProps: Props) {
+  public componentWillReceiveProps(nextProps: Props) {
     if (this.props.open !== nextProps.open) {
       this.setState({
         currency: nextProps.wallet.currency,
@@ -30,7 +30,7 @@ export default class WalletDialog extends Component<Props, Wallet> {
     }
   }
 
-  save = (event: FormEvent<HTMLFormElement>) => {
+  public save = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     this.props.save({
       currency: this.state.currency,
@@ -40,13 +40,13 @@ export default class WalletDialog extends Component<Props, Wallet> {
     });
   };
 
-  changeCurrency = (fullName: string) => {
+  public changeCurrency = (fullName: string) => {
     const extractSymbol = fullName.match(/\(([^)]+)\)/);
     const symbol = extractSymbol && extractSymbol.length > 1 ? extractSymbol[1] : '';
     this.setState({ currency: symbol });
   };
 
-  handleChange = (name: keyof Wallet) => (event: React.ChangeEvent<HTMLInputElement>) => {
+  public handleChange = (name: keyof Wallet) => (event: React.ChangeEvent<HTMLInputElement>) => {
     if (name === 'quantity') {
       this.setState({ quantity: parseFloat(event.target.value) });
     } else {
@@ -54,15 +54,11 @@ export default class WalletDialog extends Component<Props, Wallet> {
     }
   };
 
-  render() {
+  public render() {
     const { open, close, coinlist } = this.props;
 
     return (
-      <Dialog
-        title="New Wallet"
-        open={open}
-        onClose={close}
-      >
+      <Dialog title="New Wallet" open={open} onClose={close}>
         <DialogTitle>New wallet</DialogTitle>
         <DialogContent>
           <form autoComplete="off" onSubmit={this.save}>
@@ -70,8 +66,7 @@ export default class WalletDialog extends Component<Props, Wallet> {
               label="Currency"
               onChange={this.changeCurrency}
               value={this.state.currency}
-              items={Object.keys(coinlist)
-                .map(key => coinlist[key].FullName)}
+              items={Object.keys(coinlist).map(key => coinlist[key].FullName)}
             />
             <TextField
               label="Address"

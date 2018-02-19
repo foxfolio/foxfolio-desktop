@@ -45,24 +45,20 @@ export enum ExchangeTypeKeys {
   FAILED_EXCHANGE_REQUEST = 'FAILED_EXCHANGE_REQUEST',
 }
 
-export type ExchangeActions =
-  | ExchangeClassActions
-  | ExchangeInstanceActions;
+export type ExchangeActions = ExchangeClassActions | ExchangeInstanceActions;
 
-export type ExchangeClassActions =
-  | AddExchangeAction
-  | DeleteExchangeAction;
+export type ExchangeClassActions = AddExchangeAction | DeleteExchangeAction;
 
-export type AddExchangeAction = {
+export interface AddExchangeAction {
   type: ExchangeTypeKeys.ADD_EXCHANGE;
   exchangeType: string;
   credentials: ExchangeCredentials;
-};
+}
 
-export type DeleteExchangeAction = {
+export interface DeleteExchangeAction {
   type: ExchangeTypeKeys.DELETE_EXCHANGE;
   id: string;
-};
+}
 
 export type ExchangeInstanceActions =
   | UpdateExchangeCredentialsAction

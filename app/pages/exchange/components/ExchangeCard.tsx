@@ -1,12 +1,20 @@
-import React, { Component } from 'react';
 import {
-  Button, Card, CardActions, CardContent, Collapse, Divider, Grid, LinearProgress,
-  Typography, WithStyles,
+  Button,
+  Card,
+  CardActions,
+  CardContent,
+  Collapse,
+  Divider,
+  Grid,
+  LinearProgress,
+  Typography,
+  WithStyles,
 } from 'material-ui';
 import green from 'material-ui/colors/green';
 import { StyleRulesCallback, withStyles } from 'material-ui/styles';
+import React, { Component } from 'react';
 
-import { Exchange } from 'reducers/exchanges.types';
+import { Exchange } from '../../../reducers/exchanges.types';
 
 const styles: StyleRulesCallback = theme => ({
   card: {
@@ -30,29 +38,29 @@ const styles: StyleRulesCallback = theme => ({
   },
 });
 
-type Props = {
-  exchange: Exchange,
-  onEdit: () => void,
-  onDelete: () => void
-};
+interface Props {
+  exchange: Exchange;
+  onEdit: () => void;
+  onDelete: () => void;
+}
 
-type State = {
-  expanded: boolean
-};
+interface State {
+  expanded: boolean;
+}
 
 const hasOpenRequests = exchange => exchange.openRequests && exchange.openRequests > 0;
 
 export const ExchangeCard = withStyles(styles)(
   class extends Component<Props & WithStyles, State> {
-    state: State = {
+    public state: State = {
       expanded: false,
     };
 
-    handleExpandClick = () => {
+    public handleExpandClick = () => {
       this.setState({ expanded: !this.state.expanded });
     };
 
-    render() {
+    public render() {
       const { classes, exchange, onEdit, onDelete } = this.props;
 
       let status = <span className={classes.success}>OK</span>;
@@ -78,22 +86,32 @@ export const ExchangeCard = withStyles(styles)(
             <Button dense onClick={this.handleExpandClick}>
               {this.state.expanded ? 'Hide' : 'Show'} balances
             </Button>
-            <div className={classes.flexGrow}/>
-            <Button dense className={classes.error} onClick={onDelete}>Delete</Button>
-            <Button dense onClick={onEdit}>Edit</Button>
+            <div className={classes.flexGrow} />
+            <Button dense className={classes.error} onClick={onDelete}>
+              Delete
+            </Button>
+            <Button dense onClick={onEdit}>
+              Edit
+            </Button>
           </CardActions>
           <Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
-            <Divider/>
+            <Divider />
             <div className={classes.collapse}>
-              {Object.keys(exchange.balances).sort().map(asset => (
-                <Grid container key={asset}>
-                  <Grid item xs={4}><Typography>{asset}</Typography></Grid>
-                  <Grid item xs={8}><Typography>{exchange.balances[asset]}</Typography></Grid>
-                </Grid>
-              ))}
+              {Object.keys(exchange.balances)
+                .sort()
+                .map(asset => (
+                  <Grid container key={asset}>
+                    <Grid item xs={4}>
+                      <Typography>{asset}</Typography>
+                    </Grid>
+                    <Grid item xs={8}>
+                      <Typography>{exchange.balances[asset]}</Typography>
+                    </Grid>
+                  </Grid>
+                ))}
             </div>
           </Collapse>
-          {hasOpenRequests(exchange) ? <LinearProgress/> : ''}
+          {hasOpenRequests(exchange) ? <LinearProgress /> : ''}
         </Card>
       );
     }

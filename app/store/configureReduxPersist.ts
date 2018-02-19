@@ -1,23 +1,22 @@
 import * as R from 'ramda';
-import {createMigrate, createTransform, PersistConfig} from 'redux-persist';
+import { createMigrate, createTransform, PersistConfig } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 
 export const configureReduxPersist = (): PersistConfig => ({
   key: 'primary',
   blacklist: ['router', 'timer'],
   transforms: [createDateTransform(), createExchangeTransform()],
-  migrate: createMigrate(migrations, {debug: false}),
+  migrate: createMigrate(migrations, { debug: false }),
   storage,
 });
 
-const createExchangeTransform = () => createTransform(
-  (inboundState, key) => {
+const createExchangeTransform = () =>
+  createTransform((inboundState, key) => {
     if (key === 'exchanges') {
       return R.map(R.omit(['openRequests']))(inboundState);
     }
     return inboundState;
-  },
-);
+  });
 
 const createDateTransform = () => {
   const mapPath = R.curry((path, f, obj) => R.assocPath(path, f(R.path(path, obj)), obj));
@@ -34,7 +33,7 @@ const createDateTransform = () => {
 };
 
 const migrations = {
-  0: (state) => ({
+  0: state => ({
     ...state,
     wallets: {},
   }),

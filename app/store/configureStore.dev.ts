@@ -1,12 +1,11 @@
-import {applyMiddleware, compose, createStore, GenericStoreEnhancer, Middleware} from 'redux';
+import { createHashHistory } from 'history';
+import { routerActions, routerMiddleware } from 'react-router-redux';
+import { applyMiddleware, compose, createStore, GenericStoreEnhancer, Middleware } from 'redux';
+import { createLogger } from 'redux-logger';
 import thunk from 'redux-thunk';
-import {createHashHistory} from 'history';
-import {routerActions, routerMiddleware} from 'react-router-redux';
-import {createLogger} from 'redux-logger';
-
-import rootReducer from 'reducers';
-import * as exchangeActions from 'actions/exchanges';
-import {persistStore} from 'store/persistStore';
+import * as exchangeActions from '../actions/exchanges';
+import rootReducer from '../reducers';
+import { persistStore } from './persistStore';
 
 const history = createHashHistory();
 
@@ -38,9 +37,9 @@ const configureStore = (initialState?: any) => {
   /* eslint-disable no-underscore-dangle */
   const composeEnhancers = (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
     ? (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({
-      // Options: http://zalmoxisus.github.io/redux-devtools-extension/API/Arguments.html
-      actionCreators,
-    })
+        // Options: http://zalmoxisus.github.io/redux-devtools-extension/API/Arguments.html
+        actionCreators,
+      })
     : compose;
   /* eslint-enable no-underscore-dangle */
 
@@ -53,12 +52,10 @@ const configureStore = (initialState?: any) => {
   persistStore(store);
 
   if ((module as any).hot) {
-    (module as any).hot.accept('reducers', () =>
-      store.replaceReducer(require('reducers')) // eslint-disable-line global-require
-    );
+    (module as any).hot.accept('reducers', () => store.replaceReducer(require('../reducers')));
   }
 
   return store;
 };
 
-export default {configureStore, history};
+export default { configureStore, history };

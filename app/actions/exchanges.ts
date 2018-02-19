@@ -1,4 +1,4 @@
-import { ExchangeCredentials, ExchangeTypeKeys } from 'reducers/exchanges.types';
+import { ExchangeCredentials, ExchangeTypeKeys } from '../reducers/exchanges.types';
 import { Action, ThunkAction } from './actions.types';
 import { fetchAllBalances } from './transactions';
 
@@ -13,7 +13,10 @@ export function addExchange(type: string, credentials: ExchangeCredentials): Thu
   };
 }
 
-export function updateExchangeCredentials(id: string, credentials: ExchangeCredentials): ThunkAction {
+export function updateExchangeCredentials(
+  id: string,
+  credentials: ExchangeCredentials
+): ThunkAction {
   return async dispatch => {
     await dispatch({
       type: ExchangeTypeKeys.UPDATE_EXCHANGE_CREDENTIALS,

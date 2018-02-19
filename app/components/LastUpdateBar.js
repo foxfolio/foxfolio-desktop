@@ -14,11 +14,11 @@ class LastUpdateBar extends Component<Props> {
   };
 
   componentDidMount() {
-    this.timer = setInterval(this.progress, 1000);
+    this.timers = setInterval(this.progress, 1000);
   }
 
   componentWillUnmount() {
-    clearInterval(this.timer);
+    clearInterval(this.timers);
   }
 
   progress = () => {
@@ -37,7 +37,7 @@ class LastUpdateBar extends Component<Props> {
 }
 
 const mapStateToProps: MapStateToProps<*, *, *> = state => ({
-  lastUpdate: state.timer.lastUpdated ? state.timer.lastUpdated.transactions : undefined,
+  lastUpdate: state.timers.lastUpdated ? state.timers.lastUpdated.transactions : undefined,
 });
 
 export default connect(mapStateToProps)(LastUpdateBar);

@@ -4,7 +4,7 @@ import * as React from 'react';
 import { initialSettings } from '../../../../app/reducers/settings';
 import type { Ticker } from '../../../../app/reducers/ticker/types.d';
 import PortfolioPositions from '../../../../app/pages/portfolio/components/PortfolioPositions';
-import type { Portfolio } from '../../../../app/pages/portfolio/types/portfolio.d';
+import type { Portfolio } from '../../../../app/pages/portfolio/types/portfolio.types';
 
 let shallow;
 

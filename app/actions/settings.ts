@@ -1,6 +1,5 @@
-// @flow
-import type { SettingsType } from '../reducers/settings';
-import type { Action, ThunkAction } from './actions.types';
+import { SettingsType } from '../reducers/settings';
+import { Action, Dispatch, ThunkAction } from './actions.types';
 import { requestTickerUpdate } from './ticker';
 
 function saveSettings(settings: SettingsType): Action {

@@ -1,15 +1,17 @@
 import ccxt from 'ccxt';
 import R, { equals, filter, forEachObjIndexed, keys } from 'ramda';
+import { GlobalState } from '../reducers';
 import {
-  ExchangeTypeKeys, FailedExchangeRequestAction,
-  IncrementExchangeRequestCounterAction
-} from 'reducers/exchanges.types';
-
-import { Balances, Exchange, Exchanges } from 'reducers/exchanges.types';
+  Balances,
+  Exchange,
+  Exchanges,
+  ExchangeTypeKeys,
+  FailedExchangeRequestAction,
+  IncrementExchangeRequestCounterAction,
+} from '../reducers/exchanges.types';
 import { Action, Dispatch, GetState, ThunkAction } from './actions.types';
-import startTimer from './timer';
 import { requestTickerUpdate } from './ticker';
-import { GlobalState } from 'reducers';
+import startTimer from './timer';
 
 const BALANCE_REFRESH_MS = 30000;
 
@@ -59,7 +61,9 @@ function fetchBalancesForExchange(exchange: Exchange): ThunkAction {
     dispatch(incrementExchangeRequestCounter(exchange.id));
     try {
       const connector = new ccxt[exchange.type](exchange.credentials);
-      const balances: Balances = R.pickBy(balance => balance > 0)(await connector.fetchTotalBalance());
+      const balances: Balances = R.pickBy(balance => balance > 0)(
+        await connector.fetchTotalBalance()
+      );
       dispatch(updateExchangeBalances(exchange.id, balances));
     } catch (e) {
       dispatch(failedRequest(exchange.id, e.message));
@@ -86,7 +90,7 @@ export function fetchAllTransactions(): ThunkAction {
 
 export function continuouslyFetchTransactions(): ThunkAction {
   return (dispatch: Dispatch, getState: GetState) => {
-    if (!getState().timer.balances) {
+    if (!getState().timers.timers.balances) {
       const balanceTimer = setInterval(() => dispatch(fetchAllBalances()), BALANCE_REFRESH_MS);
       // const transactionTimer = setInterval(() => dispatch(fetchAllTransactions()), TRANSACTION_REFRESH_MS);
       dispatch(startTimer('balances', balanceTimer));

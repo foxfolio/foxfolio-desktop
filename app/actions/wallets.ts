@@ -1,12 +1,9 @@
-import 'redux-thunk';
-import { Dispatch } from 'redux';
-import { Action, ThunkAction } from './actions.types';
-import { Wallet } from 'reducers/wallets';
+import { Wallet } from '../reducers/wallets';
+import { Action, Dispatch, ThunkAction } from './actions.types';
 import { requestTickerUpdate } from './ticker';
-import { GlobalState } from '../reducers';
 
 export function addWallet(wallet: Wallet): ThunkAction {
-  return (dispatch: Dispatch<GlobalState>) => {
+  return (dispatch: Dispatch) => {
     dispatch(requestTickerUpdate([wallet.currency]));
     dispatch({
       type: 'ADD_WALLET',
@@ -16,7 +13,7 @@ export function addWallet(wallet: Wallet): ThunkAction {
 }
 
 export function editWallet(wallet: Wallet, newWallet: Wallet): ThunkAction {
-  return (dispatch: Dispatch<GlobalState>) => {
+  return (dispatch: Dispatch) => {
     dispatch(requestTickerUpdate([wallet.currency]));
     dispatch({
       type: 'EDIT_WALLET',

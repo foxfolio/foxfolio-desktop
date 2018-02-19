@@ -1,11 +1,9 @@
-import {applyMiddleware, compose, createStore, Store} from 'redux';
+import { createHashHistory } from 'history';
+import { routerMiddleware } from 'react-router-redux';
+import { applyMiddleware, compose, createStore, Store } from 'redux';
 import thunk from 'redux-thunk';
-import {createHashHistory} from 'history';
-import {routerMiddleware} from 'react-router-redux';
-
-import rootReducer, {GlobalState} from 'reducers';
-import {Dispatch} from 'actions/actions.types';
-import {persistStore} from 'store/persistStore';
+import rootReducer, { GlobalState } from '../reducers';
+import { persistStore } from './persistStore';
 
 const history = createHashHistory();
 
@@ -18,4 +16,4 @@ function configureStore(initialState: GlobalState): Store<GlobalState> {
   return store;
 }
 
-export default {configureStore, history};
+export default { configureStore, history };

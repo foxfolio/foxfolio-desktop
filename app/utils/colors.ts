@@ -23,8 +23,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
  */
 
-// @flow
-
 export default function getColor(currency: string): string {
   const colors = {
     ADC: '#3CB0E5',

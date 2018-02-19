@@ -1,13 +1,12 @@
-import React, { Component } from 'react';
-import { values } from 'ramda';
 import { Button, Grid, Typography, WithStyles } from 'material-ui';
 import { Add } from 'material-ui-icons';
 import { StyleRulesCallback, withStyles } from 'material-ui/styles';
+import { values } from 'ramda';
+import React, { Component } from 'react';
 
-import { Exchange, ExchangeCredentials, Exchanges } from 'reducers/exchanges.types';
+import { Exchange, ExchangeCredentials, Exchanges } from '../../../reducers/exchanges.types';
 import { ExchangeCard } from './ExchangeCard';
-import { DialogConfig } from './ExchangeDialog';
-import { ExchangeDialog } from './ExchangeDialog';
+import { DialogConfig, ExchangeDialog } from './ExchangeDialog';
 
 const styles: StyleRulesCallback = theme => ({
   button: {
@@ -19,33 +18,33 @@ const styles: StyleRulesCallback = theme => ({
   },
 });
 
-type Props = {
-  exchanges: Exchanges,
-  addExchange: (type: string, credentials: ExchangeCredentials) => any,
-  updateExchangeCredentials: (id: string, credentials: ExchangeCredentials) => any,
-  deleteExchange: (id: string) => any
-};
+interface Props {
+  exchanges: Exchanges;
+  addExchange: (type: string, credentials: ExchangeCredentials) => any;
+  updateExchangeCredentials: (id: string, credentials: ExchangeCredentials) => any;
+  deleteExchange: (id: string) => any;
+}
 
-type State = {
-  open: boolean,
-  dialogConfig?: DialogConfig
-};
+interface State {
+  open: boolean;
+  dialogConfig?: DialogConfig;
+}
 
 export const ExchangeGrid = withStyles(styles)(
   class extends Component<Props & WithStyles, State> {
-    state: State = {
+    public state: State = {
       open: false,
     };
 
-    handleEdit = exchange => () => {
+    public handleEdit = exchange => () => {
       this.setState({ open: true, dialogConfig: { action: 'edit', exchange } });
     };
 
-    handleAdd = () => {
+    public handleAdd = () => {
       this.setState({ open: true, dialogConfig: { action: 'add' } });
     };
 
-    saveExchange = (exchange: Exchange) => {
+    public saveExchange = (exchange: Exchange) => {
       if (this.state.dialogConfig && this.state.dialogConfig.action === 'edit') {
         this.props.updateExchangeCredentials(exchange.id, exchange.credentials);
       } else {
@@ -54,15 +53,15 @@ export const ExchangeGrid = withStyles(styles)(
       this.setState({ open: false });
     };
 
-    handleDelete = exchange => () => {
+    public handleDelete = exchange => () => {
       this.props.deleteExchange(exchange.id);
     };
 
-    handleClose = () => {
+    public handleClose = () => {
       this.setState({ open: false });
     };
 
-    render() {
+    public render() {
       const { exchanges, classes } = this.props;
 
       return (
@@ -79,8 +78,14 @@ export const ExchangeGrid = withStyles(styles)(
               </Grid>
             ))}
           </Grid>
-          <Button fab color="primary" aria-label="add" className={classes.button} onClick={this.handleAdd}>
-            <Add/>
+          <Button
+            fab
+            color="primary"
+            aria-label="add"
+            className={classes.button}
+            onClick={this.handleAdd}
+          >
+            <Add />
           </Button>
           <ExchangeDialog
             open={this.state.open}

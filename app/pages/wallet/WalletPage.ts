@@ -1,13 +1,12 @@
-// @flow
-import { bindActionCreators } from 'redux';
 import { connect, Dispatch } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import * as WalletActions from '../../actions/wallets';
-import { WalletGrid } from './components/WalletGrid';
 import { GlobalState } from '../../reducers';
-import { Wallet } from 'reducers/wallets';
-import { Coinlist } from 'reducers/coinlist';
+import { Coinlist } from '../../reducers/coinlist';
+import { Wallet } from '../../reducers/wallets';
+import { WalletGrid } from './components/WalletGrid';
 
-function mapStateToProps(state: GlobalState): { coinlist: Coinlist, wallets: Wallet[] } {
+function mapStateToProps(state: GlobalState): { coinlist: Coinlist; wallets: Wallet[] } {
   return {
     coinlist: state.coinlist,
     wallets: state.wallets,

@@ -1,5 +1,3 @@
-/* eslint-disable import/extensions */
-// @flow
 import Raven from 'raven-js';
 
 export function configureSentry() {
@@ -13,9 +11,13 @@ export function configureSentry() {
         }
 
         const stacktrace =
-          normalizedData.stacktrace || (normalizedData.exception && normalizedData.exception.values[0].stacktrace);
+          normalizedData.stacktrace ||
+          (normalizedData.exception && normalizedData.exception.values[0].stacktrace);
         if (stacktrace) {
-          stacktrace.frames = stacktrace.frames.map(frame => ({ ...frame, filename: '/renderer.prod.js', }));
+          stacktrace.frames = stacktrace.frames.map(frame => ({
+            ...frame,
+            filename: '/renderer.prod.js',
+          }));
         }
 
         return data;

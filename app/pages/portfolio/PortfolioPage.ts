@@ -1,17 +1,18 @@
-// @flow
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
 import R from 'ramda';
-
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { Dispatch } from '../../actions/actions.types';
 import * as TransactionActions from '../../actions/transactions';
-import type { Dispatch } from '../../actions/actions.types';
-import type { PortfolioProps } from './container/Portfolio';
-import Portfolio from './container/Portfolio';
-import type { GlobalState } from '../../reducers';
+import { GlobalState } from '../../reducers';
+import { Exchange } from '../../reducers/exchanges.types';
+import Portfolio, { PortfolioProps } from './container/Portfolio';
 
 function mapStateToProps(state: GlobalState): PortfolioProps {
   return {
-    balances: R.map(exchange => exchange.balances)(state.exchanges),
+    balances: Object.assign(
+      {},
+      ...Object.keys(state.exchanges).map(k => ({ [k]: state.exchanges[k].balances }))
+    ),
     ticker: state.ticker.ticker,
     coinlist: state.coinlist,
     wallets: state.wallets,

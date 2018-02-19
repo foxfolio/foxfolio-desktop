@@ -1,10 +1,10 @@
 import * as R from 'ramda';
-import { Balances, Exchange, Exchanges } from 'reducers/exchanges.types';
+import { Coinlist } from '../reducers/coinlist';
+import { Balances, Exchange, Exchanges } from '../reducers/exchanges.types';
+import { Ticker } from '../reducers/ticker';
+import { Wallet } from '../reducers/wallets';
 import { Action, Dispatch, GetState, ThunkAction } from './actions.types';
 import startTimer from './timer';
-import { Wallet } from '../reducers/wallets';
-import { Coinlist } from 'reducers/coinlist';
-import { Ticker } from 'reducers/ticker';
 
 const REFRESH_TIME_IN_MS = 30000;
 
@@ -23,7 +23,7 @@ function receiveTickerUpdate(ticker: Ticker): Action {
   };
 }
 
-function receiveHistory(fsym: string, tsym: string, history: { close: number }[]): Action {
+function receiveHistory(fsym: string, tsym: string, history: Array<{ close: number }>): Action {
   return {
     type: 'HISTORY_UPDATE',
     fsym,
@@ -40,7 +40,10 @@ function receiveCoinList(coinlist: Coinlist): Action {
 }
 
 export function requestTickerUpdate(
-  extraSymbols: string[] = [], fiatCurrency?: string, cryptoCurrency?: string): ThunkAction {
+  extraSymbols: string[] = [],
+  fiatCurrency?: string,
+  cryptoCurrency?: string
+): ThunkAction {
   return (dispatch: Dispatch, getState: GetState) => {
     dispatch(fetchingTickerUpdate());
 
@@ -50,7 +53,8 @@ export function requestTickerUpdate(
       state.wallets,
       fiatCurrency || state.settings.fiatCurrency,
       cryptoCurrency || state.settings.cryptoCurrency,
-      extraSymbols);
+      extraSymbols
+    );
     const fsyms = symbols.from.join(',');
     const tsyms = symbols.to.join(',');
     if (fsyms && tsyms) {
@@ -62,13 +66,20 @@ export function requestTickerUpdate(
   };
 }
 
-export function requestHistory(fsym: string, tsym: string, forceRequest: boolean = false): ThunkAction {
+export function requestHistory(
+  fsym: string,
+  tsym: string,
+  forceRequest: boolean = false
+): ThunkAction {
   return (dispatch: Dispatch, getState: GetState) => {
-    const twoMinutesAgo = new Date((new Date()).getTime() - (1000 * 60 * 2));
-    if (forceRequest
-      || !(getState().ticker.history[fsym]
-        && getState().ticker.history[fsym][tsym]
-        && getState().ticker.history[fsym][tsym].lastUpdate >= twoMinutesAgo)
+    const twoMinutesAgo = new Date(new Date().getTime() - 1000 * 60 * 2);
+    if (
+      forceRequest ||
+      !(
+        getState().ticker.history[fsym] &&
+        getState().ticker.history[fsym][tsym] &&
+        getState().ticker.history[fsym][tsym].lastUpdate >= twoMinutesAgo
+      )
     ) {
       fetch(`https://min-api.cryptocompare.com/data/histominute?fsym=${fsym}&tsym=${tsym}`)
         .then(result => result.json())
@@ -89,7 +100,7 @@ export function requestCoinList(): ThunkAction {
 
 export function continuouslyUpdateTicker(): ThunkAction {
   return (dispatch: Dispatch, getState: GetState) => {
-    if (!getState().timer.ticker) {
+    if (!getState().timers.timers.ticker) {
       const timer = setInterval(() => dispatch(requestTickerUpdate()), REFRESH_TIME_IN_MS);
       dispatch(startTimer('ticker', timer));
     }
@@ -101,7 +112,8 @@ function getSymbolsFromTransactions(
   wallets: Wallet[],
   fiatCurrency: string,
   cryptoCurrency: string,
-  extraSymbols: string[]): { from: string[], to: string[] } {
+  extraSymbols: string[]
+): { from: string[]; to: string[] } {
   const walletSymbols = wallets.map(wallet => wallet.currency) || [];
   const exchangeSymbols = R.pipe(
     R.values,

@@ -1,19 +1,19 @@
 import R, { omit } from 'ramda';
-
-import { generateId } from '../helpers/reducers';
-
 import { Action } from '../actions/actions.types';
-import { Exchange, Exchanges, ExchangeTypeKeys } from 'reducers/exchanges.types';
+import { generateId } from '../helpers/reducers';
 import {
   AddExchangeAction,
   DeleteExchangeAction,
+  Exchange,
   ExchangeInstanceActions,
+  Exchanges,
+  ExchangeTypeKeys,
   FailedExchangeRequestAction,
   UpdateExchangeBalancesAction,
   UpdateExchangeCredentialsAction,
   UpdateExchangeLedgerAction,
   UpdateExchangeTradesAction,
-} from 'reducers/exchanges.types';
+} from './exchanges.types';
 
 export function exchanges(state: Exchanges = {}, action: Action): Exchanges {
   switch (action.type) {
@@ -54,40 +54,31 @@ function deleteExchange(state: Exchanges, action: DeleteExchangeAction): Exchang
   return omit([action.id], state);
 }
 
-function updateExchangeCredentials(state: Exchange, action: UpdateExchangeCredentialsAction): Exchange {
+function updateExchangeCredentials(
+  state: Exchange,
+  action: UpdateExchangeCredentialsAction
+): Exchange {
   return assign(state, {
     credentials: action.credentials,
   });
 }
 
 function updateExchangeBalances(state: Exchange, action: UpdateExchangeBalancesAction): Exchange {
-  return assign(state,
-    noError,
-    decrementOpenRequests(state),
-    {
-      balances: action.balances
-    }
-  );
+  return assign(state, noError, decrementOpenRequests(state), {
+    balances: action.balances,
+  });
 }
 
 function updateExchangeLedger(state: Exchange, action: UpdateExchangeLedgerAction): Exchange {
-  return assign(state,
-    noError,
-    decrementOpenRequests(state),
-    {
-      ledger: mergeArraysById(state.ledger, action.ledger)
-    }
-  );
+  return assign(state, noError, decrementOpenRequests(state), {
+    ledger: mergeArraysById(state.ledger, action.ledger),
+  });
 }
 
 function updateExchangeTrades(state: Exchange, action: UpdateExchangeTradesAction): Exchange {
-  return assign(state,
-    noError,
-    decrementOpenRequests(state),
-    {
-      trades: mergeArraysById(state.ledger, action.trades),
-    }
-  );
+  return assign(state, noError, decrementOpenRequests(state), {
+    trades: mergeArraysById(state.ledger, action.trades),
+  });
 }
 
 function incrementExchangeRequestCounter(state: Exchange): Exchange {
@@ -97,26 +88,25 @@ function incrementExchangeRequestCounter(state: Exchange): Exchange {
 }
 
 function failedRequest(state: Exchange, action: FailedExchangeRequestAction): Exchange {
-  return assign(state,
-    decrementOpenRequests(state),
-    {
-      error: action.error,
-    }
-  );
+  return assign(state, decrementOpenRequests(state), {
+    error: action.error,
+  });
 }
 
 const noError: Partial<Exchange> = {
   error: undefined,
 };
 
-const decrementOpenRequests: ((state: Exchange) => Partial<Exchange>)
-  = (state: Exchange) => ({ openRequests: (state.openRequests ? state.openRequests : 0) - 1 });
+const decrementOpenRequests: ((state: Exchange) => Partial<Exchange>) = (state: Exchange) => ({
+  openRequests: (state.openRequests ? state.openRequests : 0) - 1,
+});
 
 type InstanceReducer<A extends ExchangeInstanceActions> = (state: Exchange, action: A) => Exchange;
 
 function reduceInstance<A extends ExchangeInstanceActions>(
   state: Exchanges,
-  action: A): (reducer: InstanceReducer<A>) => Exchanges {
+  action: A
+): (reducer: InstanceReducer<A>) => Exchanges {
   return instanceReducer => ({ ...state, [action.id]: instanceReducer(state[action.id], action) });
 }
 

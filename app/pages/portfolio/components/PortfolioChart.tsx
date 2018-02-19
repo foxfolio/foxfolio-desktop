@@ -1,24 +1,23 @@
-import React from 'react';
-import { defaults, HorizontalBar } from 'react-chartjs-2';
 import { withTheme } from 'material-ui';
 import { Theme } from 'material-ui/styles';
-
+import React from 'react';
+import { defaults, HorizontalBar } from 'react-chartjs-2';
 import { getTickerPrice } from '../../../helpers/transactions';
 import { SettingsType } from '../../../reducers/settings';
-import { Ticker } from 'reducers/ticker';
+import { Ticker } from '../../../reducers/ticker';
 import getColor from '../../../utils/colors';
 
 // Disable animating charts by default.
 (defaults as any).global.animation = false;
 
-type Props = {
-  ticker: Ticker,
-  portfolio: Object,
-  settings: SettingsType,
-  sum: number
-};
+interface Props {
+  ticker: Ticker;
+  portfolio: { [key: string]: number };
+  settings: SettingsType;
+  sum: number;
+}
 
-export const PortfolioChart = withTheme()<Props>(({ticker, portfolio, settings, sum, theme}) => {
+export const PortfolioChart = withTheme()<Props>(({ ticker, portfolio, settings, sum, theme }) => {
   const chartData = calculateChartData(ticker, portfolio, settings, sum, theme);
 
   return (
@@ -52,36 +51,48 @@ export const PortfolioChart = withTheme()<Props>(({ticker, portfolio, settings, 
                 min: 0,
                 max: 100,
               },
-            }],
+            },
+          ],
           yAxes: [
             {
               stacked: true,
               gridLines: {
                 color: theme.palette.text.secondary,
               },
-            }],
+            },
+          ],
         },
       }}
     />
   );
 });
 
-function calculateChartData(ticker: Ticker, portfolio: Object, settings: SettingsType, sum: number, theme: Theme) {
-  const {cryptoCurrency} = settings;
+function calculateChartData(
+  ticker: Ticker,
+  portfolio: { [key: string]: number },
+  settings: SettingsType,
+  sum: number,
+  theme: Theme
+) {
+  const { cryptoCurrency } = settings;
 
   const datasets = Object.keys(portfolio)
     .filter(asset => portfolio[asset] > 0)
     .filter(asset => ticker[asset])
-    .sort((a, b) =>
-      (getTickerPrice(ticker, b, cryptoCurrency) * portfolio[b])
-      - (getTickerPrice(ticker, a, cryptoCurrency) * portfolio[a]))
+    .sort(
+      (a, b) =>
+        getTickerPrice(ticker, b, cryptoCurrency) * portfolio[b] -
+        getTickerPrice(ticker, a, cryptoCurrency) * portfolio[a]
+    )
     .map(asset => ({
       label: asset.toUpperCase(),
       backgroundColor: getColor(asset),
       borderColor: theme.palette.background.default,
       borderWidth: 1,
-      data: [((getTickerPrice(ticker, asset, cryptoCurrency) * portfolio[asset] * 100) / sum).toFixed(2)],
+      data: [
+        (getTickerPrice(ticker, asset, cryptoCurrency) * portfolio[asset] * 100 / sum).toFixed(2),
+      ],
     }));
 
-  return {datasets};
+  return { datasets };
 }

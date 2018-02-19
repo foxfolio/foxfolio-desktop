@@ -1,4 +1,1 @@
-export const getFiatCurrencies = () => ([
-  'USD',
-  'EUR',
-]);
+export const getFiatCurrencies = () => ['USD', 'EUR'];
