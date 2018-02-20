@@ -3,6 +3,7 @@
     "module": "es6",
     "lib": [
       "dom",
+      "es6",
       "es7"
     ],
     "target": "es6",

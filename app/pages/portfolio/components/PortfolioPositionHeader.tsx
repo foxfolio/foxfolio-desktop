@@ -1,9 +1,8 @@
-// @flow
-import React from 'react';
 import { Card, CardContent, Grid, Typography } from 'material-ui';
-import { withStyles } from 'material-ui/styles';
+import { StyleRulesCallback, Theme, withStyles } from 'material-ui/styles';
+import React from 'react';
 
-export const styles = (theme: Object) => ({
+const styles: StyleRulesCallback = (theme: Theme) => ({
   root: {
     display: 'flex',
     alignItems: 'center',
@@ -31,14 +30,10 @@ export const styles = (theme: Object) => ({
   },
 });
 
-type Props = {
-  classes: any
-};
-
-const header = ({ classes }: Props) => (
+export const PortfolioPositionHeader = withStyles(styles)(({ classes }) => (
   <Card>
     <CardContent className={classes.root}>
-      <div className={classes.avatar}/>
+      <div className={classes.avatar} />
       <div className={classes.content}>
         <Grid container>
           <Grid item xs={3}>
@@ -55,9 +50,7 @@ const header = ({ classes }: Props) => (
           </Grid>
         </Grid>
       </div>
-      <div className={classes.collapseButton}/>
+      <div className={classes.collapseButton} />
     </CardContent>
   </Card>
-);
-
-export const PortfolioPositionHeader = withStyles(styles)(header);
+));

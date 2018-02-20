@@ -1,9 +1,11 @@
-// @flow
-import React from 'react';
 import { Avatar, Card, CardContent, Grid, Typography, withStyles } from 'material-ui';
-import { AccountBalanceWallet } from 'material-ui-icons';
+import { TrendingUp } from 'material-ui-icons';
+import { StyleRulesCallback } from 'material-ui/styles';
+import React from 'react';
+import { connect } from 'react-redux';
+import { Exchanges } from '../../../reducers/exchanges.types';
 
-const styles = theme => ({
+const styles: StyleRulesCallback = theme => ({
   root: {
     display: 'flex',
     alignItems: 'center',
@@ -11,8 +13,8 @@ const styles = theme => ({
   avatar: {
     backgroundColor: theme.palette.text.secondary,
     flex: '0 0 auto',
-    margin: 5,
     marginRight: theme.spacing.unit * 2,
+    margin: 5,
     width: 30,
     height: 30,
   },
@@ -24,39 +26,42 @@ const styles = theme => ({
   },
 });
 
-type Props = {
-  asset: string,
-  balance: number,
-  classes: Object
-};
+interface Props {
+  asset: string;
+  balance: number;
+  exchangeKey: string;
+  exchanges: Exchanges;
+}
 
-function PortfolioPositionWalletRow({ asset, balance, classes }: Props) {
-  return (
+const styledComponent = withStyles(styles)<Props>(
+  ({ asset, balance, classes, exchangeKey, exchanges }) => (
     <Card>
       <CardContent className={classes.root}>
         <div>
           <Avatar className={classes.avatar}>
-            <AccountBalanceWallet/>
+            <TrendingUp />
           </Avatar>
         </div>
         <div className={classes.content}>
           <Grid container>
             <Grid item xs={3}>
               <Typography type="body2" component="span">
-                Wallets
+                {exchanges[exchangeKey].type}
               </Typography>
             </Grid>
             <Grid item xs={2} className={classes.right}>
-              <Typography>
-                {`${balance.toPrecision(5)} ${asset}`}
-              </Typography>
+              <Typography>{`${balance.toPrecision(5)} ${asset}`}</Typography>
             </Grid>
           </Grid>
         </div>
-        <div style={{ width: 48 }}/>
+        <div style={{ width: 48 }} />
       </CardContent>
     </Card>
-  );
-}
+  )
+);
 
-export default withStyles(styles)(PortfolioPositionWalletRow);
+const mapStateToProps = state => ({
+  exchanges: state.exchanges,
+});
+
+export const PortfolioPositionExchangeRow = connect(mapStateToProps)(styledComponent);

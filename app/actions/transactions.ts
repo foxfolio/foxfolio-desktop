@@ -91,7 +91,10 @@ export function fetchAllTransactions(): ThunkAction {
 export function continuouslyFetchTransactions(): ThunkAction {
   return (dispatch: Dispatch, getState: GetState) => {
     if (!getState().timers.timers.balances) {
-      const balanceTimer = setInterval(() => dispatch(fetchAllBalances()), BALANCE_REFRESH_MS);
+      const balanceTimer = window.setInterval(
+        () => dispatch(fetchAllBalances()),
+        BALANCE_REFRESH_MS
+      );
       // const transactionTimer = setInterval(() => dispatch(fetchAllTransactions()), TRANSACTION_REFRESH_MS);
       dispatch(startTimer('balances', balanceTimer));
       // dispatch(startTimer('transactions', transactionTimer));

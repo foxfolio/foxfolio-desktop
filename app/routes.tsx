@@ -3,7 +3,7 @@ import { orange, red } from 'material-ui/colors';
 import React, { Component } from 'react';
 import { Route, Switch } from 'react-router';
 import Layout from './containers/Layout';
-import AboutPage from './pages/AboutPage';
+import { AboutPage } from './pages/AboutPage';
 import { ExchangePage } from './pages/exchange/ExchangePage';
 import HomePage from './pages/portfolio/PortfolioPage';
 import SettingsPage from './pages/SettingsPage';

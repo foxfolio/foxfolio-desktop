@@ -1,9 +1,8 @@
 import { Action } from '../actions/actions.types';
-import Timer = NodeJS.Timer;
 
 export interface Timers {
   timers: {
-    [index: string]: Timer;
+    [index: string]: number;
   };
   lastUpdated?: {
     [index: string]: Date;

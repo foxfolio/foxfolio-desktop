@@ -1,6 +1,6 @@
 import * as R from 'ramda';
 import { Coinlist } from '../reducers/coinlist';
-import { Balances, Exchange, Exchanges } from '../reducers/exchanges.types';
+import { Exchanges } from '../reducers/exchanges.types';
 import { Ticker } from '../reducers/ticker';
 import { Wallet } from '../reducers/wallets';
 import { Action, Dispatch, GetState, ThunkAction } from './actions.types';
@@ -101,7 +101,7 @@ export function requestCoinList(): ThunkAction {
 export function continuouslyUpdateTicker(): ThunkAction {
   return (dispatch: Dispatch, getState: GetState) => {
     if (!getState().timers.timers.ticker) {
-      const timer = setInterval(() => dispatch(requestTickerUpdate()), REFRESH_TIME_IN_MS);
+      const timer = window.setInterval(() => dispatch(requestTickerUpdate()), REFRESH_TIME_IN_MS);
       dispatch(startTimer('ticker', timer));
     }
   };

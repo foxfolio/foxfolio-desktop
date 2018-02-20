@@ -1,7 +1,6 @@
 import { Dispatch as ReduxDispatch } from 'redux';
 import { ThunkAction as ReduxThunkAction } from 'redux-thunk';
 import Timer = NodeJS.Timer;
-
 import { GlobalState } from '../reducers';
 import { Coinlist } from '../reducers/coinlist';
 import { ExchangeActions } from '../reducers/exchanges.types';
@@ -17,7 +16,7 @@ export type Action =
   | { type: 'LAST_UPDATED'; key: string; time: Date }
   | { type: 'TICKER_UPDATE'; ticker: Ticker }
   | { type: 'HISTORY_UPDATE'; fsym: string; tsym: string; history: HistoryEntry }
-  | { type: 'START_TIMER'; name: string; timer: Timer }
+  | { type: 'START_TIMER'; name: string; timer: number }
   | { type: 'RECEIVE_COIN_LIST'; coinlist: Coinlist }
   | { type: 'SAVE_SETTINGS'; settings: SettingsType };
 

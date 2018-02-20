@@ -12,7 +12,7 @@ import { Coinlist } from '../../../reducers/coinlist';
 import { SettingsType } from '../../../reducers/settings';
 import { Ticker, TickerEntry } from '../../../reducers/ticker';
 import { PortfolioForAsset } from './PortfolioPositions';
-import PriceChangeText from './PriceChangeText';
+import { PriceChangeText } from './PriceChangeText';
 
 // TODO Remove after update to material-ui@1.0.0-beta.33
 const Collapse = (MaterialCollapse as any) as ComponentType<CollapseProps & { mountOnEnter: any }>;

@@ -1,4 +1,3 @@
-// @flow
 import { contains } from 'ramda';
 import shortid from 'shortid';
 

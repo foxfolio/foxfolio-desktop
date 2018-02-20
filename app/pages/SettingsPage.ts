@@ -1,10 +1,10 @@
-// @flow
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { Dispatch } from '../actions/actions.types';
 import * as SettingsActions from '../actions/settings';
 import Settings from '../components/Settings';
-import type { GlobalState } from '../reducers';
-import type { SettingsType } from '../reducers/settings';
+import { GlobalState } from '../reducers';
+import { SettingsType } from '../reducers/settings';
 
 function mapStateToProps(state: GlobalState): { settings: SettingsType } {
   return {
