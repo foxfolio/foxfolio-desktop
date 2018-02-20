@@ -1,10 +1,12 @@
 # Foxfolio
 
-[![Travis](https://img.shields.io/travis/foxfolio/foxfolio-desktop/master.svg?style=flat-square)](https://travis-ci.org/foxfolio/foxfolio-desktop)
 [![GitHub release](https://img.shields.io/github/release/foxfolio/foxfolio-desktop/all.svg?style=flat-square)](https://github.com/foxfolio/foxfolio-desktop/releases)
+[![Travis](https://img.shields.io/travis/foxfolio/foxfolio-desktop/master.svg?style=flat-square)](https://travis-ci.org/foxfolio/foxfolio-desktop)
 [![GitHub license](https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square)](https://github.com/foxfolio/foxfolio-desktop)
 [![CodeFactor](https://www.codefactor.io/repository/github/foxfolio/foxfolio-desktop/badge)](https://www.codefactor.io/repository/github/foxfolio/foxfolio-desktop)
 [![Coveralls github](https://img.shields.io/coveralls/github/foxfolio/foxfolio-desktop.svg?style=flat-square)](https://coveralls.io/github/foxfolio/foxfolio-desktop)
+[![Gitter](https://img.shields.io/gitter/room/foxfolio/foxfolio-desktop.js.svg?style=flat-square)](https://gitter.im/foxfolio-desktop/Lobby?utm_source=share-link&utm_medium=link&utm_campaign=share-link)
+[![Twitter Follow](https://img.shields.io/twitter/follow/foxfol_io.svg?label=Follow%20Foxfolio&style=flat-square)](https://twitter.com/foxfol_io)
 
 > Cryptocurrency portfolio management application which automatically retrieves balances and trades using exchange APIs
 
