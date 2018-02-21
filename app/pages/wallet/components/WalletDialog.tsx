@@ -81,7 +81,7 @@ export default class WalletDialog extends Component<Props, Wallet> {
               label="Quantity"
               id="quantity"
               value={this.state.quantity}
-              onChange={this.handleChange('address')}
+              onChange={this.handleChange('quantity')}
               fullWidth
               margin="normal"
             />
