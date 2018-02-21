@@ -11,7 +11,7 @@ import { getFiatCurrencies } from '../../../utils/fiatCurrencies';
 import EmptyPortfolio from '../components/EmptyPortfolio';
 import { PortfolioChart } from '../components/PortfolioChart';
 import PortfolioHeader from '../components/PortfolioHeader';
-import PortfolioPositions from '../components/PortfolioPositions';
+import { PortfolioPositions } from '../components/PortfolioPositions';
 import { Balances, Portfolio } from '../types/portfolio.types';
 
 export interface PortfolioProps {

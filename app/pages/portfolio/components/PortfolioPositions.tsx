@@ -21,30 +21,27 @@ interface Props {
   settings: SettingsType;
 }
 
-export default function PortfolioPositions({ portfolio, coinlist, ticker, settings }: Props) {
-  return (
-    <div>
-      <PortfolioPositionHeader />
-      {Object.keys(portfolio.total)
-        .sort(
-          (a, b) =>
-            portfolio.total[b] *
-              (ticker[b] ? getTickerPrice(ticker, b, settings.fiatCurrency) : 0) -
-            portfolio.total[a] * (ticker[a] ? getTickerPrice(ticker, a, settings.fiatCurrency) : 0)
-        )
-        .map(asset => (
-          <PortfolioPosition
-            key={asset}
-            coinlist={coinlist}
-            ticker={ticker}
-            asset={asset}
-            portfolio={filterPortfolioForAsset(portfolio, asset)}
-            settings={settings}
-          />
-        ))}
-    </div>
-  );
-}
+export const PortfolioPositions = ({ portfolio, coinlist, ticker, settings }: Props) => (
+  <div>
+    <PortfolioPositionHeader />
+    {Object.keys(portfolio.total)
+      .sort(
+        (a, b) =>
+          portfolio.total[b] * (ticker[b] ? getTickerPrice(ticker, b, settings.fiatCurrency) : 0) -
+          portfolio.total[a] * (ticker[a] ? getTickerPrice(ticker, a, settings.fiatCurrency) : 0)
+      )
+      .map(asset => (
+        <PortfolioPosition
+          key={asset}
+          coinlist={coinlist}
+          ticker={ticker}
+          asset={asset}
+          portfolio={filterPortfolioForAsset(portfolio, asset)}
+          settings={settings}
+        />
+      ))}
+  </div>
+);
 
 const filterPortfolioForAsset = (portfolio: Portfolio, asset: string): PortfolioForAsset =>
   R.mapObjIndexed(
