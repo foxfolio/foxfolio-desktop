@@ -1,22 +1,26 @@
-import R from 'ramda';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Dispatch } from '../../actions/actions.types';
 import * as TransactionActions from '../../actions/transactions';
 import { GlobalState } from '../../reducers';
-import { Exchange } from '../../reducers/exchanges.types';
+import {
+  getCoinlist,
+  getPortfolio,
+  getPortfolioChange,
+  getPortfolioSum,
+  getSettings,
+  getTicker,
+} from '../PortfolioSelectors';
 import Portfolio, { PortfolioProps } from './container/Portfolio';
 
 function mapStateToProps(state: GlobalState): PortfolioProps {
   return {
-    balances: Object.assign(
-      {},
-      ...Object.keys(state.exchanges).map(k => ({ [k]: state.exchanges[k].balances }))
-    ),
-    ticker: state.ticker.ticker,
-    coinlist: state.coinlist,
-    wallets: state.wallets,
-    settings: state.settings,
+    ticker: getTicker(state),
+    coinlist: getCoinlist(state),
+    settings: getSettings(state),
+    portfolio: getPortfolio(state),
+    sum: getPortfolioSum(state),
+    change: getPortfolioChange(state),
   };
 }
 

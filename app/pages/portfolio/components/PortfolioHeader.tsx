@@ -1,17 +1,16 @@
 import { Grid, Typography } from 'material-ui';
 import React from 'react';
+import { SettingsType } from '../../../reducers/settings';
+import { PortfolioChange, PortfolioSum } from '../types/portfolio.types';
 import { PriceChangeText } from './PriceChangeText';
 
 interface Props {
-  settings: {
-    cryptoCurrency: 'BTC' | 'ETH';
-    fiatCurrency: string;
-  };
-  sum: { crypto: number; fiat: number };
-  change: { crypto: number; fiat: number };
+  settings: SettingsType;
+  sum: PortfolioSum;
+  change: PortfolioChange;
 }
 
-export default function PortfolioHeader({ settings, sum, change }: Props) {
+export const PortfolioHeader = ({ settings, sum, change }: Props) => {
   return (
     <Grid container>
       <Grid item xs={2} />
@@ -29,4 +28,4 @@ export default function PortfolioHeader({ settings, sum, change }: Props) {
       </Grid>
     </Grid>
   );
-}
+};

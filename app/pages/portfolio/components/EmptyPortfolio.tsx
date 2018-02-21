@@ -2,7 +2,7 @@ import { Button, Typography } from 'material-ui';
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-export default function EmptyPortfolio() {
+export const EmptyPortfolio = () => {
   return (
     <div>
       <Typography type="title">No data yet</Typography>
@@ -20,4 +20,4 @@ export default function EmptyPortfolio() {
       </Typography>
     </div>
   );
-}
+};
