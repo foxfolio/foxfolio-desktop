@@ -13,9 +13,11 @@
     "lint-fix": "npm run lint -- --fix",
     "lint-styles": "stylelint app/*.css app/components/*.css --syntax scss",
     "lint-styles-fix": "stylefmt -r app/*.css app/components/*.css",
+    "prepackage": "node ./internals/scripts/EnableAppPackageJson.js",
+    "postpackage": "node ./internals/scripts/DisableAppPackageJson.js",
     "package": "npm run build && build --publish never",
     "package-all": "npm run build && build -mwl",
-    "package-deploy": "npm run build && build -wl",
+    "package-deploy": "npm run prepackage && npm run build && build -wl && npm run postpackage",
     "package-linux-windows-ci": "build -wl --publish=never",
     "package-linux": "npm run build && build --linux",
     "package-win": "npm run build && build --win --x64",
@@ -31,7 +33,7 @@
     "test-all": "npm run lint && npm run build && npm run test",
     "test-watch": "npm test -- --watch"
   },
-  "browserslist": "electron 1.6",
+  "browserslist": "electron 1.8",
   "build": {
     "productName": "Foxfolio",
     "appId": "de.foxfolio.foxfolio-desktop",
