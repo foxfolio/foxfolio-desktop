@@ -3,7 +3,7 @@ import { Add } from 'material-ui-icons';
 import { StyleRulesCallback, withStyles } from 'material-ui/styles';
 import React, { Component } from 'react';
 import { Coinlist } from '../../../reducers/coinlist';
-import { Wallet } from '../../../reducers/wallets';
+import { Wallet } from '../../../reducers/wallets.types';
 import WalletDialog from './WalletDialog';
 import { WalletGridItem } from './WalletGridItem';
 

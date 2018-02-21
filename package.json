@@ -139,6 +139,7 @@
     "@types/react-router": "^4.0.21",
     "@types/react-router-redux": "^5.0.11",
     "@types/recharts": "^1.0.14",
+    "@types/redux-form": "^7.0.14",
     "awesome-typescript-loader": "^3.4.1",
     "babel-core": "^6.24.1",
     "babel-eslint": "^7.2.3",

@@ -128,6 +128,13 @@
     "@types/d3-shape" "*"
     "@types/react" "*"
 
+"@types/redux-form@^7.0.14":
+  version "7.0.14"
+  resolved "https://registry.yarnpkg.com/@types/redux-form/-/redux-form-7.0.14.tgz#1bd23434647af8d8d387c24fc9b61eec0276cb2c"
+  dependencies:
+    "@types/react" "*"
+    redux "^3.6.0"
+
 JSONStream@^0.8.4:
   version "0.8.4"
   resolved "https://registry.yarnpkg.com/JSONStream/-/JSONStream-0.8.4.tgz#91657dfe6ff857483066132b4618b62e8f4887bd"
@@ -449,7 +456,7 @@ async@^1.4.0, async@^1.5.2:
   version "1.5.2"
   resolved "https://registry.yarnpkg.com/async/-/async-1.5.2.tgz#ec6a61ae56480c0c3cb241c95618e20892f9672a"
 
-async@^2.0.0, async@^2.1.2, async@^2.1.4, async@^2.1.5, async@^2.4.1, async@^2.5.0:
+async@^2.0.0, async@^2.1.2, async@^2.1.4, async@^2.1.5, async@^2.4.1:
   version "2.6.0"
   resolved "https://registry.yarnpkg.com/async/-/async-2.6.0.tgz#61a29abb6fcc026fea77e56d1c6ec53a795951f4"
   dependencies:
@@ -5920,7 +5927,7 @@ loader-runner@^2.3.0:
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/loader-runner/-/loader-runner-2.3.0.tgz#f482aea82d543e07921700d5a46ef26fdac6b8a2"
 
-loader-utils@^0.2.16, loader-utils@~0.2.2:
+loader-utils@^0.2.16:
   version "0.2.17"
   resolved "https://registry.yarnpkg.com/loader-utils/-/loader-utils-0.2.17.tgz#f86e6374d43205a6e6c60e9196f17c0299bfb348"
   dependencies:
@@ -8700,14 +8707,6 @@ sort-keys@^1.0.0:
 source-list-map@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/source-list-map/-/source-list-map-2.0.0.tgz#aaa47403f7b245a92fbc97ea08f250d6087ed085"
-
-source-map-loader@^0.2.3:
-  version "0.2.3"
-  resolved "https://registry.yarnpkg.com/source-map-loader/-/source-map-loader-0.2.3.tgz#d4b0c8cd47d54edce3e6bfa0f523f452b5b0e521"
-  dependencies:
-    async "^2.5.0"
-    loader-utils "~0.2.2"
-    source-map "~0.6.1"
 
 source-map-resolve@^0.3.0:
   version "0.3.1"

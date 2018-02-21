@@ -2,7 +2,7 @@ import * as R from 'ramda';
 import { Coinlist } from '../reducers/coinlist';
 import { Exchanges } from '../reducers/exchanges.types';
 import { Ticker } from '../reducers/ticker';
-import { Wallet } from '../reducers/wallets';
+import { Wallet } from '../reducers/wallets.types';
 import { Action, Dispatch, GetState, ThunkAction } from './actions.types';
 import startTimer from './timer';
 

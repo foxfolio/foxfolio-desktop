@@ -8,7 +8,8 @@ import { Exchanges } from './exchanges.types';
 import settings, { SettingsType } from './settings';
 import { ticker, TickerAndHistory } from './ticker';
 import timers, { Timers } from './timer';
-import { Wallet, wallets } from './wallets';
+import { wallets } from './wallets';
+import { Wallet } from './wallets.types';
 
 const config = configureReduxPersist();
 export default persistCombineReducers(config, {

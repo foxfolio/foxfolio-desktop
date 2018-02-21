@@ -3,7 +3,7 @@ import { bindActionCreators } from 'redux';
 import * as WalletActions from '../../actions/wallets';
 import { GlobalState } from '../../reducers';
 import { Coinlist } from '../../reducers/coinlist';
-import { Wallet } from '../../reducers/wallets';
+import { Wallet } from '../../reducers/wallets.types';
 import { WalletGrid } from './components/WalletGrid';
 
 function mapStateToProps(state: GlobalState): { coinlist: Coinlist; wallets: Wallet[] } {

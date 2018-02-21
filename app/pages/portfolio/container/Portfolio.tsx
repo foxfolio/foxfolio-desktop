@@ -6,7 +6,7 @@ import { getTickerPrice } from '../../../helpers/transactions';
 import { Coinlist } from '../../../reducers/coinlist';
 import { SettingsType } from '../../../reducers/settings';
 import { Ticker } from '../../../reducers/ticker';
-import { Wallet } from '../../../reducers/wallets';
+import { Wallet } from '../../../reducers/wallets.types';
 import { getFiatCurrencies } from '../../../utils/fiatCurrencies';
 import EmptyPortfolio from '../components/EmptyPortfolio';
 import { PortfolioChart } from '../components/PortfolioChart';

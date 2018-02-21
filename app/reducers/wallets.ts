@@ -1,12 +1,6 @@
 import R from 'ramda';
-import { Action } from '../../actions/actions.types';
-
-export interface Wallet {
-  currency: string;
-  address: string;
-  quantity: number;
-  note?: string;
-}
+import { Action } from '../actions/actions.types';
+import { Wallet } from './wallets.types';
 
 export function wallets(state: Wallet[] = [], action: Action): Wallet[] {
   switch (action.type) {

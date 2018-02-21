@@ -1,12 +1,11 @@
 import { Dispatch as ReduxDispatch } from 'redux';
 import { ThunkAction as ReduxThunkAction } from 'redux-thunk';
-import Timer = NodeJS.Timer;
 import { GlobalState } from '../reducers';
 import { Coinlist } from '../reducers/coinlist';
 import { ExchangeActions } from '../reducers/exchanges.types';
 import { SettingsType } from '../reducers/settings';
 import { HistoryEntry, Ticker } from '../reducers/ticker';
-import { Wallet } from '../reducers/wallets';
+import { Wallet } from '../reducers/wallets.types';
 
 export type Action =
   | ExchangeActions

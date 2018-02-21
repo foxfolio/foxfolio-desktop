@@ -13,7 +13,7 @@ import React, { Component } from 'react';
 
 import { CurrencyAvatar } from '../../../components/CurrencyAvatar';
 import { Coinlist } from '../../../reducers/coinlist';
-import { Wallet } from '../../../reducers/wallets';
+import { Wallet } from '../../../reducers/wallets.types';
 
 const styles: StyleRulesCallback = theme => ({
   card: {

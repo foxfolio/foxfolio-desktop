@@ -2,7 +2,7 @@ import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField } 
 import React, { Component, FormEvent } from 'react';
 import { Autocomplete } from '../../../components/Autocomplete';
 import { Coinlist } from '../../../reducers/coinlist';
-import { Wallet } from '../../../reducers/wallets';
+import { Wallet } from '../../../reducers/wallets.types';
 
 interface Props {
   wallet: Wallet;
@@ -64,6 +64,7 @@ export default class WalletDialog extends Component<Props, Wallet> {
           <form autoComplete="off" onSubmit={this.save}>
             <Autocomplete
               label="Currency"
+              id="currency"
               onChange={this.changeCurrency}
               value={this.state.currency}
               items={Object.keys(coinlist).map(key => coinlist[key].FullName)}

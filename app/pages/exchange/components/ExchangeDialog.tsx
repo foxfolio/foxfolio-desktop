@@ -100,6 +100,7 @@ export const ExchangeDialog = withStyles(styles)(
               <div style={{ minHeight: 250 }}>
                 <Autocomplete
                   label="Exchange"
+                  id="exchange"
                   onChange={this.changeExchange}
                   value={this.state.exchange.type}
                   items={ccxt.exchanges.filter(exchange => exchange.charAt(0) !== '_')}
