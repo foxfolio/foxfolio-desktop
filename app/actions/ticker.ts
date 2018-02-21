@@ -1,7 +1,7 @@
 import * as R from 'ramda';
 import { Coinlist } from '../reducers/coinlist';
 import { Exchanges } from '../reducers/exchanges.types';
-import { Ticker } from '../reducers/ticker';
+import { HistoryEntry, Ticker } from '../reducers/ticker';
 import { Wallet } from '../reducers/wallets.types';
 import { Action, Dispatch, GetState, ThunkAction } from './actions.types';
 import startTimer from './timer';
@@ -23,7 +23,7 @@ function receiveTickerUpdate(ticker: Ticker): Action {
   };
 }
 
-function receiveHistory(fsym: string, tsym: string, history: Array<{ close: number }>): Action {
+function receiveHistory(fsym: string, tsym: string, history: HistoryEntry): Action {
   return {
     type: 'HISTORY_UPDATE',
     fsym,
