@@ -45,7 +45,7 @@ exports[`Render portfolio page 1`] = `
       }
     }
   >
-    <WithTheme(PortfolioChart)
+    <WithTheme(Component)
       portfolio={
         Object {
           "BTC": 6,
@@ -80,7 +80,7 @@ exports[`Render portfolio page 1`] = `
       }
     }
   >
-    <PortfolioPositions
+    <Component
       coinlist={Object {}}
       portfolio={
         Object {

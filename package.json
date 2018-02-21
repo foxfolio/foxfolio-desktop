@@ -99,38 +99,45 @@
     "reload"
   ],
   "jest": {
+    "globals": {
+      "ts-jest": {
+        "useBabelrc": true
+      }
+    },
     "moduleNameMapper": {
       "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/internals/mocks/fileMock.js",
       "\\.(css|less|sass|scss)$": "identity-obj-proxy"
     },
     "collectCoverageFrom": [
-      "app/**/*.js",
+      "app/**/*.ts?(x)",
       "!**/*.prod.js"
     ],
     "moduleFileExtensions": [
-      "js"
+      "js",
+      "ts",
+      "tsx"
     ],
     "moduleDirectories": [
-      "node_modules",
-      "app/node_modules"
+      "node_modules"
     ],
     "snapshotSerializers": [
       "enzyme-to-json/serializer"
     ],
     "setupFiles": [
-      "<rootDir>/__tests__/jestsetup.js"
+      "<rootDir>/__tests__/jestsetup.ts"
     ],
     "testMatch": [
-      "**/__tests__/**/*.spec.js?(x)"
+      "**/__tests__/**/*.spec.ts?(x)"
     ],
     "transform": {
-      "^.+\\.js$": "babel-jest"
+      "^.+\\.tsx?$": "ts-jest"
     }
   },
   "homepage": "http://foxfol.io",
   "devDependencies": {
     "@sentry/webpack-plugin": "^1.2.0",
     "@types/history": "^4.6.2",
+    "@types/jest": "^22.1.3",
     "@types/ramda": "^0.25.17",
     "@types/react": "^16.0.36",
     "@types/react-dom": "^16.0.3",
@@ -193,6 +200,7 @@
     "stylefmt": "^6.0.0",
     "stylelint": "^7.12.0",
     "stylelint-config-standard": "^16.0.0",
+    "ts-jest": "^22.0.4",
     "tslint": "^5.9.1",
     "tslint-config-prettier": "^1.8.0",
     "tslint-react": "^3.5.1",

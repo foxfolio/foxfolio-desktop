@@ -5,20 +5,20 @@ exports[`Render portfolio position 1`] = `
   raised={false}
 >
   <WithStyles(CardContent)
-    className="PortfolioPosition-root-1"
+    className="Component-root-1"
     onClick={[Function]}
   >
     <div
-      className="PortfolioPosition-avatar-2"
+      className="Component-avatar-2"
     >
       <Component
         asset="ETH"
         coinlist={Object {}}
-        fiatClass="PortfolioPosition-fiatAvatar-3"
+        fiatClass="Component-fiatAvatar-3"
       />
     </div>
     <div
-      className="PortfolioPosition-content-4"
+      className="Component-content-4"
     >
       <WithStyles(GridWrapper)
         container={true}
@@ -45,7 +45,7 @@ exports[`Render portfolio position 1`] = `
           </div>
         </WithStyles(GridWrapper)>
         <WithStyles(GridWrapper)
-          className="PortfolioPosition-right-7"
+          className="Component-right-7"
           item={true}
           xs={2}
         >
@@ -67,7 +67,7 @@ exports[`Render portfolio position 1`] = `
           </div>
         </WithStyles(GridWrapper)>
         <WithStyles(GridWrapper)
-          className="PortfolioPosition-right-7"
+          className="Component-right-7"
           item={true}
           xs={3}
         >
@@ -89,7 +89,7 @@ exports[`Render portfolio position 1`] = `
           </div>
         </WithStyles(GridWrapper)>
         <WithStyles(GridWrapper)
-          className="PortfolioPosition-right-7"
+          className="Component-right-7"
           item={true}
           xs={2}
         >
@@ -99,7 +99,7 @@ exports[`Render portfolio position 1`] = `
               component="span"
               type="subheading"
             >
-              <WithStyles(PriceChangeText)
+              <WithStyles(Component)
                 change={5.2}
                 muted={false}
               />
@@ -109,7 +109,7 @@ exports[`Render portfolio position 1`] = `
               component="span"
               type="body1"
             >
-              <WithStyles(PriceChangeText)
+              <WithStyles(Component)
                 change={2}
                 muted={true}
               />
@@ -120,7 +120,7 @@ exports[`Render portfolio position 1`] = `
     </div>
     <div>
       <WithStyles(IconButton)
-        className="PortfolioPosition-expand-5"
+        className="Component-expand-5"
       >
         <pure(ExpandMore) />
       </WithStyles(IconButton)>
@@ -133,9 +133,9 @@ exports[`Render portfolio position 1`] = `
     unmountOnExit={true}
   >
     <div
-      className="PortfolioPosition-collapse-8"
+      className="Component-collapse-8"
     >
-      <Connect(WithTheme(RawTokenLineChart))
+      <Connect(WithTheme(Component))
         fsym="ETH"
         tsym="USD"
       />

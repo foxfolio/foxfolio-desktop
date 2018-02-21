@@ -13,7 +13,7 @@ export interface Ticker {
 
 export interface TickerEntry {
   CHANGEPCT24HOUR: number;
-  PRICE: string;
+  PRICE: string; // TODO store price as number
 }
 
 export interface History {
@@ -25,7 +25,7 @@ export interface History {
   };
 }
 
-export type HistoryEntry = Array<{ close: number }>;
+export type HistoryEntry = Array<{ close: number; time: number }>;
 
 export function ticker(
   state: TickerAndHistory = { ticker: {}, history: {} },

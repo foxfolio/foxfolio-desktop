@@ -1,7 +1,6 @@
-// @flow
-import * as React from 'react';
 import { createShallow } from 'material-ui/test-utils';
-import PriceChangeText from '../../../../app/pages/portfolio/components/PriceChangeText';
+import * as React from 'react';
+import { PriceChangeText } from '../../../../app/pages/portfolio/components/PriceChangeText';
 
 let shallow;
 
@@ -10,11 +9,11 @@ beforeAll(() => {
 });
 
 test('Positive change', () => {
-  const wrapper = shallow(<PriceChangeText change={5}/>).dive();
+  const wrapper = shallow(<PriceChangeText change={5} />).dive();
   expect(wrapper).toMatchSnapshot();
 });
 
 test('Negative change', () => {
-  const wrapper = shallow(<PriceChangeText change={-5}/>).dive();
+  const wrapper = shallow(<PriceChangeText change={-5} />).dive();
   expect(wrapper).toMatchSnapshot();
 });

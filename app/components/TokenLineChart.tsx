@@ -1,4 +1,5 @@
 import { LinearProgress, withTheme } from 'material-ui';
+import { Theme } from 'material-ui/styles';
 import { WithTheme } from 'material-ui/styles/withTheme';
 import moment from 'moment';
 import React, { Component } from 'react';
@@ -31,7 +32,7 @@ interface OwnProps {
   tsym: string;
 }
 
-const ThemedTokenLineChart = withTheme()(
+export const ThemedTokenLineChart = withTheme()(
   class extends Component<StateProps & DispatchProps & OwnProps & WithTheme> {
     public componentWillMount() {
       const { requestHistory, fsym, tsym } = this.props;

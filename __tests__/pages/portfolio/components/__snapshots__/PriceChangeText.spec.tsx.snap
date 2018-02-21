@@ -9,12 +9,12 @@ exports[`Negative change 1`] = `
   }
 >
   <span
-    className="PriceChangeText-negative-1"
+    className="Component-negative-1"
   >
     -5.00%
   </span>
   <span
-    className="PriceChangeText-interval-5"
+    className="Component-interval-5"
   >
      /24h
   </span>
@@ -30,12 +30,12 @@ exports[`Positive change 1`] = `
   }
 >
   <span
-    className="PriceChangeText-positive-3"
+    className="Component-positive-3"
   >
     +5.00%
   </span>
   <span
-    className="PriceChangeText-interval-5"
+    className="Component-interval-5"
   >
      /24h
   </span>

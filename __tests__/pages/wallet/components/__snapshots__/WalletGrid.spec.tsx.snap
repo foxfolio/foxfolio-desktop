@@ -18,7 +18,9 @@ exports[`Render wallet grid 1`] = `
       md={6}
       sm={12}
     >
-      <WithStyles(WalletGridItem)
+      <WithStyles(Component)
+        coinlist={Object {}}
+        onDelete={[MockFunction]}
         onEdit={[Function]}
         wallet={
           Object {
@@ -32,7 +34,7 @@ exports[`Render wallet grid 1`] = `
   </WithStyles(GridWrapper)>
   <WithStyles(Button)
     aria-label="add"
-    className="WalletGrid-button-1"
+    className="Component-button-1"
     color="primary"
     fab={true}
     onClick={[Function]}
@@ -41,6 +43,7 @@ exports[`Render wallet grid 1`] = `
   </WithStyles(Button)>
   <WalletDialog
     close={[Function]}
+    coinlist={Object {}}
     open={false}
     save={[Function]}
     wallet={

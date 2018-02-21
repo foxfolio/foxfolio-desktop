@@ -1,10 +1,9 @@
-// @flow
 import { createShallow } from 'material-ui/test-utils';
 import * as React from 'react';
+import { PortfolioPositions } from '../../../../app/pages/portfolio/components/PortfolioPositions';
+import { Portfolio } from '../../../../app/pages/portfolio/types/portfolio.types';
 import { initialSettings } from '../../../../app/reducers/settings';
-import type { Ticker } from '../../../../app/reducers/ticker/types.d';
-import PortfolioPositions from '../../../../app/pages/portfolio/components/PortfolioPositions';
-import type { Portfolio } from '../../../../app/pages/portfolio/types/portfolio.types';
+import { Ticker } from '../../../../app/reducers/ticker';
 
 let shallow;
 
@@ -20,8 +19,11 @@ test('Render portfolio positions', () => {
     exchanges: { key: { BTC: 1, ETH: 2 } },
   };
   const ticker: Ticker = {
-    BTC: { BTC: { PRICE: 1, CHANGEPCT24HOUR: 0 }, USD: { PRICE: 10000, CHANGEPCT24HOUR: 1.1 } },
-    ETH: { BTC: { PRICE: 0.1, CHANGEPCT24HOUR: 2 }, USD: { PRICE: 1000, CHANGEPCT24HOUR: 5.2 } },
+    BTC: { BTC: { PRICE: '1', CHANGEPCT24HOUR: 0 }, USD: { PRICE: '10000', CHANGEPCT24HOUR: 1.1 } },
+    ETH: {
+      BTC: { PRICE: '0.1', CHANGEPCT24HOUR: 2 },
+      USD: { PRICE: '1000', CHANGEPCT24HOUR: 5.2 },
+    },
   };
   const settings = { ...initialSettings, fiatCurrency: 'USD' };
 
@@ -31,6 +33,7 @@ test('Render portfolio positions', () => {
       portfolio={portfolio}
       settings={settings}
       ticker={ticker}
-    />);
+    />
+  );
   expect(wrapper).toMatchSnapshot();
 });
