@@ -52,7 +52,7 @@ const configureStore = (initialState?: any) => {
   persistStore(store);
 
   if ((module as any).hot) {
-    (module as any).hot.accept('reducers', () => store.replaceReducer(require('../reducers')));
+    (module as any).hot.accept('../reducers', () => store.replaceReducer(require('../reducers')));
   }
 
   return store;
