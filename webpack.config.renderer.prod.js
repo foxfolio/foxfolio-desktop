@@ -150,7 +150,6 @@ export default merge.smart(baseConfig, {
      */
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'production'),
-      'process.env.RELEASE_HASH': JSON.stringify(process.env.RELEASE_HASH || ''),
     }),
 
     /**

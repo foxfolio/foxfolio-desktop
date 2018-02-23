@@ -3,7 +3,7 @@ import Raven from 'raven-js';
 export function configureSentry() {
   if (process.env.SENTRY_DSN) {
     Raven.config(process.env.SENTRY_DSN, {
-      release: process.env.RELEASE_HASH || '',
+      release: `v${process.env.VERSION || ''}`,
       dataCallback(data) {
         const normalizedData = data;
         if (normalizedData.culprit) {
