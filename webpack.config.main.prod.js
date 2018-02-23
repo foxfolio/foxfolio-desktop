@@ -55,6 +55,7 @@ export default merge.smart(baseConfig, {
       include: ['./app/dist'],
       urlPrefix: '/',
       release: process.env.RELEASE_HASH || '',
+      setcommit: true
     }),
   ],
 
