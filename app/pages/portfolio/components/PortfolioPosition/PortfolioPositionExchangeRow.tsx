@@ -3,7 +3,7 @@ import { TrendingUp } from 'material-ui-icons';
 import { StyleRulesCallback } from 'material-ui/styles';
 import React from 'react';
 import { connect } from 'react-redux';
-import { Exchanges } from '../../../reducers/exchanges.types';
+import { Exchanges } from '../../../../reducers/exchanges.types';
 
 const styles: StyleRulesCallback = theme => ({
   root: {

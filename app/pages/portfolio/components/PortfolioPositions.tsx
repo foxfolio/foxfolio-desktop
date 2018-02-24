@@ -6,7 +6,7 @@ import { SettingsType } from '../../../reducers/settings';
 import { Ticker } from '../../../reducers/ticker';
 import { Portfolio } from '../types/portfolio.types';
 import { PortfolioPosition } from './PortfolioPosition';
-import { PortfolioPositionHeader } from './PortfolioPositionHeader';
+import { PortfolioPositionHeader } from './PortfolioPositionsHeader';
 
 export interface PortfolioForAsset {
   total: number;
