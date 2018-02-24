@@ -10,22 +10,55 @@ beforeAll(() => {
   shallow = createShallow();
 });
 
-test('Render portfolio position', () => {
-  const asset = 'ETH';
-  const coinlist = {};
-  const portfolio = {
-    total: 10,
-    wallets: 2,
-    exchanges: { exchangeKey: 8 },
-  };
-  const ticker: Ticker = {
+let coinlist = {};
+let ticker: Ticker;
+const settings = { ...initialSettings, fiatCurrency: 'USD' };
+
+beforeEach(() => {
+  coinlist = {};
+  ticker = {
     BTC: { BTC: { PRICE: 1, CHANGEPCT24HOUR: 0 }, USD: { PRICE: 10000, CHANGEPCT24HOUR: 1.1 } },
     ETH: {
       BTC: { PRICE: 0.1, CHANGEPCT24HOUR: 2 },
       USD: { PRICE: 1000, CHANGEPCT24HOUR: 5.2 },
     },
   };
-  const settings = { ...initialSettings, fiatCurrency: 'USD' };
+});
+
+test('Render portfolio position', () => {
+  const asset = 'ETH';
+  const portfolio = {
+    total: 10,
+    wallets: 2,
+    exchanges: { exchangeKey: 8 },
+  };
+
+  const wrapper = shallow(
+    <PortfolioPosition
+      asset={asset}
+      coinlist={coinlist}
+      portfolio={portfolio}
+      settings={settings}
+      ticker={ticker}
+    />
+  ).dive();
+  expect(wrapper).toMatchSnapshot();
+});
+
+test('Portfolio position without ticker', () => {
+  const asset = 'ETH';
+  const portfolio = {
+    total: 10,
+    wallets: 2,
+    exchanges: { exchangeKey: 8 },
+  };
+
+  ticker = {
+    BTC: { BTC: { PRICE: 1, CHANGEPCT24HOUR: 0 }, USD: { PRICE: 10000, CHANGEPCT24HOUR: 1.1 } },
+    ETH: {
+      USD: { PRICE: 1000, CHANGEPCT24HOUR: 5.2 },
+    },
+  };
 
   const wrapper = shallow(
     <PortfolioPosition

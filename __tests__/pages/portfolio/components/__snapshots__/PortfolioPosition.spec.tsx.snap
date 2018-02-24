@@ -1,145 +1,200 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Portfolio position without ticker 1`] = `
+<WithStyles(Component)
+  cardContent={
+    <UNDEFINED>
+      <div
+        className="Component-avatar-1"
+      >
+        <Unknown
+          asset="ETH"
+          coinlist={Object {}}
+          fiatClass="Component-fiatAvatar-2"
+        />
+      </div>
+      <div
+        className="Component-content-3"
+      >
+        <WithStyles(GridWrapper)
+          container={true}
+        >
+          <WithStyles(GridWrapper)
+            item={true}
+            xs={3}
+          >
+            <div>
+              <WithStyles(Typography)
+                color="default"
+                component="span"
+                type="body2"
+              >
+                ETH
+              </WithStyles(Typography)>
+              <WithStyles(Typography)
+                color="secondary"
+                component="span"
+                type="body2"
+              >
+                10.000
+              </WithStyles(Typography)>
+            </div>
+          </WithStyles(GridWrapper)>
+          <WithStyles(GridWrapper)
+            className="Component-right-4"
+            item={true}
+            xs={2}
+          >
+            
+          </WithStyles(GridWrapper)>
+          <WithStyles(GridWrapper)
+            className="Component-right-4"
+            item={true}
+            xs={3}
+          >
+            
+          </WithStyles(GridWrapper)>
+          <WithStyles(GridWrapper)
+            className="Component-right-4"
+            item={true}
+            xs={2}
+          >
+            
+          </WithStyles(GridWrapper)>
+        </WithStyles(GridWrapper)>
+      </div>
+    </UNDEFINED>
+  }
+  collapseContent={
+    <Connect(WithTheme(Component))
+      fsym="ETH"
+      tsym="USD"
+    />
+  }
+/>
+`;
+
 exports[`Render portfolio position 1`] = `
-<Card
-  raised={false}
->
-  <WithStyles(CardContent)
-    className="Component-root-1"
-    onClick={[Function]}
-  >
-    <div
-      className="Component-avatar-2"
-    >
-      <Component
-        asset="ETH"
-        coinlist={Object {}}
-        fiatClass="Component-fiatAvatar-3"
-      />
-    </div>
-    <div
-      className="Component-content-4"
-    >
-      <WithStyles(GridWrapper)
-        container={true}
+<WithStyles(Component)
+  cardContent={
+    <UNDEFINED>
+      <div
+        className="Component-avatar-1"
+      >
+        <Unknown
+          asset="ETH"
+          coinlist={Object {}}
+          fiatClass="Component-fiatAvatar-2"
+        />
+      </div>
+      <div
+        className="Component-content-3"
       >
         <WithStyles(GridWrapper)
-          item={true}
-          xs={3}
+          container={true}
         >
-          <div>
-            <WithStyles(Typography)
-              color="default"
-              component="span"
-              type="body2"
-            >
-              ETH
-            </WithStyles(Typography)>
-            <WithStyles(Typography)
-              color="secondary"
-              component="span"
-              type="body2"
-            >
-              10.000
-            </WithStyles(Typography)>
-          </div>
+          <WithStyles(GridWrapper)
+            item={true}
+            xs={3}
+          >
+            <div>
+              <WithStyles(Typography)
+                color="default"
+                component="span"
+                type="body2"
+              >
+                ETH
+              </WithStyles(Typography)>
+              <WithStyles(Typography)
+                color="secondary"
+                component="span"
+                type="body2"
+              >
+                10.000
+              </WithStyles(Typography)>
+            </div>
+          </WithStyles(GridWrapper)>
+          <WithStyles(GridWrapper)
+            className="Component-right-4"
+            item={true}
+            xs={2}
+          >
+            <div>
+              <WithStyles(Typography)
+                color="default"
+                component="span"
+                type="subheading"
+              >
+                10000.00 USD
+              </WithStyles(Typography)>
+              <WithStyles(Typography)
+                color="secondary"
+                component="span"
+                type="body1"
+              >
+                1.0000 BTC
+              </WithStyles(Typography)>
+            </div>
+          </WithStyles(GridWrapper)>
+          <WithStyles(GridWrapper)
+            className="Component-right-4"
+            item={true}
+            xs={3}
+          >
+            <div>
+              <WithStyles(Typography)
+                color="default"
+                component="span"
+                type="subheading"
+              >
+                1000.0 USD
+              </WithStyles(Typography)>
+              <WithStyles(Typography)
+                color="secondary"
+                component="span"
+                type="body1"
+              >
+                0.10000 BTC
+              </WithStyles(Typography)>
+            </div>
+          </WithStyles(GridWrapper)>
+          <WithStyles(GridWrapper)
+            className="Component-right-4"
+            item={true}
+            xs={2}
+          >
+            <div>
+              <WithStyles(Typography)
+                color="default"
+                component="span"
+                type="subheading"
+              >
+                <WithStyles(Component)
+                  change={5.2}
+                  muted={false}
+                />
+              </WithStyles(Typography)>
+              <WithStyles(Typography)
+                color="secondary"
+                component="span"
+                type="body1"
+              >
+                <WithStyles(Component)
+                  change={2}
+                  muted={true}
+                />
+              </WithStyles(Typography)>
+            </div>
+          </WithStyles(GridWrapper)>
         </WithStyles(GridWrapper)>
-        <WithStyles(GridWrapper)
-          className="Component-right-7"
-          item={true}
-          xs={2}
-        >
-          <div>
-            <WithStyles(Typography)
-              color="default"
-              component="span"
-              type="subheading"
-            >
-              10000.00  USD
-            </WithStyles(Typography)>
-            <WithStyles(Typography)
-              color="secondary"
-              component="span"
-              type="body1"
-            >
-              1.0000 BTC
-            </WithStyles(Typography)>
-          </div>
-        </WithStyles(GridWrapper)>
-        <WithStyles(GridWrapper)
-          className="Component-right-7"
-          item={true}
-          xs={3}
-        >
-          <div>
-            <WithStyles(Typography)
-              color="default"
-              component="span"
-              type="subheading"
-            >
-              1000.0 USD
-            </WithStyles(Typography)>
-            <WithStyles(Typography)
-              color="secondary"
-              component="span"
-              type="body1"
-            >
-              0.10000 BTC
-            </WithStyles(Typography)>
-          </div>
-        </WithStyles(GridWrapper)>
-        <WithStyles(GridWrapper)
-          className="Component-right-7"
-          item={true}
-          xs={2}
-        >
-          <div>
-            <WithStyles(Typography)
-              color="default"
-              component="span"
-              type="subheading"
-            >
-              <WithStyles(Component)
-                change={5.2}
-                muted={false}
-              />
-            </WithStyles(Typography)>
-            <WithStyles(Typography)
-              color="secondary"
-              component="span"
-              type="body1"
-            >
-              <WithStyles(Component)
-                change={2}
-                muted={true}
-              />
-            </WithStyles(Typography)>
-          </div>
-        </WithStyles(GridWrapper)>
-      </WithStyles(GridWrapper)>
-    </div>
-    <div>
-      <WithStyles(IconButton)
-        className="Component-expand-5"
-      >
-        <pure(ExpandMore) />
-      </WithStyles(IconButton)>
-    </div>
-  </WithStyles(CardContent)>
-  <WithStyles(Collapse)
-    in={false}
-    mountOnEnter={true}
-    timeout="auto"
-    unmountOnExit={true}
-  >
-    <div
-      className="Component-collapse-8"
-    >
-      <Connect(WithTheme(Component))
-        fsym="ETH"
-        tsym="USD"
-      />
-    </div>
-  </WithStyles(Collapse)>
-</Card>
+      </div>
+    </UNDEFINED>
+  }
+  collapseContent={
+    <Connect(WithTheme(Component))
+      fsym="ETH"
+      tsym="USD"
+    />
+  }
+/>
 `;

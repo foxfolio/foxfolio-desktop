@@ -12,11 +12,11 @@ exports[`Render portfolio page 1`] = `
       }
     }
   >
-    <PortfolioHeader
+    <Component
       change={
         Object {
-          "crypto": 0,
-          "fiat": 2,
+          "crypto": 6,
+          "fiat": 6000,
         }
       }
       settings={

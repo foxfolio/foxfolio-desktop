@@ -4,12 +4,8 @@ import { Dispatch } from '../../actions/actions.types';
 import * as TransactionActions from '../../actions/transactions';
 import { GlobalState } from '../../reducers';
 import { getCoinlist, getSettings, getTicker } from '../../selectors/selectGlobalState';
-import Portfolio, { PortfolioProps } from './container/Portfolio';
-import {
-  getPortfolio,
-  getPortfolioChange,
-  getPortfolioSum,
-  } from './selectors/selectPortfolio';
+import { PortfolioContainer, PortfolioProps } from './container/Portfolio';
+import { getPortfolio, getPortfolioChange, getPortfolioSum } from './selectors/selectPortfolio';
 
 function mapStateToProps(state: GlobalState): PortfolioProps {
   return {
@@ -26,4 +22,4 @@ function mapDispatchToProps(dispatch: Dispatch) {
   return bindActionCreators(TransactionActions, dispatch);
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Portfolio);
+export default connect(mapStateToProps, mapDispatchToProps)(PortfolioContainer);

@@ -19,14 +19,14 @@ export interface PortfolioProps {
   settings: SettingsType;
 }
 
-export default function PortfolioContainer({
+export const PortfolioContainer = ({
   portfolio,
   ticker,
   coinlist,
   sum,
   change,
   settings,
-}: PortfolioProps) {
+}: PortfolioProps) => {
   if (ticker[settings.cryptoCurrency] && !R.isEmpty(portfolio.total)) {
     return (
       <div>
@@ -57,4 +57,4 @@ export default function PortfolioContainer({
       <EmptyPortfolio />
     </Paper>
   );
-}
+};

@@ -1,10 +1,15 @@
 import { createShallow } from 'material-ui/test-utils';
 import * as React from 'react';
-import EmptyPortfolio from '../../../../app/pages/portfolio/components/EmptyPortfolio';
-import Portfolio from '../../../../app/pages/portfolio/container/Portfolio';
-import { Balances } from '../../../../app/reducers/exchanges.types';
+import { EmptyPortfolio } from '../../../../app/pages/portfolio/components/EmptyPortfolio';
+import { PortfolioContainer } from '../../../../app/pages/portfolio/container/Portfolio';
+import {
+  Portfolio,
+  PortfolioChange,
+  PortfolioSum,
+} from '../../../../app/pages/portfolio/types/portfolio.types';
+import { Coinlist } from '../../../../app/reducers/coinlist';
 import { initialSettings } from '../../../../app/reducers/settings';
-import { Wallet } from '../../../../app/reducers/wallets.types';
+import { Ticker } from '../../../../app/reducers/ticker';
 
 let shallow;
 
@@ -12,45 +17,66 @@ beforeAll(() => {
   shallow = createShallow();
 });
 
-let balances: { [id: string]: Balances };
-let coinlist;
-let ticker;
-let wallets: Wallet[];
+let coinlist: Coinlist;
+let ticker: Ticker;
+let portfolio: Portfolio;
+let sum: PortfolioSum;
+let change: PortfolioChange;
 
 beforeEach(() => {
-  balances = {};
   coinlist = {};
   ticker = {};
-  wallets = [];
 });
 
 test('Render portfolio page', () => {
-  balances = { exchange: { BTC: 5 } };
   ticker = { BTC: { USD: { PRICE: 1000, CHANGEPCT24HOUR: 2 } } };
-  wallets = [{ address: '', currency: 'BTC', quantity: 1 }];
+
+  portfolio = {
+    total: { BTC: 6 },
+    exchanges: { exchange: { BTC: 5 } },
+    wallets: { BTC: 1 },
+  };
+  sum = { fiat: 6000, crypto: 6 };
+
+  change = {
+    fiat: 6000,
+    crypto: 6,
+  };
 
   const wrapper = shallow(
-    <Portfolio
-      balances={balances}
+    <PortfolioContainer
+      portfolio={portfolio}
       coinlist={coinlist}
       settings={initialSettings}
       ticker={ticker}
-      wallets={wallets}
+      sum={sum}
+      change={change}
     />
   );
   expect(wrapper).toMatchSnapshot();
 });
 
 test('Render empty portfolio when ticker is empty', () => {
-  balances = { exchange: { BTC: 1 } };
+  portfolio = {
+    total: { BTC: 6 },
+    exchanges: { exchange: { BTC: 5 } },
+    wallets: { BTC: 1 },
+  };
+  sum = { fiat: 6000, crypto: 6 };
+
+  change = {
+    fiat: 6000,
+    crypto: 6,
+  };
 
   const wrapper = shallow(
-    <Portfolio
-      balances={balances}
+    <PortfolioContainer
+      portfolio={portfolio}
       coinlist={coinlist}
       settings={initialSettings}
       ticker={ticker}
-      wallets={wallets}
+      sum={sum}
+      change={change}
     />
   );
   expect(wrapper.contains(<EmptyPortfolio />)).toBeTruthy();
@@ -58,14 +84,25 @@ test('Render empty portfolio when ticker is empty', () => {
 
 test('Render empty portfolio when balances and wallets are empty', () => {
   ticker = { BTC: { USD: { PRICE: 1000, CHANGEPCT24HOUR: 2 } } };
+  portfolio = {
+    total: {},
+    exchanges: {},
+    wallets: {},
+  };
+  sum = { fiat: 0, crypto: 0 };
 
+  change = {
+    fiat: 0,
+    crypto: 0,
+  };
   const wrapper = shallow(
-    <Portfolio
-      balances={balances}
+    <PortfolioContainer
+      portfolio={portfolio}
       coinlist={coinlist}
       settings={initialSettings}
       ticker={ticker}
-      wallets={wallets}
+      sum={sum}
+      change={change}
     />
   );
   expect(wrapper.contains(<EmptyPortfolio />)).toBeTruthy();
