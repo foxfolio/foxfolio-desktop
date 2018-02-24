@@ -3,6 +3,7 @@ import { bindActionCreators } from 'redux';
 import { Dispatch } from '../../actions/actions.types';
 import * as TransactionActions from '../../actions/transactions';
 import { GlobalState } from '../../reducers';
+import Portfolio, { PortfolioProps } from './container/Portfolio';
 import {
   getCoinlist,
   getPortfolio,
@@ -10,8 +11,7 @@ import {
   getPortfolioSum,
   getSettings,
   getTicker,
-} from '../PortfolioSelectors';
-import Portfolio, { PortfolioProps } from './container/Portfolio';
+} from './PortfolioSelectors';
 
 function mapStateToProps(state: GlobalState): PortfolioProps {
   return {

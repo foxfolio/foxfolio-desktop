@@ -13,8 +13,8 @@ beforeAll(() => {
 test('Render portfolio chart', () => {
   const portfolio = { BTC: 5, ETH: 10 };
   const ticker: Ticker = {
-    BTC: { BTC: { PRICE: '1', CHANGEPCT24HOUR: 0 } },
-    ETH: { BTC: { PRICE: '0.1', CHANGEPCT24HOUR: 2 } },
+    BTC: { BTC: { PRICE: 1, CHANGEPCT24HOUR: 0 } },
+    ETH: { BTC: { PRICE: 0.1, CHANGEPCT24HOUR: 2 } },
   };
 
   const wrapper = shallow(

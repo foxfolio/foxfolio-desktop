@@ -13,7 +13,7 @@ export interface Ticker {
 
 export interface TickerEntry {
   CHANGEPCT24HOUR: number;
-  PRICE: string; // TODO store price as number
+  PRICE: number;
 }
 
 export interface History {

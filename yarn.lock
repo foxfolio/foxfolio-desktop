@@ -34,7 +34,7 @@
     esutils "^2.0.2"
     js-tokens "^3.0.0"
 
-"@sentry/cli@^1.28.1":
+"@sentry/cli@^1.30.0":
   version "1.30.0"
   resolved "https://registry.yarnpkg.com/@sentry/cli/-/cli-1.30.0.tgz#bd2eb7d84ef87f1d58e4a6fb2c4889fd2ae4b6c9"
   dependencies:
@@ -42,12 +42,6 @@
     node-fetch "^1.7.3"
     progress "2.0.0"
     proxy-from-env "^1.0.0"
-
-"@sentry/webpack-plugin@greimela/sentry-webpack-plugin":
-  version "1.3.3"
-  resolved "https://codeload.github.com/greimela/sentry-webpack-plugin/tar.gz/d5463d643b814548ddba7e8d8af6fe7e0f94a074"
-  dependencies:
-    "@sentry/cli" "^1.28.1"
 
 "@types/d3-path@*":
   version "1.0.6"

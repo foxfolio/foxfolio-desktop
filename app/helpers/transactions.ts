@@ -23,5 +23,5 @@ export function unifySymbols(symbol: string): string {
 }
 
 export function getTickerPrice(ticker: Ticker, fsym: string, tsym: string): number {
-  return fsym !== tsym ? parseFloat(ticker[fsym][tsym].PRICE) : 1;
+  return fsym !== tsym ? ticker[fsym][tsym].PRICE : 1;
 }

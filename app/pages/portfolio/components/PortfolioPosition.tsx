@@ -159,25 +159,25 @@ const PositionQuantity = (
     return (
       <div>
         <Typography type="body2" component="span" color={quantity > 0 ? 'default' : 'secondary'}>
-          {`${(
-            (asset !== fiatCurrency ? parseFloat(ticker[fiatCurrency].PRICE) : 1) * quantity
-          ).toFixed(2)}  ${fiatCurrency}`}
+          {`${((asset !== fiatCurrency ? ticker[fiatCurrency].PRICE : 1) * quantity).toFixed(
+            2
+          )}  ${fiatCurrency}`}
         </Typography>
         <Typography type="body2" component="span" color={quantity > 0 ? 'default' : 'secondary'}>
           {`${(
-            (asset !== cryptoCurrency ? parseFloat(ticker[cryptoCurrency].PRICE) : 1) * quantity
+            (asset !== cryptoCurrency ? ticker[cryptoCurrency].PRICE : 1) * quantity
           ).toPrecision(5)} ${cryptoCurrency}`}
         </Typography>
       </div>
     );
   }
   const fiatEntry = `${(
-    (asset !== fiatCurrency ? parseFloat(ticker[fiatCurrency].PRICE) : 1) * quantity
+    (asset !== fiatCurrency ? ticker[fiatCurrency].PRICE : 1) * quantity
   ).toFixed(2)}  ${fiatCurrency}`;
   const cryptoEntry =
-    `${(
-      (asset !== cryptoCurrency ? parseFloat(ticker[cryptoCurrency].PRICE) : 1) * quantity
-    ).toPrecision(5)} ` + `${cryptoCurrency}`;
+    `${((asset !== cryptoCurrency ? ticker[cryptoCurrency].PRICE : 1) * quantity).toPrecision(
+      5
+    )} ` + `${cryptoCurrency}`;
 
   return (
     <div>
@@ -204,24 +204,22 @@ const PositionPrice = (
       <div>
         <Typography type="body2" component="span" color={quantity > 0 ? 'default' : 'secondary'}>
           {asset !== fiatCurrency
-            ? `${parseFloat(ticker[fiatCurrency].PRICE).toPrecision(5)} ${fiatCurrency}`
+            ? `${ticker[fiatCurrency].PRICE.toPrecision(5)} ${fiatCurrency}`
             : '-'}
         </Typography>
         <Typography type="body2" component="span" color={quantity > 0 ? 'default' : 'secondary'}>
           {asset !== cryptoCurrency
-            ? `${parseFloat(ticker[cryptoCurrency].PRICE).toPrecision(5)} ${cryptoCurrency}`
+            ? `${ticker[cryptoCurrency].PRICE.toPrecision(5)} ${cryptoCurrency}`
             : '-'}
         </Typography>
       </div>
     );
   }
   const fiatEntry =
-    asset !== fiatCurrency
-      ? `${parseFloat(ticker[fiatCurrency].PRICE).toPrecision(5)} ${fiatCurrency}`
-      : '-';
+    asset !== fiatCurrency ? `${ticker[fiatCurrency].PRICE.toPrecision(5)} ${fiatCurrency}` : '-';
   const cryptoEntry =
     asset !== cryptoCurrency
-      ? `${parseFloat(ticker[cryptoCurrency].PRICE).toPrecision(5)} ${cryptoCurrency}`
+      ? `${ticker[cryptoCurrency].PRICE.toPrecision(5)} ${cryptoCurrency}`
       : '-';
   return (
     <div>

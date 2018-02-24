@@ -1,16 +1,16 @@
 import R from 'ramda';
 import { createSelector } from 'reselect';
-import { getTickerPrice } from '../helpers/transactions';
-import { GlobalState } from '../reducers';
-import { Exchanges } from '../reducers/exchanges.types';
-import { Ticker } from '../reducers/ticker';
-import { getFiatCurrencies } from '../utils/fiatCurrencies';
+import { getTickerPrice } from '../../helpers/transactions';
+import { GlobalState } from '../../reducers/index';
+import { Exchanges } from '../../reducers/exchanges.types';
+import { Ticker } from '../../reducers/ticker';
+import { getFiatCurrencies } from '../../utils/fiatCurrencies';
 import {
   Balances,
   ExchangeBalances,
   Portfolio,
   PortfolioSum,
-} from './portfolio/types/portfolio.types';
+} from './types/portfolio.types';
 
 export const getCoinlist = (state: GlobalState) => state.coinlist;
 export const getTicker = (state: GlobalState) => state.ticker.ticker;

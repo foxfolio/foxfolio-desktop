@@ -1,7 +1,7 @@
 import * as R from 'ramda';
 import { Coinlist } from '../reducers/coinlist';
 import { Exchanges } from '../reducers/exchanges.types';
-import { HistoryEntry, Ticker } from '../reducers/ticker';
+import { HistoryEntry, Ticker, TickerEntry } from '../reducers/ticker';
 import { Wallet } from '../reducers/wallets.types';
 import { Action, Dispatch, GetState, ThunkAction } from './actions.types';
 import startTimer from './timer';
@@ -16,10 +16,10 @@ function fetchingTickerUpdate(): Action {
   };
 }
 
-function receiveTickerUpdate(ticker: Ticker): Action {
+function receiveTickerUpdate(rawTicker: RawTicker): Action {
   return {
     type: 'TICKER_UPDATE',
-    ticker,
+    ticker: formatRawTicker(rawTicker),
   };
 }
 
@@ -126,4 +126,26 @@ function getSymbolsFromTransactions(
     from: R.uniq([cryptoCurrency, ...walletSymbols, ...exchangeSymbols, ...extraSymbols]),
     to: [cryptoCurrency, fiatCurrency],
   };
+}
+
+interface RawTicker {
+  [fsym: string]: {
+    [tsym: string]: RawTickerEntry;
+  };
+}
+
+interface RawTickerEntry {
+  CHANGEPCT24HOUR: string;
+  PRICE: string;
+}
+
+function formatRawTicker(rawTicker: RawTicker) {
+  const ticker = R.mapObjIndexed(
+    R.mapObjIndexed((entry: RawTickerEntry) => ({
+      ...entry,
+      CHANGEPCT24HOUR: parseFloat(entry.CHANGEPCT24HOUR),
+      PRICE: parseFloat(entry.PRICE),
+    }))
+  )(rawTicker);
+  return ticker;
 }
