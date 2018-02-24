@@ -2,10 +2,6 @@ import R from 'ramda';
 import { Exchanges, Trade } from '../reducers/exchanges.types';
 import { Ticker } from '../reducers/ticker';
 
-export const mapKeys = R.curry((fn: any, obj: object) =>
-  R.zipObj(R.map(fn, R.keys(obj)), R.values(obj))
-);
-
 export const flattenTransactions: (exchanges: Exchanges) => Trade[] = exchanges =>
   R.pipe(
     R.values,
