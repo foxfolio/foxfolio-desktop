@@ -1,3 +1,5 @@
+import 'whatwg-fetch';
+
 import * as ccxt from 'ccxt';
 import * as R from 'ramda';
 import { Coinlist } from '../reducers/coinlist';

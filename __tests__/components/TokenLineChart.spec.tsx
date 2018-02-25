@@ -1,5 +1,3 @@
-import { Theme } from 'material-ui/styles';
-import { WithTheme } from 'material-ui/styles/withTheme';
 import { createMount } from 'material-ui/test-utils';
 import * as React from 'react';
 import { ThemedTokenLineChart } from '../../app/components/TokenLineChart';

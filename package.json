@@ -249,7 +249,8 @@
     "redux-thunk": "^2.2.0",
     "reselect": "^3.0.1",
     "shortid": "^2.2.8",
-    "source-map-support": "^0.4.15"
+    "source-map-support": "^0.4.15",
+    "whatwg-fetch": "^2.0.3"
   },
   "resolutions": {
     "webpack-sources": "1.0.1"
