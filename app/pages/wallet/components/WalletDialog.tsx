@@ -12,11 +12,18 @@ interface Props {
   save: (source: Wallet) => void;
 }
 
-export default class WalletDialog extends Component<Props, Wallet> {
-  public state: Wallet = {
+interface StringWallet {
+  currency: string;
+  quantity: string;
+  address: string;
+  note?: string;
+}
+
+export default class WalletDialog extends Component<Props, StringWallet> {
+  public state: StringWallet = {
     currency: '',
     address: '',
-    quantity: 0,
+    quantity: '',
   };
 
   public componentWillReceiveProps(nextProps: Props) {
@@ -24,7 +31,7 @@ export default class WalletDialog extends Component<Props, Wallet> {
       this.setState({
         currency: nextProps.wallet.currency,
         address: nextProps.wallet.address,
-        quantity: nextProps.wallet.quantity,
+        quantity: nextProps.wallet.quantity.toString(),
         note: nextProps.wallet.note,
       });
     }
@@ -35,7 +42,7 @@ export default class WalletDialog extends Component<Props, Wallet> {
     this.props.save({
       currency: this.state.currency,
       address: this.state.address,
-      quantity: this.state.quantity,
+      quantity: parseFloat(this.state.quantity),
       note: this.state.note ? this.state.note : '',
     });
   };
@@ -48,7 +55,7 @@ export default class WalletDialog extends Component<Props, Wallet> {
 
   public handleChange = (name: keyof Wallet) => (event: React.ChangeEvent<HTMLInputElement>) => {
     if (name === 'quantity') {
-      this.setState({ quantity: parseFloat(event.target.value) });
+      this.setState({ quantity: event.target.value });
     } else {
       this.setState({ [name]: event.target.value } as any);
     }
@@ -84,6 +91,7 @@ export default class WalletDialog extends Component<Props, Wallet> {
               onChange={this.handleChange('quantity')}
               fullWidth
               margin="normal"
+              type="number"
             />
             <TextField
               label="Note"
