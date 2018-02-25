@@ -1,8 +1,10 @@
+import * as ccxt from 'ccxt';
 import * as R from 'ramda';
 import { Coinlist } from '../reducers/coinlist';
-import { Exchanges } from '../reducers/exchanges.types';
-import { HistoryEntry, Ticker, TickerEntry } from '../reducers/ticker';
+import { Exchange, Exchanges } from '../reducers/exchanges.types';
+import { HistoryEntry, Ticker } from '../reducers/ticker';
 import { Wallet } from '../reducers/wallets.types';
+import { getExchanges } from '../selectors/selectGlobalState';
 import { Action, Dispatch, GetState, ThunkAction } from './actions.types';
 import startTimer from './timer';
 
@@ -44,7 +46,7 @@ export function requestTickerUpdate(
   fiatCurrency?: string,
   cryptoCurrency?: string
 ): ThunkAction {
-  return (dispatch: Dispatch, getState: GetState) => {
+  return async (dispatch: Dispatch, getState: GetState) => {
     dispatch(fetchingTickerUpdate());
 
     const state = getState();
@@ -55,16 +57,74 @@ export function requestTickerUpdate(
       cryptoCurrency || state.settings.cryptoCurrency,
       extraSymbols
     );
-    const fsyms = symbols.from.join(',');
-    const tsyms = symbols.to.join(',');
-    if (fsyms && tsyms) {
-      fetch(`https://min-api.cryptocompare.com/data/pricemultifull?fsyms=${fsyms}&tsyms=${tsyms}`)
-        .then(result => result.json())
-        .then(result => dispatch(receiveTickerUpdate(result.RAW)))
-        .catch(error => console.error(error));
+    try {
+      let ticker = await getTickerForSymbols(symbols);
+      ticker = await requestMissingTickerUpdateFromExchange(ticker, getExchanges(state), symbols);
+      dispatch(receiveTickerUpdate(ticker));
+    } catch (error) {
+      console.error(error); // TODO Show this error to the user? Logging?
     }
   };
 }
+
+const getTickerForSymbols = (symbols: Symbols) => {
+  const fsyms = symbols.from.join(',');
+  const tsyms = symbols.to.join(',');
+  if (fsyms && tsyms) {
+    return fetch(
+      `https://min-api.cryptocompare.com/data/pricemultifull?fsyms=${fsyms}&tsyms=${tsyms}`
+    )
+      .then(result => result.json())
+      .then(result => result.RAW);
+  }
+  return Promise.reject('No symbols');
+};
+
+const requestMissingTickerUpdateFromExchange = async (
+  ticker,
+  exchanges: Exchanges,
+  symbols: Symbols
+) => {
+  const updatedTicker: Ticker = { ...ticker };
+
+  try {
+    for (const fsym of symbols.from) {
+      if (!ticker[fsym]) {
+        for (const exchange of R.values(exchanges)) {
+          if (exchangeHasSymbol(fsym, exchange)) {
+            const connector: ccxt.Exchange = new ccxt[exchange.type](exchange.credentials);
+            const markets: {
+              [symbol: string]: ccxt.Market;
+            } = (await connector.loadMarkets()) as any;
+            const marketsForSymbol = R.values(markets).filter(market =>
+              market.symbol.startsWith(fsym.toUpperCase())
+            );
+            for (const market of marketsForSymbol) {
+              try {
+                const tick = await connector.fetchTicker(market.symbol);
+                updatedTicker[market.base][market.quote] = {
+                  PRICE: tick.last || tick.ask,
+                  CHANGEPCT24HOUR: 0,
+                };
+              } catch (error) {
+                console.error(error);
+              }
+            }
+            break;
+          }
+        }
+      }
+    }
+  } catch (error) {
+    console.error(error);
+    return ticker;
+  }
+  return updatedTicker;
+};
+
+const exchangeHasSymbol = (symbol: string, exchange: Exchange) => {
+  return R.contains(symbol, R.keys(exchange.balances));
+};
 
 export function requestHistory(
   fsym: string,
@@ -107,13 +167,18 @@ export function continuouslyUpdateTicker(): ThunkAction {
   };
 }
 
+interface Symbols {
+  from: string[];
+  to: string[];
+}
+
 function getSymbolsFromTransactions(
   exchanges: Exchanges,
   wallets: Wallet[],
   fiatCurrency: string,
   cryptoCurrency: string,
   extraSymbols: string[]
-): { from: string[]; to: string[] } {
+): Symbols {
   const walletSymbols = wallets.map(wallet => wallet.currency) || [];
   const exchangeSymbols = R.pipe(
     R.values,
