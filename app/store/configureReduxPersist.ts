@@ -1,8 +1,10 @@
 import * as R from 'ramda';
 import { createMigrate, createTransform, PersistConfig } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
+import { GlobalState } from '../reducers';
 
 export const configureReduxPersist = (): PersistConfig => ({
+  version: 0,
   key: 'primary',
   blacklist: ['router', 'timer'],
   transforms: [createDateTransform(), createExchangeTransform()],
@@ -33,8 +35,8 @@ const createDateTransform = () => {
 };
 
 const migrations = {
-  0: state => ({
+  0: (state: GlobalState): GlobalState => ({
     ...state,
-    wallets: {},
+    ticker: { ticker: {}, history: {} },
   }),
 };
