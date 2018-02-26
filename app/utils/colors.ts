@@ -25,6 +25,7 @@ SOFTWARE.
 
 export default function getColor(currency: string): string {
   const colors = {
+    ['ACT*']: '#626efb',
     ADC: '#3CB0E5',
     AEON: '#164450',
     AMP: '#048DD2',
