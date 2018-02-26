@@ -18,7 +18,6 @@ const options = {
   const cli = new SentryCli();
 
   console.log(`Creating release ${release}`);
-  await helper.execute(['releases', 'delete', release]);
   console.log(await cli.releases.new(release));
 
   console.log('Uploading source maps');
