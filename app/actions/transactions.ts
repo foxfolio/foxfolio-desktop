@@ -1,5 +1,6 @@
 import ccxt from 'ccxt';
-import R, { equals, filter, forEachObjIndexed, keys } from 'ramda';
+import R, { equals, forEachObjIndexed, keys } from 'ramda';
+import { mapKeys } from '../helpers/mapping';
 import { GlobalState } from '../reducers';
 import {
   Balances,
@@ -9,6 +10,7 @@ import {
   FailedExchangeRequestAction,
   IncrementExchangeRequestCounterAction,
 } from '../reducers/exchanges.types';
+import { unifySymbols } from '../utils/unifySymbols';
 import { Action, Dispatch, GetState, ThunkAction } from './actions.types';
 import { requestTickerUpdate } from './ticker';
 import startTimer from './timer';
@@ -64,7 +66,7 @@ function fetchBalancesForExchange(exchange: Exchange): ThunkAction {
       const balances: Balances = R.pickBy(balance => balance > 0)(
         await connector.fetchTotalBalance()
       );
-      dispatch(updateExchangeBalances(exchange.id, balances));
+      dispatch(updateExchangeBalances(exchange.id, mapKeys(unifySymbols, balances)));
     } catch (e) {
       dispatch(failedRequest(exchange.id, e.message));
     }
