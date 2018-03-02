@@ -37,6 +37,6 @@ const createDateTransform = () => {
 const migrations = {
   0: (state: GlobalState): GlobalState => ({
     ...state,
-    ticker: { ticker: {}, history: {} },
+    ticker: { ...state.ticker, ticker: {}, history: {} },
   }),
 };

@@ -15,6 +15,7 @@ export type Action =
   | { type: 'LAST_UPDATED'; key: string; time: Date }
   | { type: 'TICKER_UPDATE'; ticker: Ticker }
   | { type: 'HISTORY_UPDATE'; fsym: string; tsym: string; history: HistoryEntry }
+  | { type: 'RECEIVE_PRICE_FOR_TIME'; fsym: string; tsym: string; timestamp: number; price: number }
   | { type: 'START_TIMER'; name: string; timer: number }
   | { type: 'RECEIVE_COIN_LIST'; coinlist: Coinlist }
   | { type: 'SAVE_SETTINGS'; settings: SettingsType };

@@ -1,5 +1,12 @@
 import { AppBar, Avatar, List, Toolbar, Typography, WithStyles } from 'material-ui';
-import { AccountBalanceWallet, Cloud, Dashboard, HelpOutline, Settings } from 'material-ui-icons';
+import {
+  AccountBalanceWallet,
+  Cloud,
+  Dashboard,
+  HelpOutline,
+  Settings,
+  SwapHoriz,
+} from 'material-ui-icons';
 import Drawer from 'material-ui/Drawer';
 import { StyleRulesCallback, withStyles } from 'material-ui/styles';
 import React, { Component } from 'react';
@@ -91,7 +98,7 @@ const styledLayout = withStyles(styles)(
             </AppBar>
             <List className={classes.topList}>
               <DrawerItem label="Portfolio" route="/" icon={<Dashboard />} />
-              {/* <DrawerItem label="Transactions" route="/transactions" icon={<SwapHoriz/>}/> */}
+              <DrawerItem label="Trades" route="/trades" icon={<SwapHoriz />} />
             </List>
             <List className={classes.bottomList}>
               <DrawerItem label="Wallets" route="/wallets" icon={<AccountBalanceWallet />} />

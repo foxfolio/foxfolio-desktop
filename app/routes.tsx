@@ -7,6 +7,7 @@ import { AboutPage } from './pages/AboutPage';
 import { ExchangePage } from './pages/exchange/ExchangePage';
 import HomePage from './pages/portfolio/PortfolioPage';
 import SettingsPage from './pages/SettingsPage';
+import { TradesPage } from './pages/trades/TradesPage';
 import WalletPage from './pages/wallet/WalletPage';
 import { GlobalState } from './reducers';
 
@@ -31,6 +32,7 @@ export class Routes extends Component<Props> {
         <Layout>
           <Switch>
             <Route exact path="/" component={HomePage} />
+            <Route path="/trades" component={TradesPage} />
             <Route path="/wallets" component={WalletPage} />
             <Route path="/exchanges" component={ExchangePage} />
             <Route path="/settings" component={SettingsPage} />

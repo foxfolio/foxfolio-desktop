@@ -1,7 +1,6 @@
-import 'whatwg-fetch';
-
 import * as ccxt from 'ccxt';
 import * as R from 'ramda';
+import 'whatwg-fetch';
 import { Coinlist } from '../reducers/coinlist';
 import { Exchange, Exchanges } from '../reducers/exchanges.types';
 import { HistoryEntry, Ticker } from '../reducers/ticker';
@@ -33,6 +32,16 @@ function receiveHistory(fsym: string, tsym: string, history: HistoryEntry): Acti
     fsym,
     tsym,
     history,
+  };
+}
+
+function receivePriceForTime(fsym: string, tsym: string, timestamp: number, price: number): Action {
+  return {
+    type: 'RECEIVE_PRICE_FOR_TIME',
+    fsym,
+    tsym,
+    timestamp,
+    price,
   };
 }
 
@@ -147,6 +156,41 @@ export function requestHistory(
         .then(result => result.json())
         .then(result => dispatch(receiveHistory(fsym, tsym, result.Data)))
         .catch(error => console.error(error));
+    }
+  };
+}
+
+export interface TickerRequest {
+  fsym: string;
+  tsym: string;
+  timestamp: number;
+}
+
+export function requestTicker(requests: TickerRequest[]): ThunkAction {
+  return async (dispatch: Dispatch, getState: GetState) => {
+    const pricesForTime = getState().ticker.pricesForTime;
+    for (const request of requests) {
+      const timestampInSec = Math.floor(request.timestamp / 1000);
+      if (
+        pricesForTime[request.fsym] &&
+        pricesForTime[request.fsym][request.tsym] &&
+        pricesForTime[request.fsym][request.tsym][timestampInSec]
+      ) {
+        continue;
+      }
+      const histoPrice = await fetch(
+        `https://min-api.cryptocompare.com/data/pricehistorical?ts=${timestampInSec}&fsym=${
+          request.fsym
+        }&tsyms=${request.tsym}`
+      ).then(result => result.json());
+      dispatch(
+        receivePriceForTime(
+          request.fsym,
+          request.tsym,
+          timestampInSec,
+          histoPrice[request.fsym][request.tsym]
+        )
+      );
     }
   };
 }

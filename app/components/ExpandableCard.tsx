@@ -34,6 +34,7 @@ export const styles: StyleRulesCallback = (theme: Theme) => ({
 interface Props {
   cardContent: JSX.Element;
   collapseContent: JSX.Element;
+  className?: string;
 }
 
 interface State {
@@ -51,10 +52,10 @@ export const ExpandableCard = withStyles(styles)(
     };
 
     public render() {
-      const { classes, cardContent, collapseContent } = this.props;
+      const { classes, className, cardContent, collapseContent } = this.props;
 
       return (
-        <Card>
+        <Card className={className}>
           <CardContent className={classes.root} onClick={this.handleExpandClick}>
             {cardContent}
             <div>

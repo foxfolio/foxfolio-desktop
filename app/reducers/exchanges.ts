@@ -77,7 +77,7 @@ function updateExchangeLedger(state: Exchange, action: UpdateExchangeLedgerActio
 
 function updateExchangeTrades(state: Exchange, action: UpdateExchangeTradesAction): Exchange {
   return assign(state, noError, decrementOpenRequests(state), {
-    trades: mergeArraysById(state.ledger, action.trades),
+    trades: mergeArraysById(state.trades, action.trades),
   });
 }
 

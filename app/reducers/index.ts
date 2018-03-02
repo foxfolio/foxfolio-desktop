@@ -4,10 +4,11 @@ import { persistCombineReducers } from 'redux-persist';
 import { configureReduxPersist } from '../store/configureReduxPersist';
 import { coinlist, Coinlist } from './coinlist';
 import { exchanges } from './exchanges';
-import { Exchanges } from './exchanges.types';
+import { Exchanges, Trade } from './exchanges.types';
 import settings, { SettingsType } from './settings';
 import { ticker, TickerAndHistory } from './ticker';
 import timers, { Timers } from './timer';
+import { trades, TradesMap } from './trades';
 import { wallets } from './wallets';
 import { Wallet } from './wallets.types';
 
@@ -20,6 +21,7 @@ export default persistCombineReducers(config, {
   settings,
   ticker,
   timers,
+  trades,
   wallets,
 });
 
@@ -29,5 +31,6 @@ export interface GlobalState {
   settings: SettingsType;
   ticker: TickerAndHistory;
   timers: Timers;
+  trades: TradesMap;
   wallets: Wallet[];
 }
