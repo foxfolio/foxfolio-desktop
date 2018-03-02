@@ -35,16 +35,6 @@ function receiveHistory(fsym: string, tsym: string, history: HistoryEntry): Acti
   };
 }
 
-function receivePriceForTime(fsym: string, tsym: string, timestamp: number, price: number): Action {
-  return {
-    type: 'RECEIVE_PRICE_FOR_TIME',
-    fsym,
-    tsym,
-    timestamp,
-    price,
-  };
-}
-
 function receiveCoinList(coinlist: Coinlist): Action {
   return {
     type: 'RECEIVE_COIN_LIST',
@@ -156,41 +146,6 @@ export function requestHistory(
         .then(result => result.json())
         .then(result => dispatch(receiveHistory(fsym, tsym, result.Data)))
         .catch(error => console.error(error));
-    }
-  };
-}
-
-export interface TickerRequest {
-  fsym: string;
-  tsym: string;
-  timestamp: number;
-}
-
-export function requestTicker(requests: TickerRequest[]): ThunkAction {
-  return async (dispatch: Dispatch, getState: GetState) => {
-    const pricesForTime = getState().ticker.pricesForTime;
-    for (const request of requests) {
-      const timestampInSec = Math.floor(request.timestamp / 1000);
-      if (
-        pricesForTime[request.fsym] &&
-        pricesForTime[request.fsym][request.tsym] &&
-        pricesForTime[request.fsym][request.tsym][timestampInSec]
-      ) {
-        continue;
-      }
-      const histoPrice = await fetch(
-        `https://min-api.cryptocompare.com/data/pricehistorical?ts=${timestampInSec}&fsym=${
-          request.fsym
-        }&tsyms=${request.tsym}`
-      ).then(result => result.json());
-      dispatch(
-        receivePriceForTime(
-          request.fsym,
-          request.tsym,
-          timestampInSec,
-          histoPrice[request.fsym][request.tsym]
-        )
-      );
     }
   };
 }

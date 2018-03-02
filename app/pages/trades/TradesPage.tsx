@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Dispatch } from '../../actions/actions.types';
-import * as tickerActions from '../../actions/ticker';
+import * as tradeActions from '../../actions/trades';
 import { GlobalState } from '../../reducers';
 import { getCoinlist, getSettings, getTicker } from '../../selectors/selectGlobalState';
 import { DispatchProps, StateProps, TradesList } from './components/TradesList';
@@ -18,7 +18,7 @@ function mapStateToProps(state: GlobalState): StateProps {
 }
 
 function mapDispatchToProps(dispatch: Dispatch): DispatchProps {
-  return bindActionCreators(tickerActions, dispatch);
+  return bindActionCreators(tradeActions, dispatch);
 }
 
 export const TradesPage = connect(mapStateToProps, mapDispatchToProps)(TradesList);

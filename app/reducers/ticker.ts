@@ -63,9 +63,11 @@ export function ticker(
         pricesForTime: {
           ...state.pricesForTime,
           [action.fsym]: {
-            ...state.pricesForTime[action.fsym],
+            ...(state.pricesForTime ? state.pricesForTime[action.fsym] : {}),
             [action.tsym]: {
-              ...state.pricesForTime[action.fsym][action.tsym],
+              ...(state.pricesForTime[action.fsym]
+                ? state.pricesForTime[action.fsym][action.tsym]
+                : {}),
               [action.timestamp]: action.price,
             },
           },

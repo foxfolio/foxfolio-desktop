@@ -27,7 +27,7 @@ interface Props {
 
 interface State {
   open: boolean;
-  dialogConfig?: DialogConfig;
+  dialogConfig?: DialogConfig<Exchange>;
 }
 
 export const ExchangeGrid = withStyles(styles)(
@@ -37,7 +37,7 @@ export const ExchangeGrid = withStyles(styles)(
     };
 
     public handleEdit = exchange => () => {
-      this.setState({ open: true, dialogConfig: { action: 'edit', exchange } });
+      this.setState({ open: true, dialogConfig: { action: 'edit', item: exchange } });
     };
 
     public handleAdd = () => {

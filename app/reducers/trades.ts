@@ -1,4 +1,6 @@
+import * as R from 'ramda';
 import { Action } from '../actions/actions.types';
+import { generateId } from '../helpers/reducers';
 import { Trade } from './exchanges.types';
 
 export interface TradesMap {
@@ -6,5 +8,30 @@ export interface TradesMap {
 }
 
 export const trades = (state: TradesMap = {}, action: Action) => {
-  return state;
+  switch (action.type) {
+    case 'ADD_TRADE':
+      return addTrade(state, action.trade);
+    case 'UPDATE_TRADE':
+      return updateTrade(state, action.trade);
+    case 'DELETE_TRADE':
+      return deleteTrade(state, action.id);
+    default:
+      return state;
+  }
+};
+
+const addTrade = (state: TradesMap, trade: Trade): TradesMap => {
+  const newTrade = {
+    ...trade,
+    id: generateId(Object.keys(state)),
+  };
+  return { ...state, [newTrade.id]: newTrade };
+};
+
+const updateTrade = (state: TradesMap, trade: Trade): TradesMap => {
+  return { ...state, [trade.id]: trade };
+};
+
+const deleteTrade = (state: TradesMap, id: string): TradesMap => {
+  return R.omit([id], state);
 };

@@ -30,27 +30,27 @@ export interface Trade {
   amount: number;
   cost: number;
   datetime: Date;
-  fee: {
-    cost: number;
-    currency: string;
-  };
-  info: {
-    commission: string;
-    commissionAsset: string;
-    id: number;
-    isBestMatch: boolean;
-    isBuyer: boolean;
-    isMaker: boolean;
-    orderId: number;
-    price: string;
-    qty: string;
-    time: number;
-  };
-  order: string;
   price: number;
   side: 'buy' | 'sell';
   symbol: string;
   timestamp: number;
+  // fee: {
+  //   cost: number;
+  //   currency: string;
+  // };
+  // info: {
+  //   commission: string;
+  //   commissionAsset: string;
+  //   id: number;
+  //   isBestMatch: boolean;
+  //   isBuyer: boolean;
+  //   isMaker: boolean;
+  //   orderId: number;
+  //   price: string;
+  //   qty: string;
+  //   time: number;
+  // };
+  // order: string;
 }
 
 export interface LedgerEntry {

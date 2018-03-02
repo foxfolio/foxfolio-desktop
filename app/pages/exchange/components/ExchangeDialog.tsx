@@ -14,22 +14,22 @@ import React, { Component, FormEvent } from 'react';
 import { Autocomplete } from '../../../components/Autocomplete';
 import { Exchange } from '../../../reducers/exchanges.types';
 
-export type DialogConfig = AddConfig | EditConfig;
+export type DialogConfig<T> = AddConfig | EditConfig<T>;
 
 interface AddConfig {
   action: 'add';
 }
 
-interface EditConfig {
+interface EditConfig<T> {
   action: 'edit';
-  exchange: Exchange;
+  item: T;
 }
 
 interface Props {
   open: boolean;
   onClose: () => void;
   saveExchange: (exchange: Exchange) => void;
-  config?: DialogConfig;
+  config?: DialogConfig<Exchange>;
 }
 
 interface State {
@@ -63,7 +63,7 @@ export const ExchangeDialog = withStyles(styles)(
     public componentWillReceiveProps(nextProps: Props): void {
       if (this.props.open !== nextProps.open && nextProps.config) {
         if (nextProps.config.action === 'edit') {
-          return this.setState({ exchange: nextProps.config.exchange });
+          return this.setState({ exchange: nextProps.config.item });
         }
         this.setState({ exchange: emptyExchange });
       }
@@ -87,7 +87,7 @@ export const ExchangeDialog = withStyles(styles)(
       this.props.saveExchange(this.state.exchange);
     };
 
-    public createDialog(config: DialogConfig) {
+    public createDialog(config: DialogConfig<Exchange>) {
       const { requiredCredentials } =
         this.state.exchange.type !== ''
           ? new ccxt[this.state.exchange.type]()

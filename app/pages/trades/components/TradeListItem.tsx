@@ -44,7 +44,10 @@ export const TradeListItem = withStyles(styles)(
   ({ classes, coinlist, ticker, trade, settings, pricesForTime }: Props & WithStyles) => {
     const asset = trade.symbol.split('/')[0];
     const currency = trade.symbol.split('/')[1];
-    const currentPrice = ticker[asset][settings.fiatCurrency].PRICE;
+    const currentPrice =
+      ticker && ticker[asset] && ticker[asset][settings.fiatCurrency]
+        ? ticker[asset][settings.fiatCurrency].PRICE
+        : 0;
     const historicalPrice =
       pricesForTime &&
       pricesForTime[currency] &&
@@ -55,7 +58,7 @@ export const TradeListItem = withStyles(styles)(
 
     const currentValue = currentPrice * trade.amount;
     const historicalValue = trade.amount * trade.price * historicalPrice;
-    const change = currentValue / historicalValue * 100;
+    const change = currentValue / historicalValue * 100 - 100;
     return (
       <React.Fragment>
         <div className={classes.avatar}>
@@ -73,17 +76,21 @@ export const TradeListItem = withStyles(styles)(
               </Typography>
             </Grid>
             <Grid item xs={2} className={classes.right}>
-              <Typography type="body1" className={change > 0 ? classes.positive : classes.negative}>
-                --- {change.toFixed(2)}% -->
+              <Typography
+                type="body1"
+                className={change >= 0 ? classes.positive : classes.negative}
+              >
+                {change >= 0 ? '+' : ''}
+                {change.toFixed(2)}%
               </Typography>
             </Grid>
             <Grid item xs={2} className={classes.right}>
-              <Typography type="body1" className={change > 0 ? classes.positive : classes.negative}>
+              <Typography type="body1">
                 {(currentPrice * trade.amount).toFixed(2)} {settings.fiatCurrency}
               </Typography>
             </Grid>
             <Grid item xs={2} className={classes.right}>
-              <Typography type="body1" className={change > 0 ? classes.positive : classes.negative}>
+              <Typography type="body1">
                 {(currentValue - historicalValue).toFixed(2)} {settings.fiatCurrency}
               </Typography>
             </Grid>
