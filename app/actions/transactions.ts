@@ -1,3 +1,5 @@
+import 'whatwg-fetch'; // Has to be imported before ccxt
+
 import ccxt from 'ccxt';
 import R, { equals, forEachObjIndexed, keys } from 'ramda';
 import { mapKeys } from '../helpers/mapping';

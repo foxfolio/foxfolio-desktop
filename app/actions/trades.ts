@@ -1,6 +1,5 @@
-import { ExchangeTypeKeys, Trade } from '../reducers/exchanges.types';
+import { Trade } from '../reducers/exchanges.types';
 import { Action, Dispatch, GetState, ThunkAction } from './actions.types';
-import { fetchAllBalances } from './transactions';
 
 export interface TickerRequest {
   fsym: string;

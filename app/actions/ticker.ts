@@ -1,6 +1,7 @@
+import 'whatwg-fetch'; // Has to be imported before ccxt
+
 import * as ccxt from 'ccxt';
 import * as R from 'ramda';
-import 'whatwg-fetch';
 import { Coinlist } from '../reducers/coinlist';
 import { Exchange, Exchanges } from '../reducers/exchanges.types';
 import { HistoryEntry, Ticker } from '../reducers/ticker';
