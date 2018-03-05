@@ -4,7 +4,7 @@ import { StyleRulesCallback, withStyles } from 'material-ui/styles';
 import { values } from 'ramda';
 import React, { Component } from 'react';
 
-import { Exchange, ExchangeCredentials, Exchanges } from '../../../reducers/exchanges.types';
+import { Exchange, ExchangeCredentials, Exchanges, Trade } from '../../../reducers/exchanges.types';
 import { ExchangeCard } from './ExchangeCard';
 import { DialogConfig, ExchangeDialog } from './ExchangeDialog';
 
@@ -18,10 +18,14 @@ const styles: StyleRulesCallback = theme => ({
   },
 });
 
-interface Props {
+export interface StateProps {
   exchanges: Exchanges;
+}
+
+export interface DispatchProps {
   addExchange: (type: string, credentials: ExchangeCredentials) => any;
   updateExchangeCredentials: (id: string, credentials: ExchangeCredentials) => any;
+  updateExchangeTrades: (id: string, trades: Trade[]) => any;
   deleteExchange: (id: string) => any;
 }
 
@@ -31,7 +35,7 @@ interface State {
 }
 
 export const ExchangeGrid = withStyles(styles)(
-  class extends Component<Props & WithStyles, State> {
+  class extends Component<StateProps & DispatchProps & WithStyles, State> {
     public state: State = {
       open: false,
     };

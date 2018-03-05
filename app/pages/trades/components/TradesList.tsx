@@ -55,10 +55,6 @@ interface State {
   dialogConfig?: DialogConfig<Trade>;
 }
 
-const flattenTrades = (trades: Trade[]) => {
-  const mergedTrades = mergeTradesForDay(trades);
-  return R.values(mergedTrades).reduce((acc, trade) => acc.concat(R.values(trade)), []);
-};
 export const TradesList = withStyles(styles)(
   class extends Component<Props & WithStyles, State> {
     public state: State = {
@@ -148,6 +144,12 @@ export const TradesList = withStyles(styles)(
     }
   }
 );
+
+const flattenTrades = (trades: Trade[]) => {
+  console.log(trades);
+  const mergedTrades = mergeTradesForDay(trades);
+  return R.values(mergedTrades).reduce((acc, trade) => acc.concat(R.values(trade)), []);
+};
 
 const mergeTradesForDay = (trades: Trade[]) =>
   trades.filter(trade => trade.side === 'buy').reduce((acc, trade): {

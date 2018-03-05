@@ -4,12 +4,12 @@ import { bindActionCreators } from 'redux';
 import { Dispatch } from '../../actions/actions.types';
 import * as exchangeActions from '../../actions/exchanges';
 import { GlobalState } from '../../reducers';
-import { Exchanges } from '../../reducers/exchanges.types';
-import { ExchangeGrid } from './components/ExchangeGrid';
+import { getExchanges } from '../../selectors/selectGlobalState';
+import { ExchangeGrid, StateProps } from './components/ExchangeGrid';
 
-function mapStateToProps(state: GlobalState): { exchanges: Exchanges } {
+function mapStateToProps(state: GlobalState): StateProps {
   return {
-    exchanges: state.exchanges,
+    exchanges: getExchanges(state),
   };
 }
 

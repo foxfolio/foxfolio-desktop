@@ -11,18 +11,21 @@ import {
   ExchangeTypeKeys,
   FailedExchangeRequestAction,
   IncrementExchangeRequestCounterAction,
+  Trade,
 } from '../reducers/exchanges.types';
 import { unifySymbols } from '../utils/unifySymbols';
 import { Action, Dispatch, GetState, ThunkAction } from './actions.types';
+import { updateExchangeTrades } from './exchanges';
 import { requestTickerUpdate } from './ticker';
 import startTimer from './timer';
 
 const BALANCE_REFRESH_MS = 30000;
+const TRADE_REFRESH_MS = 60000;
 
-function setLastUpdate(): Action {
+function setLastUpdate(key: string): Action {
   return {
     type: 'LAST_UPDATED',
-    key: 'transactions',
+    key,
     time: new Date(),
   };
 }
@@ -60,6 +63,32 @@ function getConfiguredExchanges(state: GlobalState): Exchanges {
   return state.exchanges;
 }
 
+export function continuouslyFetchTransactions(): ThunkAction {
+  return (dispatch: Dispatch, getState: GetState) => {
+    if (!getState().timers.timers.balances) {
+      const balanceTimer = window.setInterval(
+        () => dispatch(fetchAllBalances()),
+        BALANCE_REFRESH_MS
+      );
+
+      // Move trade timer a bit back to avoid nonce collisions
+      window.setTimeout(() => {
+        const tradeTimer = window.setInterval(() => dispatch(fetchAllTrades()), TRADE_REFRESH_MS);
+        dispatch(startTimer('trades', tradeTimer));
+      }, 1000);
+      dispatch(startTimer('balances', balanceTimer));
+    }
+  };
+}
+
+export function fetchAllBalances(): ThunkAction {
+  return (dispatch: Dispatch, getState: GetState) => {
+    dispatch(setLastUpdate('balances'));
+    const exchanges = getConfiguredExchanges(getState());
+    forEachObjIndexed(exchange => dispatch(fetchBalancesForExchange(exchange)))(exchanges);
+  };
+}
+
 function fetchBalancesForExchange(exchange: Exchange): ThunkAction {
   return async (dispatch: Dispatch) => {
     dispatch(incrementExchangeRequestCounter(exchange.id));
@@ -75,33 +104,39 @@ function fetchBalancesForExchange(exchange: Exchange): ThunkAction {
   };
 }
 
-export function fetchAllBalances(): ThunkAction {
+export function fetchAllTrades(): ThunkAction {
   return (dispatch: Dispatch, getState: GetState) => {
-    dispatch(setLastUpdate());
+    dispatch(setLastUpdate('trades'));
     const exchanges = getConfiguredExchanges(getState());
-    forEachObjIndexed(exchange => dispatch(fetchBalancesForExchange(exchange)))(exchanges);
+    forEachObjIndexed(exchange => dispatch(fetchTradesForExchange(exchange)))(exchanges);
   };
 }
 
-export function fetchAllTransactions(): ThunkAction {
-  return (dispatch: Dispatch, getState: GetState) => {
-    forEachObjIndexed(exchange => {
-      const connector = new ccxt[exchange.type]();
-      return dispatch(connector.fetchTotalBalance());
-    })(getConfiguredExchanges(getState()));
-  };
-}
+function fetchTradesForExchange(exchange: Exchange): ThunkAction {
+  return async (dispatch: Dispatch) => {
+    // dispatch(incrementExchangeRequestCounter(exchange.id));
+    try {
+      const connector: ccxt.Exchange = new ccxt[exchange.type](exchange.credentials);
+      if (connector.has.fetchMyTrades) {
+        const trades = await connector.fetchMyTrades();
+        dispatch(updateExchangeTrades(exchange.id, normalizeTrades(trades)));
+      } else {
+        console.log('No orders...');
+      }
 
-export function continuouslyFetchTransactions(): ThunkAction {
-  return (dispatch: Dispatch, getState: GetState) => {
-    if (!getState().timers.timers.balances) {
-      const balanceTimer = window.setInterval(
-        () => dispatch(fetchAllBalances()),
-        BALANCE_REFRESH_MS
-      );
-      // const transactionTimer = setInterval(() => dispatch(fetchAllTransactions()), TRANSACTION_REFRESH_MS);
-      dispatch(startTimer('balances', balanceTimer));
-      // dispatch(startTimer('transactions', transactionTimer));
+      // dispatch(updateExchangeBalances(exchange.id, balances));
+    } catch (e) {
+      console.log(e);
+      // dispatch(failedRequest(exchange.id, e.message));
     }
   };
 }
+
+const normalizeTrades = (trades: Trade[]) =>
+  trades
+    .filter(trade => trade.price > 0)
+    .map(trade => ({
+      ...trade,
+      side: trade.side ? trade.side : trade.amount >= 0 ? 'buy' : 'sell',
+    }))
+    .map(trade => ({ ...trade, amount: Math.abs(trade.amount) }));

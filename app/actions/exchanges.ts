@@ -1,4 +1,4 @@
-import { ExchangeCredentials, ExchangeTypeKeys } from '../reducers/exchanges.types';
+import { ExchangeCredentials, ExchangeTypeKeys, Trade } from '../reducers/exchanges.types';
 import { Action, ThunkAction } from './actions.types';
 import { fetchAllBalances } from './transactions';
 
@@ -24,6 +24,17 @@ export function updateExchangeCredentials(
       credentials,
     });
     dispatch(fetchAllBalances());
+  };
+}
+
+export function updateExchangeTrades(
+  id: string,
+  trades: Trade[]
+): Action {
+  return {
+    type: ExchangeTypeKeys.UPDATE_EXCHANGE_TRADES,
+    id,
+    trades,
   };
 }
 
