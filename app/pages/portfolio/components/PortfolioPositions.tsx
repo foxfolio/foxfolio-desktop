@@ -1,10 +1,10 @@
-import R from 'ramda';
+import * as _ from 'lodash';
 import React from 'react';
 import { getTickerPrice } from '../../../helpers/transactions';
 import { Coinlist } from '../../../reducers/coinlist';
 import { SettingsType } from '../../../reducers/settings';
 import { Ticker } from '../../../reducers/ticker';
-import { Portfolio } from '../types/portfolio.types';
+import { ExchangeBalances, Portfolio } from '../types/portfolio.types';
 import { PortfolioPosition } from './PortfolioPosition';
 import { PortfolioPositionHeader } from './PortfolioPositionsHeader';
 
@@ -43,13 +43,14 @@ export const PortfolioPositions = ({ portfolio, coinlist, ticker, settings }: Pr
   </div>
 );
 
-const filterPortfolioForAsset = (portfolio: Portfolio, asset: string): PortfolioForAsset =>
-  R.mapObjIndexed(
-    (value: any, key) =>
+export const filterPortfolioForAsset = (portfolio: Portfolio, asset: string): PortfolioForAsset =>
+  _.mapValues(
+    portfolio,
+    (value, key) =>
       key !== 'exchanges'
-        ? value[asset] || 0
-        : R.pipe(
-            R.filter(balances => balances[asset]),
-            R.mapObjIndexed(balances => balances[asset])
-          )(value)
-  )(portfolio) as PortfolioForAsset;
+        ? (value as any)[asset] || 0
+        : _.chain((value as any) as ExchangeBalances)
+            .pickBy(balances => balances[asset])
+            .mapValues(balances => (balances ? balances[asset] : 0))
+            .value()
+  );

@@ -1,5 +1,5 @@
+import * as _ from 'lodash';
 import { Paper } from 'material-ui';
-import R from 'ramda';
 import React from 'react';
 import { Coinlist } from '../../../reducers/coinlist';
 import { SettingsType } from '../../../reducers/settings';
@@ -27,7 +27,7 @@ export const PortfolioContainer = ({
   change,
   settings,
 }: PortfolioProps) => {
-  if (ticker[settings.cryptoCurrency] && !R.isEmpty(portfolio.total)) {
+  if (ticker[settings.cryptoCurrency] && !_.isEmpty(portfolio.total)) {
     return (
       <div>
         <Paper style={{ marginTop: 0, paddingBottom: 25, paddingTop: 25, textAlign: 'center' }}>

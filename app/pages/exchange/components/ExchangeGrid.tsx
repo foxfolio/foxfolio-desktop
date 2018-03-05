@@ -1,9 +1,8 @@
+import _ from 'lodash';
 import { Button, Grid, Typography, WithStyles } from 'material-ui';
 import { Add } from 'material-ui-icons';
 import { StyleRulesCallback, withStyles } from 'material-ui/styles';
-import { values } from 'ramda';
 import React, { Component } from 'react';
-
 import { Exchange, ExchangeCredentials, Exchanges, Trade } from '../../../reducers/exchanges.types';
 import { ExchangeCard } from './ExchangeCard';
 import { DialogConfig, ExchangeDialog } from './ExchangeDialog';
@@ -72,7 +71,7 @@ export const ExchangeGrid = withStyles(styles)(
         <div className="container">
           <Typography type="headline">Exchanges</Typography>
           <Grid container>
-            {values(exchanges).map(exchange => (
+            {_.values(exchanges).map(exchange => (
               <Grid item key={exchange.id} sm={12} md={6}>
                 <ExchangeCard
                   exchange={exchange}

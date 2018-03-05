@@ -1,8 +1,7 @@
 import 'whatwg-fetch'; // Has to be imported before ccxt
 
 import ccxt from 'ccxt';
-import R, { equals, forEachObjIndexed, keys } from 'ramda';
-import { mapKeys } from '../helpers/mapping';
+import * as _ from 'lodash';
 import { GlobalState } from '../reducers';
 import {
   Balances,
@@ -33,7 +32,7 @@ function setLastUpdate(key: string): Action {
 function updateExchangeBalances(id: string, balances: Balances): ThunkAction {
   return (dispatch: Dispatch, getState: GetState) => {
     const stateBalance = getState().exchanges[id].balances;
-    if (!equals(keys(stateBalance), keys(balances))) {
+    if (!_.isEqual(_.keys(stateBalance), _.keys(balances))) {
       dispatch(requestTickerUpdate(Object.keys(balances)));
     }
     dispatch({
@@ -85,7 +84,7 @@ export function fetchAllBalances(): ThunkAction {
   return (dispatch: Dispatch, getState: GetState) => {
     dispatch(setLastUpdate('balances'));
     const exchanges = getConfiguredExchanges(getState());
-    forEachObjIndexed(exchange => dispatch(fetchBalancesForExchange(exchange)))(exchanges);
+    _.forEach(exchanges, exchange => dispatch(fetchBalancesForExchange(exchange)));
   };
 }
 
@@ -94,10 +93,13 @@ function fetchBalancesForExchange(exchange: Exchange): ThunkAction {
     dispatch(incrementExchangeRequestCounter(exchange.id));
     try {
       const connector = new ccxt[exchange.type](exchange.credentials);
-      const balances: Balances = R.pickBy(balance => balance > 0)(
-        await connector.fetchTotalBalance()
+      const balances: Balances = _.pickBy(
+        await connector.fetchTotalBalance(),
+        balance => balance > 0
       );
-      dispatch(updateExchangeBalances(exchange.id, mapKeys(unifySymbols, balances)));
+      dispatch(
+        updateExchangeBalances(exchange.id, _.mapKeys(balances, (key: string) => unifySymbols(key)))
+      );
     } catch (e) {
       dispatch(failedRequest(exchange.id, e.message));
     }
@@ -108,7 +110,7 @@ export function fetchAllTrades(): ThunkAction {
   return (dispatch: Dispatch, getState: GetState) => {
     dispatch(setLastUpdate('trades'));
     const exchanges = getConfiguredExchanges(getState());
-    forEachObjIndexed(exchange => dispatch(fetchTradesForExchange(exchange)))(exchanges);
+    _.forEach(exchange => dispatch(fetchTradesForExchange(exchange)));
   };
 }
 

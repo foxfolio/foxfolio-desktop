@@ -1,4 +1,4 @@
-import R, { omit } from 'ramda';
+import _ from 'lodash';
 import { Action } from '../actions/actions.types';
 import { generateId } from '../helpers/reducers';
 import {
@@ -51,7 +51,7 @@ function addExchange(state: Exchanges, action: AddExchangeAction): Exchanges {
 }
 
 function deleteExchange(state: Exchanges, action: DeleteExchangeAction): Exchanges {
-  return omit([action.id], state);
+  return _.omit(state, action.id);
 }
 
 function updateExchangeCredentials(
@@ -111,7 +111,7 @@ function reduceInstance<A extends ExchangeInstanceActions>(
 }
 
 function mergeArraysById<T extends { id: any }>(array: T[], newArray: T[]): T[] {
-  return R.unionWith(R.eqBy(R.prop('id')), array, newArray);
+  return _.unionWith(array, newArray, (a, b) => _.isEqualWith(a, b, _.property('id')));
 }
 
 const assign: <T>(a: T, ...b: Array<Partial<T>>) => T = (a, ...b) => Object.assign({}, a, ...b);

@@ -1,6 +1,9 @@
 import { createShallow } from 'material-ui/test-utils';
 import * as React from 'react';
-import { PortfolioPositions } from '../../../../app/pages/portfolio/components/PortfolioPositions';
+import {
+  filterPortfolioForAsset,
+  PortfolioPositions,
+} from '../../../../app/pages/portfolio/components/PortfolioPositions';
 import { Portfolio } from '../../../../app/pages/portfolio/types/portfolio.types';
 import { initialSettings } from '../../../../app/reducers/settings';
 import { Ticker } from '../../../../app/reducers/ticker';
@@ -36,4 +39,15 @@ test('Render portfolio positions', () => {
     />
   );
   expect(wrapper).toMatchSnapshot();
+});
+
+test('filterPortfolioForAsset', () => {
+  const portfolio: Portfolio = {
+    total: { BTC: 5, ETH: 10 },
+    wallets: { BTC: 4, ETH: 8 },
+    exchanges: { key: { BTC: 1, ETH: 2 } },
+  };
+  const portfolioForAsset = filterPortfolioForAsset(portfolio, 'ETH');
+
+  expect(portfolioForAsset).toMatchObject({ total: 10, wallets: 8, exchanges: { key: 2 } });
 });
