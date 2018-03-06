@@ -11,12 +11,12 @@ import {
   WithStyles,
 } from 'material-ui';
 import green from 'material-ui/colors/green';
-import { StyleRulesCallback, withStyles } from 'material-ui/styles';
+import { StyleRulesCallback, Theme, withStyles } from 'material-ui/styles';
 import React, { Component } from 'react';
 
 import { Exchange } from '../../../reducers/exchanges.types';
 
-const styles: StyleRulesCallback = theme => ({
+const styles: StyleRulesCallback = (theme: Theme) => ({
   card: {
     margin: '10px 0',
   },
@@ -48,7 +48,7 @@ interface State {
   expanded: boolean;
 }
 
-const hasOpenRequests = exchange => exchange.openRequests && exchange.openRequests > 0;
+const hasOpenRequests = (exchange: Exchange) => exchange.openRequests && exchange.openRequests > 0;
 
 export const ExchangeCard = withStyles(styles)(
   class extends Component<Props & WithStyles, State> {

@@ -39,7 +39,7 @@ export const ExchangeGrid = withStyles(styles)(
       open: false,
     };
 
-    public handleEdit = exchange => () => {
+    public handleEdit = (exchange: Exchange) => () => {
       this.setState({ open: true, dialogConfig: { action: 'edit', item: exchange } });
     };
 
@@ -56,7 +56,7 @@ export const ExchangeGrid = withStyles(styles)(
       this.setState({ open: false });
     };
 
-    public handleDelete = exchange => () => {
+    public handleDelete = (exchange: Exchange) => () => {
       this.props.deleteExchange(exchange.id);
     };
 

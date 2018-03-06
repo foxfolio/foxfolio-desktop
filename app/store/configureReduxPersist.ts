@@ -8,7 +8,7 @@ export const configureReduxPersist = (): PersistConfig => ({
   key: 'primary',
   blacklist: ['router', 'timer'],
   transforms: [createExchangeTransform()],
-  migrate: createMigrate(migrations, { debug: false }),
+  migrate: createMigrate(migrations as any, { debug: false }),
   storage,
 });
 
@@ -18,7 +18,7 @@ const createExchangeTransform = () =>
       return _.map(inboundState, object => _.omit(object, 'openRequests'));
     }
     return inboundState;
-  });
+  }, _.identity);
 
 const migrations = {
   0: (state: GlobalState): GlobalState => ({

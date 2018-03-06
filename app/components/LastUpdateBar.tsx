@@ -1,6 +1,7 @@
 import { LinearProgress } from 'material-ui';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { GlobalState } from '../reducers';
 
 interface Props {
   lastUpdate: Date;
@@ -36,8 +37,8 @@ class UnconnectedLastUpdateBar extends Component<Props> {
   }
 }
 
-const mapStateToProps = state => ({
-  lastUpdate: state.timers.lastUpdated ? state.timers.lastUpdated.transactions : undefined,
+const mapStateToProps = (state: GlobalState) => ({
+  lastUpdate: state.timers.lastUpdated ? state.timers.lastUpdated.trades : undefined,
 });
 
 export const LastUpdateBar = connect(mapStateToProps)(UnconnectedLastUpdateBar);

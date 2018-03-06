@@ -14,7 +14,7 @@ export function configureSentry() {
           normalizedData.stacktrace ||
           (normalizedData.exception && normalizedData.exception.values[0].stacktrace);
         if (stacktrace) {
-          stacktrace.frames = stacktrace.frames.map(frame => ({
+          stacktrace.frames = stacktrace.frames.map((frame: object) => ({
             ...frame,
             filename: '/renderer.prod.js',
           }));

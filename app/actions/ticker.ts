@@ -83,7 +83,7 @@ const getTickerForSymbols = (symbols: Symbols) => {
 };
 
 const requestMissingTickerUpdateFromExchange = async (
-  ticker,
+  ticker: Ticker,
   exchanges: Exchanges,
   symbols: Symbols
 ) => {

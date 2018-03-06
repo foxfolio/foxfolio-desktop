@@ -66,7 +66,11 @@ export const PositionPriceChange = (
   return PortfolioPositionColumn(currencyFocus, cryptoEntry, fiatEntry);
 };
 
-export const PortfolioPositionColumn = (currencyFocus: CurrencyFocus, cryptoEntry, fiatEntry) => (
+export const PortfolioPositionColumn = (
+  currencyFocus: CurrencyFocus,
+  cryptoEntry: any,
+  fiatEntry: any
+) => (
   <div>
     <Typography
       type={currencyFocus !== 'equal' ? 'subheading' : 'body1'}

@@ -15,6 +15,7 @@
     "strict": true,
     "strictNullChecks": true,
     "noImplicitAny": false,
+    "suppressImplicitAnyIndexErrors": true,
     "moduleResolution": "node"
   },
   "exclude": [

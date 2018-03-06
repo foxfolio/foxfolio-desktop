@@ -55,7 +55,7 @@ export const WalletGrid = withStyles(styles)(
       this.setState({ open: false });
     };
 
-    public saveDialog = wallet => {
+    public saveDialog = (wallet: Wallet) => {
       if (this.state.isNew) {
         this.props.addWallet(wallet);
       } else {

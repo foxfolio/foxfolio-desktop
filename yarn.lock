@@ -43,6 +43,14 @@
     progress "2.0.0"
     proxy-from-env "^1.0.0"
 
+"@types/chart.js@^2.7.9":
+  version "2.7.9"
+  resolved "https://registry.yarnpkg.com/@types/chart.js/-/chart.js-2.7.9.tgz#e6479d2bc2023702c735694ee72e46f1705e2d5f"
+
+"@types/classnames@^2.2.3":
+  version "2.2.3"
+  resolved "https://registry.yarnpkg.com/@types/classnames/-/classnames-2.2.3.tgz#3f0ff6873da793870e20a260cada55982f38a9e5"
+
 "@types/d3-path@*":
   version "1.0.6"
   resolved "https://registry.yarnpkg.com/@types/d3-path/-/d3-path-1.0.6.tgz#c1a7d2dc07b295fdd1c84dabe4404df991b48693"
@@ -101,6 +109,14 @@
     "@types/react" "*"
     redux "^3.6.0"
 
+"@types/react-router-dom@^4.2.4":
+  version "4.2.4"
+  resolved "https://registry.yarnpkg.com/@types/react-router-dom/-/react-router-dom-4.2.4.tgz#02c43274129ffe0ac42b348f7c8c4a9a4e127c8a"
+  dependencies:
+    "@types/history" "*"
+    "@types/react" "*"
+    "@types/react-router" "*"
+
 "@types/react-router-redux@^5.0.11":
   version "5.0.11"
   resolved "https://registry.yarnpkg.com/@types/react-router-redux/-/react-router-redux-5.0.11.tgz#5a1ebf7975c60640a524dadf95856ba3c26ddf09"
@@ -108,6 +124,13 @@
     "@types/history" "*"
     "@types/react" "*"
     redux "^3.7.2"
+
+"@types/react-router@*":
+  version "4.0.22"
+  resolved "https://registry.yarnpkg.com/@types/react-router/-/react-router-4.0.22.tgz#2b97336eddfdf5886973539539b8ce7037cf629b"
+  dependencies:
+    "@types/history" "*"
+    "@types/react" "*"
 
 "@types/react-router@^4.0.21":
   version "4.0.21"
@@ -139,6 +162,16 @@
   dependencies:
     "@types/react" "*"
     redux "^3.6.0"
+
+"@types/redux-logger@^3.0.5":
+  version "3.0.5"
+  resolved "https://registry.yarnpkg.com/@types/redux-logger/-/redux-logger-3.0.5.tgz#d1a02758f90845899cd304aa0912daeba2028eb6"
+  dependencies:
+    redux "^3.6.0"
+
+"@types/shortid@^0.0.29":
+  version "0.0.29"
+  resolved "https://registry.yarnpkg.com/@types/shortid/-/shortid-0.0.29.tgz#8093ee0416a6e2bf2aa6338109114b3fbffa0e9b"
 
 JSONStream@^0.8.4:
   version "0.8.4"
@@ -8375,9 +8408,9 @@ redux-logger@^3.0.6:
   dependencies:
     deep-diff "^0.3.5"
 
-redux-persist@^5.4.0:
-  version "5.4.0"
-  resolved "https://registry.yarnpkg.com/redux-persist/-/redux-persist-5.4.0.tgz#a1062313546a9d4ca6f9271464d18f736e8ca394"
+redux-persist@^5.9.1:
+  version "5.9.1"
+  resolved "https://registry.yarnpkg.com/redux-persist/-/redux-persist-5.9.1.tgz#83bd4abd526ef768f63fceee338fa9d8ed6552d6"
 
 redux-thunk@^2.2.0:
   version "2.2.0"

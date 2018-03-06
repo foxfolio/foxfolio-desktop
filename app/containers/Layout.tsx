@@ -60,8 +60,10 @@ interface State {
   hasError: boolean;
 }
 
+type Props = OwnProps & WithStyles & RouteComponentProps<any>;
+
 const styledLayout = withStyles(styles)(
-  class extends Component<OwnProps & WithStyles & RouteComponentProps<any>, State> {
+  class extends Component<Props, State> {
     public state: State = {
       hasError: false,
     };
@@ -72,13 +74,13 @@ const styledLayout = withStyles(styles)(
       this.props.dispatch(requestCoinList());
     }
 
-    public componentWillReceiveProps(nextProps) {
+    public componentWillReceiveProps(nextProps: Props) {
       if (this.props.location.pathname !== nextProps.location.pathname) {
         this.setState({ hasError: false });
       }
     }
 
-    public componentDidCatch(error, errorInfo) {
+    public componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
       this.setState({ hasError: true });
       getRaven().captureException(error, { extra: errorInfo });
     }

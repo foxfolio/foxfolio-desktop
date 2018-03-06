@@ -4,5 +4,5 @@ import rehydrationComplete from '../actions/init';
 import { GlobalState } from '../reducers';
 
 export function persistStore(store: Store<GlobalState>) {
-  persistStoreRedux(store, null, () => store.dispatch(rehydrationComplete()));
+  persistStoreRedux(store, {}, () => store.dispatch(rehydrationComplete()));
 }

@@ -110,7 +110,7 @@ export function fetchAllTrades(): ThunkAction {
   return (dispatch: Dispatch, getState: GetState) => {
     dispatch(setLastUpdate('trades'));
     const exchanges = getConfiguredExchanges(getState());
-    _.forEach(exchange => dispatch(fetchTradesForExchange(exchange)));
+    _.forEach((exchange: Exchange) => dispatch(fetchTradesForExchange(exchange)));
   };
 }
 

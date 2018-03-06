@@ -2,7 +2,6 @@ import classnames from 'classnames';
 import { CardContent, WithStyles } from 'material-ui';
 import { ExpandMore } from 'material-ui-icons';
 import Card from 'material-ui/Card';
-import green from 'material-ui/colors/green';
 import IconButton from 'material-ui/IconButton';
 import { StyleRulesCallback, Theme, withStyles } from 'material-ui/styles';
 import { CollapseProps } from 'material-ui/transitions';
@@ -64,7 +63,7 @@ export const ExpandableCard = withStyles(styles)(
                   [classes.expandOpen]: this.state.expanded,
                 })}
               >
-                <ExpandMore />
+                <ExpandMore/>
               </IconButton>
             </div>
           </CardContent>
@@ -74,5 +73,5 @@ export const ExpandableCard = withStyles(styles)(
         </Card>
       );
     }
-  }
+  },
 );

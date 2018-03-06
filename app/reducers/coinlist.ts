@@ -1,3 +1,4 @@
+import { Reducer } from 'redux';
 import { Action } from '../actions/actions.types';
 
 export interface Coinlist {
@@ -9,11 +10,11 @@ export interface CoinlistEntry {
   ImageUrl: string;
 }
 
-export function coinlist(state: Coinlist = {}, action: Action): Coinlist {
+export const coinlist = (state: Coinlist = {}, action: Action): Coinlist => {
   switch (action.type) {
     case 'RECEIVE_COIN_LIST':
       return action.coinlist;
     default:
       return state;
   }
-}
+};

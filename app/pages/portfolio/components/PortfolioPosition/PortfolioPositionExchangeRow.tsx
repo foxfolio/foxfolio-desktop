@@ -3,7 +3,9 @@ import { TrendingUp } from 'material-ui-icons';
 import { StyleRulesCallback } from 'material-ui/styles';
 import React from 'react';
 import { connect } from 'react-redux';
+import { GlobalState } from '../../../../reducers';
 import { Exchanges } from '../../../../reducers/exchanges.types';
+import { getExchanges } from '../../../../selectors/selectGlobalState';
 
 const styles: StyleRulesCallback = theme => ({
   root: {
@@ -60,8 +62,8 @@ const styledComponent = withStyles(styles)<Props>(
   )
 );
 
-const mapStateToProps = state => ({
-  exchanges: state.exchanges,
+const mapStateToProps = (state: GlobalState) => ({
+  exchanges: getExchanges(state),
 });
 
 export const PortfolioPositionExchangeRow = connect(mapStateToProps)(styledComponent);

@@ -1,7 +1,9 @@
+import * as chartjs from 'chart.js';
+import { ChartData, ChartDataSets, ChartTooltipItem } from 'chart.js';
 import { withTheme } from 'material-ui';
 import { Theme } from 'material-ui/styles';
 import React from 'react';
-import { defaults, HorizontalBar } from 'react-chartjs-2';
+import { ChartData as ReactChartData, defaults, HorizontalBar } from 'react-chartjs-2';
 import { getTickerPrice } from '../../../helpers/transactions';
 import { SettingsType } from '../../../reducers/settings';
 import { Ticker } from '../../../reducers/ticker';
@@ -29,7 +31,7 @@ export const PortfolioChart = withTheme()<Props>(({ ticker, portfolio, settings,
         tooltips: {
           mode: 'x',
           callbacks: {
-            label: (item, data) => `${data.datasets[item.datasetIndex].label}: ${item.xLabel} %`,
+            label: labelCallback,
           },
         },
         legend: {
@@ -73,7 +75,7 @@ function calculateChartData(
   settings: SettingsType,
   sum: number,
   theme: Theme
-) {
+): chartjs.ChartData {
   const { cryptoCurrency } = settings;
 
   const datasets = Object.keys(portfolio)
@@ -90,9 +92,20 @@ function calculateChartData(
       borderColor: theme.palette.background.default,
       borderWidth: 1,
       data: [
-        (getTickerPrice(ticker, asset, cryptoCurrency) * portfolio[asset] * 100 / sum).toFixed(2),
+        {
+          x: (getTickerPrice(ticker, asset, cryptoCurrency) * portfolio[asset] * 100 / sum).toFixed(
+            2
+          ),
+        },
       ],
     }));
 
   return { datasets };
 }
+
+const labelCallback = (item: ChartTooltipItem, data: ChartData) => {
+  if (data && data.datasets && item && item.datasetIndex != null) {
+    return `${data.datasets[item.datasetIndex].label}: ${item.xLabel} %`;
+  }
+  return '';
+};
