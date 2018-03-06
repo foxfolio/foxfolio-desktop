@@ -98,7 +98,7 @@ function fetchBalancesForExchange(exchange: Exchange): ThunkAction {
         balance => balance > 0
       );
       dispatch(
-        updateExchangeBalances(exchange.id, _.mapKeys(balances, (key: string) => unifySymbols(key)))
+        updateExchangeBalances(exchange.id, _.mapKeys(balances, (value, key) => unifySymbols(key)))
       );
     } catch (e) {
       dispatch(failedRequest(exchange.id, e.message));

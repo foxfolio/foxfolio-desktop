@@ -1,4 +1,4 @@
-import R from 'ramda';
+import _ from 'lodash';
 import { createSelector } from 'reselect';
 import { getTickerPrice } from '../../../helpers/transactions';
 import { Ticker } from '../../../reducers/ticker';
@@ -10,12 +10,12 @@ export const getPortfolio = createSelector(
   [getWalletBalances, getFilteredExchangeBalances],
   (walletBalances, filteredBalances): Portfolio => {
     const reducedExchangeBalances: Balances = Object.keys(filteredBalances).reduce(
-      (acc, key) => R.mergeWith((a, b) => a + b, acc, filteredBalances[key]),
+      (acc, key) => _.mergeWith(acc, filteredBalances[key], _.add),
       {}
     );
 
     return {
-      total: R.mergeWith((a, b) => a + b, reducedExchangeBalances, walletBalances),
+      total: _.mergeWith(reducedExchangeBalances, walletBalances, _.add),
       exchanges: filteredBalances,
       wallets: walletBalances,
     };

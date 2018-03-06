@@ -1,3 +1,4 @@
+import * as _ from 'lodash';
 import { CardContent, WithStyles } from 'material-ui';
 import { Add, Delete } from 'material-ui-icons';
 import Button from 'material-ui/Button';
@@ -6,12 +7,10 @@ import IconButton from 'material-ui/IconButton';
 import { StyleRulesCallback } from 'material-ui/styles';
 import withStyles from 'material-ui/styles/withStyles';
 import moment from 'moment';
-import R from 'ramda';
 import React, { Component } from 'react';
 import { TickerRequest } from '../../../actions/trades';
-import { ExpandableCard } from '../../../components/ExpandableCard';
 import { Coinlist } from '../../../reducers/coinlist';
-import { Exchange, Trade } from '../../../reducers/exchanges.types';
+import { Trade } from '../../../reducers/exchanges.types';
 import { SettingsType } from '../../../reducers/settings';
 import { PricesForTime, Ticker } from '../../../reducers/ticker';
 import { DialogConfig } from '../../exchange/components/ExchangeDialog';
@@ -108,7 +107,7 @@ export const TradesList = withStyles(styles)(
 
       return (
         <React.Fragment>
-          {flattededTrades.sort((a, b) => a.timestamp < b.timestamp).map(trade => (
+          {flattededTrades.sort((a, b) => a.timestamp - b.timestamp).map(trade => (
             <Card className={classes.row} key={trade.id}>
               <CardContent className={classes.root} onClick={this.handleEdit(trade)}>
                 <TradeListItem
@@ -148,7 +147,10 @@ export const TradesList = withStyles(styles)(
 const flattenTrades = (trades: Trade[]) => {
   console.log(trades);
   const mergedTrades = mergeTradesForDay(trades);
-  return R.values(mergedTrades).reduce((acc, trade) => acc.concat(R.values(trade)), []);
+  return _.chain(mergedTrades)
+    .values()
+    .reduce((acc, trade) => _.concat(acc, _.values(trade)), [] as Trade[])
+    .value();
 };
 
 const mergeTradesForDay = (trades: Trade[]) =>

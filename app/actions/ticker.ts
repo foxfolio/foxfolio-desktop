@@ -1,7 +1,6 @@
 import 'whatwg-fetch'; // Has to be imported before ccxt
 
 import * as ccxt from 'ccxt';
-import * as R from 'ramda';
 import { Coinlist } from '../reducers/coinlist';
 import { Exchange, Exchanges } from '../reducers/exchanges.types';
 import { HistoryEntry, Ticker } from '../reducers/ticker';
@@ -9,6 +8,7 @@ import { Wallet } from '../reducers/wallets.types';
 import { getExchanges } from '../selectors/selectGlobalState';
 import { Action, Dispatch, GetState, ThunkAction } from './actions.types';
 import startTimer from './timer';
+import _ from 'lodash';
 
 const REFRESH_TIME_IN_MS = 30000;
 
@@ -92,13 +92,13 @@ const requestMissingTickerUpdateFromExchange = async (
   try {
     for (const fsym of symbols.from) {
       if (!ticker[fsym]) {
-        for (const exchange of R.values(exchanges)) {
+        for (const exchange of _.values(exchanges)) {
           if (exchangeHasSymbol(fsym, exchange)) {
             const connector: ccxt.Exchange = new ccxt[exchange.type](exchange.credentials);
             const markets: {
               [symbol: string]: ccxt.Market;
             } = (await connector.loadMarkets()) as any;
-            const marketsForSymbol = R.values(markets).filter(market =>
+            const marketsForSymbol = _.values(markets).filter(market =>
               market.symbol.startsWith(fsym.toUpperCase())
             );
             for (const market of marketsForSymbol) {
@@ -125,7 +125,7 @@ const requestMissingTickerUpdateFromExchange = async (
 };
 
 const exchangeHasSymbol = (symbol: string, exchange: Exchange) => {
-  return R.contains(symbol, R.keys(exchange.balances));
+  return _.includes(_.keys(exchange.balances), symbol);
 };
 
 export function requestHistory(
@@ -182,15 +182,15 @@ function getSymbolsFromTransactions(
   extraSymbols: string[]
 ): Symbols {
   const walletSymbols = wallets.map(wallet => wallet.currency) || [];
-  const exchangeSymbols = R.pipe(
-    R.values,
-    R.map(exchange => exchange.balances),
-    R.map(R.keys),
-    R.reduce((acc, keys) => acc.concat(keys), [] as string[])
-  )(exchanges);
+  const exchangeSymbols = _.chain(exchanges)
+    .values()
+    .map(exchange => exchange.balances)
+    .map(_.keys)
+    .reduce((acc, keys) => acc.concat(keys), [] as string[])
+    .value();
 
   return {
-    from: R.uniq([cryptoCurrency, ...walletSymbols, ...exchangeSymbols, ...extraSymbols]),
+    from: _.uniq([cryptoCurrency, ...walletSymbols, ...exchangeSymbols, ...extraSymbols]),
     to: [cryptoCurrency, fiatCurrency],
   };
 }
@@ -206,13 +206,12 @@ interface RawTickerEntry {
   PRICE: string;
 }
 
-function formatRawTicker(rawTicker: RawTicker) {
-  const ticker = R.mapObjIndexed(
-    R.mapObjIndexed((entry: RawTickerEntry) => ({
+function formatRawTicker(rawTicker: RawTicker): Ticker {
+  return _.mapValues(rawTicker, fsymEntry =>
+    _.mapValues(fsymEntry, (entry: RawTickerEntry) => ({
       ...entry,
       CHANGEPCT24HOUR: parseFloat(entry.CHANGEPCT24HOUR),
       PRICE: parseFloat(entry.PRICE),
     }))
-  )(rawTicker);
-  return ticker;
+  );
 }

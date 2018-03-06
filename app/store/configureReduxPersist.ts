@@ -15,7 +15,7 @@ export const configureReduxPersist = (): PersistConfig => ({
 const createExchangeTransform = () =>
   createTransform((inboundState, key) => {
     if (key === 'exchanges') {
-      return _.map(inboundState, object => _.omit(object, 'openRequests'));
+      return _.mapValues(inboundState, object => _.omit(object, 'openRequests'));
     }
     return inboundState;
   }, _.identity);

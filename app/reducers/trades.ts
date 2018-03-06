@@ -1,4 +1,4 @@
-import * as R from 'ramda';
+import * as _ from 'lodash';
 import { Action } from '../actions/actions.types';
 import { generateId } from '../helpers/reducers';
 import { Trade } from './exchanges.types';
@@ -33,5 +33,5 @@ const updateTrade = (state: TradesMap, trade: Trade): TradesMap => {
 };
 
 const deleteTrade = (state: TradesMap, id: string): TradesMap => {
-  return R.omit([id], state);
+  return _.omit(state, id);
 };

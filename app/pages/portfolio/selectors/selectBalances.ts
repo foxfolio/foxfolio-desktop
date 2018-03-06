@@ -1,5 +1,4 @@
 import * as _ from 'lodash';
-import R from 'ramda';
 import { createSelector } from 'reselect';
 import { GlobalState } from '../../../reducers';
 import { Exchanges } from '../../../reducers/exchanges.types';
@@ -14,10 +13,12 @@ export const getExchangeBalances = createSelector<GlobalState, Exchanges, Exchan
 
 export const getFilteredExchangeBalances = createSelector(
   [getExchangeBalances, getSettings],
-  (exchangeBalances, settings): ExchangeBalances =>
-    _.mapValues(exchangeBalances, balance =>
-      (settings.includeFiat ? R.identity : R.omit(getFiatCurrencies()))(balance)
-    )
+  (exchangeBalances, settings): ExchangeBalances => {
+    return _.mapValues(
+      exchangeBalances,
+      balance => (settings.includeFiat ? balance : _.omit(balance, getFiatCurrencies()))
+    );
+  }
 );
 
 export const getWalletBalances = createSelector(

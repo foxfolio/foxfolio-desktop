@@ -1,4 +1,4 @@
-import R from 'ramda';
+import _ from 'lodash';
 import { Action } from '../actions/actions.types';
 import { Wallet } from './wallets.types';
 
@@ -7,9 +7,9 @@ export function wallets(state: Wallet[] = [], action: Action): Wallet[] {
     case 'ADD_WALLET':
       return [...state, action.wallet];
     case 'EDIT_WALLET':
-      return [...R.reject(R.equals(action.wallet), state), action.newWallet];
+      return [..._.reject(state, item => _.isEqual(item, action.wallet)), action.newWallet];
     case 'DELETE_WALLET':
-      return R.reject(R.equals(action.wallet), state);
+      return _.reject(state, item => _.isEqual(item, action.wallet));
     default:
       return state;
   }
