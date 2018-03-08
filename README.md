@@ -81,6 +81,7 @@ BTC 3E8yR2viEgLpErjfmFkMTZ9ntVP66KBLGD
 ETH 0x588fFcb52d43fe7Def5D4F45Bb7c324ECAA79010
 LTC MQTha8UbFoagdrM4RWKvrNvzJFFUat4jN3
 ARK AXkXn8h18dYKQMfkE3Va8WJ9SPQqCrATc3
+NANO xrb_3bua4emgw1ygmf3p4wfw43nkqdxsxuoxmk6bfx8ajsq91m9jxwdm6go6ebq9
 ```
 ## License
 
