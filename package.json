@@ -83,7 +83,7 @@
   },
   "author": {
     "name": "Andreas Greimel",
-    "email": "andreas@greimel.de",
+    "email": "info@foxfol.io",
     "url": "https://github.com/greimela"
   },
   "license": "MIT",
@@ -91,15 +91,9 @@
     "url": "https://gitlab.com/foxfolio/foxfolio-desktop/issues"
   },
   "keywords": [
-    "electron",
-    "boilerplate",
-    "react",
-    "redux",
-    "flow",
-    "sass",
-    "webpack",
-    "hot",
-    "reload"
+    "portfolio",
+    "foxfolio",
+    "cryptocurrency"
   ],
   "jest": {
     "globals": {
@@ -155,7 +149,6 @@
     "@types/redux-form": "^7.0.14",
     "@types/redux-logger": "^3.0.5",
     "@types/shortid": "^0.0.29",
-    "awesome-typescript-loader": "^3.4.1",
     "babel-core": "^6.24.1",
     "babel-eslint": "^7.2.3",
     "babel-jest": "^20.0.3",
@@ -163,7 +156,6 @@
     "babel-plugin-add-module-exports": "^0.2.1",
     "babel-plugin-dev-expression": "^0.2.1",
     "babel-plugin-dynamic-import-webpack": "^1.0.1",
-    "babel-plugin-flow-runtime": "^0.11.1",
     "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-plugin-transform-es2015-classes": "^6.24.1",
     "babel-preset-env": "^1.5.1",
@@ -173,6 +165,7 @@
     "babel-preset-stage-0": "^6.24.1",
     "babel-register": "^6.24.1",
     "babili-webpack-plugin": "^0.1.2",
+    "cache-loader": "^1.2.2",
     "chalk": "^2.0.1",
     "concurrently": "^3.5.0",
     "coveralls": "^3.0.0",
@@ -189,9 +182,7 @@
     "extract-text-webpack-plugin": "^3.0.2",
     "fbjs-scripts": "^0.8.0",
     "file-loader": "^0.11.1",
-    "flow-bin": "^0.63.1",
-    "flow-runtime": "^0.16.0",
-    "flow-typed": "^2.2.3",
+    "fork-ts-checker-webpack-plugin": "^0.4.0",
     "html-webpack-plugin": "^2.29.0",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^22.1.4",
@@ -209,7 +200,9 @@
     "stylefmt": "^6.0.0",
     "stylelint": "^7.12.0",
     "stylelint-config-standard": "^16.0.0",
+    "thread-loader": "^1.1.5",
     "ts-jest": "^22.0.4",
+    "ts-loader": "^4.0.1",
     "tslint": "^5.9.1",
     "tslint-config-prettier": "^1.8.0",
     "tslint-react": "^3.5.1",
@@ -242,7 +235,7 @@
     "react": "^16.2.0",
     "react-chartjs-2": "^2.7.0",
     "react-dom": "^16.2.0",
-    "react-hot-loader": "^3.1.3",
+    "react-hot-loader": "^4.0.0",
     "react-redux": "^5.0.6",
     "react-router": "^4.2.0",
     "react-router-dom": "^4.2.2",

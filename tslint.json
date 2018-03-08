@@ -1,5 +1,6 @@
 {
   "extends": ["tslint:latest", "tslint-react", "tslint-config-prettier"],
+  "defaultSeverity": "warning",
   "rules": {
     "object-literal-sort-keys": false,
     "interface-name": false,

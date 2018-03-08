@@ -9,6 +9,7 @@ import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 import merge from 'webpack-merge';
 import baseConfig from './webpack.config.base';
 import CheckNodeEnv from './internals/scripts/CheckNodeEnv';
+import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
 
 CheckNodeEnv('production');
 
@@ -139,6 +140,10 @@ export default merge.smart(baseConfig, {
   },
 
   plugins: [
+    new ForkTsCheckerWebpackPlugin({
+      checkSyntacticErrors: true,
+    }),
+
     /**
      * Create global constants which can be configured at compile time.
      *

@@ -12,10 +12,11 @@ import fs from 'fs';
 import webpack from 'webpack';
 import chalk from 'chalk';
 import merge from 'webpack-merge';
-import { spawn, execSync } from 'child_process';
+import { execSync, spawn } from 'child_process';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import baseConfig from './webpack.config.base';
 import CheckNodeEnv from './internals/scripts/CheckNodeEnv';
+import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
 
 CheckNodeEnv('development');
 
@@ -73,20 +74,26 @@ export default merge.smart(baseConfig, {
       {
         test: /\.tsx?$/,
         exclude: /node_modules/,
-        use: [{
-          loader: 'babel-loader',
-          options: {
-            cacheDirectory: true,
-            plugins: [
-              // Here, we include babel plugins that are only required for the
-              // renderer process. The 'transform-*' plugins must be included
-              // before react-hot-loader/babel
-              'transform-class-properties',
-              'transform-es2015-classes',
-              'react-hot-loader/babel',
-            ],
+        use: [
+          {
+            loader: 'babel-loader',
+            options: {
+              cacheDirectory: true,
+              plugins: [
+                // Here, we include babel plugins that are only required for the
+                // renderer process. The 'transform-*' plugins must be included
+                // before react-hot-loader/babel
+                'transform-class-properties',
+                'transform-es2015-classes',
+                'react-hot-loader/babel',
+              ],
+            },
+          }, {
+            loader: 'ts-loader',
+            options: {
+              happyPackMode: true
+            },
           },
-        }, 'awesome-typescript-loader',
         ],
       },
       {
@@ -232,6 +239,12 @@ export default merge.smart(baseConfig, {
     }),
 
     new webpack.NoEmitOnErrorsPlugin(),
+
+    new ForkTsCheckerWebpackPlugin({
+      tslint: true,
+      checkSyntacticErrors: true,
+      watch: ['./app'] // optional but improves performance (fewer stat calls)
+    }),
 
     /**
      * Create global constants which can be configured at compile time.

@@ -1,9 +1,8 @@
-import * as chartjs from 'chart.js';
-import { ChartData, ChartDataSets, ChartTooltipItem } from 'chart.js';
+import chartjs, { ChartData, ChartTooltipItem } from 'chart.js';
 import { withTheme } from 'material-ui';
 import { Theme } from 'material-ui/styles';
 import React from 'react';
-import { ChartData as ReactChartData, defaults, HorizontalBar } from 'react-chartjs-2';
+import { defaults, HorizontalBar } from 'react-chartjs-2';
 import { getTickerPrice } from '../../../helpers/transactions';
 import { SettingsType } from '../../../reducers/settings';
 import { Ticker } from '../../../reducers/ticker';

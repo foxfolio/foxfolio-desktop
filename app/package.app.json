@@ -6,7 +6,7 @@
   "main": "./main.prod.js",
   "author": {
     "name": "Andreas Greimel",
-    "email": "andreas@greimel.de",
+    "email": "info@foxfol.io",
     "url": "https://github.com/greimela"
   },
   "scripts": {

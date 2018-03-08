@@ -63,7 +63,7 @@ export const ExpandableCard = withStyles(styles)(
                   [classes.expandOpen]: this.state.expanded,
                 })}
               >
-                <ExpandMore/>
+                <ExpandMore />
               </IconButton>
             </div>
           </CardContent>
@@ -73,5 +73,5 @@ export const ExpandableCard = withStyles(styles)(
         </Card>
       );
     }
-  },
+  }
 );

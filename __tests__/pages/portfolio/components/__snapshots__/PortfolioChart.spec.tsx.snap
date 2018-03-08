@@ -10,7 +10,9 @@ exports[`Render portfolio chart 1`] = `
           "borderColor": "#fafafa",
           "borderWidth": 1,
           "data": Array [
-            "83.33",
+            Object {
+              "x": "83.33",
+            },
           ],
           "label": "BTC",
         },
@@ -19,7 +21,9 @@ exports[`Render portfolio chart 1`] = `
           "borderColor": "#fafafa",
           "borderWidth": 1,
           "data": Array [
-            "16.67",
+            Object {
+              "x": "16.67",
+            },
           ],
           "label": "ETH",
         },

@@ -1,6 +1,7 @@
 import 'whatwg-fetch'; // Has to be imported before ccxt
 
 import * as ccxt from 'ccxt';
+import _ from 'lodash';
 import { Coinlist } from '../reducers/coinlist';
 import { Exchange, Exchanges } from '../reducers/exchanges.types';
 import { HistoryEntry, Ticker } from '../reducers/ticker';
@@ -8,7 +9,6 @@ import { Wallet } from '../reducers/wallets.types';
 import { getExchanges } from '../selectors/selectGlobalState';
 import { Action, Dispatch, GetState, ThunkAction } from './actions.types';
 import startTimer from './timer';
-import _ from 'lodash';
 
 const REFRESH_TIME_IN_MS = 30000;
 

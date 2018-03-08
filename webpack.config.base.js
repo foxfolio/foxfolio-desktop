@@ -4,6 +4,7 @@
 
 import path from 'path';
 import webpack from 'webpack';
+import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
 
 export default {
   module: {
@@ -26,7 +27,12 @@ export default {
           options: {
             cacheDirectory: true,
           },
-        }, 'awesome-typescript-loader'],
+        }, {
+          loader: 'ts-loader',
+          options: {
+            happyPackMode: true
+          },
+        }]
       }],
   },
 
