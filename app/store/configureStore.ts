@@ -1,10 +1,11 @@
 import { History } from 'history';
 import { Store } from 'react-redux';
+import { Persistor } from 'redux-persist/es/types';
 
 import { GlobalState } from '../reducers';
 
 interface MyStore {
-  configureStore: () => Store<GlobalState>;
+  configureStore: () => { store: Store<GlobalState>; persistor: Persistor };
   history: History;
 }
 

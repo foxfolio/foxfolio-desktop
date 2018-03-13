@@ -49,13 +49,13 @@ const configureStore = (initialState?: any) => {
 
   // Create Store
   const store = createStore(rootReducer, initialState, enhancer);
-  persistStore(store);
+  const persistor = persistStore(store);
 
   if ((module as any).hot) {
     (module as any).hot.accept('../reducers', () => store.replaceReducer(require('../reducers')));
   }
 
-  return store;
+  return { persistor, store };
 };
 
 export default { configureStore, history };

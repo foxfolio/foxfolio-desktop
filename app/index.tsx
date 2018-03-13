@@ -9,11 +9,11 @@ import './app.global.css';
 
 configureSentry();
 
-const store = configureStore();
+const { persistor, store } = configureStore();
 
 render(
   <AppContainer>
-    <Root store={store} history={history} />
+    <Root store={store} history={history} persistor={persistor} />
   </AppContainer>,
   document.getElementById('root')
 );
@@ -23,7 +23,7 @@ if ((module as any).hot) {
     const NextRoot = require('./pages/Root');
     render(
       <AppContainer>
-        <NextRoot store={store} history={history} />
+        <NextRoot store={store} history={history} persistor={persistor} />
       </AppContainer>,
       document.getElementById('root')
     );

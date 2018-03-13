@@ -6,7 +6,7 @@ import Layout from './containers/Layout';
 import { AboutPage } from './pages/AboutPage';
 import { ExchangePage } from './pages/exchange/ExchangePage';
 import { PortfolioPage } from './pages/portfolio/PortfolioPage';
-import { SettingsPage } from './pages/SettingsPage';
+import { SettingsPage } from './pages/settings/SettingsPage';
 import { TradesPage } from './pages/trades/TradesPage';
 import { WalletPage } from './pages/wallet/WalletPage';
 import { GlobalState } from './reducers';
