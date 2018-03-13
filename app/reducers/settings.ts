@@ -6,6 +6,7 @@ export interface SettingsType {
   fiatCurrency: string;
   cryptoCurrency: 'BTC' | 'ETH';
   includeFiat: boolean;
+  hideZeroBalances: boolean;
   currencyFocus: CurrencyFocus;
   theme: 'light' | 'dark';
 }
@@ -13,6 +14,7 @@ export interface SettingsType {
 export const initialSettings: SettingsType = {
   fiatCurrency: 'USD',
   cryptoCurrency: 'BTC',
+  hideZeroBalances: false,
   includeFiat: true,
   currencyFocus: 'fiat',
   theme: 'light',
