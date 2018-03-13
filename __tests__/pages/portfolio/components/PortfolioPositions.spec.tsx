@@ -49,5 +49,5 @@ test('filterPortfolioForAsset', () => {
   };
   const portfolioForAsset = filterPortfolioForAsset(portfolio, 'ETH');
 
-  expect(portfolioForAsset).toMatchObject({ total: 10, wallets: 8, exchanges: { key: 2 } });
+  expect(portfolioForAsset).toEqual({ total: 10, wallets: 8, exchanges: { key: 2 } });
 });

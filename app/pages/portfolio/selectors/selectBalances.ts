@@ -1,5 +1,6 @@
 import * as _ from 'lodash';
 import { createSelector } from 'reselect';
+import { getTickerPrice } from '../../../helpers/ticker';
 import { GlobalState } from '../../../reducers';
 import { Exchanges } from '../../../reducers/exchanges.types';
 import { SettingsType } from '../../../reducers/settings';
@@ -45,7 +46,7 @@ const omitBalances = (balances: Balances, settings: SettingsType, ticker: Ticker
   }
   if (settings.hideZeroBalances) {
     balances = _.omitBy(balances, (value, key) => {
-      return ticker[key][settings.fiatCurrency].PRICE * value < 0.05;
+      return getTickerPrice(ticker, key, settings.fiatCurrency) * value < 0.05;
     }) as Balances;
   }
   return balances;
