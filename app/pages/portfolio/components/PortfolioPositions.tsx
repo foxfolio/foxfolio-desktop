@@ -1,6 +1,6 @@
 import * as _ from 'lodash';
 import React from 'react';
-import { getTickerPrice } from '../../../helpers/transactions';
+import { getTickerPrice } from '../../../helpers/ticker';
 import { Coinlist } from '../../../reducers/coinlist';
 import { SettingsType } from '../../../reducers/settings';
 import { Ticker } from '../../../reducers/ticker';

@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import { createSelector } from 'reselect';
-import { getTickerPrice } from '../../../helpers/transactions';
+import { getTickerPrice } from '../../../helpers/ticker';
 import { Ticker } from '../../../reducers/ticker';
 import { getSettings, getTicker } from '../../../selectors/selectGlobalState';
 import { Balances, Portfolio, PortfolioSum } from '../types/portfolio.types';
@@ -9,8 +9,8 @@ import { getFilteredExchangeBalances, getWalletBalances } from './selectBalances
 export const getPortfolio = createSelector(
   [getWalletBalances, getFilteredExchangeBalances],
   (walletBalances, filteredBalances): Portfolio => {
-    const reducedExchangeBalances: Balances = Object.keys(filteredBalances).reduce(
-      (acc, key) => _.mergeWith(acc, filteredBalances[key], _.add),
+    const reducedExchangeBalances: Balances = _.values(filteredBalances).reduce(
+      (acc, value) => _.mergeWith(acc, value, _.add),
       {}
     );
 

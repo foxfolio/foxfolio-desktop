@@ -3,7 +3,7 @@ import { withTheme } from 'material-ui';
 import { Theme } from 'material-ui/styles';
 import React from 'react';
 import { defaults, HorizontalBar } from 'react-chartjs-2';
-import { getTickerPrice } from '../../../helpers/transactions';
+import { getTickerPrice } from '../../../helpers/ticker';
 import { SettingsType } from '../../../reducers/settings';
 import { Ticker } from '../../../reducers/ticker';
 import getColor from '../../../utils/colors';

@@ -2,7 +2,14 @@ import * as _ from 'lodash';
 import { createSelector } from 'reselect';
 import { GlobalState } from '../../../reducers';
 import { Exchanges } from '../../../reducers/exchanges.types';
-import { getExchanges, getSettings, getWallets } from '../../../selectors/selectGlobalState';
+import { SettingsType } from '../../../reducers/settings';
+import { Ticker } from '../../../reducers/ticker';
+import {
+  getExchanges,
+  getSettings,
+  getTicker,
+  getWallets,
+} from '../../../selectors/selectGlobalState';
 import { getFiatCurrencies } from '../../../utils/fiatCurrencies';
 import { Balances, ExchangeBalances } from '../types/portfolio.types';
 
@@ -12,12 +19,9 @@ export const getExchangeBalances = createSelector<GlobalState, Exchanges, Exchan
 );
 
 export const getFilteredExchangeBalances = createSelector(
-  [getExchangeBalances, getSettings],
-  (exchangeBalances, settings): ExchangeBalances => {
-    return _.mapValues(
-      exchangeBalances,
-      balance => (settings.includeFiat ? balance : _.omit(balance, getFiatCurrencies()))
-    );
+  [getExchangeBalances, getSettings, getTicker],
+  (exchangeBalances, settings, ticker): ExchangeBalances => {
+    return _.mapValues(exchangeBalances, balances => omitBalances(balances, settings, ticker));
   }
 );
 
@@ -34,3 +38,15 @@ export const getWalletBalances = createSelector(
         {}
       )
 );
+
+const omitBalances = (balances: Balances, settings: SettingsType, ticker: Ticker): Balances => {
+  if (!settings.includeFiat) {
+    balances = _.omit(balances, getFiatCurrencies());
+  }
+  if (settings.hideZeroBalances) {
+    balances = _.omitBy(balances, (value, key) => {
+      return ticker[key][settings.fiatCurrency].PRICE * value < 0.05;
+    }) as Balances;
+  }
+  return balances;
+};
