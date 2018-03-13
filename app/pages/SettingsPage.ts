@@ -16,4 +16,4 @@ function mapDispatchToProps(dispatch: Dispatch) {
   return bindActionCreators(SettingsActions, dispatch);
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Settings);
+export const SettingsPage = connect(mapStateToProps, mapDispatchToProps)(Settings);

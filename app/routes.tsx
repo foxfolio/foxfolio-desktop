@@ -5,10 +5,10 @@ import { Route, Switch } from 'react-router';
 import Layout from './containers/Layout';
 import { AboutPage } from './pages/AboutPage';
 import { ExchangePage } from './pages/exchange/ExchangePage';
-import HomePage from './pages/portfolio/PortfolioPage';
-import SettingsPage from './pages/SettingsPage';
+import { PortfolioPage } from './pages/portfolio/PortfolioPage';
+import { SettingsPage } from './pages/SettingsPage';
 import { TradesPage } from './pages/trades/TradesPage';
-import WalletPage from './pages/wallet/WalletPage';
+import { WalletPage } from './pages/wallet/WalletPage';
 import { GlobalState } from './reducers';
 
 interface Props {
@@ -31,7 +31,7 @@ export class Routes extends Component<Props> {
       <MuiThemeProvider theme={appTheme}>
         <Layout>
           <Switch>
-            <Route exact path="/" component={HomePage} />
+            <Route exact path="/" component={PortfolioPage} />
             <Route path="/trades" component={TradesPage} />
             <Route path="/wallets" component={WalletPage} />
             <Route path="/exchanges" component={ExchangePage} />

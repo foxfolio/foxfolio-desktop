@@ -22,4 +22,4 @@ function mapDispatchToProps(dispatch: Dispatch) {
   return bindActionCreators(TransactionActions, dispatch);
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(PortfolioContainer);
+export const PortfolioPage = connect(mapStateToProps, mapDispatchToProps)(PortfolioContainer);

@@ -17,4 +17,4 @@ function mapDispatchToProps(dispatch: Dispatch<GlobalState>) {
   return bindActionCreators(WalletActions, dispatch);
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(WalletGrid);
+export const WalletPage = connect(mapStateToProps, mapDispatchToProps)(WalletGrid);
