@@ -24,6 +24,7 @@ exports[`Render portfolio page 1`] = `
           "cryptoCurrency": "BTC",
           "currencyFocus": "fiat",
           "fiatCurrency": "USD",
+          "hideZeroBalances": false,
           "includeFiat": true,
           "theme": "light",
         }
@@ -56,6 +57,7 @@ exports[`Render portfolio page 1`] = `
           "cryptoCurrency": "BTC",
           "currencyFocus": "fiat",
           "fiatCurrency": "USD",
+          "hideZeroBalances": false,
           "includeFiat": true,
           "theme": "light",
         }
@@ -102,6 +104,7 @@ exports[`Render portfolio page 1`] = `
           "cryptoCurrency": "BTC",
           "currencyFocus": "fiat",
           "fiatCurrency": "USD",
+          "hideZeroBalances": false,
           "includeFiat": true,
           "theme": "light",
         }
