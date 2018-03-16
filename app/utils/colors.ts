@@ -53,6 +53,7 @@ export default function getColor(currency: string): string {
     BCH: '#F7931A',
     BCC: '#F7931A',
     BTCD: '#2A72DC',
+    BTCP: '#2c3062',
     BTS: '#03A9E0',
     BTX: '#ff17a1',
     CLAM: '#D6AB31',
