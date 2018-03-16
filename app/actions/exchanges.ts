@@ -27,10 +27,7 @@ export function updateExchangeCredentials(
   };
 }
 
-export function updateExchangeTrades(
-  id: string,
-  trades: Trade[]
-): Action {
+export function updateExchangeTrades(id: string, trades: Trade[]): Action {
   return {
     type: ExchangeTypeKeys.UPDATE_EXCHANGE_TRADES,
     id,
