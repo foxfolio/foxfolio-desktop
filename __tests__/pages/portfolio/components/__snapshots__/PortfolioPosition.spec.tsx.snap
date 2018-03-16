@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Portfolio position without ticker 1`] = `
+exports[`Portfolio position with missing ticker 1`] = `
 <WithStyles(Component)
   cardContent={
     <UNDEFINED>

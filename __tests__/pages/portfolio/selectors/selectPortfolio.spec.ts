@@ -33,6 +33,7 @@ beforeEach(() => {
           USD: { PRICE: 100, CHANGEPCT24HOUR: 4 },
           BTC: { PRICE: 0.01, CHANGEPCT24HOUR: 5 },
         },
+        USD: { BTC: { PRICE: 0.0001, CHANGEPCT24HOUR: -1 } },
       },
     },
   };

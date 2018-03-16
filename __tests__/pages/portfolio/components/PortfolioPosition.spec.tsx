@@ -17,7 +17,7 @@ const settings = { ...initialSettings, fiatCurrency: 'USD' };
 beforeEach(() => {
   coinlist = {};
   ticker = {
-    BTC: { BTC: { PRICE: 1, CHANGEPCT24HOUR: 0 }, USD: { PRICE: 10000, CHANGEPCT24HOUR: 1.1 } },
+    BTC: { USD: { PRICE: 10000, CHANGEPCT24HOUR: 1.1 } },
     ETH: {
       BTC: { PRICE: 0.1, CHANGEPCT24HOUR: 2 },
       USD: { PRICE: 1000, CHANGEPCT24HOUR: 5.2 },
@@ -45,7 +45,7 @@ test('Render portfolio position', () => {
   expect(wrapper).toMatchSnapshot();
 });
 
-test('Portfolio position without ticker', () => {
+test('Portfolio position with missing ticker', () => {
   const asset = 'ETH';
   const portfolio = {
     total: 10,
