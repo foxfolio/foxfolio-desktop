@@ -1,11 +1,12 @@
 import Typography from 'material-ui/Typography';
 import * as React from 'react';
+import { TickerEntries } from '../../../../helpers/ticker';
 import { CurrencyFocus, SettingsType } from '../../../../reducers/settings';
-import { TickerForSymbol } from '../PortfolioPosition';
+import { TickerForSymbol } from '../../../../reducers/ticker';
 import { PriceChangeText } from '../PriceChangeText';
 
 export const PositionPrice = (
-  ticker: TickerForSymbol,
+  ticker: TickerEntries,
   quantity: number,
   asset: string,
   settings: SettingsType
@@ -21,7 +22,7 @@ export const PositionPrice = (
 };
 
 export const PositionQuantity = (
-  ticker: TickerForSymbol,
+  ticker: TickerEntries,
   quantity: number,
   asset: string,
   settings: SettingsType
@@ -37,11 +38,11 @@ export const PositionQuantity = (
   return PortfolioPositionColumn(currencyFocus, cryptoEntry, fiatEntry);
 };
 
-const getPrice = (symbol: string, currency: string, ticker: TickerForSymbol) =>
+const getPrice = (symbol: string, currency: string, ticker: TickerEntries) =>
   symbol !== currency ? ticker[currency].PRICE : 1;
 
 export const PositionPriceChange = (
-  ticker: TickerForSymbol,
+  ticker: TickerEntries,
   quantity: number,
   asset: string,
   settings: SettingsType

@@ -7,9 +7,11 @@ export interface TickerAndHistory {
 }
 
 export interface Ticker {
-  [fsym: string]: {
-    [tsym: string]: TickerEntry;
-  };
+  [fsym: string]: TickerForSymbol | undefined;
+}
+
+export interface TickerForSymbol {
+  [tsym: string]: TickerEntry | undefined;
 }
 
 export interface TickerEntry {

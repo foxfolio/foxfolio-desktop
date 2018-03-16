@@ -3,9 +3,9 @@ import { Ticker, TickerEntry } from '../reducers/ticker';
 export const getTickerEntry = (ticker: Ticker, fsym: string, tsym: string): TickerEntry => {
   if (fsym !== tsym) {
     if (ticker) {
-      const tickerBase = ticker[fsym];
-      if (tickerBase != null) {
-        const tickerEntry = tickerBase[tsym];
+      const tickerForSymbol = ticker[fsym];
+      if (tickerForSymbol != null) {
+        const tickerEntry = tickerForSymbol[tsym];
         if (tickerEntry != null && tickerEntry.PRICE && tickerEntry.CHANGEPCT24HOUR) {
           return tickerEntry;
         }
@@ -20,3 +20,16 @@ export const getTickerEntry = (ticker: Ticker, fsym: string, tsym: string): Tick
     return { PRICE: 1, CHANGEPCT24HOUR: 0 };
   }
 };
+
+export interface TickerEntries {
+  [symbol: string]: TickerEntry;
+}
+
+export const getTickerEntries = (ticker: Ticker, fsym: string, tsyms: string[]): TickerEntries =>
+  tsyms.reduce(
+    (acc, tsym) => ({
+      ...acc,
+      [tsym]: getTickerEntry(ticker, fsym, tsym),
+    }),
+    {}
+  );

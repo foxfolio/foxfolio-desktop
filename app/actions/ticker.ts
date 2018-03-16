@@ -4,7 +4,7 @@ import * as ccxt from 'ccxt';
 import _ from 'lodash';
 import { Coinlist } from '../reducers/coinlist';
 import { Exchange, Exchanges } from '../reducers/exchanges.types';
-import { HistoryEntry, Ticker } from '../reducers/ticker';
+import { HistoryEntry, Ticker, TickerEntry } from '../reducers/ticker';
 import { Wallet } from '../reducers/wallets.types';
 import { getExchanges } from '../selectors/selectGlobalState';
 import { Action, Dispatch, GetState, ThunkAction } from './actions.types';
@@ -104,9 +104,12 @@ const requestMissingTickerUpdateFromExchange = async (
             for (const market of marketsForSymbol) {
               try {
                 const tick = await connector.fetchTicker(market.symbol);
-                updatedTicker[market.base][market.quote] = {
-                  PRICE: tick.last || tick.ask,
-                  CHANGEPCT24HOUR: 0,
+                updatedTicker[market.base] = {
+                  ...updatedTicker[market.base],
+                  [market.quote]: {
+                    PRICE: tick.last || tick.ask,
+                    CHANGEPCT24HOUR: 0,
+                  },
                 };
               } catch (error) {
                 console.error(error);

@@ -5,6 +5,7 @@ import React from 'react';
 import { CurrencyAvatar } from '../../../components/CurrencyAvatar';
 import { ExpandableCard } from '../../../components/ExpandableCard';
 import { TokenLineChart } from '../../../components/TokenLineChart';
+import { getTickerEntries } from '../../../helpers/ticker';
 import { Coinlist } from '../../../reducers/coinlist';
 import { SettingsType } from '../../../reducers/settings';
 import { Ticker, TickerEntry } from '../../../reducers/ticker';
@@ -42,13 +43,13 @@ interface Props {
   settings: SettingsType;
 }
 
-export interface TickerForSymbol {
-  [tsym: string]: TickerEntry;
-}
-
 export const PortfolioPosition = withStyles(styles)<Props>(
   ({ asset, classes, portfolio, coinlist, ticker, settings }) => {
     const quantity = portfolio.total;
+    const tickerEntries = getTickerEntries(ticker, asset, [
+      settings.cryptoCurrency,
+      settings.fiatCurrency,
+    ]);
 
     return (
       <ExpandableCard
@@ -74,17 +75,17 @@ export const PortfolioPosition = withStyles(styles)<Props>(
                 </Grid>
                 <Grid item xs={2} className={classes.right}>
                   {hasPrice(asset, ticker, settings)
-                    ? PositionQuantity(ticker[asset], quantity, asset, settings)
+                    ? PositionQuantity(tickerEntries, quantity, asset, settings)
                     : ''}
                 </Grid>
                 <Grid item xs={3} className={classes.right}>
                   {hasPrice(asset, ticker, settings)
-                    ? PositionPrice(ticker[asset], quantity, asset, settings)
+                    ? PositionPrice(tickerEntries, quantity, asset, settings)
                     : ''}
                 </Grid>
                 <Grid item xs={2} className={classes.right}>
                   {hasPrice(asset, ticker, settings)
-                    ? PositionPriceChange(ticker[asset], quantity, asset, settings)
+                    ? PositionPriceChange(tickerEntries, quantity, asset, settings)
                     : ''}
                 </Grid>
               </Grid>
@@ -96,7 +97,13 @@ export const PortfolioPosition = withStyles(styles)<Props>(
   }
 );
 
-const hasPrice = (asset: string, ticker: Ticker, settings: SettingsType) =>
-  ticker[asset] &&
-  (asset === settings.fiatCurrency || ticker[asset][settings.fiatCurrency]) &&
-  (asset === settings.cryptoCurrency || ticker[asset][settings.cryptoCurrency]);
+const hasPrice = (asset: string, ticker: Ticker, settings: SettingsType) => {
+  const tickerForSymbol = ticker[asset];
+  if (tickerForSymbol != null) {
+    return (
+      (asset === settings.fiatCurrency || tickerForSymbol[settings.fiatCurrency]) &&
+      (asset === settings.cryptoCurrency || tickerForSymbol[settings.cryptoCurrency])
+    );
+  }
+  return false;
+};
