@@ -4,7 +4,8 @@
     "lib": [
       "dom",
       "es6",
-      "es7"
+      "es7",
+      "es2017.object"
     ],
     "target": "es6",
     "allowSyntheticDefaultImports": true,

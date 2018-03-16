@@ -16,6 +16,7 @@ import {
 import { bindActionCreators } from 'redux';
 
 import * as TickerActions from '../actions/ticker';
+import { getHistoryEntry } from '../helpers/ticker';
 import { GlobalState } from '../reducers';
 import { History } from '../reducers/ticker';
 
@@ -42,11 +43,11 @@ export const ThemedTokenLineChart = withTheme()(
     public render() {
       const { history, fsym, tsym, theme } = this.props;
 
-      if (fsym !== tsym && history[fsym] && history[fsym][tsym]) {
-        const reducedHistory = history[fsym][tsym].data;
+      const historyEntry = getHistoryEntry(history, fsym, tsym);
+      if (fsym !== tsym && historyEntry.data.length > 0) {
         return (
           <ResponsiveContainer height={300}>
-            <AreaChart data={reducedHistory} margin={{ left: 40, top: 5, bottom: 5, right: 5 }}>
+            <AreaChart data={historyEntry.data} margin={{ left: 40, top: 5, bottom: 5, right: 5 }}>
               <Area
                 stroke={theme.palette.text.secondary}
                 fill={theme.palette.text.divider}

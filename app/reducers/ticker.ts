@@ -20,23 +20,29 @@ export interface TickerEntry {
 }
 
 export interface History {
-  [fsym: string]: {
-    [tsym: string]: {
-      lastUpdate: Date;
-      data: HistoryEntry;
-    };
-  };
+  [fsym: string]:
+    | {
+        [tsym: string]: HistoryEntry | undefined;
+      }
+    | undefined;
 }
+export interface HistoryEntry {
+  lastUpdate: Date;
+  data: HistoryData;
+}
+export type HistoryData = Array<{ close: number; time: number }>;
 
 export interface PricesForTime {
-  [fsym: string]: {
-    [tsym: string]: {
-      [timestamp: number]: number;
-    };
-  };
+  [fsym: string]:
+    | {
+        [tsym: string]:
+          | {
+              [timestamp: number]: number | undefined;
+            }
+          | undefined;
+      }
+    | undefined;
 }
-
-export type HistoryEntry = Array<{ close: number; time: number }>;
 
 export function ticker(
   state: TickerAndHistory = { ticker: {}, history: {}, pricesForTime: {} },
@@ -60,6 +66,7 @@ export function ticker(
         },
       };
     case 'RECEIVE_PRICE_FOR_TIME':
+      const pricesForSymbol = state.pricesForTime[action.fsym];
       return {
         ...state,
         pricesForTime: {
@@ -67,9 +74,7 @@ export function ticker(
           [action.fsym]: {
             ...(state.pricesForTime ? state.pricesForTime[action.fsym] : {}),
             [action.tsym]: {
-              ...(state.pricesForTime[action.fsym]
-                ? state.pricesForTime[action.fsym][action.tsym]
-                : {}),
+              ...(pricesForSymbol ? pricesForSymbol[action.tsym] : {}),
               [action.timestamp]: action.price,
             },
           },

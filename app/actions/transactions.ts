@@ -84,9 +84,7 @@ export function fetchAllBalances(): ThunkAction {
   return async (dispatch: Dispatch, getState: GetState) => {
     dispatch(setLastUpdate('balances'));
     const exchanges = getConfiguredExchanges(getState());
-    await Promise.all(
-      _.map(exchanges, exchange => dispatch(fetchBalancesForExchange(exchange)))
-    );
+    await Promise.all(_.map(exchanges, exchange => dispatch(fetchBalancesForExchange(exchange))));
   };
 }
 

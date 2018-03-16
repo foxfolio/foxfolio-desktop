@@ -4,7 +4,7 @@ import { GlobalState } from '../reducers';
 import { Coinlist } from '../reducers/coinlist';
 import { ExchangeActions } from '../reducers/exchanges.types';
 import { SettingsType } from '../reducers/settings';
-import { HistoryEntry, Ticker } from '../reducers/ticker';
+import { HistoryData, Ticker } from '../reducers/ticker';
 import { Wallet } from '../reducers/wallets.types';
 import { TradeActions } from './trades';
 
@@ -16,7 +16,7 @@ export type Action =
   | { type: 'DELETE_WALLET'; wallet: Wallet }
   | { type: 'LAST_UPDATED'; key: string; time: Date }
   | { type: 'TICKER_UPDATE'; ticker: Ticker }
-  | { type: 'HISTORY_UPDATE'; fsym: string; tsym: string; history: HistoryEntry }
+  | { type: 'HISTORY_UPDATE'; fsym: string; tsym: string; history: HistoryData }
   | { type: 'START_TIMER'; name: string; timer: number }
   | { type: 'RECEIVE_COIN_LIST'; coinlist: Coinlist }
   | { type: 'SAVE_SETTINGS'; settings: SettingsType };

@@ -8,7 +8,7 @@ import Typography from 'material-ui/Typography';
 import moment from 'moment';
 import * as React from 'react';
 import { CurrencyAvatar } from '../../../components/CurrencyAvatar';
-import { getTickerEntry } from '../../../helpers/ticker';
+import { getPriceForTime, getTickerEntry } from '../../../helpers/ticker';
 import { Coinlist } from '../../../reducers/coinlist';
 import { Trade } from '../../../reducers/exchanges.types';
 import { SettingsType } from '../../../reducers/settings';
@@ -46,13 +46,7 @@ export const TradeListItem = withStyles(styles)(
     const asset = trade.symbol.split('/')[0];
     const currency = trade.symbol.split('/')[1];
     const currentPrice = getTickerEntry(ticker, asset, settings.fiatCurrency).PRICE;
-    const historicalPrice =
-      pricesForTime &&
-      pricesForTime[currency] &&
-      pricesForTime[currency][settings.fiatCurrency] &&
-      pricesForTime[currency][settings.fiatCurrency][Math.floor(trade.timestamp / 1000)]
-        ? pricesForTime[currency][settings.fiatCurrency][Math.floor(trade.timestamp / 1000)]
-        : 0;
+    const historicalPrice = getPriceForTime(pricesForTime, currency, settings.fiatCurrency, trade.timestamp);
 
     const currentValue = currentPrice * trade.amount;
     const historicalValue = trade.amount * trade.price * historicalPrice;

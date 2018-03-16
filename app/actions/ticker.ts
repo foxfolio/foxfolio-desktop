@@ -2,11 +2,13 @@ import 'whatwg-fetch'; // Has to be imported before ccxt
 
 import * as ccxt from 'ccxt';
 import _ from 'lodash';
+import moment from 'moment';
+import { getHistoryEntry } from '../helpers/ticker';
 import { Coinlist } from '../reducers/coinlist';
 import { Exchange, Exchanges } from '../reducers/exchanges.types';
-import { HistoryEntry, Ticker, TickerEntry } from '../reducers/ticker';
+import { HistoryData, Ticker, TickerEntry } from '../reducers/ticker';
 import { Wallet } from '../reducers/wallets.types';
-import { getExchanges } from '../selectors/selectGlobalState';
+import { getExchanges, getHistory } from '../selectors/selectGlobalState';
 import { Action, Dispatch, GetState, ThunkAction } from './actions.types';
 import startTimer from './timer';
 
@@ -27,7 +29,7 @@ function receiveTickerUpdate(rawTicker: RawTicker): Action {
   };
 }
 
-function receiveHistory(fsym: string, tsym: string, history: HistoryEntry): Action {
+function receiveHistory(fsym: string, tsym: string, history: HistoryData): Action {
   return {
     type: 'HISTORY_UPDATE',
     fsym,
@@ -137,14 +139,10 @@ export function requestHistory(
   forceRequest: boolean = false
 ): ThunkAction {
   return (dispatch: Dispatch, getState: GetState) => {
-    const twoMinutesAgo = new Date(new Date().getTime() - 1000 * 60 * 2);
+    const twoMinutesAgo = moment().subtract(2, 'minutes');
     if (
       forceRequest ||
-      !(
-        getState().ticker.history[fsym] &&
-        getState().ticker.history[fsym][tsym] &&
-        getState().ticker.history[fsym][tsym].lastUpdate >= twoMinutesAgo
-      )
+      !(getHistoryEntry(getHistory(getState()), fsym, tsym).lastUpdate >= twoMinutesAgo.toDate())
     ) {
       fetch(`https://min-api.cryptocompare.com/data/histominute?fsym=${fsym}&tsym=${tsym}`)
         .then(result => result.json())

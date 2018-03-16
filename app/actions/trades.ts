@@ -1,3 +1,4 @@
+import { getPriceForTime } from '../helpers/ticker';
 import { Trade } from '../reducers/exchanges.types';
 import { Action, Dispatch, GetState, ThunkAction } from './actions.types';
 
@@ -56,11 +57,7 @@ export function requestTicker(requests: TickerRequest[]): ThunkAction {
     const pricesForTime = getState().ticker.pricesForTime;
     for (const request of requests) {
       const timestampInSec = Math.floor(request.timestamp / 1000);
-      if (
-        pricesForTime[request.fsym] &&
-        pricesForTime[request.fsym][request.tsym] &&
-        pricesForTime[request.fsym][request.tsym][timestampInSec]
-      ) {
+      if (getPriceForTime(pricesForTime, request.fsym, request.tsym, request.timestamp) > 0) {
         continue;
       }
       const histoPrice = await fetch(
