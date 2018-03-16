@@ -81,27 +81,29 @@ export function continuouslyFetchTransactions(): ThunkAction {
 }
 
 export function fetchAllBalances(): ThunkAction {
-  return (dispatch: Dispatch, getState: GetState) => {
+  return async (dispatch: Dispatch, getState: GetState) => {
     dispatch(setLastUpdate('balances'));
     const exchanges = getConfiguredExchanges(getState());
-    _.forEach(exchanges, exchange => dispatch(fetchBalancesForExchange(exchange)));
+    await Promise.all(
+      _.map(exchanges, exchange => dispatch(fetchBalancesForExchange(exchange)))
+    );
   };
 }
 
 function fetchBalancesForExchange(exchange: Exchange): ThunkAction {
   return async (dispatch: Dispatch) => {
-    dispatch(incrementExchangeRequestCounter(exchange.id));
+    await dispatch(incrementExchangeRequestCounter(exchange.id));
     try {
       const connector = new ccxt[exchange.type](exchange.credentials);
       const balances: Balances = _.pickBy(
         await connector.fetchTotalBalance(),
         balance => balance > 0
       );
-      dispatch(
+      await dispatch(
         updateExchangeBalances(exchange.id, _.mapKeys(balances, (value, key) => unifySymbols(key)))
       );
     } catch (e) {
-      dispatch(failedRequest(exchange.id, e.message));
+      await dispatch(failedRequest(exchange.id, e.message));
     }
   };
 }
