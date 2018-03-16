@@ -22,7 +22,7 @@ interface Props {
 }
 
 export const PortfolioPositions = ({ portfolio, coinlist, ticker, settings }: Props) => (
-  <div>
+  <React.Fragment>
     <PortfolioPositionHeader />
     {Object.keys(portfolio.total)
       .sort(
@@ -42,7 +42,7 @@ export const PortfolioPositions = ({ portfolio, coinlist, ticker, settings }: Pr
           settings={settings}
         />
       ))}
-  </div>
+  </React.Fragment>
 );
 
 export const filterPortfolioForAsset = (portfolio: Portfolio, asset: string): PortfolioForAsset =>

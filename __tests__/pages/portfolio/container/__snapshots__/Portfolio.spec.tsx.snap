@@ -75,13 +75,24 @@ exports[`Render portfolio page 1`] = `
       }
     />
   </WithStyles(Paper)>
-  <WithStyles(Paper)
+  <div
     style={
       Object {
         "marginTop": 30,
       }
     }
   >
+    <WithStyles(Paper)
+      style={
+        Object {
+          "width": 192,
+        }
+      }
+    >
+      <Connect(DisconnectedPortfolioFocusButtons) />
+    </WithStyles(Paper)>
+  </div>
+  <WithStyles(Paper)>
     <Component
       coinlist={Object {}}
       portfolio={

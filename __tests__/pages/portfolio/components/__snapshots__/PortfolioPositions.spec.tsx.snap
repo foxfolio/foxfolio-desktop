@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Render portfolio positions 1`] = `
-<div>
+<React.Fragment>
   <WithStyles(Component) />
   <WithStyles(Component)
     asset="BTC"
@@ -99,5 +99,5 @@ exports[`Render portfolio positions 1`] = `
       }
     }
   />
-</div>
+</React.Fragment>
 `;

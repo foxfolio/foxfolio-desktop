@@ -2,18 +2,13 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Dispatch } from '../../actions/actions.types';
 import * as SettingsActions from '../../actions/settings';
-import { GlobalState } from '../../reducers/index';
-import { SettingsType } from '../../reducers/settings';
+import { GlobalState } from '../../reducers';
 import { SettingsPaper } from './components/SettingsPaper';
 
-function mapStateToProps(state: GlobalState): { settings: SettingsType } {
-  return {
-    settings: state.settings,
-  };
-}
+const mapStateToProps = (state: GlobalState) => ({
+  settings: state.settings,
+});
 
-function mapDispatchToProps(dispatch: Dispatch) {
-  return bindActionCreators(SettingsActions, dispatch);
-}
+const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators(SettingsActions, dispatch);
 
 export const SettingsPage = connect(mapStateToProps, mapDispatchToProps)(SettingsPaper);

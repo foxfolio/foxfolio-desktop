@@ -1,4 +1,4 @@
-import { Card, CardContent, Grid, Typography } from 'material-ui';
+import { Button, Card, CardContent, Grid, Typography } from 'material-ui';
 import { StyleRulesCallback, Theme, withStyles } from 'material-ui/styles';
 import React from 'react';
 
@@ -37,16 +37,16 @@ export const PortfolioPositionHeader = withStyles(styles)(({ classes }) => (
       <div className={classes.content}>
         <Grid container>
           <Grid item xs={3}>
-            <Typography type="title">Coin</Typography>
+            <Typography type="subheading">Coin</Typography>
           </Grid>
           <Grid item xs={2} className={classes.right}>
-            <Typography type="title">Quantity</Typography>
+            <Typography type="subheading">Quantity</Typography>
           </Grid>
           <Grid item xs={3} className={classes.right}>
-            <Typography type="title">Price</Typography>
+            <Typography type="subheading">Price</Typography>
           </Grid>
           <Grid item xs={2} className={classes.right}>
-            <Typography type="title">Change</Typography>
+            <Typography type="subheading">Change</Typography>
           </Grid>
         </Grid>
       </div>

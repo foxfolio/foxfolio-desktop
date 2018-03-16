@@ -1,22 +1,27 @@
-// @flow
-import { Paper, Typography } from 'material-ui';
-import { withStyles } from 'material-ui/styles';
+import { Paper, Typography, WithStyles } from 'material-ui';
+import { StyleRules, withStyles } from 'material-ui/styles';
 import React from 'react';
-import { SettingsType } from '../../../reducers/settings';
+import { CurrencyFocus, SettingsType } from '../../../reducers/settings';
 import { SettingsForm } from './SettingsForm';
 
-const styles = () => ({
+const styles: StyleRules = {
   paper: { marginTop: 30, padding: 25 },
   headline: { marginBottom: 30 },
-});
+};
 
-interface Props {
+interface StateProps {
   settings: SettingsType;
-  saveSettingsAndUpdateTicker: (settings: SettingsType) => any;
 }
 
-export const SettingsPaper = withStyles(styles)<Props>(
-  ({ settings, classes, saveSettingsAndUpdateTicker }) => (
+interface DispatchProps {
+  saveSettingsAndUpdateTicker: (settings: SettingsType) => any;
+  setPortfolioFocus: (focus: CurrencyFocus) => any;
+}
+
+type Props = StateProps & DispatchProps & WithStyles;
+
+export const SettingsPaper = withStyles(styles)(
+  ({ settings, classes, saveSettingsAndUpdateTicker }: Props) => (
     <div className="container">
       <Paper className={classes.paper}>
         <Typography type="display1" className={classes.headline}>

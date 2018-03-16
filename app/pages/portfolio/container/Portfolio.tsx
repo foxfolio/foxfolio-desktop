@@ -1,11 +1,12 @@
 import * as _ from 'lodash';
-import { Paper } from 'material-ui';
+import { Button, Paper } from 'material-ui';
 import React from 'react';
 import { Coinlist } from '../../../reducers/coinlist';
 import { SettingsType } from '../../../reducers/settings';
 import { Ticker } from '../../../reducers/ticker';
 import { EmptyPortfolio } from '../components/EmptyPortfolio';
 import { PortfolioChart } from '../components/PortfolioChart';
+import { PortfolioFocusButtons } from '../components/PortfolioFocusButtons';
 import { PortfolioHeader } from '../components/PortfolioHeader';
 import { PortfolioPositions } from '../components/PortfolioPositions';
 import { Portfolio, PortfolioChange, PortfolioSum } from '../types/portfolio.types';
@@ -41,7 +42,12 @@ export const PortfolioContainer = ({
             settings={settings}
           />
         </Paper>
-        <Paper style={{ marginTop: 30 }}>
+        <div style={{ marginTop: 30 }}>
+          <Paper style={{ width: 192 }}>
+            <PortfolioFocusButtons />
+          </Paper>
+        </div>
+        <Paper>
           <PortfolioPositions
             portfolio={portfolio}
             ticker={ticker}
