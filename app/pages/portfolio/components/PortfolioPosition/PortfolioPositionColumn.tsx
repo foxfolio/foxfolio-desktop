@@ -1,8 +1,7 @@
-import Typography from 'material-ui/Typography';
-import * as React from 'react';
+import { Grid, Typography } from 'material-ui';
+import React, { CSSProperties } from 'react';
 import { TickerEntries } from '../../../../helpers/ticker';
 import { CurrencyFocus, SettingsType } from '../../../../reducers/settings';
-import { TickerForSymbol } from '../../../../reducers/ticker';
 import { PriceChangeText } from '../PriceChangeText';
 
 export const PositionPrice = (
@@ -67,25 +66,29 @@ export const PositionPriceChange = (
   return PortfolioPositionColumn(currencyFocus, cryptoEntry, fiatEntry);
 };
 
+const singleStyle: CSSProperties = {
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'flex-end',
+  height: '100%',
+};
+
 export const PortfolioPositionColumn = (
   currencyFocus: CurrencyFocus,
   cryptoEntry: any,
   fiatEntry: any
 ) => (
-  <div>
-    <Typography
-      type={currencyFocus !== 'equal' ? 'subheading' : 'body1'}
-      component="span"
-      color="default"
-    >
+  <div style={currencyFocus !== 'equal' ? singleStyle : {}}>
+    <Typography type="subheading" component="span" color="default" style={{ padding: 'auto' }}>
       {currencyFocus === 'crypto' ? cryptoEntry : fiatEntry}
     </Typography>
-    <Typography
-      type="body1"
-      component="span"
-      color={currencyFocus === 'equal' ? 'default' : 'secondary'}
-    >
-      {currencyFocus === 'crypto' ? fiatEntry : cryptoEntry}
-    </Typography>
+
+    {currencyFocus === 'equal' ? (
+      <Typography type="body1" component="span" color="secondary">
+        {cryptoEntry}
+      </Typography>
+    ) : (
+      ''
+    )}
   </div>
 );

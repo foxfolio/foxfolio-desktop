@@ -119,21 +119,29 @@ exports[`Render portfolio position 1`] = `
             item={true}
             xs={2}
           >
-            <div>
+            <div
+              style={
+                Object {
+                  "alignItems": "center",
+                  "display": "flex",
+                  "height": "100%",
+                  "justifyContent": "flex-end",
+                }
+              }
+            >
               <WithStyles(Typography)
                 color="default"
                 component="span"
+                style={
+                  Object {
+                    "padding": "auto",
+                  }
+                }
                 type="subheading"
               >
                 10000.00 USD
               </WithStyles(Typography)>
-              <WithStyles(Typography)
-                color="secondary"
-                component="span"
-                type="body1"
-              >
-                1.0000 BTC
-              </WithStyles(Typography)>
+              
             </div>
           </WithStyles(GridWrapper)>
           <WithStyles(GridWrapper)
@@ -141,21 +149,29 @@ exports[`Render portfolio position 1`] = `
             item={true}
             xs={3}
           >
-            <div>
+            <div
+              style={
+                Object {
+                  "alignItems": "center",
+                  "display": "flex",
+                  "height": "100%",
+                  "justifyContent": "flex-end",
+                }
+              }
+            >
               <WithStyles(Typography)
                 color="default"
                 component="span"
+                style={
+                  Object {
+                    "padding": "auto",
+                  }
+                }
                 type="subheading"
               >
                 1000.0 USD
               </WithStyles(Typography)>
-              <WithStyles(Typography)
-                color="secondary"
-                component="span"
-                type="body1"
-              >
-                0.10000 BTC
-              </WithStyles(Typography)>
+              
             </div>
           </WithStyles(GridWrapper)>
           <WithStyles(GridWrapper)
@@ -163,10 +179,24 @@ exports[`Render portfolio position 1`] = `
             item={true}
             xs={2}
           >
-            <div>
+            <div
+              style={
+                Object {
+                  "alignItems": "center",
+                  "display": "flex",
+                  "height": "100%",
+                  "justifyContent": "flex-end",
+                }
+              }
+            >
               <WithStyles(Typography)
                 color="default"
                 component="span"
+                style={
+                  Object {
+                    "padding": "auto",
+                  }
+                }
                 type="subheading"
               >
                 <WithStyles(Component)
@@ -174,16 +204,7 @@ exports[`Render portfolio position 1`] = `
                   muted={false}
                 />
               </WithStyles(Typography)>
-              <WithStyles(Typography)
-                color="secondary"
-                component="span"
-                type="body1"
-              >
-                <WithStyles(Component)
-                  change={2}
-                  muted={true}
-                />
-              </WithStyles(Typography)>
+              
             </div>
           </WithStyles(GridWrapper)>
         </WithStyles(GridWrapper)>

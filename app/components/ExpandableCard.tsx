@@ -15,6 +15,11 @@ export const styles: StyleRulesCallback = (theme: Theme) => ({
   root: {
     display: 'flex',
     alignItems: 'center',
+    paddingTop: theme.spacing.unit,
+    paddingBottom: theme.spacing.unit,
+    '&:last-child': {
+      paddingBottom: theme.spacing.unit,
+    },
   },
   expand: {
     transform: 'rotate(0deg)',
