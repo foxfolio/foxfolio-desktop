@@ -1,6 +1,6 @@
 import * as _ from 'lodash';
 import React from 'react';
-import { getTickerPrice } from '../../../helpers/ticker';
+import { getTickerEntry } from '../../../helpers/ticker';
 import { Coinlist } from '../../../reducers/coinlist';
 import { SettingsType } from '../../../reducers/settings';
 import { Ticker } from '../../../reducers/ticker';
@@ -27,8 +27,10 @@ export const PortfolioPositions = ({ portfolio, coinlist, ticker, settings }: Pr
     {Object.keys(portfolio.total)
       .sort(
         (a, b) =>
-          portfolio.total[b] * (ticker[b] ? getTickerPrice(ticker, b, settings.fiatCurrency) : 0) -
-          portfolio.total[a] * (ticker[a] ? getTickerPrice(ticker, a, settings.fiatCurrency) : 0)
+          portfolio.total[b] *
+            (ticker[b] ? getTickerEntry(ticker, b, settings.fiatCurrency).PRICE : 0) -
+          portfolio.total[a] *
+            (ticker[a] ? getTickerEntry(ticker, a, settings.fiatCurrency).PRICE : 0)
       )
       .map(asset => (
         <PortfolioPosition

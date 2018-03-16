@@ -1,9 +1,22 @@
-import { Ticker } from '../reducers/ticker';
+import { Ticker, TickerEntry } from '../reducers/ticker';
 
-export const getTickerPrice = (ticker: Ticker, fsym: string, tsym: string) => {
+export const getTickerEntry = (ticker: Ticker, fsym: string, tsym: string): TickerEntry => {
   if (fsym !== tsym) {
-    return ticker && ticker[fsym] && ticker[fsym][tsym] ? ticker[fsym][tsym].PRICE : 0;
+    if (ticker) {
+      const tickerBase = ticker[fsym];
+      if (tickerBase != null) {
+        const tickerEntry = tickerBase[tsym];
+        if (tickerEntry != null && tickerEntry.PRICE && tickerEntry.CHANGEPCT24HOUR) {
+          return tickerEntry;
+        }
+      }
+    }
+    console.log(`Couldn't get ticker entry for ${fsym}/${tsym}`);
+    return {
+      PRICE: 0,
+      CHANGEPCT24HOUR: 0,
+    };
   } else {
-    return 1;
+    return { PRICE: 1, CHANGEPCT24HOUR: 0 };
   }
 };

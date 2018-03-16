@@ -2,43 +2,40 @@ import {
   getExchangeBalances,
   getFilteredExchangeBalances,
   getWalletBalances,
-} from '../../../app/pages/portfolio/selectors/selectBalances';
-import { GlobalState } from '../../../app/reducers';
+} from '../../../../app/pages/portfolio/selectors/selectBalances';
+import { GlobalState } from '../../../../app/reducers/index';
+import { emptyState } from '../../../emptyState';
 
 let state: GlobalState;
 
 beforeEach(() => {
   state = {
+    ...emptyState,
     exchanges: {
-      key: {
-        balances: {
-          USD: 1,
-          BTC: 2,
-          ETH: 5,
-          LTC: 0.00001,
-        },
-      },
+      ...emptyState.exchanges,
+      key: { ...emptyState.exchanges.key, balances: { BTC: 2, ETH: 5, LTC: 0.00001, USD: 1 } },
     },
-    wallets: [{ currency: 'BTC', quantity: 5 }, { currency: 'ETH', quantity: 4 }],
+    wallets: [
+      { currency: 'BTC', quantity: 5, address: 'btc' },
+      { currency: 'ETH', quantity: 4, address: 'eth' },
+    ],
     ticker: {
+      ...emptyState.ticker,
       ticker: {
         BTC: {
-          USD: { PRICE: 10000 },
+          USD: { PRICE: 10000, CHANGEPCT24HOUR: 1 },
         },
         ETH: {
-          USD: { PRICE: 1000 },
+          USD: { PRICE: 1000, CHANGEPCT24HOUR: 2 },
+          BTC: { PRICE: 0.1, CHANGEPCT24HOUR: 3 },
         },
         LTC: {
-          USD: { PRICE: 100 },
+          USD: { PRICE: 100, CHANGEPCT24HOUR: 4 },
+          BTC: { PRICE: 0.01, CHANGEPCT24HOUR: 5 },
         },
       },
     },
-    settings: {
-      hideZeroBalances: false,
-      includeFiat: true,
-      fiatCurrency: 'USD',
-    },
-  } as any;
+  };
 });
 
 test('getExchangeBalances', () => {

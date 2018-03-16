@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import { createSelector } from 'reselect';
-import { getTickerPrice } from '../../../helpers/ticker';
+import { getTickerEntry } from '../../../helpers/ticker';
 import { Ticker } from '../../../reducers/ticker';
 import { getSettings, getTicker } from '../../../selectors/selectGlobalState';
 import { Balances, Portfolio, PortfolioSum } from '../types/portfolio.types';
@@ -39,9 +39,10 @@ export const getPortfolioChange = createSelector(
 );
 
 function calculateSum(ticker: Ticker, portfolio: Balances, currency: string) {
-  return Object.keys(portfolio)
-    .filter(asset => ticker && ticker[asset])
-    .reduce((acc, asset) => acc + getTickerPrice(ticker, asset, currency) * portfolio[asset], 0);
+  return Object.keys(portfolio).reduce(
+    (acc, asset) => acc + getTickerEntry(ticker, asset, currency).PRICE * portfolio[asset],
+    0
+  );
 }
 
 function calculateChange(ticker: Ticker, portfolio: Balances, sum: number, currency: string) {
@@ -51,8 +52,8 @@ function calculateChange(ticker: Ticker, portfolio: Balances, sum: number, curre
     .reduce(
       (acc, asset) =>
         acc +
-        ticker[asset][currency].CHANGEPCT24HOUR *
-          (getTickerPrice(ticker, asset, currency) * portfolio[asset] / sum),
+        getTickerEntry(ticker, asset, currency).CHANGEPCT24HOUR *
+          (getTickerEntry(ticker, asset, currency).PRICE * portfolio[asset] / sum),
       0
     );
 }

@@ -3,7 +3,7 @@ import { withTheme } from 'material-ui';
 import { Theme } from 'material-ui/styles';
 import React from 'react';
 import { defaults, HorizontalBar } from 'react-chartjs-2';
-import { getTickerPrice } from '../../../helpers/ticker';
+import { getTickerEntry } from '../../../helpers/ticker';
 import { SettingsType } from '../../../reducers/settings';
 import { Ticker } from '../../../reducers/ticker';
 import getColor from '../../../utils/colors';
@@ -82,8 +82,8 @@ function calculateChartData(
     .filter(asset => ticker[asset])
     .sort(
       (a, b) =>
-        getTickerPrice(ticker, b, cryptoCurrency) * portfolio[b] -
-        getTickerPrice(ticker, a, cryptoCurrency) * portfolio[a]
+        getTickerEntry(ticker, b, cryptoCurrency).PRICE * portfolio[b] -
+        getTickerEntry(ticker, a, cryptoCurrency).PRICE * portfolio[a]
     )
     .map(asset => ({
       label: asset.toUpperCase(),
@@ -92,7 +92,7 @@ function calculateChartData(
       borderWidth: 1,
       data: [
         {
-          x: (getTickerPrice(ticker, asset, cryptoCurrency) * portfolio[asset] * 100 / sum).toFixed(
+          x: (getTickerEntry(ticker, asset, cryptoCurrency).PRICE * portfolio[asset] * 100 / sum).toFixed(
             2
           ),
         },

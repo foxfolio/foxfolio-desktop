@@ -8,7 +8,7 @@ import Typography from 'material-ui/Typography';
 import moment from 'moment';
 import * as React from 'react';
 import { CurrencyAvatar } from '../../../components/CurrencyAvatar';
-import { getTickerPrice } from '../../../helpers/ticker';
+import { getTickerEntry } from '../../../helpers/ticker';
 import { Coinlist } from '../../../reducers/coinlist';
 import { Trade } from '../../../reducers/exchanges.types';
 import { SettingsType } from '../../../reducers/settings';
@@ -45,7 +45,7 @@ export const TradeListItem = withStyles(styles)(
   ({ classes, coinlist, ticker, trade, settings, pricesForTime }: Props & WithStyles) => {
     const asset = trade.symbol.split('/')[0];
     const currency = trade.symbol.split('/')[1];
-    const currentPrice = getTickerPrice(ticker, asset, settings.fiatCurrency);
+    const currentPrice = getTickerEntry(ticker, asset, settings.fiatCurrency).PRICE;
     const historicalPrice =
       pricesForTime &&
       pricesForTime[currency] &&
