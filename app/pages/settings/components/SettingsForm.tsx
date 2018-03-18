@@ -12,6 +12,7 @@ import React from 'react';
 import { Field, reduxForm } from 'redux-form';
 import { Checkbox, Select, Switch } from 'redux-form-material-ui';
 import { SettingsType } from '../../../reducers/settings';
+import { getCryptoCurrencies, getFiatCurrencies } from '../../../utils/currencies';
 
 interface Props {
   handleSubmit: (settings: SettingsType) => void;
@@ -45,8 +46,9 @@ export const SettingsForm = reduxForm<SettingsType>({ form: 'settingsForm' })(
               <FormControl fullWidth>
                 <InputLabel htmlFor="fiatCurrency">Fiat currency</InputLabel>
                 <Field name="fiatCurrency" component={Select}>
-                  <MenuItem value="USD">USD</MenuItem>
-                  <MenuItem value="EUR">EUR</MenuItem>
+                  {getFiatCurrencies().map(currency => (
+                    <MenuItem value={currency}>{currency}</MenuItem>
+                  ))}
                 </Field>
               </FormControl>
             </Grid>
@@ -56,8 +58,9 @@ export const SettingsForm = reduxForm<SettingsType>({ form: 'settingsForm' })(
               <FormControl fullWidth>
                 <InputLabel htmlFor="cryptoCurrency">Main crypto currency</InputLabel>
                 <Field name="cryptoCurrency" component={Select}>
-                  <MenuItem value="BTC">BTC</MenuItem>
-                  <MenuItem value="ETH">ETH</MenuItem>
+                  {getCryptoCurrencies().map(currency => (
+                    <MenuItem value={currency}>{currency}</MenuItem>
+                  ))}
                 </Field>
               </FormControl>
             </Grid>

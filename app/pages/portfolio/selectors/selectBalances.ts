@@ -11,7 +11,7 @@ import {
   getTicker,
   getWallets,
 } from '../../../selectors/selectGlobalState';
-import { getFiatCurrencies } from '../../../utils/fiatCurrencies';
+import { getFiatCurrencies } from '../../../utils/currencies';
 import { Balances, ExchangeBalances } from '../types/portfolio.types';
 
 export const getExchangeBalances = createSelector<GlobalState, Exchanges, ExchangeBalances>(

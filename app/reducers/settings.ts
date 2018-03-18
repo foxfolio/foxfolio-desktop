@@ -1,10 +1,11 @@
 import { Action } from '../actions/actions.types';
+import { CryptoCurrency, FiatCurrency } from '../utils/currencies';
 
 export type CurrencyFocus = 'crypto' | 'fiat' | 'equal';
 
 export interface SettingsType {
-  fiatCurrency: string;
-  cryptoCurrency: 'BTC' | 'ETH';
+  fiatCurrency: FiatCurrency;
+  cryptoCurrency: CryptoCurrency;
   includeFiat: boolean;
   hideZeroBalances: boolean;
   currencyFocus: CurrencyFocus;

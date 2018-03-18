@@ -3,7 +3,7 @@ import { AccountBalance, HelpOutline } from 'material-ui-icons';
 import React from 'react';
 
 import { Coinlist } from '../reducers/coinlist';
-import { getFiatCurrencies } from '../utils/fiatCurrencies';
+import { getFiatCurrencies } from '../utils/currencies';
 
 interface Props {
   asset: string;

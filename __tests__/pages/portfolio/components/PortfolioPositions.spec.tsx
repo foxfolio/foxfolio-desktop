@@ -7,6 +7,7 @@ import {
 import { Portfolio } from '../../../../app/pages/portfolio/types/portfolio.types';
 import { initialSettings } from '../../../../app/reducers/settings';
 import { Ticker } from '../../../../app/reducers/ticker';
+import { FiatCurrency } from '../../../../app/utils/currencies';
 
 let shallow;
 
@@ -28,7 +29,7 @@ test('Render portfolio positions', () => {
       USD: { PRICE: 1000, CHANGEPCT24HOUR: 5.2 },
     },
   };
-  const settings = { ...initialSettings, fiatCurrency: 'USD' };
+  const settings = { ...initialSettings, fiatCurrency: 'USD' as FiatCurrency };
 
   const wrapper = shallow(
     <PortfolioPositions

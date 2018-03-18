@@ -3,6 +3,7 @@ import * as React from 'react';
 import { PortfolioPosition } from '../../../../app/pages/portfolio/components/PortfolioPosition';
 import { initialSettings } from '../../../../app/reducers/settings';
 import { Ticker } from '../../../../app/reducers/ticker';
+import { CryptoCurrency, FiatCurrency } from '../../../../app/utils/currencies';
 
 let shallow;
 
@@ -12,7 +13,7 @@ beforeAll(() => {
 
 let coinlist = {};
 let ticker: Ticker;
-const settings = { ...initialSettings, fiatCurrency: 'USD' };
+const settings = { ...initialSettings, fiatCurrency: 'USD' as FiatCurrency };
 
 beforeEach(() => {
   coinlist = {};
