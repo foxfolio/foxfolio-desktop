@@ -21,7 +21,11 @@ const isSelected = (selection: string | null, item: string) =>
 
 export const Autocomplete = withStyles(styles)<Props>(
   ({ classes, id, label, items, onChange, value }) => (
-    <Downshift onChange={onChange} defaultSelectedItem={value}>
+    <Downshift
+      onChange={onChange}
+      itemToString={i => (i == null ? '' : String(i))}
+      defaultSelectedItem={value}
+    >
       {({ getInputProps, getItemProps, isOpen, inputValue, highlightedIndex }) => (
         <div className={classes.container}>
           <TextField fullWidth autoFocus label={label} InputProps={getInputProps({ id })} />

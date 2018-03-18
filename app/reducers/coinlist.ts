@@ -8,6 +8,7 @@ export interface Coinlist {
 export interface CoinlistEntry {
   FullName: string;
   ImageUrl: string;
+  SortOrder: string;
 }
 
 export const coinlist = (state: Coinlist = {}, action: Action): Coinlist => {

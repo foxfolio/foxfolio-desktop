@@ -74,7 +74,9 @@ export default class WalletDialog extends Component<Props, StringWallet> {
               id="currency"
               onChange={this.changeCurrency}
               value={this.state.currency}
-              items={Object.keys(coinlist).map(key => coinlist[key].FullName)}
+              items={Object.values(coinlist)
+                .sort((a, b) => parseInt(a.SortOrder, 10) - parseInt(b.SortOrder, 10))
+                .map(coin => coin.FullName)}
             />
             <TextField
               label="Address"
