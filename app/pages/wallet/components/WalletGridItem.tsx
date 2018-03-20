@@ -7,7 +7,6 @@ import {
   Typography,
   WithStyles,
 } from 'material-ui';
-import green from 'material-ui/colors/green';
 import { StyleRulesCallback, withStyles } from 'material-ui/styles';
 import React, { Component } from 'react';
 
@@ -22,10 +21,6 @@ const styles: StyleRulesCallback = theme => ({
   subheader: {
     marginBottom: 12,
     color: theme.palette.text.secondary,
-  },
-  fiatAvatar: {
-    color: '#fff',
-    backgroundColor: green[500],
   },
   flexGrow: {
     flex: '1 1 auto',
@@ -46,13 +41,7 @@ export const WalletGridItem = withStyles(styles)(
       return (
         <Card className={classes.card}>
           <CardHeader
-            avatar={
-              <CurrencyAvatar
-                asset={wallet.currency}
-                coinlist={coinlist}
-                fiatClass={classes.fiatAvatar}
-              />
-            }
+            avatar={<CurrencyAvatar asset={wallet.currency} coinlist={coinlist} />}
             title={
               <Typography type="headline" component="h2">
                 {coinlist[wallet.currency] ? coinlist[wallet.currency].FullName : wallet.currency}

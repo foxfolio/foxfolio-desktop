@@ -11,7 +11,7 @@ const styles: StyleRulesCallback = theme => ({
   button: {
     margin: theme.spacing.unit,
     color: theme.palette.background.default,
-    position: 'absolute',
+    position: 'fixed',
     right: 40,
     bottom: 40,
   },

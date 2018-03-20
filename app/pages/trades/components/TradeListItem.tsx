@@ -46,7 +46,12 @@ export const TradeListItem = withStyles(styles)(
     const asset = trade.symbol.split('/')[0];
     const currency = trade.symbol.split('/')[1];
     const currentPrice = getTickerEntry(ticker, asset, settings.fiatCurrency).PRICE;
-    const historicalPrice = getPriceForTime(pricesForTime, currency, settings.fiatCurrency, trade.timestamp);
+    const historicalPrice = getPriceForTime(
+      pricesForTime,
+      currency,
+      settings.fiatCurrency,
+      trade.timestamp
+    );
 
     const currentValue = currentPrice * trade.amount;
     const historicalValue = trade.amount * trade.price * historicalPrice;
@@ -54,7 +59,7 @@ export const TradeListItem = withStyles(styles)(
     return (
       <React.Fragment>
         <div className={classes.avatar}>
-          <CurrencyAvatar asset={asset} coinlist={coinlist} fiatClass={classes.fiatAvatar} />
+          <CurrencyAvatar asset={asset} coinlist={coinlist} />
         </div>
         <div className={classes.content}>
           <Grid container>

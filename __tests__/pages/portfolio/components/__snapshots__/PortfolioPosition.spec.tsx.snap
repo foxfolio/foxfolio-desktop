@@ -7,14 +7,13 @@ exports[`Portfolio position with missing ticker 1`] = `
       <div
         className="Component-avatar-1"
       >
-        <Unknown
+        <WithStyles(Component)
           asset="ETH"
           coinlist={Object {}}
-          fiatClass="Component-fiatAvatar-2"
         />
       </div>
       <div
-        className="Component-content-3"
+        className="Component-content-2"
       >
         <WithStyles(GridWrapper)
           container={true}
@@ -41,21 +40,21 @@ exports[`Portfolio position with missing ticker 1`] = `
             </div>
           </WithStyles(GridWrapper)>
           <WithStyles(GridWrapper)
-            className="Component-right-4"
+            className="Component-right-3"
             item={true}
             xs={2}
           >
             
           </WithStyles(GridWrapper)>
           <WithStyles(GridWrapper)
-            className="Component-right-4"
+            className="Component-right-3"
             item={true}
             xs={3}
           >
             
           </WithStyles(GridWrapper)>
           <WithStyles(GridWrapper)
-            className="Component-right-4"
+            className="Component-right-3"
             item={true}
             xs={2}
           >
@@ -81,14 +80,13 @@ exports[`Render portfolio position 1`] = `
       <div
         className="Component-avatar-1"
       >
-        <Unknown
+        <WithStyles(Component)
           asset="ETH"
           coinlist={Object {}}
-          fiatClass="Component-fiatAvatar-2"
         />
       </div>
       <div
-        className="Component-content-3"
+        className="Component-content-2"
       >
         <WithStyles(GridWrapper)
           container={true}
@@ -115,7 +113,7 @@ exports[`Render portfolio position 1`] = `
             </div>
           </WithStyles(GridWrapper)>
           <WithStyles(GridWrapper)
-            className="Component-right-4"
+            className="Component-right-3"
             item={true}
             xs={2}
           >
@@ -145,7 +143,7 @@ exports[`Render portfolio position 1`] = `
             </div>
           </WithStyles(GridWrapper)>
           <WithStyles(GridWrapper)
-            className="Component-right-4"
+            className="Component-right-3"
             item={true}
             xs={3}
           >
@@ -175,7 +173,7 @@ exports[`Render portfolio position 1`] = `
             </div>
           </WithStyles(GridWrapper)>
           <WithStyles(GridWrapper)
-            className="Component-right-4"
+            className="Component-right-3"
             item={true}
             xs={2}
           >

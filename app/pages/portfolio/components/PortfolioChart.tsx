@@ -92,9 +92,12 @@ function calculateChartData(
       borderWidth: 1,
       data: [
         {
-          x: (getTickerEntry(ticker, asset, cryptoCurrency).PRICE * portfolio[asset] * 100 / sum).toFixed(
-            2
-          ),
+          x: (
+            getTickerEntry(ticker, asset, cryptoCurrency).PRICE *
+            portfolio[asset] *
+            100 /
+            sum
+          ).toFixed(2),
         },
       ],
     }));

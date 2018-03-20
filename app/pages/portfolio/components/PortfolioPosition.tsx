@@ -22,10 +22,6 @@ export const styles: StyleRulesCallback = (theme: Theme) => ({
     flex: '0 0 auto',
     marginRight: theme.spacing.unit * 2,
   },
-  fiatAvatar: {
-    color: '#fff',
-    backgroundColor: green[500],
-  },
   content: {
     flex: '1 1 auto',
   },
@@ -66,7 +62,7 @@ export const PortfolioPosition = withStyles(styles)<Props>(
         cardContent={
           <React.Fragment>
             <div className={classes.avatar}>
-              <CurrencyAvatar asset={asset} coinlist={coinlist} fiatClass={classes.fiatAvatar} />
+              <CurrencyAvatar asset={asset} coinlist={coinlist} />
             </div>
             <div className={classes.content}>
               <Grid container>
