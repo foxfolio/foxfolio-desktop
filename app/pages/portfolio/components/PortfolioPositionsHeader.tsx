@@ -16,6 +16,7 @@ const styles: StyleRulesCallback = (theme: Theme) => ({
   },
   content: {
     flex: '1 1 auto',
+    marginRight: theme.spacing.unit * 2,
   },
   collapseButton: {
     flex: '0 0 auto',
@@ -36,7 +37,7 @@ export const PortfolioPositionHeader = withStyles(styles)(({ classes }) => (
       <div className={classes.avatar} />
       <div className={classes.content}>
         <Grid container>
-          <Grid item xs={3}>
+          <Grid item xs={4}>
             <Typography type="subheading">Coin</Typography>
           </Grid>
           <Grid item xs={2} className={classes.right}>
@@ -45,7 +46,7 @@ export const PortfolioPositionHeader = withStyles(styles)(({ classes }) => (
           <Grid item xs={3} className={classes.right}>
             <Typography type="subheading">Price</Typography>
           </Grid>
-          <Grid item xs={2} className={classes.right}>
+          <Grid item xs={3} className={classes.right}>
             <Typography type="subheading">Change</Typography>
           </Grid>
         </Grid>

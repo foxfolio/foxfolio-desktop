@@ -59,7 +59,7 @@ export const ExpandableCard = withStyles(styles)(
       const { classes, className, cardContent, collapseContent } = this.props;
 
       return (
-        <Card className={className}>
+        <Card className={className} square>
           <CardContent className={classes.root} onClick={this.handleExpandClick}>
             {cardContent}
             <div>

@@ -24,6 +24,7 @@ export const styles: StyleRulesCallback = (theme: Theme) => ({
   },
   content: {
     flex: '1 1 auto',
+    marginRight: theme.spacing.unit * 2,
   },
   right: {
     textAlign: 'right',
@@ -66,7 +67,7 @@ export const PortfolioPosition = withStyles(styles)<Props>(
             </div>
             <div className={classes.content}>
               <Grid container>
-                <Grid item xs={3}>
+                <Grid item xs={4}>
                   {PositionHeader(coinlist[asset] ? coinlist[asset].FullName : asset, quantity)}
                 </Grid>
                 <Grid item xs={2} className={classes.right}>
@@ -79,7 +80,7 @@ export const PortfolioPosition = withStyles(styles)<Props>(
                     ? PositionPrice(tickerEntries, quantity, asset, settings)
                     : ''}
                 </Grid>
-                <Grid item xs={2} className={classes.right}>
+                <Grid item xs={3} className={classes.right}>
                   {hasPrice(asset, ticker, settings)
                     ? PositionPriceChange(tickerEntries, quantity, asset, settings)
                     : ''}

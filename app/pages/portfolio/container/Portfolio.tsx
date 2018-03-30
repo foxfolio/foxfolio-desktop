@@ -43,18 +43,18 @@ export const PortfolioContainer = ({
           />
         </Paper>
         <div style={{ marginTop: 30 }}>
-          <Paper style={{ width: 192 }}>
+          <Paper square style={{ width: 192, marginLeft: 'calc(100% - 192px)' }}>
             <PortfolioFocusButtons />
           </Paper>
         </div>
-        <Paper>
+        <div>
           <PortfolioPositions
             portfolio={portfolio}
             ticker={ticker}
             coinlist={coinlist}
             settings={settings}
           />
-        </Paper>
+        </div>
       </div>
     );
   }
