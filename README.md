@@ -29,6 +29,7 @@ You can find binaries for the latest release under [releases](https://github.com
 Currently available for
 - Windows (`.exe`)
 - Linux (`.AppImage`, `.deb`)
+- Mac (`.dmg`)
 
 ## Usage
 
