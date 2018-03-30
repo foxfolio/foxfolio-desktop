@@ -83,8 +83,10 @@ exports[`Render portfolio page 1`] = `
     }
   >
     <WithStyles(Paper)
+      square={true}
       style={
         Object {
+          "marginLeft": "calc(100% - 192px)",
           "width": 192,
         }
       }
@@ -92,7 +94,7 @@ exports[`Render portfolio page 1`] = `
       <Connect(DisconnectedPortfolioFocusButtons) />
     </WithStyles(Paper)>
   </div>
-  <WithStyles(Paper)>
+  <div>
     <Component
       coinlist={Object {}}
       portfolio={
@@ -131,6 +133,6 @@ exports[`Render portfolio page 1`] = `
         }
       }
     />
-  </WithStyles(Paper)>
+  </div>
 </div>
 `;

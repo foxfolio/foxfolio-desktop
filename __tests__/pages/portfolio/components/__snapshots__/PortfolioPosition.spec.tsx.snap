@@ -20,7 +20,7 @@ exports[`Portfolio position with missing ticker 1`] = `
         >
           <WithStyles(GridWrapper)
             item={true}
-            xs={3}
+            xs={4}
           >
             <div>
               <WithStyles(Typography)
@@ -56,7 +56,7 @@ exports[`Portfolio position with missing ticker 1`] = `
           <WithStyles(GridWrapper)
             className="Component-right-3"
             item={true}
-            xs={2}
+            xs={3}
           >
             
           </WithStyles(GridWrapper)>
@@ -93,7 +93,7 @@ exports[`Render portfolio position 1`] = `
         >
           <WithStyles(GridWrapper)
             item={true}
-            xs={3}
+            xs={4}
           >
             <div>
               <WithStyles(Typography)
@@ -175,7 +175,7 @@ exports[`Render portfolio position 1`] = `
           <WithStyles(GridWrapper)
             className="Component-right-3"
             item={true}
-            xs={2}
+            xs={3}
           >
             <div
               style={
