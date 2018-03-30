@@ -40,13 +40,13 @@ export const PortfolioPositionHeader = withStyles(styles)(({ classes }) => (
           <Grid item xs={4}>
             <Typography type="subheading">Coin</Typography>
           </Grid>
-          <Grid item xs={2} className={classes.right}>
+          <Grid item xs={3} className={classes.right}>
             <Typography type="subheading">Quantity</Typography>
           </Grid>
           <Grid item xs={3} className={classes.right}>
             <Typography type="subheading">Price</Typography>
           </Grid>
-          <Grid item xs={3} className={classes.right}>
+          <Grid item xs={2} className={classes.right}>
             <Typography type="subheading">Change</Typography>
           </Grid>
         </Grid>

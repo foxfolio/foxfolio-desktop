@@ -42,21 +42,21 @@ exports[`Portfolio position with missing ticker 1`] = `
           <WithStyles(GridWrapper)
             className="Component-right-3"
             item={true}
+            xs={3}
+          >
+            
+          </WithStyles(GridWrapper)>
+          <WithStyles(GridWrapper)
+            className="Component-right-3"
+            item={true}
+            xs={3}
+          >
+            
+          </WithStyles(GridWrapper)>
+          <WithStyles(GridWrapper)
+            className="Component-right-3"
+            item={true}
             xs={2}
-          >
-            
-          </WithStyles(GridWrapper)>
-          <WithStyles(GridWrapper)
-            className="Component-right-3"
-            item={true}
-            xs={3}
-          >
-            
-          </WithStyles(GridWrapper)>
-          <WithStyles(GridWrapper)
-            className="Component-right-3"
-            item={true}
-            xs={3}
           >
             
           </WithStyles(GridWrapper)>
@@ -115,67 +115,67 @@ exports[`Render portfolio position 1`] = `
           <WithStyles(GridWrapper)
             className="Component-right-3"
             item={true}
+            xs={3}
+          >
+            <div
+              style={
+                Object {
+                  "alignItems": "center",
+                  "display": "flex",
+                  "height": "100%",
+                  "justifyContent": "flex-end",
+                }
+              }
+            >
+              <WithStyles(Typography)
+                color="default"
+                component="span"
+                style={
+                  Object {
+                    "padding": "auto",
+                  }
+                }
+                type="subheading"
+              >
+                10,000.00 USD
+              </WithStyles(Typography)>
+              
+            </div>
+          </WithStyles(GridWrapper)>
+          <WithStyles(GridWrapper)
+            className="Component-right-3"
+            item={true}
+            xs={3}
+          >
+            <div
+              style={
+                Object {
+                  "alignItems": "center",
+                  "display": "flex",
+                  "height": "100%",
+                  "justifyContent": "flex-end",
+                }
+              }
+            >
+              <WithStyles(Typography)
+                color="default"
+                component="span"
+                style={
+                  Object {
+                    "padding": "auto",
+                  }
+                }
+                type="subheading"
+              >
+                1,000.00 USD
+              </WithStyles(Typography)>
+              
+            </div>
+          </WithStyles(GridWrapper)>
+          <WithStyles(GridWrapper)
+            className="Component-right-3"
+            item={true}
             xs={2}
-          >
-            <div
-              style={
-                Object {
-                  "alignItems": "center",
-                  "display": "flex",
-                  "height": "100%",
-                  "justifyContent": "flex-end",
-                }
-              }
-            >
-              <WithStyles(Typography)
-                color="default"
-                component="span"
-                style={
-                  Object {
-                    "padding": "auto",
-                  }
-                }
-                type="subheading"
-              >
-                10000.00 USD
-              </WithStyles(Typography)>
-              
-            </div>
-          </WithStyles(GridWrapper)>
-          <WithStyles(GridWrapper)
-            className="Component-right-3"
-            item={true}
-            xs={3}
-          >
-            <div
-              style={
-                Object {
-                  "alignItems": "center",
-                  "display": "flex",
-                  "height": "100%",
-                  "justifyContent": "flex-end",
-                }
-              }
-            >
-              <WithStyles(Typography)
-                color="default"
-                component="span"
-                style={
-                  Object {
-                    "padding": "auto",
-                  }
-                }
-                type="subheading"
-              >
-                1000.0 USD
-              </WithStyles(Typography)>
-              
-            </div>
-          </WithStyles(GridWrapper)>
-          <WithStyles(GridWrapper)
-            className="Component-right-3"
-            item={true}
-            xs={3}
           >
             <div
               style={

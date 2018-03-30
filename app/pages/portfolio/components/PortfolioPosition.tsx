@@ -70,7 +70,7 @@ export const PortfolioPosition = withStyles(styles)<Props>(
                 <Grid item xs={4}>
                   {PositionHeader(coinlist[asset] ? coinlist[asset].FullName : asset, quantity)}
                 </Grid>
-                <Grid item xs={2} className={classes.right}>
+                <Grid item xs={3} className={classes.right}>
                   {hasPrice(asset, ticker, settings)
                     ? PositionQuantity(tickerEntries, quantity, asset, settings)
                     : ''}
@@ -80,7 +80,7 @@ export const PortfolioPosition = withStyles(styles)<Props>(
                     ? PositionPrice(tickerEntries, quantity, asset, settings)
                     : ''}
                 </Grid>
-                <Grid item xs={3} className={classes.right}>
+                <Grid item xs={2} className={classes.right}>
                   {hasPrice(asset, ticker, settings)
                     ? PositionPriceChange(tickerEntries, quantity, asset, settings)
                     : ''}

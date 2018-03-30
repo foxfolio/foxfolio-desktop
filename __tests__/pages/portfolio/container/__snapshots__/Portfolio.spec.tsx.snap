@@ -86,7 +86,6 @@ exports[`Render portfolio page 1`] = `
       square={true}
       style={
         Object {
-          "marginLeft": "calc(100% - 192px)",
           "width": 192,
         }
       }

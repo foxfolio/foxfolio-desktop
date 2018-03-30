@@ -1,3 +1,4 @@
+import format from 'format-number';
 import { Typography } from 'material-ui';
 import React, { CSSProperties } from 'react';
 import { TickerEntries } from '../../../../helpers/ticker';
@@ -11,11 +12,15 @@ export const PositionPrice = (
   settings: SettingsType
 ) => {
   const { currencyFocus, cryptoCurrency, fiatCurrency } = settings;
-  const fiatPrice = ticker[fiatCurrency].PRICE.toPrecision(5);
-  const cryptoPrice = ticker[cryptoCurrency].PRICE.toPrecision(5);
 
-  const fiatEntry = asset !== fiatCurrency ? `${fiatPrice} ${fiatCurrency}` : '-';
-  const cryptoEntry = asset !== cryptoCurrency ? `${cryptoPrice} ${cryptoCurrency}` : '-';
+  const fiatEntry =
+    asset !== fiatCurrency
+      ? format(getFormatOptions(fiatCurrency, 2))(ticker[fiatCurrency].PRICE)
+      : '';
+  const cryptoEntry =
+    asset !== cryptoCurrency
+      ? format(getFormatOptions(cryptoCurrency, 6))(ticker[cryptoCurrency].PRICE)
+      : '';
 
   return PortfolioPositionColumn(currencyFocus, cryptoEntry, fiatEntry);
 };
@@ -31,11 +36,17 @@ export const PositionQuantity = (
   const fiatQuantity = getPrice(asset, fiatCurrency, ticker) * quantity;
   const cryptoQuantity = getPrice(asset, cryptoCurrency, ticker) * quantity;
 
-  const fiatEntry = `${fiatQuantity.toFixed(2)} ${fiatCurrency}`;
-  const cryptoEntry = `${cryptoQuantity.toPrecision(5)} ${cryptoCurrency}`;
+  const fiatEntry = format(getFormatOptions(fiatCurrency, 2))(fiatQuantity);
+  const cryptoEntry = format(getFormatOptions(cryptoCurrency, 6))(cryptoQuantity);
 
   return PortfolioPositionColumn(currencyFocus, cryptoEntry, fiatEntry);
 };
+
+const getFormatOptions = (suffix: string, roundTo: number) => ({
+  padRight: roundTo,
+  round: roundTo,
+  suffix: ` ${suffix}`,
+});
 
 const getPrice = (symbol: string, currency: string, ticker: TickerEntries) =>
   symbol !== currency ? ticker[currency].PRICE : 1;
@@ -55,13 +66,13 @@ export const PositionPriceChange = (
     asset !== fiatCurrency ? (
       <PriceChangeText change={fiatChange} muted={currencyFocus === 'crypto'} />
     ) : (
-      '-'
+      ''
     );
   const cryptoEntry =
     asset !== cryptoCurrency ? (
       <PriceChangeText change={cryptoChange} muted={currencyFocus === 'fiat'} />
     ) : (
-      '-'
+      ''
     );
   return PortfolioPositionColumn(currencyFocus, cryptoEntry, fiatEntry);
 };

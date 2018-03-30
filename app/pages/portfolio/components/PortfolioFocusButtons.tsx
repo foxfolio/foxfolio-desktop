@@ -52,7 +52,8 @@ const mapState = (state: GlobalState): StateProps => ({
   settings: getSettings(state),
 });
 
-const mapDispatch = (dispatch: Dispatch) => bindActionCreators(settingsActions, dispatch);
+const mapDispatch = (dispatch: Dispatch): DispatchProps =>
+  bindActionCreators(settingsActions, dispatch);
 
 export const PortfolioFocusButtons = connect(mapState, mapDispatch)(
   DisconnectedPortfolioFocusButtons

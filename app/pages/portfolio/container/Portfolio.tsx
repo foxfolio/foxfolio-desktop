@@ -43,7 +43,7 @@ export const PortfolioContainer = ({
           />
         </Paper>
         <div style={{ marginTop: 30 }}>
-          <Paper square style={{ width: 192, marginLeft: 'calc(100% - 192px)' }}>
+          <Paper square style={{ width: 192 }}>
             <PortfolioFocusButtons />
           </Paper>
         </div>
