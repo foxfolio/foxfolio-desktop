@@ -5,7 +5,7 @@ import { StyleRulesCallback, withStyles } from 'material-ui/styles';
 import React, { Component } from 'react';
 import { Coinlist } from '../../../reducers/coinlist';
 import { Exchange, ExchangeCredentials, Exchanges, Trade } from '../../../reducers/exchanges.types';
-import { ExchangeCard } from './ExchangeCard';
+import { ExchangeCard } from './ExchangeCard/ExchangeCard';
 import { DialogConfig, ExchangeDialog } from './ExchangeDialog';
 
 const styles: StyleRulesCallback = theme => ({
@@ -15,6 +15,12 @@ const styles: StyleRulesCallback = theme => ({
     position: 'fixed',
     right: 40,
     bottom: 40,
+  },
+  cardcontainer: {
+    minWidth: 450,
+    maxWidth: 500,
+    marginLeft: 'auto',
+    marginRight: 'auto',
   },
 });
 
@@ -72,18 +78,16 @@ export const ExchangeGrid = withStyles(styles)(
       return (
         <div className="container">
           <Typography type="headline">Exchanges</Typography>
-          <Grid container>
+          <div className={classes.cardcontainer}>
             {_.values(exchanges).map(exchange => (
-              <Grid item key={exchange.id} sm={12} md={8} lg={6}>
-                <ExchangeCard
-                  coinlist={coinlist}
-                  exchange={exchange}
-                  onEdit={this.handleEdit(exchange)}
-                  onDelete={this.handleDelete(exchange)}
-                />
-              </Grid>
+              <ExchangeCard
+                coinlist={coinlist}
+                exchange={exchange}
+                onEdit={this.handleEdit(exchange)}
+                onDelete={this.handleDelete(exchange)}
+              />
             ))}
-          </Grid>
+          </div>
           <Button
             fab
             color="primary"

@@ -3,9 +3,9 @@ import green from 'material-ui/colors/green';
 import { StyleRulesCallback, Theme, withStyles } from 'material-ui/styles';
 import { ClassNameMap } from 'material-ui/styles/withStyles';
 import React, { Component } from 'react';
-import { Coinlist } from '../../../reducers/coinlist';
+import { Coinlist } from '../../../../reducers/coinlist';
 
-import { Exchange } from '../../../reducers/exchanges.types';
+import { Exchange } from '../../../../reducers/exchanges.types';
 import { ExchangeCardBalance } from './ExchangeCardBalance';
 import { ExchangeCardMenu } from './ExchangeCardMenu';
 

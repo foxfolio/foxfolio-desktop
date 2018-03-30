@@ -13,6 +13,7 @@ const styles: StyleRules = {
     color: '#fff',
     backgroundColor: green[500],
   },
+  root: {},
 };
 
 interface Props {
@@ -22,20 +23,24 @@ interface Props {
 
 export const CurrencyAvatar = withStyles(styles)(
   ({ asset, coinlist, classes }: Props & WithStyles) => {
-    let avatar = (
-      <Avatar>
-        <HelpOutline />
-      </Avatar>
-    );
     if (coinlist[asset]) {
-      avatar = <Avatar src={`https://www.cryptocompare.com${coinlist[asset].ImageUrl}`} />;
+      return (
+        <Avatar
+          classes={{ root: classes.root }}
+          src={`https://www.cryptocompare.com${coinlist[asset].ImageUrl}`}
+        />
+      );
     } else if (getFiatCurrencies().includes(asset)) {
-      avatar = (
-        <Avatar className={classes.fiatAvatar}>
+      return (
+        <Avatar className={classes.fiatAvatar} classes={{ root: classes.root }}>
           <AccountBalance />
         </Avatar>
       );
     }
-    return avatar;
+    return (
+      <Avatar classes={{ root: classes.root }}>
+        <HelpOutline />
+      </Avatar>
+    );
   }
 );
