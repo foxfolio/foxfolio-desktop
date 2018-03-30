@@ -3,7 +3,7 @@ import 'whatwg-fetch'; // Has to be imported before ccxt
 import * as ccxt from 'ccxt';
 import _ from 'lodash';
 import moment from 'moment';
-import { getHistoryEntry } from '../helpers/ticker';
+import { getHistoryEntry, getTickerEntry } from '../helpers/ticker';
 import { Coinlist } from '../reducers/coinlist';
 import { Exchange, Exchanges } from '../reducers/exchanges.types';
 import { HistoryData, Ticker, TickerEntry } from '../reducers/ticker';
@@ -54,15 +54,24 @@ export function requestTickerUpdate(
     dispatch(fetchingTickerUpdate());
 
     const state = getState();
+    fiatCurrency = fiatCurrency || state.settings.fiatCurrency;
+    cryptoCurrency = cryptoCurrency || state.settings.cryptoCurrency;
+
     const symbols = getSymbolsFromTransactions(
       state.exchanges,
       state.wallets,
-      fiatCurrency || state.settings.fiatCurrency,
-      cryptoCurrency || state.settings.cryptoCurrency,
+      fiatCurrency,
+      cryptoCurrency,
       extraSymbols
     );
     try {
       let ticker = await getTickerForSymbols(symbols);
+      ticker = calculateFiatValues(
+        ticker,
+        fiatCurrency,
+        cryptoCurrency,
+        getTickerEntry(ticker, cryptoCurrency, fiatCurrency)
+      );
       ticker = await requestMissingTickerUpdateFromExchange(ticker, getExchanges(state), symbols);
       dispatch(receiveTickerUpdate(ticker));
     } catch (error) {
@@ -82,6 +91,36 @@ const getTickerForSymbols = (symbols: Symbols) => {
       .then(result => result.RAW);
   }
   return Promise.reject('No symbols');
+};
+
+const calculateChange = (tickerEntry: any, tickerEntryFiat: any): number => {
+  const open24hour = tickerEntry.OPEN24HOUR * tickerEntryFiat.OPEN24HOUR;
+  const currentPrice = tickerEntry.PRICE * tickerEntryFiat.PRICE;
+
+  return (currentPrice - open24hour) / open24hour * 100;
+};
+
+const calculateFiatValues = (
+  ticker: Ticker,
+  fiatCurrency: string,
+  cryptoCurrency: string,
+  tickerEntryFiatCrypto: TickerEntry
+): Ticker => {
+  return _.mapValues(ticker, (entry, asset) => {
+    if (asset === fiatCurrency || asset === cryptoCurrency) {
+      return entry;
+    }
+    return {
+      ...entry,
+      [fiatCurrency]: {
+        ...(entry ? entry[fiatCurrency] : {}),
+        CHANGEPCT24HOUR: calculateChange(
+          getTickerEntry(ticker, asset, cryptoCurrency),
+          tickerEntryFiatCrypto
+        ),
+      },
+    };
+  });
 };
 
 const requestMissingTickerUpdateFromExchange = async (
