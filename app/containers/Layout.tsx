@@ -100,7 +100,6 @@ const styledLayout = withStyles(styles)(
             </AppBar>
             <List className={classes.topList}>
               <DrawerItem label="Portfolio" route="/" icon={<Dashboard />} />
-              <DrawerItem label="Trades" route="/trades" icon={<SwapHoriz />} />
             </List>
             <List className={classes.bottomList}>
               <DrawerItem label="Wallets" route="/wallets" icon={<AccountBalanceWallet />} />
