@@ -5,6 +5,7 @@ import withStyles from 'material-ui/styles/withStyles';
 import React from 'react';
 import { CurrencyAvatar } from '../../../../components/CurrencyAvatar';
 import { Coinlist } from '../../../../reducers/coinlist';
+import { TickerEntry } from '../../../../reducers/ticker';
 
 const styles: StyleRulesCallback = theme => ({
   card: {
@@ -38,12 +39,14 @@ const styles: StyleRulesCallback = theme => ({
 
 interface Props {
   coinlist: Coinlist;
+  tickerEntry: TickerEntry;
   asset: string;
   balance: number;
+  fiatCurrency: string;
 }
 
 export const ExchangeCardBalance = withStyles(styles)(
-  ({ classes, coinlist, asset, balance }: Props & WithStyles) => (
+  ({ classes, coinlist, tickerEntry, asset, balance, fiatCurrency }: Props & WithStyles) => (
     <Card elevation={2} className={classes.card}>
       <CardContent className={classes.root}>
         <div className={classes.avatarrow}>
@@ -57,8 +60,12 @@ export const ExchangeCardBalance = withStyles(styles)(
             <Grid item xs={4} className={classes.right}>
               <Typography>{format({ round: 6, padRight: 6 })(balance)}</Typography>
             </Grid>
-            <Grid item xs={4} className={classes.right}>
-              <Typography>{format({ round: 6, padRight: 6, suffix: ' €' })(12.3212)}</Typography>
+            <Grid item xs={5} className={classes.right}>
+              <Typography>
+                {format({ round: 2, padRight: 2, suffix: ` ${fiatCurrency}` })(
+                  balance * tickerEntry.PRICE
+                )}
+              </Typography>
             </Grid>
           </Grid>
         </div>

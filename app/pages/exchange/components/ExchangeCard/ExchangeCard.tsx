@@ -3,9 +3,11 @@ import green from 'material-ui/colors/green';
 import { StyleRulesCallback, Theme, withStyles } from 'material-ui/styles';
 import { ClassNameMap } from 'material-ui/styles/withStyles';
 import React, { Component } from 'react';
+import { getTickerEntry } from '../../../../helpers/ticker';
 import { Coinlist } from '../../../../reducers/coinlist';
-
-import { Exchange } from '../../../../reducers/exchanges.types';
+import { Balances, Exchange } from '../../../../reducers/exchanges.types';
+import { MINIMUM_BALANCE, SettingsType } from '../../../../reducers/settings';
+import { Ticker } from '../../../../reducers/ticker';
 import { ExchangeCardBalance } from './ExchangeCardBalance';
 import { ExchangeCardMenu } from './ExchangeCardMenu';
 
@@ -31,6 +33,8 @@ const styles: StyleRulesCallback = (theme: Theme) => ({
 interface Props {
   coinlist: Coinlist;
   exchange: Exchange;
+  ticker: Ticker;
+  settings: SettingsType;
   onEdit: () => void;
   onDelete: () => void;
 }
@@ -38,7 +42,7 @@ interface Props {
 export const ExchangeCard = withStyles(styles)(
   class extends Component<Props & WithStyles> {
     public render() {
-      const { classes, coinlist, exchange, onEdit, onDelete } = this.props;
+      const { classes, coinlist, exchange, ticker, settings, onEdit, onDelete } = this.props;
 
       return (
         <Card className={classes.card}>
@@ -48,13 +52,24 @@ export const ExchangeCard = withStyles(styles)(
             action={<ExchangeCardMenu onEdit={onEdit} onDelete={onDelete} />}
           />
           {Object.keys(exchange.balances)
-            .sort()
+            .filter(
+              asset =>
+                !settings.hideZeroBalances ||
+                getFiatBalance(ticker, asset, settings, exchange.balances) > MINIMUM_BALANCE
+            )
+            .sort(
+              (a, b) =>
+                getFiatBalance(ticker, b, settings, exchange.balances) -
+                getFiatBalance(ticker, a, settings, exchange.balances)
+            )
             .map(asset => (
               <ExchangeCardBalance
                 key={asset}
                 asset={asset}
                 balance={exchange.balances[asset]}
                 coinlist={coinlist}
+                tickerEntry={getTickerEntry(ticker, asset, settings.fiatCurrency)}
+                fiatCurrency={settings.fiatCurrency}
               />
             ))}
           {hasOpenRequests(exchange) ? <LinearProgress /> : ''}
@@ -74,3 +89,12 @@ const getStatus = (classes: ClassNameMap, exchange: Exchange) => {
 };
 
 const hasOpenRequests = (exchange: Exchange) => exchange.openRequests && exchange.openRequests > 0;
+
+const getFiatBalance = (
+  ticker: Ticker,
+  asset: string,
+  settings: SettingsType,
+  balances: Balances
+) => {
+  return getTickerEntry(ticker, asset, settings.fiatCurrency).PRICE * balances[asset];
+};

@@ -7,6 +7,8 @@ import { Coinlist } from '../../../reducers/coinlist';
 import { Exchange, ExchangeCredentials, Exchanges, Trade } from '../../../reducers/exchanges.types';
 import { ExchangeCard } from './ExchangeCard/ExchangeCard';
 import { DialogConfig, ExchangeDialog } from './ExchangeDialog';
+import { Ticker } from '../../../reducers/ticker';
+import { SettingsType } from '../../../reducers/settings';
 
 const styles: StyleRulesCallback = theme => ({
   button: {
@@ -27,6 +29,8 @@ const styles: StyleRulesCallback = theme => ({
 export interface StateProps {
   coinlist: Coinlist;
   exchanges: Exchanges;
+  ticker: Ticker;
+  settings: SettingsType;
 }
 
 export interface DispatchProps {
@@ -73,7 +77,7 @@ export const ExchangeGrid = withStyles(styles)(
     };
 
     public render() {
-      const { exchanges, classes, coinlist } = this.props;
+      const { exchanges, classes, coinlist, ticker, settings } = this.props;
 
       return (
         <div className="container">
@@ -83,6 +87,8 @@ export const ExchangeGrid = withStyles(styles)(
               <ExchangeCard
                 coinlist={coinlist}
                 exchange={exchange}
+                ticker={ticker}
+                settings={settings}
                 onEdit={this.handleEdit(exchange)}
                 onDelete={this.handleDelete(exchange)}
               />

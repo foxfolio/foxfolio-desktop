@@ -3,7 +3,7 @@ import { createSelector } from 'reselect';
 import { getTickerEntry } from '../../../helpers/ticker';
 import { GlobalState } from '../../../reducers';
 import { Exchanges } from '../../../reducers/exchanges.types';
-import { SettingsType } from '../../../reducers/settings';
+import { MINIMUM_BALANCE, SettingsType } from '../../../reducers/settings';
 import { Ticker } from '../../../reducers/ticker';
 import {
   getExchanges,
@@ -46,7 +46,7 @@ const omitBalances = (balances: Balances, settings: SettingsType, ticker: Ticker
   }
   if (settings.hideZeroBalances) {
     balances = _.omitBy(balances, (value, key) => {
-      return getTickerEntry(ticker, key, settings.fiatCurrency).PRICE * value < 0.05;
+      return getTickerEntry(ticker, key, settings.fiatCurrency).PRICE * value < MINIMUM_BALANCE;
     }) as Balances;
   }
   return balances;

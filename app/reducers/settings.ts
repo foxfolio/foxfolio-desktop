@@ -1,6 +1,8 @@
 import { Action } from '../actions/actions.types';
 import { CryptoCurrency, FiatCurrency } from '../utils/currencies';
 
+export const MINIMUM_BALANCE = 0.05;
+
 export type CurrencyFocus = 'crypto' | 'fiat' | 'equal';
 
 export interface SettingsType {
