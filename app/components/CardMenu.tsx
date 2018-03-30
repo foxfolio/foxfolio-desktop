@@ -14,12 +14,17 @@ const styles: StyleRules = {
   },
 };
 
+interface MenuItem {
+  key: string;
+  text: string;
+  onClickListener: () => any;
+  className?: string;
+}
 interface Props {
-  onEdit: () => any;
-  onDelete: () => any;
+  items: MenuItem[];
 }
 
-export const ExchangeCardMenu = withStyles(styles)(
+export const CardMenu = withStyles(styles)(
   class extends React.Component<Props & WithStyles> {
     public state = {
       anchorEl: undefined,
@@ -37,7 +42,7 @@ export const ExchangeCardMenu = withStyles(styles)(
     };
 
     public render() {
-      const { classes, onEdit, onDelete } = this.props;
+      const { classes, items } = this.props;
       const { anchorEl } = this.state;
 
       return (
@@ -53,12 +58,15 @@ export const ExchangeCardMenu = withStyles(styles)(
             open={Boolean(anchorEl)}
             onClose={this.handleClose()}
           >
-            <MenuItem key="edit" onClick={this.handleClose(onEdit)}>
-              Edit
-            </MenuItem>
-            <MenuItem key="delete" onClick={this.handleClose(onDelete)} className={classes.error}>
-              Delete
-            </MenuItem>
+            {items.map(item => (
+              <MenuItem
+                key={item.key}
+                onClick={item.onClickListener}
+                className={item.className ? classes[item.className] : undefined}
+              >
+                {item.text}
+              </MenuItem>
+            ))}
           </Menu>
         </div>
       );

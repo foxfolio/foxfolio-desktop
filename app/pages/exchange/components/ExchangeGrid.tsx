@@ -5,10 +5,10 @@ import { StyleRulesCallback, withStyles } from 'material-ui/styles';
 import React, { Component } from 'react';
 import { Coinlist } from '../../../reducers/coinlist';
 import { Exchange, ExchangeCredentials, Exchanges, Trade } from '../../../reducers/exchanges.types';
+import { SettingsType } from '../../../reducers/settings';
+import { Ticker } from '../../../reducers/ticker';
 import { ExchangeCard } from './ExchangeCard/ExchangeCard';
 import { DialogConfig, ExchangeDialog } from './ExchangeDialog';
-import { Ticker } from '../../../reducers/ticker';
-import { SettingsType } from '../../../reducers/settings';
 
 const styles: StyleRulesCallback = theme => ({
   button: {

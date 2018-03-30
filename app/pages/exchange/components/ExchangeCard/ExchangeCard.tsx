@@ -3,17 +3,17 @@ import green from 'material-ui/colors/green';
 import { StyleRulesCallback, Theme, withStyles } from 'material-ui/styles';
 import { ClassNameMap } from 'material-ui/styles/withStyles';
 import React, { Component } from 'react';
+import { CardMenu } from '../../../../components/CardMenu';
 import { getTickerEntry } from '../../../../helpers/ticker';
 import { Coinlist } from '../../../../reducers/coinlist';
 import { Balances, Exchange } from '../../../../reducers/exchanges.types';
 import { MINIMUM_BALANCE, SettingsType } from '../../../../reducers/settings';
 import { Ticker } from '../../../../reducers/ticker';
 import { ExchangeCardBalance } from './ExchangeCardBalance';
-import { ExchangeCardMenu } from './ExchangeCardMenu';
 
 const styles: StyleRulesCallback = (theme: Theme) => ({
   card: {
-    margin: '10px 0',
+    margin: '36px 0',
   },
   subheader: {
     marginBottom: 12,
@@ -25,8 +25,10 @@ const styles: StyleRulesCallback = (theme: Theme) => ({
   error: {
     color: theme.palette.error[500],
   },
-  collapse: {
-    padding: 16,
+  balanceitem: {
+    '&:last-child': {
+      paddingBottom: theme.spacing.unit * 2,
+    },
   },
 });
 
@@ -49,7 +51,14 @@ export const ExchangeCard = withStyles(styles)(
           <CardHeader
             title={exchange.type}
             subheader={getStatus(classes, exchange)}
-            action={<ExchangeCardMenu onEdit={onEdit} onDelete={onDelete} />}
+            action={
+              <CardMenu
+                items={[
+                  { key: 'edit', text: 'Edit', onClickListener: onEdit },
+                  { key: 'delete', text: 'Delete', onClickListener: onDelete, className: 'error' },
+                ]}
+              />
+            }
           />
           {Object.keys(exchange.balances)
             .filter(
@@ -70,6 +79,7 @@ export const ExchangeCard = withStyles(styles)(
                 coinlist={coinlist}
                 tickerEntry={getTickerEntry(ticker, asset, settings.fiatCurrency)}
                 fiatCurrency={settings.fiatCurrency}
+                classes={{ card: classes.balanceitem }}
               />
             ))}
           {hasOpenRequests(exchange) ? <LinearProgress /> : ''}

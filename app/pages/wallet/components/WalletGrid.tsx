@@ -4,8 +4,8 @@ import { StyleRulesCallback, withStyles } from 'material-ui/styles';
 import React, { Component } from 'react';
 import { Coinlist } from '../../../reducers/coinlist';
 import { Wallet } from '../../../reducers/wallets.types';
+import { WalletCard } from './WalletCard';
 import WalletDialog from './WalletDialog';
-import { WalletGridItem } from './WalletGridItem';
 
 const styles: StyleRulesCallback = theme => ({
   button: {
@@ -72,11 +72,11 @@ export const WalletGrid = withStyles(styles)(
           <Typography type="headline">Wallets</Typography>
           <Grid container>
             {wallets.sort((a, b) => a.address.localeCompare(b.address)).map(wallet => (
-              <Grid item key={wallet.currency + wallet.address} sm={12} md={6}>
-                <WalletGridItem
+              <Grid item key={wallet.currency + wallet.address} sm={12} md={8} lg={6}>
+                <WalletCard
                   wallet={wallet}
-                  onEdit={this.editDialog}
-                  onDelete={deleteWallet}
+                  onEdit={() => this.editDialog(wallet)}
+                  onDelete={() => deleteWallet(wallet)}
                   coinlist={coinlist}
                 />
               </Grid>
