@@ -124,7 +124,7 @@ export const TradesList = withStyles(styles)(
             </Card>
           ))}
           <Button
-            fab
+            variant="fab"
             color="primary"
             aria-label="add"
             className={classes.button}

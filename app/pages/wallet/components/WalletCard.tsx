@@ -58,13 +58,13 @@ export const WalletCard = withStyles(styles)(
             }
             subheader={wallet.quantity}
             title={
-              <Typography type="headline" component="h2">
+              <Typography variant="headline" component="h2">
                 {coinlist[wallet.currency] ? coinlist[wallet.currency].FullName : wallet.currency}
               </Typography>
             }
           />
           <CardContent className={classes.content}>
-            <Typography type="body1" className={classes.subheader}>
+            <Typography variant="body1" className={classes.subheader}>
               {`Address: ${wallet.address}`}
               <br />
               {`Note: ${wallet.note ? wallet.note : ''}`}

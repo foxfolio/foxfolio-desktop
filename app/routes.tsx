@@ -1,5 +1,5 @@
 import { createMuiTheme, MuiThemeProvider } from 'material-ui';
-import { orange, red } from 'material-ui/colors';
+import { orange } from 'material-ui/colors';
 import React, { Component } from 'react';
 import { Route, Switch } from 'react-router';
 import Layout from './containers/Layout';
@@ -22,7 +22,6 @@ export class Routes extends Component<Props> {
       palette: {
         type: settings.theme === 'light' ? 'light' : 'dark',
         primary: orange,
-        error: red,
       },
     });
     console.log(appTheme);

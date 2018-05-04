@@ -15,13 +15,13 @@ export const PortfolioHeader = ({ settings, sum, change }: Props) => {
     <Grid container>
       <Grid item xs={2} />
       <Grid item xs={4}>
-        <Typography type="title">
+        <Typography variant="title">
           {sum.fiat.toPrecision(5)} {settings.fiatCurrency} |&nbsp;
           <PriceChangeText change={change.fiat} />
         </Typography>
       </Grid>
       <Grid item xs={4}>
-        <Typography type="title" style={{ paddingLeft: 20 }}>
+        <Typography variant="title" style={{ paddingLeft: 20 }}>
           {sum.crypto.toPrecision(5)} {settings.cryptoCurrency} |{' '}
           <PriceChangeText change={change.crypto} />
         </Typography>

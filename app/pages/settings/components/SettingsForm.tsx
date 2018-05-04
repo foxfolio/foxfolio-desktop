@@ -24,7 +24,7 @@ export const SettingsForm = reduxForm<SettingsType>({ form: 'settingsForm' })(
       <form onSubmit={handleSubmit}>
         <Grid container>
           <Grid item xs={12}>
-            <Typography type="title">General</Typography>
+            <Typography variant="title">General</Typography>
           </Grid>
           <Grid item xs={12} style={{ marginLeft: 10 }}>
             <Grid item lg={4} md={6} sm={12}>
@@ -35,11 +35,11 @@ export const SettingsForm = reduxForm<SettingsType>({ form: 'settingsForm' })(
                   <MenuItem value="dark">Dark</MenuItem>
                 </Field>
               </FormControl>
-              <Typography type="caption">Switch page after changing the theme</Typography>
+              <Typography variant="caption">Switch page after changing the theme</Typography>
             </Grid>
           </Grid>
           <Grid item xs={12} style={{ marginTop: 20 }}>
-            <Typography type="title">Portfolio</Typography>
+            <Typography variant="title">Portfolio</Typography>
           </Grid>
           <Grid item xs={12} style={{ marginLeft: 10 }}>
             <Grid item lg={4} md={6} sm={12}>
@@ -80,18 +80,33 @@ export const SettingsForm = reduxForm<SettingsType>({ form: 'settingsForm' })(
           <Grid item xs={12} style={{ marginLeft: 10 }}>
             <Grid item lg={4} md={6} sm={12}>
               <FormControlLabel
-                control={<Field name="hideZeroBalances" component={Switch} />}
+                control={
+                  <Field
+                    name="hideZeroBalances"
+                    component={(props: any) => <Switch color="primary" {...props} />}
+                  />
+                }
                 label="Hide zero balances"
               />
               <br />
               <FormControlLabel
-                control={<Field name="includeFiat" component={Switch} />}
+                control={
+                  <Field
+                    name="includeFiat"
+                    component={(props: any) => <Switch color="primary" {...props} />}
+                  />
+                }
                 label="Include fiat in portfolio"
               />
             </Grid>
           </Grid>
           <Grid item xs={12}>
-            <Button raised color="primary" type="submit" disabled={pristine || submitting}>
+            <Button
+              variant="raised"
+              color="primary"
+              type="submit"
+              disabled={pristine || submitting}
+            >
               Save
             </Button>
           </Grid>

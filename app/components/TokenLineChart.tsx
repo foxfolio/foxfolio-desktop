@@ -50,7 +50,7 @@ export const ThemedTokenLineChart = withTheme()(
             <AreaChart data={historyEntry.data} margin={{ left: 40, top: 5, bottom: 5, right: 5 }}>
               <Area
                 stroke={theme.palette.text.secondary}
-                fill={theme.palette.text.divider}
+                fill={theme.palette.divider}
                 dataKey="close"
                 isAnimationActive={false}
               />
@@ -65,7 +65,7 @@ export const ThemedTokenLineChart = withTheme()(
                 tickFormatter={tick => tick.toPrecision(6)}
                 domain={[dataMin => dataMin - 0.02 * dataMin, dataMax => dataMax + 0.02 * dataMax]}
               />
-              <CartesianGrid stroke={theme.palette.text.divider} strokeDasharray="3 3" />
+              <CartesianGrid stroke={theme.palette.divider} strokeDasharray="3 3" />
               <Tooltip
                 itemStyle={{ color: theme.palette.text.secondary }}
                 wrapperStyle={{ backgroundColor: theme.palette.background.paper }}

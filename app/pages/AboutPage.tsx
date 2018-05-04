@@ -13,15 +13,15 @@ export const AboutPage = withStyles(styles)(({ classes }) => {
   return (
     <div className="container">
       <Paper className={classes.paper}>
-        <Typography type="display1">About Foxfolio</Typography>
-        <Typography type="caption" paragraph>
+        <Typography variant="display1">About Foxfolio</Typography>
+        <Typography variant="caption" paragraph>
           Version {version}
         </Typography>
-        <Typography type="body2">
+        <Typography variant="body2">
           Portfolio management application for cryptocurrencies&nbsp; which automatically retrieves
           balances and trades using exchange APIs.
         </Typography>
-        <Typography type="caption" paragraph>
+        <Typography variant="caption" paragraph>
           Created by Andreas Greimel
         </Typography>
         <Typography paragraph>

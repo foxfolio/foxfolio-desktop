@@ -64,17 +64,17 @@ export const TradeListItem = withStyles(styles)(
         <div className={classes.content}>
           <Grid container>
             <Grid item xs={2}>
-              <Typography type="body1">{moment(trade.timestamp).format('MMM DD, YYYY')}</Typography>
+              <Typography variant="body1">{moment(trade.timestamp).format('MMM DD, YYYY')}</Typography>
             </Grid>
             <Grid item xs={4} className={classes.right}>
-              <Typography type="body1">
+              <Typography variant="body1">
                 {trade.amount} x {trade.price.toFixed(6)} {settings.fiatCurrency} ={' '}
                 {historicalValue.toFixed(2)} {settings.fiatCurrency}
               </Typography>
             </Grid>
             <Grid item xs={2} className={classes.right}>
               <Typography
-                type="body1"
+                variant="body1"
                 className={change >= 0 ? classes.positive : classes.negative}
               >
                 {change >= 0 ? '+' : ''}
@@ -82,12 +82,12 @@ export const TradeListItem = withStyles(styles)(
               </Typography>
             </Grid>
             <Grid item xs={2} className={classes.right}>
-              <Typography type="body1">
+              <Typography variant="body1">
                 {(currentPrice * trade.amount).toFixed(2)} {settings.fiatCurrency}
               </Typography>
             </Grid>
             <Grid item xs={2} className={classes.right}>
-              <Typography type="body1">
+              <Typography variant="body1">
                 {(currentValue - historicalValue).toFixed(2)} {settings.fiatCurrency}
               </Typography>
             </Grid>

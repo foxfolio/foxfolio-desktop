@@ -22,7 +22,7 @@ const DisconnectedPortfolioFocusButtons = ({
 }: StateProps & DispatchProps) => (
   <React.Fragment>
     <Button
-      dense
+      size="small"
       color="primary"
       disabled={settings.currencyFocus === 'crypto'}
       onClick={() => setPortfolioFocus('crypto')}
@@ -30,7 +30,7 @@ const DisconnectedPortfolioFocusButtons = ({
       {settings.cryptoCurrency}
     </Button>
     <Button
-      dense
+      size="small"
       color="primary"
       disabled={settings.currencyFocus === 'fiat'}
       onClick={() => setPortfolioFocus('fiat')}
@@ -38,7 +38,7 @@ const DisconnectedPortfolioFocusButtons = ({
       {settings.fiatCurrency}
     </Button>
     <Button
-      dense
+      size="small"
       color="primary"
       disabled={settings.currencyFocus === 'equal'}
       onClick={() => setPortfolioFocus('equal')}

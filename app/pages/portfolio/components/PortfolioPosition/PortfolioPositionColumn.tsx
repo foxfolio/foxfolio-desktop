@@ -90,12 +90,12 @@ export const PortfolioPositionColumn = (
   fiatEntry: any
 ) => (
   <div style={currencyFocus !== 'equal' ? singleStyle : {}}>
-    <Typography type="subheading" component="span" color="default" style={{ padding: 'auto' }}>
+    <Typography variant="subheading" component="span" color="default" style={{ padding: 'auto' }}>
       {currencyFocus === 'crypto' ? cryptoEntry : fiatEntry}
     </Typography>
 
     {currencyFocus === 'equal' ? (
-      <Typography type="body1" component="span" color="secondary">
+      <Typography variant="body1" component="span" color="textSecondary">
         {cryptoEntry}
       </Typography>
     ) : (

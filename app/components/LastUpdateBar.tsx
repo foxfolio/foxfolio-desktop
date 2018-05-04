@@ -33,7 +33,7 @@ class UnconnectedLastUpdateBar extends Component<Props> {
   };
 
   public render() {
-    return <LinearProgress mode="determinate" value={this.state.completed} />;
+    return <LinearProgress variant="determinate" value={this.state.completed} />;
   }
 }
 

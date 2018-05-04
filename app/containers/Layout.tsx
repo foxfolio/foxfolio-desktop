@@ -89,11 +89,11 @@ const styledLayout = withStyles(styles)(
       const { classes, children } = this.props;
       return (
         <div className={classes.appFrame}>
-          <Drawer type="permanent" classes={{ paper: classes.drawerPaper }}>
+          <Drawer variant="permanent" classes={{ paper: classes.drawerPaper }}>
             <AppBar position="static" color="default" elevation={1}>
               <Toolbar className={classes.toolbar}>
                 <Avatar src={icon} className={classes.avatar} />
-                <Typography type="title" color="inherit">
+                <Typography variant="title" color="inherit">
                   Foxfolio
                 </Typography>
               </Toolbar>
@@ -113,7 +113,7 @@ const styledLayout = withStyles(styles)(
             <div className={classes.padding}>
               {this.state.hasError ? (
                 <div style={{ textAlign: 'center', paddingTop: 25, paddingBottom: 25 }}>
-                  <Typography type="title">An unknown error occurred.</Typography>
+                  <Typography variant="title">An unknown error occurred.</Typography>
                 </div>
               ) : (
                 children

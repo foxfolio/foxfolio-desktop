@@ -24,7 +24,7 @@ export const SettingsPaper = withStyles(styles)(
   ({ settings, classes, saveSettingsAndUpdateTicker }: Props) => (
     <div className="container">
       <Paper className={classes.paper}>
-        <Typography type="display1" className={classes.headline}>
+        <Typography variant="display1" className={classes.headline}>
           Settings
         </Typography>
         <SettingsForm

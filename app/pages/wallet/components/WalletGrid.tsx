@@ -69,8 +69,8 @@ export const WalletGrid = withStyles(styles)(
 
       return (
         <div className="container">
-          <Typography type="headline">Wallets</Typography>
-          <Grid container>
+          <Typography variant="headline">Wallets</Typography>
+          <Grid container spacing={16}>
             {wallets.sort((a, b) => a.address.localeCompare(b.address)).map(wallet => (
               <Grid item key={wallet.currency + wallet.address} sm={12} md={8} lg={6}>
                 <WalletCard
@@ -83,7 +83,7 @@ export const WalletGrid = withStyles(styles)(
             ))}
           </Grid>
           <Button
-            fab
+            variant="fab"
             color="primary"
             aria-label="add"
             className={classes.button}

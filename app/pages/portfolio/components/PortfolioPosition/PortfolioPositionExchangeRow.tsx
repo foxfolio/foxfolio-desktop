@@ -47,7 +47,7 @@ const styledComponent = withStyles(styles)<Props>(
         <div className={classes.content}>
           <Grid container>
             <Grid item xs={3}>
-              <Typography type="body2" component="span">
+              <Typography variant="body2" component="span">
                 {exchanges[exchangeKey].type}
               </Typography>
             </Grid>

@@ -81,7 +81,7 @@ export const ExchangeGrid = withStyles(styles)(
 
       return (
         <div className="container">
-          <Typography type="headline">Exchanges</Typography>
+          <Typography variant="headline">Exchanges</Typography>
           <div className={classes.cardcontainer}>
             {_.values(exchanges).map(exchange => (
               <ExchangeCard
@@ -95,7 +95,7 @@ export const ExchangeGrid = withStyles(styles)(
             ))}
           </div>
           <Button
-            fab
+            variant="fab"
             color="primary"
             aria-label="add"
             className={classes.button}
