@@ -27,10 +27,8 @@ export const PortfolioPositions = ({ portfolio, coinlist, ticker, settings }: Pr
     {Object.keys(portfolio.total)
       .sort(
         (a, b) =>
-          portfolio.total[b] *
-            (ticker[b] ? getTickerEntry(ticker, b, settings.fiatCurrency).PRICE : 0) -
-          portfolio.total[a] *
-            (ticker[a] ? getTickerEntry(ticker, a, settings.fiatCurrency).PRICE : 0)
+          portfolio.total[b] * getTickerEntry(ticker, b, settings.fiatCurrency).PRICE -
+          portfolio.total[a] * getTickerEntry(ticker, a, settings.fiatCurrency).PRICE
       )
       .map(asset => (
         <PortfolioPosition
