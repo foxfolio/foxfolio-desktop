@@ -73,7 +73,7 @@ export const ExchangeCard = withStyles(styles)(
             )
             .map(asset => (
               <ExchangeCardBalance
-                key={asset}
+                key={`${exchange.type} ${asset}`}
                 asset={asset}
                 balance={exchange.balances[asset]}
                 coinlist={coinlist}
