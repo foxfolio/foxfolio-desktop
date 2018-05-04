@@ -33,7 +33,8 @@ function updateExchangeBalances(id: string, balances: Balances): ThunkAction {
   return (dispatch: Dispatch, getState: GetState) => {
     const stateBalance = getState().exchanges[id].balances;
     if (!_.isEqual(_.keys(stateBalance), _.keys(balances))) {
-      dispatch(requestTickerUpdate(Object.keys(balances)));
+      dispatch(requestTickerUpdate(_.keys(balances)));
+      dispatch(fetchTradesForExchange(getState().exchanges[id]));
     }
     dispatch({
       type: ExchangeTypeKeys.UPDATE_EXCHANGE_BALANCES,
@@ -70,11 +71,6 @@ export function continuouslyFetchTransactions(): ThunkAction {
         BALANCE_REFRESH_MS
       );
 
-      // Move trade timer a bit back to avoid nonce collisions
-      window.setTimeout(() => {
-        const tradeTimer = window.setInterval(() => dispatch(fetchAllTrades()), TRADE_REFRESH_MS);
-        dispatch(startTimer('trades', tradeTimer));
-      }, 1000);
       dispatch(startTimer('balances', balanceTimer));
     }
   };
@@ -106,17 +102,9 @@ function fetchBalancesForExchange(exchange: Exchange): ThunkAction {
   };
 }
 
-export function fetchAllTrades(): ThunkAction {
-  return (dispatch: Dispatch, getState: GetState) => {
-    dispatch(setLastUpdate('trades'));
-    const exchanges = getConfiguredExchanges(getState());
-    _.forEach((exchange: Exchange) => dispatch(fetchTradesForExchange(exchange)));
-  };
-}
-
 function fetchTradesForExchange(exchange: Exchange): ThunkAction {
   return async (dispatch: Dispatch) => {
-    // dispatch(incrementExchangeRequestCounter(exchange.id));
+    dispatch(incrementExchangeRequestCounter(exchange.id));
     try {
       const connector: ccxt.Exchange = new ccxt[exchange.type](exchange.credentials);
       if (connector.has.fetchMyTrades) {
@@ -125,11 +113,9 @@ function fetchTradesForExchange(exchange: Exchange): ThunkAction {
       } else {
         console.log('No orders...');
       }
-
-      // dispatch(updateExchangeBalances(exchange.id, balances));
     } catch (e) {
       console.log(e);
-      // dispatch(failedRequest(exchange.id, e.message));
+      dispatch(failedRequest(exchange.id, e.message));
     }
   };
 }
