@@ -26,14 +26,14 @@ exports[`Portfolio position with missing ticker 1`] = `
               <WithStyles(Typography)
                 color="default"
                 component="span"
-                type="body2"
+                variant="body2"
               >
                 ETH
               </WithStyles(Typography)>
               <WithStyles(Typography)
-                color="secondary"
+                color="textSecondary"
                 component="span"
-                type="body2"
+                variant="body2"
               >
                 10.000
               </WithStyles(Typography)>
@@ -99,14 +99,14 @@ exports[`Render portfolio position 1`] = `
               <WithStyles(Typography)
                 color="default"
                 component="span"
-                type="body2"
+                variant="body2"
               >
                 ETH
               </WithStyles(Typography)>
               <WithStyles(Typography)
-                color="secondary"
+                color="textSecondary"
                 component="span"
-                type="body2"
+                variant="body2"
               >
                 10.000
               </WithStyles(Typography)>
@@ -135,7 +135,7 @@ exports[`Render portfolio position 1`] = `
                     "padding": "auto",
                   }
                 }
-                type="subheading"
+                variant="subheading"
               >
                 10,000.00 USD
               </WithStyles(Typography)>
@@ -165,7 +165,7 @@ exports[`Render portfolio position 1`] = `
                     "padding": "auto",
                   }
                 }
-                type="subheading"
+                variant="subheading"
               >
                 1,000.00 USD
               </WithStyles(Typography)>
@@ -195,7 +195,7 @@ exports[`Render portfolio position 1`] = `
                     "padding": "auto",
                   }
                 }
-                type="subheading"
+                variant="subheading"
               >
                 <WithStyles(Component)
                   change={5.2}

@@ -5,12 +5,13 @@ exports[`Render wallet grid 1`] = `
   className="container"
 >
   <WithStyles(Typography)
-    type="headline"
+    variant="headline"
   >
     Wallets
   </WithStyles(Typography)>
   <WithStyles(GridWrapper)
     container={true}
+    spacing={16}
   >
     <WithStyles(GridWrapper)
       item={true}
@@ -37,8 +38,8 @@ exports[`Render wallet grid 1`] = `
     aria-label="add"
     className="Component-button-1"
     color="primary"
-    fab={true}
     onClick={[Function]}
+    variant="fab"
   >
     <pure(Add) />
   </WithStyles(Button)>
