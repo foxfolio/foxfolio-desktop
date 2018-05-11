@@ -173,6 +173,7 @@
     "cross-env": "^5.0.0",
     "cross-spawn": "^5.1.0",
     "css-loader": "^0.28.3",
+    "csstype": "^2.4.2",
     "electron": "^1.8.2",
     "electron-builder": "^20.5.1",
     "electron-devtools-installer": "^2.2.0",
