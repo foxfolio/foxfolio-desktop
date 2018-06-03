@@ -95,6 +95,7 @@ export default function getColor(currency: string): string {
     GOLOS: '#2670B7',
     GRC: '#88A13C',
     GRS: '#648FA0',
+    GTO: '#7e27ff',
     HEAT: '#ff5606',
     HSR: '#56428e',
     ICN: '#4c6f8c',
