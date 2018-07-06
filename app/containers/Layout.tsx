@@ -27,6 +27,10 @@ const styles: StyleRulesCallback = theme => ({
     height: '100%',
   },
   avatar: { margin: 10 },
+  icon: {
+    width: 250,
+    margin: '5px 0',
+  },
   padding: {
     padding: theme.spacing.unit * 3,
   },
@@ -91,12 +95,7 @@ const styledLayout = withStyles(styles)(
         <div className={classes.appFrame}>
           <Drawer variant="permanent" classes={{ paper: classes.drawerPaper }}>
             <AppBar position="static" color="default" elevation={1}>
-              <Toolbar className={classes.toolbar}>
-                <Avatar src={icon} className={classes.avatar} />
-                <Typography variant="title" color="inherit">
-                  Foxfolio
-                </Typography>
-              </Toolbar>
+              <img src={icon} className={classes.icon} />
             </AppBar>
             <List className={classes.topList}>
               <DrawerItem label="Portfolio" route="/" icon={<Dashboard />} />
