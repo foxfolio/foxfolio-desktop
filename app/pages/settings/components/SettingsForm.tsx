@@ -23,7 +23,7 @@ export const SettingsForm = reduxForm<SettingsType>({ form: 'settingsForm' })(
     return (
       <form onSubmit={handleSubmit}>
         <Grid container>
-          <Grid item xs={12}>
+          <Grid item xs={12} style={{ marginBottom: 10 }}>
             <Typography variant="title">General</Typography>
           </Grid>
           <Grid item xs={12} style={{ marginLeft: 10 }}>
@@ -38,7 +38,7 @@ export const SettingsForm = reduxForm<SettingsType>({ form: 'settingsForm' })(
               <Typography variant="caption">Switch page after changing the theme</Typography>
             </Grid>
           </Grid>
-          <Grid item xs={12} style={{ marginTop: 20 }}>
+          <Grid item xs={12} style={{ marginTop: 20, marginBottom: 10 }}>
             <Typography variant="title">Portfolio</Typography>
           </Grid>
           <Grid item xs={12} style={{ marginLeft: 10 }}>
