@@ -14,13 +14,17 @@ export const PositionPrice = (
   const { currencyFocus, cryptoCurrency, fiatCurrency } = settings;
 
   const fiatEntry =
-    asset !== fiatCurrency
-      ? format(getFormatOptions(fiatCurrency, 2))(ticker[fiatCurrency].PRICE)
-      : '';
+    asset !== fiatCurrency ? (
+      format(getFormatOptions(fiatCurrency, 2))(ticker[fiatCurrency].PRICE)
+    ) : (
+      <span>&nbsp;</span>
+    );
   const cryptoEntry =
-    asset !== cryptoCurrency
-      ? format(getFormatOptions(cryptoCurrency, 6))(ticker[cryptoCurrency].PRICE)
-      : '';
+    asset !== cryptoCurrency ? (
+      format(getFormatOptions(cryptoCurrency, 6))(ticker[cryptoCurrency].PRICE)
+    ) : (
+      <span>&nbsp;</span>
+    );
 
   return PortfolioPositionColumn(currencyFocus, cryptoEntry, fiatEntry);
 };
@@ -66,13 +70,13 @@ export const PositionPriceChange = (
     asset !== fiatCurrency ? (
       <PriceChangeText change={fiatChange} muted={currencyFocus === 'crypto'} />
     ) : (
-      ''
+      <span>&nbsp;</span>
     );
   const cryptoEntry =
     asset !== cryptoCurrency ? (
       <PriceChangeText change={cryptoChange} muted={currencyFocus === 'fiat'} />
     ) : (
-      ''
+      <span>&nbsp;</span>
     );
   return PortfolioPositionColumn(currencyFocus, cryptoEntry, fiatEntry);
 };
