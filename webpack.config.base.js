@@ -4,7 +4,6 @@
 
 import path from 'path';
 import webpack from 'webpack';
-import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
 
 export default {
   module: {
