@@ -6,18 +6,9 @@ import path from 'path';
 import webpack from 'webpack';
 
 export default {
+  mode: 'production',
   module: {
     rules: [
-      {
-        test: /\.jsx?$/,
-        exclude: /node_modules/,
-        use: {
-          loader: 'babel-loader',
-          options: {
-            cacheDirectory: true,
-          },
-        },
-      },
       {
         test: /\.tsx?$/,
         exclude: /node_modules/,
