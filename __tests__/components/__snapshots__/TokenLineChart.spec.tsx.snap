@@ -186,6 +186,9 @@ exports[`Render token line chart 1`] = `
           "0px 11px 14px -7px rgba(0, 0, 0, 0.2),0px 23px 36px 3px rgba(0, 0, 0, 0.14),0px 9px 44px 8px rgba(0, 0, 0, 0.12)",
           "0px 11px 15px -7px rgba(0, 0, 0, 0.2),0px 24px 38px 3px rgba(0, 0, 0, 0.14),0px 9px 46px 8px rgba(0, 0, 0, 0.12)",
         ],
+        "shape": Object {
+          "borderRadius": 4,
+        },
         "spacing": Object {
           "unit": 8,
         },
@@ -224,6 +227,7 @@ exports[`Render token line chart 1`] = `
             "lineHeight": "1.71429em",
           },
           "button": Object {
+            "color": "rgba(0, 0, 0, 0.87)",
             "fontFamily": "\\"Roboto\\", \\"Helvetica\\", \\"Arial\\", sans-serif",
             "fontSize": "0.875rem",
             "fontWeight": 500,

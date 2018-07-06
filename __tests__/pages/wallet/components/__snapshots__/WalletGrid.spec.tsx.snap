@@ -9,11 +9,11 @@ exports[`Render wallet grid 1`] = `
   >
     Wallets
   </WithStyles(Typography)>
-  <WithStyles(GridWrapper)
+  <WithStyles(Grid)
     container={true}
     spacing={16}
   >
-    <WithStyles(GridWrapper)
+    <WithStyles(Grid)
       item={true}
       key="BTC"
       lg={6}
@@ -32,8 +32,8 @@ exports[`Render wallet grid 1`] = `
           }
         }
       />
-    </WithStyles(GridWrapper)>
-  </WithStyles(GridWrapper)>
+    </WithStyles(Grid)>
+  </WithStyles(Grid)>
   <WithStyles(Button)
     aria-label="add"
     className="Component-button-1"

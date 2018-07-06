@@ -8,12 +8,12 @@ import { getExchanges } from '../../app/selectors/selectGlobalState';
 import { Store } from '../../app/store/configureStore';
 
 import ccxt from 'ccxt';
-import { Action } from '../../app/actions/actions.types';
 jest.mock('ccxt');
 
 const fakeFetchTotalBalance = jest.fn();
 const fakeBinance = jest.fn(() => ({
   fetchTotalBalance: fakeFetchTotalBalance,
+  has: {},
 }));
 ccxt.binance = fakeBinance as any;
 

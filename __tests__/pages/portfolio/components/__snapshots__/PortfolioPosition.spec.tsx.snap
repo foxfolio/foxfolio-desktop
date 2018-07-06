@@ -15,10 +15,10 @@ exports[`Portfolio position with missing ticker 1`] = `
       <div
         className="Component-content-2"
       >
-        <WithStyles(GridWrapper)
+        <WithStyles(Grid)
           container={true}
         >
-          <WithStyles(GridWrapper)
+          <WithStyles(Grid)
             item={true}
             xs={4}
           >
@@ -38,29 +38,29 @@ exports[`Portfolio position with missing ticker 1`] = `
                 10.000
               </WithStyles(Typography)>
             </div>
-          </WithStyles(GridWrapper)>
-          <WithStyles(GridWrapper)
+          </WithStyles(Grid)>
+          <WithStyles(Grid)
             className="Component-right-3"
             item={true}
             xs={3}
           >
             
-          </WithStyles(GridWrapper)>
-          <WithStyles(GridWrapper)
+          </WithStyles(Grid)>
+          <WithStyles(Grid)
             className="Component-right-3"
             item={true}
             xs={3}
           >
             
-          </WithStyles(GridWrapper)>
-          <WithStyles(GridWrapper)
+          </WithStyles(Grid)>
+          <WithStyles(Grid)
             className="Component-right-3"
             item={true}
             xs={2}
           >
             
-          </WithStyles(GridWrapper)>
-        </WithStyles(GridWrapper)>
+          </WithStyles(Grid)>
+        </WithStyles(Grid)>
       </div>
     </UNDEFINED>
   }
