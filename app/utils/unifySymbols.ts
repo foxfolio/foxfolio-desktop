@@ -6,6 +6,8 @@ export function unifySymbols(symbol: string): string {
       return 'NANO';
     case 'ACT':
       return 'ACT*';
+    case 'IOTA':
+      return 'IOT';
     default:
       return symbol;
   }
