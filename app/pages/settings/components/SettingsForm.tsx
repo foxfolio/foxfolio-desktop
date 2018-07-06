@@ -7,7 +7,7 @@ import {
   InputLabel,
   MenuItem,
   Typography,
-} from 'material-ui';
+} from '@material-ui/core';
 import React from 'react';
 import { Field, reduxForm } from 'redux-form';
 import { Checkbox, Select, Switch } from 'redux-form-material-ui';

@@ -1,4 +1,4 @@
-import { Grid, Typography } from 'material-ui';
+import { Grid, Typography } from '@material-ui/core';
 import React from 'react';
 import { SettingsType } from '../../../reducers/settings';
 import { PortfolioChange, PortfolioSum } from '../types/portfolio.types';

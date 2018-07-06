@@ -1,15 +1,20 @@
 import { History } from 'history';
-import { Store } from 'react-redux';
-import { Persistor } from 'redux-persist/es/types';
-
+import { Store as ReduxStore } from 'redux';
+import { Persistor } from 'redux-persist';
+import { ThunkDispatch } from 'redux-thunk';
+import { Action } from '../actions/actions.types';
 import { GlobalState } from '../reducers';
 
-interface MyStore {
-  configureStore: () => { store: Store<GlobalState>; persistor: Persistor };
+export interface Store<State = GlobalState> extends ReduxStore<State, Action> {
+  dispatch: ThunkDispatch<State, void, Action>;
+}
+
+export interface StoreCreator {
+  configureStore: () => { store: Store; persistor: Persistor };
   history: History;
 }
 
-let store: MyStore;
+let store: StoreCreator;
 
 store =
   process.env.NODE_ENV === 'production'

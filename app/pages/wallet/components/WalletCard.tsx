@@ -6,8 +6,8 @@ import {
   CardHeader,
   Typography,
   WithStyles,
-} from 'material-ui';
-import { StyleRulesCallback, withStyles } from 'material-ui/styles';
+} from '@material-ui/core';
+import { StyleRulesCallback, withStyles } from '@material-ui/core/styles';
 import React, { Component } from 'react';
 
 import { CardMenu } from '../../../components/CardMenu';

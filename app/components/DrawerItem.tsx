@@ -1,6 +1,6 @@
-import { ListItem, ListItemIcon, ListItemText } from 'material-ui';
+import { ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 
 interface Props {
   icon: any; // TODO Add correct type
@@ -8,9 +8,11 @@ interface Props {
   route: string;
 }
 
+const navLinkTo = (to: string) => props => <NavLink exact {...props} to={to} />;
+
 export function DrawerItem({ icon, label, route }: Props) {
   return (
-    <ListItem button component={props => <NavLink {...props} exact to={route} />}>
+    <ListItem button component={navLinkTo(route)}>
       <ListItemIcon>{icon}</ListItemIcon>
       <ListItemText primary={label} />
     </ListItem>

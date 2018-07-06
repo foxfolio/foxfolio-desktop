@@ -1,7 +1,7 @@
-import { Card, CardHeader, LinearProgress, WithStyles } from 'material-ui';
-import green from 'material-ui/colors/green';
-import { StyleRulesCallback, Theme, withStyles } from 'material-ui/styles';
-import { ClassNameMap } from 'material-ui/styles/withStyles';
+import { Card, CardHeader, LinearProgress, WithStyles } from '@material-ui/core';
+import green from '@material-ui/core/colors/green';
+import { StyleRulesCallback, Theme, withStyles } from '@material-ui/core/styles';
+import { ClassNameMap } from '@material-ui/core/styles/withStyles';
 import React, { Component } from 'react';
 import { CardMenu } from '../../../../components/CardMenu';
 import { getTickerEntry } from '../../../../helpers/ticker';

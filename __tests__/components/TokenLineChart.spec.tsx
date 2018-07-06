@@ -1,4 +1,4 @@
-import { createMount } from 'material-ui/test-utils';
+import { createMount } from '@material-ui/core/test-utils';
 import * as React from 'react';
 import { ThemedTokenLineChart } from '../../app/components/TokenLineChart';
 

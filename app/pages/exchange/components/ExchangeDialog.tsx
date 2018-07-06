@@ -1,4 +1,3 @@
-import ccxt from 'ccxt';
 import {
   Button,
   Dialog,
@@ -7,8 +6,9 @@ import {
   DialogTitle,
   TextField,
   WithStyles,
-} from 'material-ui';
-import { StyleRules, withStyles } from 'material-ui/styles';
+} from '@material-ui/core';
+import { StyleRules, withStyles } from '@material-ui/core/styles';
+import ccxt from 'ccxt';
 import React, { Component, FormEvent } from 'react';
 
 import { Autocomplete } from '../../../components/Autocomplete';

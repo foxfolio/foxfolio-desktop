@@ -8,8 +8,8 @@ import {
   MenuItem,
   TextField,
   WithStyles,
-} from 'material-ui';
-import { StyleRules, withStyles } from 'material-ui/styles';
+} from '@material-ui/core';
+import { StyleRules, withStyles } from '@material-ui/core/styles';
 import moment from 'moment';
 import React, { Component, FormEvent } from 'react';
 import { Trade } from '../../../reducers/exchanges.types';

@@ -1,4 +1,4 @@
-import { createShallow } from 'material-ui/test-utils';
+import { createShallow } from '@material-ui/core/test-utils';
 import * as React from 'react';
 import { WalletGrid } from '../../../../app/pages/wallet/components/WalletGrid';
 import { Wallet } from '../../../../app/reducers/wallets.types';

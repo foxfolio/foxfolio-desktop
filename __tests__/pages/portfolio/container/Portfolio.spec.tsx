@@ -1,4 +1,4 @@
-import { createShallow } from 'material-ui/test-utils';
+import { createShallow } from '@material-ui/core/test-utils';
 import * as React from 'react';
 import { EmptyPortfolio } from '../../../../app/pages/portfolio/components/EmptyPortfolio';
 import { PortfolioContainer } from '../../../../app/pages/portfolio/container/Portfolio';

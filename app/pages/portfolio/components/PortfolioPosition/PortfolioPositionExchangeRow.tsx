@@ -1,6 +1,6 @@
-import { Avatar, Card, CardContent, Grid, Typography, withStyles } from 'material-ui';
-import { TrendingUp } from 'material-ui-icons';
-import { StyleRulesCallback } from 'material-ui/styles';
+import { Avatar, Card, CardContent, Grid, Typography, withStyles } from '@material-ui/core';
+import { StyleRulesCallback } from '@material-ui/core/styles';
+import { TrendingUp } from '@material-ui/icons';
 import React from 'react';
 import { connect } from 'react-redux';
 import { GlobalState } from '../../../../reducers';

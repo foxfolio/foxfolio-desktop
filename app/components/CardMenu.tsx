@@ -1,10 +1,11 @@
-import { WithStyles } from 'material-ui';
-import { MoreVert } from 'material-ui-icons';
-import red from 'material-ui/colors/red';
-import IconButton from 'material-ui/IconButton';
-import Menu, { MenuItem } from 'material-ui/Menu';
-import { StyleRules } from 'material-ui/styles';
-import withStyles from 'material-ui/styles/withStyles';
+import { WithStyles } from '@material-ui/core';
+import red from '@material-ui/core/colors/red';
+import IconButton from '@material-ui/core/IconButton';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+import { StyleRules } from '@material-ui/core/styles';
+import withStyles from '@material-ui/core/styles/withStyles';
+import { MoreVert } from '@material-ui/icons';
 
 import React from 'react';
 

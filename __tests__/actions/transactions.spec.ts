@@ -1,12 +1,14 @@
-import { applyMiddleware, combineReducers, createStore, Store } from 'redux';
+import { applyMiddleware, combineReducers, createStore } from 'redux';
 import thunk from 'redux-thunk';
 import { fetchAllBalances } from '../../app/actions/transactions';
 import { GlobalState } from '../../app/reducers';
 import { exchanges } from '../../app/reducers/exchanges';
 import { initialSettings } from '../../app/reducers/settings';
 import { getExchanges } from '../../app/selectors/selectGlobalState';
+import { Store } from '../../app/store/configureStore';
 
 import ccxt from 'ccxt';
+import { Action } from '../../app/actions/actions.types';
 jest.mock('ccxt');
 
 const fakeFetchTotalBalance = jest.fn();
@@ -15,7 +17,7 @@ const fakeBinance = jest.fn(() => ({
 }));
 ccxt.binance = fakeBinance as any;
 
-let store: Store<GlobalState>;
+let store: Store;
 
 beforeEach(() => {
   const initialState: Partial<GlobalState> = {
@@ -42,7 +44,7 @@ beforeEach(() => {
     } as any),
     initialState as GlobalState,
     applyMiddleware(thunk)
-  );
+  ) as Store;
 });
 
 describe('fetchAllBalances', () => {

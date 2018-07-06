@@ -1,4 +1,4 @@
-import { LinearProgress } from 'material-ui';
+import { LinearProgress } from '@material-ui/core';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { GlobalState } from '../reducers';

@@ -1,5 +1,6 @@
-import { connect, Dispatch } from 'react-redux';
+import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { Dispatch } from '../../actions/actions.types';
 import * as WalletActions from '../../actions/wallets';
 import { GlobalState } from '../../reducers';
 import { Coinlist } from '../../reducers/coinlist';
@@ -13,7 +14,7 @@ function mapStateToProps(state: GlobalState): { coinlist: Coinlist; wallets: Wal
   };
 }
 
-function mapDispatchToProps(dispatch: Dispatch<GlobalState>) {
+function mapDispatchToProps(dispatch: Dispatch) {
   return bindActionCreators(WalletActions, dispatch);
 }
 

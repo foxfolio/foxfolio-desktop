@@ -1,5 +1,5 @@
-import { createMuiTheme, MuiThemeProvider } from 'material-ui';
-import { orange } from 'material-ui/colors';
+import { createMuiTheme, MuiThemeProvider } from '@material-ui/core';
+import { orange } from '@material-ui/core/colors';
 import React, { Component } from 'react';
 import { Route, Switch } from 'react-router';
 import Layout from './containers/Layout';

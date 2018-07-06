@@ -1,6 +1,6 @@
+import { MenuItem, Paper, TextField, withStyles } from '@material-ui/core';
+import { StyleRules } from '@material-ui/core/styles';
 import Downshift from 'downshift';
-import { MenuItem, Paper, TextField, withStyles } from 'material-ui';
-import { StyleRules } from 'material-ui/styles';
 import React from 'react';
 
 const styles: StyleRules = {

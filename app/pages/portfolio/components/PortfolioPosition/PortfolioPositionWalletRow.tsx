@@ -1,6 +1,6 @@
-import { Avatar, Card, CardContent, Grid, Typography, withStyles } from 'material-ui';
-import { AccountBalanceWallet } from 'material-ui-icons';
-import { StyleRulesCallback } from 'material-ui/styles';
+import { Avatar, Card, CardContent, Grid, Typography, withStyles } from '@material-ui/core';
+import { StyleRulesCallback } from '@material-ui/core/styles';
+import { AccountBalanceWallet } from '@material-ui/icons';
 import React from 'react';
 
 const styles: StyleRulesCallback = theme => ({

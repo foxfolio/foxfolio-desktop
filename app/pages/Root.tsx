@@ -1,14 +1,14 @@
 import { History } from 'history';
 import React from 'react';
-import { Provider, Store } from 'react-redux';
+import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'react-router-redux';
 import { Persistor } from 'redux-persist/es/types';
 import { PersistGate } from 'redux-persist/integration/react';
-import { GlobalState } from '../reducers';
 import { Routes } from '../routes';
+import { Store } from '../store/configureStore';
 
 interface RootProps {
-  store: Store<GlobalState>;
+  store: Store;
   history: History;
   persistor: Persistor;
 }

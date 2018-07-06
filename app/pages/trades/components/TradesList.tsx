@@ -1,11 +1,11 @@
+import { CardContent, WithStyles } from '@material-ui/core';
+import Button from '@material-ui/core/Button';
+import Card from '@material-ui/core/Card';
+import IconButton from '@material-ui/core/IconButton';
+import { StyleRulesCallback } from '@material-ui/core/styles';
+import withStyles from '@material-ui/core/styles/withStyles';
+import { Add, Delete } from '@material-ui/icons';
 import * as _ from 'lodash';
-import { CardContent, WithStyles } from 'material-ui';
-import { Add, Delete } from 'material-ui-icons';
-import Button from 'material-ui/Button';
-import Card from 'material-ui/Card';
-import IconButton from 'material-ui/IconButton';
-import { StyleRulesCallback } from 'material-ui/styles';
-import withStyles from 'material-ui/styles/withStyles';
 import moment from 'moment';
 import React, { Component } from 'react';
 import { TickerRequest } from '../../../actions/trades';

@@ -1,6 +1,5 @@
-import { Grid } from 'material-ui';
-import green from 'material-ui/colors/green';
-import { StyleRulesCallback, Theme, withStyles } from 'material-ui/styles';
+import { Grid } from '@material-ui/core';
+import { StyleRulesCallback, Theme, withStyles } from '@material-ui/core/styles';
 import React from 'react';
 import { CurrencyAvatar } from '../../../components/CurrencyAvatar';
 import { ExpandableCard } from '../../../components/ExpandableCard';
@@ -8,7 +7,7 @@ import { TokenLineChart } from '../../../components/TokenLineChart';
 import { getTickerEntries } from '../../../helpers/ticker';
 import { Coinlist } from '../../../reducers/coinlist';
 import { SettingsType } from '../../../reducers/settings';
-import { Ticker, TickerEntry } from '../../../reducers/ticker';
+import { Ticker } from '../../../reducers/ticker';
 import {
   PositionPrice,
   PositionPriceChange,

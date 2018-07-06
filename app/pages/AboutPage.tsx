@@ -1,5 +1,5 @@
-import { Paper, Typography, withStyles } from 'material-ui';
-import { StyleRules } from 'material-ui/styles';
+import { Paper, Typography, withStyles } from '@material-ui/core';
+import { StyleRules } from '@material-ui/core/styles';
 import React from 'react';
 import { openInBrowser } from '../helpers/electron';
 

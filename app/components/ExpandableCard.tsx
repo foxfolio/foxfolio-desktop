@@ -1,15 +1,11 @@
+import { CardContent, WithStyles } from '@material-ui/core';
+import Card from '@material-ui/core/Card';
+import Collapse from '@material-ui/core/Collapse';
+import IconButton from '@material-ui/core/IconButton';
+import { StyleRulesCallback, Theme, withStyles } from '@material-ui/core/styles';
+import { ExpandMore } from '@material-ui/icons';
 import classnames from 'classnames';
-import { CardContent, WithStyles } from 'material-ui';
-import { ExpandMore } from 'material-ui-icons';
-import Card from 'material-ui/Card';
-import IconButton from 'material-ui/IconButton';
-import { StyleRulesCallback, Theme, withStyles } from 'material-ui/styles';
-import { CollapseProps } from 'material-ui/transitions';
-import MaterialCollapse from 'material-ui/transitions/Collapse';
 import React, { Component, ComponentType } from 'react';
-
-// TODO Remove after update to material-ui@1.0.0-beta.33
-const Collapse = (MaterialCollapse as any) as ComponentType<CollapseProps & { mountOnEnter: any }>;
 
 export const styles: StyleRulesCallback = (theme: Theme) => ({
   root: {

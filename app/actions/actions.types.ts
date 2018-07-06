@@ -1,5 +1,5 @@
 import { Dispatch as ReduxDispatch } from 'redux';
-import { ThunkAction as ReduxThunkAction } from 'redux-thunk';
+import { ThunkAction as ReduxThunkAction, ThunkDispatch } from 'redux-thunk';
 import { GlobalState } from '../reducers';
 import { Coinlist } from '../reducers/coinlist';
 import { ExchangeActions } from '../reducers/exchanges.types';
@@ -21,6 +21,6 @@ export type Action =
   | { type: 'RECEIVE_COIN_LIST'; coinlist: Coinlist }
   | { type: 'SAVE_SETTINGS'; settings: SettingsType };
 
-export type Dispatch = ReduxDispatch<GlobalState>;
+export type Dispatch = ThunkDispatch<GlobalState, void, Action>;
 export type GetState = () => GlobalState;
-export type ThunkAction = ReduxThunkAction<void | Promise<void>, GlobalState, {}>;
+export type ThunkAction = ReduxThunkAction<void | Promise<void>, GlobalState, void, Action>;

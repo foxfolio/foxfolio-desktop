@@ -1,7 +1,7 @@
+import { Card, CardContent, Grid, Typography, WithStyles } from '@material-ui/core';
+import { StyleRulesCallback } from '@material-ui/core/styles';
+import withStyles from '@material-ui/core/styles/withStyles';
 import format from 'format-number';
-import { Card, CardContent, Grid, Typography, WithStyles } from 'material-ui';
-import { StyleRulesCallback } from 'material-ui/styles';
-import withStyles from 'material-ui/styles/withStyles';
 import React from 'react';
 import { CurrencyAvatar } from '../../../../components/CurrencyAvatar';
 import { Coinlist } from '../../../../reducers/coinlist';

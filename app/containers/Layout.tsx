@@ -1,4 +1,6 @@
-import { AppBar, Avatar, List, Toolbar, Typography, WithStyles } from 'material-ui';
+import { AppBar, Avatar, List, Toolbar, Typography, WithStyles } from '@material-ui/core';
+import Drawer from '@material-ui/core/Drawer';
+import { StyleRulesCallback, withStyles } from '@material-ui/core/styles';
 import {
   AccountBalanceWallet,
   Cloud,
@@ -6,9 +8,7 @@ import {
   HelpOutline,
   Settings,
   SwapHoriz,
-} from 'material-ui-icons';
-import Drawer from 'material-ui/Drawer';
-import { StyleRulesCallback, withStyles } from 'material-ui/styles';
+} from '@material-ui/icons';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router';

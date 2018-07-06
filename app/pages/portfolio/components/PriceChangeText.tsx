@@ -1,14 +1,8 @@
-// @flow
-import { withStyles } from 'material-ui';
-import { green, grey, red } from 'material-ui/colors';
+import { createStyles, WithStyles, withStyles } from '@material-ui/core';
+import { green, grey, red } from '@material-ui/core/colors';
 import React from 'react';
 
-interface Props {
-  change: number;
-  muted?: boolean;
-}
-
-const styles = () => ({
+const styles = createStyles({
   negative: {
     color: red[500],
   },
@@ -31,7 +25,12 @@ const styles = () => ({
   },
 });
 
-export const PriceChangeText = withStyles(styles)<Props>(({ change, classes, muted }) => {
+interface Props extends WithStyles<typeof styles> {
+  change: number;
+  muted?: boolean;
+}
+
+export const PriceChangeText = withStyles(styles)(({ change, classes, muted }: Props) => {
   let className = classes.positive;
   if (change > 0 && muted) {
     className = classes.positiveMuted;

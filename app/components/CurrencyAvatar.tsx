@@ -1,8 +1,8 @@
-import { Avatar, WithStyles } from 'material-ui';
-import { AccountBalance, HelpOutline } from 'material-ui-icons';
-import green from 'material-ui/colors/green';
-import { StyleRules } from 'material-ui/styles';
-import withStyles from 'material-ui/styles/withStyles';
+import { Avatar, WithStyles } from '@material-ui/core';
+import green from '@material-ui/core/colors/green';
+import { StyleRules } from '@material-ui/core/styles';
+import withStyles from '@material-ui/core/styles/withStyles';
+import { AccountBalance, HelpOutline } from '@material-ui/icons';
 import React from 'react';
 
 import { Coinlist } from '../reducers/coinlist';

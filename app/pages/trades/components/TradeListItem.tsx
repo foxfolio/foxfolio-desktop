@@ -1,10 +1,10 @@
-import { WithStyles } from 'material-ui';
-import green from 'material-ui/colors/green';
-import red from 'material-ui/colors/red';
-import Grid from 'material-ui/Grid';
-import { StyleRulesCallback } from 'material-ui/styles';
-import withStyles from 'material-ui/styles/withStyles';
-import Typography from 'material-ui/Typography';
+import { WithStyles } from '@material-ui/core';
+import green from '@material-ui/core/colors/green';
+import red from '@material-ui/core/colors/red';
+import Grid from '@material-ui/core/Grid';
+import { StyleRulesCallback } from '@material-ui/core/styles';
+import withStyles from '@material-ui/core/styles/withStyles';
+import Typography from '@material-ui/core/Typography';
 import moment from 'moment';
 import * as React from 'react';
 import { CurrencyAvatar } from '../../../components/CurrencyAvatar';

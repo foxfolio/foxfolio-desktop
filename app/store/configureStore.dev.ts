@@ -1,10 +1,11 @@
 import { createHashHistory } from 'history';
 import { routerActions, routerMiddleware } from 'react-router-redux';
-import { applyMiddleware, compose, createStore, GenericStoreEnhancer, Middleware } from 'redux';
+import { applyMiddleware, compose, createStore, Middleware, StoreEnhancer } from 'redux';
 import { createLogger } from 'redux-logger';
 import thunk from 'redux-thunk';
 import * as exchangeActions from '../actions/exchanges';
 import rootReducer from '../reducers';
+import { Store } from './configureStore';
 import { persistStore } from './persistStore';
 
 const history = createHashHistory();
@@ -12,7 +13,7 @@ const history = createHashHistory();
 const configureStore = (initialState?: any) => {
   // Redux Configuration
   const middleware: Middleware[] = [];
-  const enhancers: GenericStoreEnhancer[] = [];
+  const enhancers: StoreEnhancer[] = [];
 
   // Thunk Middleware
   middleware.push(thunk);
@@ -48,7 +49,7 @@ const configureStore = (initialState?: any) => {
   const enhancer = composeEnhancers(...enhancers);
 
   // Create Store
-  const store = createStore(rootReducer, initialState, enhancer);
+  const store: Store = createStore(rootReducer, initialState, enhancer);
   const persistor = persistStore(store);
 
   if ((module as any).hot) {

@@ -1,5 +1,5 @@
+import { Button, Paper } from '@material-ui/core';
 import * as _ from 'lodash';
-import { Button, Paper } from 'material-ui';
 import React from 'react';
 import { Coinlist } from '../../../reducers/coinlist';
 import { SettingsType } from '../../../reducers/settings';

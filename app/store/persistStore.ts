@@ -1,9 +1,8 @@
-import { Store } from 'redux';
 import { persistStore as persistStoreRedux } from 'redux-persist';
 import { Persistor } from 'redux-persist/es/types';
 import rehydrationComplete from '../actions/init';
-import { GlobalState } from '../reducers';
+import { Store } from './configureStore';
 
-export function persistStore(store: Store<GlobalState>): Persistor {
+export function persistStore(store: Store): Persistor {
   return persistStoreRedux(store, {}, () => store.dispatch(rehydrationComplete()));
 }

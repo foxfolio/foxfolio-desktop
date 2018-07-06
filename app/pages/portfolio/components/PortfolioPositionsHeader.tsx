@@ -1,5 +1,5 @@
-import { Button, Card, CardContent, Grid, Typography } from 'material-ui';
-import { StyleRulesCallback, Theme, withStyles } from 'material-ui/styles';
+import { Button, Card, CardContent, Grid, Typography } from '@material-ui/core';
+import { StyleRulesCallback, Theme, withStyles } from '@material-ui/core/styles';
 import React from 'react';
 
 const styles: StyleRulesCallback = (theme: Theme) => ({

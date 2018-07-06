@@ -1,5 +1,5 @@
+import { Typography } from '@material-ui/core';
 import format from 'format-number';
-import { Typography } from 'material-ui';
 import React, { CSSProperties } from 'react';
 import { TickerEntries } from '../../../../helpers/ticker';
 import { CurrencyFocus, SettingsType } from '../../../../reducers/settings';

@@ -1,7 +1,7 @@
+import { Button, Grid, Typography, WithStyles } from '@material-ui/core';
+import { StyleRulesCallback, withStyles } from '@material-ui/core/styles';
+import { Add } from '@material-ui/icons';
 import _ from 'lodash';
-import { Button, Grid, Typography, WithStyles } from 'material-ui';
-import { Add } from 'material-ui-icons';
-import { StyleRulesCallback, withStyles } from 'material-ui/styles';
 import React, { Component } from 'react';
 import { Coinlist } from '../../../reducers/coinlist';
 import { Exchange, ExchangeCredentials, Exchanges, Trade } from '../../../reducers/exchanges.types';

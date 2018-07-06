@@ -1,6 +1,6 @@
+import { withTheme } from '@material-ui/core';
+import { Theme } from '@material-ui/core/styles';
 import chartjs, { ChartData, ChartTooltipItem } from 'chart.js';
-import { withTheme } from 'material-ui';
-import { Theme } from 'material-ui/styles';
 import React from 'react';
 import { defaults, HorizontalBar } from 'react-chartjs-2';
 import { getTickerEntry } from '../../../helpers/ticker';

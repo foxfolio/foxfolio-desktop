@@ -1,9 +1,9 @@
-import { LinearProgress, withTheme } from 'material-ui';
-import { Theme } from 'material-ui/styles';
-import { WithTheme } from 'material-ui/styles/withTheme';
+import { LinearProgress, withTheme } from '@material-ui/core';
+import { Theme } from '@material-ui/core/styles';
+import { WithTheme } from '@material-ui/core/styles/withTheme';
 import moment from 'moment';
 import React, { Component } from 'react';
-import { connect, Dispatch, MapStateToProps } from 'react-redux';
+import { connect, MapStateToProps } from 'react-redux';
 import {
   Area,
   AreaChart,
@@ -15,6 +15,7 @@ import {
 } from 'recharts';
 import { bindActionCreators } from 'redux';
 
+import { Dispatch } from '../actions/actions.types';
 import * as TickerActions from '../actions/ticker';
 import { getHistoryEntry } from '../helpers/ticker';
 import { GlobalState } from '../reducers';
@@ -89,7 +90,7 @@ export const ThemedTokenLineChart = withTheme()(
 const mapStateToProps: MapStateToProps<StateProps, OwnProps, GlobalState> = state => ({
   history: state.ticker.history,
 });
-const mapActionsToProps = (dispatch: Dispatch<GlobalState>) =>
+const mapActionsToProps = (dispatch: Dispatch) =>
   bindActionCreators(TickerActions, dispatch);
 
 export const TokenLineChart = connect<StateProps, DispatchProps, OwnProps, GlobalState>(
