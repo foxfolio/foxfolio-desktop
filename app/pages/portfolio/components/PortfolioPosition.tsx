@@ -1,4 +1,4 @@
-import { Grid } from '@material-ui/core';
+import { createStyles, Grid, WithStyles } from '@material-ui/core';
 import { StyleRulesCallback, Theme, withStyles } from '@material-ui/core/styles';
 import React from 'react';
 import { CurrencyAvatar } from '../../../components/CurrencyAvatar';
@@ -16,22 +16,23 @@ import {
 import { PositionHeader } from './PortfolioPosition/PortfolioPositionHeader';
 import { PortfolioForAsset } from './PortfolioPositions';
 
-export const styles: StyleRulesCallback = (theme: Theme) => ({
-  avatar: {
-    flex: '0 0 auto',
-    marginRight: theme.spacing.unit * 2,
-  },
-  content: {
-    flex: '1 1 auto',
-    marginRight: theme.spacing.unit * 2,
-  },
-  right: {
-    textAlign: 'right',
-  },
-});
+export const styles: StyleRulesCallback = (theme: Theme) =>
+  createStyles({
+    avatar: {
+      flex: '0 0 auto',
+      marginRight: theme.spacing.unit * 2,
+    },
+    content: {
+      flex: '1 1 auto',
+      marginRight: theme.spacing.unit * 2,
+    },
+    right: {
+      textAlign: 'right',
+    },
+  });
 
 // TODO Use connect to get coinlist, ticker and settings
-interface Props {
+interface Props extends WithStyles<typeof styles> {
   asset: string;
   coinlist: Coinlist;
   ticker: Ticker;
@@ -39,8 +40,8 @@ interface Props {
   settings: SettingsType;
 }
 
-export const PortfolioPosition = withStyles(styles)<Props>(
-  ({ asset, classes, portfolio, coinlist, ticker, settings }) => {
+export const PortfolioPosition = withStyles(styles)(
+  ({ asset, classes, portfolio, coinlist, ticker, settings }: Props) => {
     const quantity = portfolio.total;
     const tickerEntries = getTickerEntries(ticker, asset, [
       settings.cryptoCurrency,

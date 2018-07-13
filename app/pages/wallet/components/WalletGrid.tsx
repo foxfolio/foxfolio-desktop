@@ -1,4 +1,4 @@
-import { Button, Grid, Typography, WithStyles } from '@material-ui/core';
+import { Button, createStyles, Grid, Typography, WithStyles } from '@material-ui/core';
 import { StyleRulesCallback, withStyles } from '@material-ui/core/styles';
 import { Add } from '@material-ui/icons';
 import React, { Component } from 'react';
@@ -7,17 +7,18 @@ import { Wallet } from '../../../reducers/wallets.types';
 import { WalletCard } from './WalletCard';
 import WalletDialog from './WalletDialog';
 
-const styles: StyleRulesCallback = theme => ({
-  button: {
-    margin: theme.spacing.unit,
-    color: theme.palette.background.default,
-    position: 'fixed',
-    right: 40,
-    bottom: 40,
-  },
-});
+const styles: StyleRulesCallback = theme =>
+  createStyles({
+    button: {
+      margin: theme.spacing.unit,
+      color: theme.palette.background.default,
+      position: 'fixed',
+      right: 40,
+      bottom: 40,
+    },
+  });
 
-interface Props {
+interface Props extends WithStyles<typeof styles> {
   coinlist: Coinlist;
   wallets: Wallet[];
   addWallet: (source: Wallet) => any;
@@ -32,7 +33,7 @@ interface State {
 }
 
 export const WalletGrid = withStyles(styles)(
-  class extends Component<Props & WithStyles, State> {
+  class extends Component<Props, State> {
     public state = {
       open: false,
       isNew: true,
