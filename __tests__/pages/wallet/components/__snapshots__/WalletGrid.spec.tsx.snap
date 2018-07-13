@@ -20,7 +20,7 @@ exports[`Render wallet grid 1`] = `
       md={8}
       sm={12}
     >
-      <WithStyles(Component)
+      <WithStyles(class_1)
         coinlist={Object {}}
         onDelete={[Function]}
         onEdit={[Function]}
@@ -36,7 +36,7 @@ exports[`Render wallet grid 1`] = `
   </WithStyles(Grid)>
   <WithStyles(Button)
     aria-label="add"
-    className="Component-button-1"
+    className="class_1-button-1"
     color="primary"
     onClick={[Function]}
     variant="fab"

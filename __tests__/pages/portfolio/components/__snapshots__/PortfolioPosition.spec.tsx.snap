@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Portfolio position with missing ticker 1`] = `
-<WithStyles(Component)
+<WithStyles(class_1)
   cardContent={
     <UNDEFINED>
       <div
@@ -65,7 +65,7 @@ exports[`Portfolio position with missing ticker 1`] = `
     </UNDEFINED>
   }
   collapseContent={
-    <Connect(WithTheme(Component))
+    <Connect(WithTheme(class_1))
       fsym="ETH"
       tsym="USD"
     />
@@ -74,7 +74,7 @@ exports[`Portfolio position with missing ticker 1`] = `
 `;
 
 exports[`Render portfolio position 1`] = `
-<WithStyles(Component)
+<WithStyles(class_1)
   cardContent={
     <UNDEFINED>
       <div
@@ -210,7 +210,7 @@ exports[`Render portfolio position 1`] = `
     </UNDEFINED>
   }
   collapseContent={
-    <Connect(WithTheme(Component))
+    <Connect(WithTheme(class_1))
       fsym="ETH"
       tsym="USD"
     />

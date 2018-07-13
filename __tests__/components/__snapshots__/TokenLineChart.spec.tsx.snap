@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Render token line chart 1`] = `
-<WithTheme(Component)
+<WithTheme(class_1)
   fsym="ETH"
   history={
     Object {
@@ -30,7 +30,7 @@ exports[`Render token line chart 1`] = `
   }
   tsym="USD"
 >
-  <Component
+  <class_1
     fsym="ETH"
     history={
       Object {
@@ -433,6 +433,6 @@ exports[`Render token line chart 1`] = `
         </ResizeDetector>
       </div>
     </ResponsiveContainer>
-  </Component>
-</WithTheme(Component)>
+  </class_1>
+</WithTheme(class_1)>
 `;
