@@ -191,6 +191,13 @@ export function requestHistory(
   };
 }
 
+export const requestHistoryForAll = (
+  fsyms: string[],
+  tsym: string,
+  forceRequest: boolean = false
+) => (dispatch: Dispatch, getState: GetState) =>
+  fsyms.forEach(fsym => dispatch(requestHistory(fsym, tsym, forceRequest)));
+
 export function requestCoinList(): ThunkAction {
   return (dispatch: Dispatch) => {
     fetch('https://min-api.cryptocompare.com/data/all/coinlist')
