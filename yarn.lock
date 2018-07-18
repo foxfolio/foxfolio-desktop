@@ -2198,9 +2198,9 @@ caseless@~0.12.0:
   version "0.12.0"
   resolved "https://registry.yarnpkg.com/caseless/-/caseless-0.12.0.tgz#1b681c21ff84033c826543090689420d187151dc"
 
-ccxt@^1.11.2:
-  version "1.15.19"
-  resolved "https://registry.yarnpkg.com/ccxt/-/ccxt-1.15.19.tgz#bc9e8a52e2da04106400e49b69cc1e4aff7a0126"
+ccxt@^1.16.58:
+  version "1.16.58"
+  resolved "https://registry.yarnpkg.com/ccxt/-/ccxt-1.16.58.tgz#8382acef7f13befd052d430d8ed5126a1b6418e1"
   dependencies:
     cloudscraper "1.4.1"
     crypto-js "3.1.9-1"
@@ -10292,12 +10292,19 @@ webpack-merge@^4.1.3:
   dependencies:
     lodash "^4.17.5"
 
-webpack-sources@1.0.1, webpack-sources@^1.0.1, webpack-sources@^1.1.0:
+webpack-sources@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/webpack-sources/-/webpack-sources-1.0.1.tgz#c7356436a4d13123be2e2426a05d1dad9cbe65cf"
   dependencies:
     source-list-map "^2.0.0"
     source-map "~0.5.3"
+
+webpack-sources@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/webpack-sources/-/webpack-sources-1.1.0.tgz#a101ebae59d6507354d71d8013950a3a8b7a5a54"
+  dependencies:
+    source-list-map "^2.0.0"
+    source-map "~0.6.1"
 
 webpack@^4.15.1:
   version "4.15.1"
