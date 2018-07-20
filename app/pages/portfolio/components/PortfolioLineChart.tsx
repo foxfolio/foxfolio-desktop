@@ -18,12 +18,12 @@ import { bindActionCreators } from 'redux';
 import * as _ from 'lodash';
 import { Dispatch } from '../../../actions/actions.types';
 import * as TickerActions from '../../../actions/ticker';
+import { getHistoryEntry } from '../../../helpers/ticker';
 import { GlobalState } from '../../../reducers';
 import { SettingsType } from '../../../reducers/settings';
 import { History, HistoryData } from '../../../reducers/ticker';
 import { getHistory, getSettings } from '../../../selectors/selectGlobalState';
 import { Balances } from '../types/portfolio.types';
-import { getHistoryEntry } from '../../../helpers/ticker';
 
 interface StateProps {
   history: History;
@@ -53,7 +53,7 @@ export const ThemedPortfolioLineChart = withTheme()(
       if (data.length > 0) {
         return (
           <ResponsiveContainer height={300}>
-            <AreaChart data={data} margin={{ left: 40, top: 5, bottom: 5, right: 5 }}>
+            <AreaChart data={data} margin={{ left: 5, top: 5, bottom: 0, right: 15 }}>
               <Area
                 stroke={theme.palette.text.secondary}
                 fill={theme.palette.divider}
@@ -68,7 +68,7 @@ export const ThemedPortfolioLineChart = withTheme()(
               <YAxis
                 interval="preserveStartEnd"
                 tick={{ fill: theme.palette.text.secondary, strokeWidth: 0 }}
-                tickFormatter={tick => tick.toPrecision(6)}
+                tickFormatter={tick => tick.toPrecision(3)}
                 domain={[dataMin => dataMin - 0.02 * dataMin, dataMax => dataMax + 0.02 * dataMax]}
               />
               <CartesianGrid stroke={theme.palette.divider} strokeDasharray="3 3" />
@@ -105,7 +105,7 @@ const calculateHistoryForPortfolio = (
   });
   return _.entries(mergedHistory).map(pair => ({
     time: parseInt(pair[0], 10),
-    value: pair[1] + (portfolio[tsym] || 0),
+    value: Math.floor((pair[1] + (portfolio[tsym] || 0)) * 1e6) / 1e6,
   }));
 };
 
