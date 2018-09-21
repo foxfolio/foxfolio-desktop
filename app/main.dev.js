@@ -53,6 +53,26 @@ app.on('window-all-closed', () => {
   }
 });
 
+
+app.on('ready', async () => {
+  if (process.env.NODE_ENV === 'development' || process.env.DEBUG_PROD === 'true') {
+    await installExtensions();
+  }
+
+  if (process.env.NODE_ENV === 'production') {
+    autoUpdater.checkForUpdatesAndNotify();
+  }
+
+  createAndShowWindow();
+});
+
+
+app.on('activate', () => {
+  if (!mainWindow) {
+    createAndShowWindow();
+  }
+});
+
 autoUpdater.on('update-downloaded', (info) => {
   dialog.showMessageBox(mainWindow, {
     title: 'Update ready to install',
@@ -66,15 +86,7 @@ autoUpdater.on('update-downloaded', (info) => {
   });
 });
 
-app.on('ready', async () => {
-  if (process.env.NODE_ENV === 'development' || process.env.DEBUG_PROD === 'true') {
-    await installExtensions();
-  }
-
-  if (process.env.NODE_ENV === 'production') {
-    autoUpdater.checkForUpdatesAndNotify();
-  }
-
+function createAndShowWindow() {
   mainWindow = new BrowserWindow({
     show: false,
     width: 1280,
@@ -98,4 +110,4 @@ app.on('ready', async () => {
   mainWindow.on('closed', () => {
     mainWindow = null;
   });
-});
+}
