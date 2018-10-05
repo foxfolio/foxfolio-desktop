@@ -1,5 +1,4 @@
 import { LinearProgress, withTheme } from '@material-ui/core';
-import { Theme } from '@material-ui/core/styles';
 import { WithTheme } from '@material-ui/core/styles/withTheme';
 import dayjs from 'dayjs';
 import React, { Component } from 'react';

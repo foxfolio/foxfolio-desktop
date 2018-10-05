@@ -1,5 +1,4 @@
 import { LinearProgress, withTheme } from '@material-ui/core';
-import { Theme } from '@material-ui/core/styles';
 import { WithTheme } from '@material-ui/core/styles/withTheme';
 import dayjs from 'dayjs';
 import React, { Component } from 'react';
@@ -21,7 +20,7 @@ import * as TickerActions from '../../../actions/ticker';
 import { getHistoryEntry } from '../../../helpers/ticker';
 import { GlobalState } from '../../../reducers';
 import { SettingsType } from '../../../reducers/settings';
-import { History, HistoryData } from '../../../reducers/ticker';
+import { History} from '../../../reducers/ticker';
 import { getHistory, getSettings } from '../../../selectors/selectGlobalState';
 import { Balances } from '../types/portfolio.types';
 

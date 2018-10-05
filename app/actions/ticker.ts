@@ -195,7 +195,7 @@ export const requestHistoryForAll = (
   fsyms: string[],
   tsym: string,
   forceRequest: boolean = false
-) => (dispatch: Dispatch, getState: GetState) =>
+) => (dispatch: Dispatch) =>
   fsyms.forEach(fsym => dispatch(requestHistory(fsym, tsym, forceRequest)));
 
 export function requestCoinList(): ThunkAction {
