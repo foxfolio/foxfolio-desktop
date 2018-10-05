@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { GlobalState } from '../reducers';
 
 interface Props {
-  lastUpdate: Date;
+  lastUpdate: Date | undefined;
 }
 
 class UnconnectedLastUpdateBar extends Component<Props> {
