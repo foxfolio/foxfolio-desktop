@@ -1,9 +1,9 @@
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Dispatch } from '../../actions/actions.types';
-import * as WalletActions from '../../actions/wallets';
 import { GlobalState } from '../../modules';
 import { Coinlist } from '../../modules/coinlist.types';
+import * as WalletActions from '../../modules/wallets';
 import { Wallet } from '../../modules/wallets.types';
 import { WalletGrid } from './components/WalletGrid';
 

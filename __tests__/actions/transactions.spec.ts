@@ -1,9 +1,8 @@
 import { applyMiddleware, combineReducers, createStore } from 'redux';
 import thunk from 'redux-thunk';
-import { fetchAllBalances } from '../../app/actions/transactions';
 import { GlobalState } from '../../app/modules';
-import { exchanges } from '../../app/modules/exchanges';
-import { initialSettings } from '../../app/modules/settings';
+import exchanges, { fetchAllBalances } from '../../app/modules/exchanges';
+import { initialSettings } from '../../app/modules/settings.types';
 import { getExchanges } from '../../app/selectors/selectGlobalState';
 import { Store } from '../../app/store/configureStore';
 

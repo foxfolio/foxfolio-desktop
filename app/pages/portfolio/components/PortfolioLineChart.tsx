@@ -16,11 +16,11 @@ import { bindActionCreators } from 'redux';
 
 import * as _ from 'lodash';
 import { Dispatch } from '../../../actions/actions.types';
-import * as TickerActions from '../../../actions/ticker';
 import { getHistoryEntry } from '../../../helpers/ticker';
 import { GlobalState } from '../../../modules';
+import * as HistoryActions from '../../../modules/history';
+import { History } from '../../../modules/history.types';
 import { SettingsType } from '../../../modules/settings.types';
-import { History} from '../../../modules/ticker.types';
 import { getHistory, getSettings } from '../../../selectors/selectGlobalState';
 import { Balances } from '../types/portfolio.types';
 
@@ -112,7 +112,7 @@ const mapStateToProps: MapStateToProps<StateProps, OwnProps, GlobalState> = stat
   history: getHistory(state),
   settings: getSettings(state),
 });
-const mapActionsToProps = (dispatch: Dispatch) => bindActionCreators(TickerActions, dispatch);
+const mapActionsToProps = (dispatch: Dispatch) => bindActionCreators(HistoryActions, dispatch);
 
 export const PortfolioLineChart = connect<StateProps, DispatchProps, OwnProps, GlobalState>(
   mapStateToProps,

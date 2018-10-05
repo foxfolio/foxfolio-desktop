@@ -1,4 +1,6 @@
-import { History, HistoryEntry, PricesForTime, Ticker, TickerEntry } from '../modules/ticker.types';
+import { History, HistoryEntry } from '../modules/history.types';
+import { Prices } from '../modules/prices.types';
+import { Ticker, TickerEntry } from '../modules/ticker.types';
 
 export interface TickerEntries {
   [symbol: string]: TickerEntry;
@@ -40,7 +42,7 @@ export const getHistoryEntry = (history: History, fsym: string, tsym: string): H
 };
 
 export const getPriceForTime = (
-  pricesForTime: PricesForTime,
+  pricesForTime: Prices,
   fsym: string,
   tsym: string,
   timestamp: number

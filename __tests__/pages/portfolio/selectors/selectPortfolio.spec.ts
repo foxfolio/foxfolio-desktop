@@ -20,21 +20,18 @@ beforeEach(() => {
       { currency: 'ETH', quantity: 4, address: 'eth' },
     ],
     ticker: {
-      ...emptyState.ticker,
-      ticker: {
-        BTC: {
-          USD: { PRICE: 10000, CHANGEPCT24HOUR: 1 },
-        },
-        ETH: {
-          USD: { PRICE: 1000, CHANGEPCT24HOUR: 2 },
-          BTC: { PRICE: 0.1, CHANGEPCT24HOUR: 3 },
-        },
-        LTC: {
-          USD: { PRICE: 100, CHANGEPCT24HOUR: 4 },
-          BTC: { PRICE: 0.01, CHANGEPCT24HOUR: 5 },
-        },
-        USD: { BTC: { PRICE: 0.0001, CHANGEPCT24HOUR: -1 } },
+      BTC: {
+        USD: { PRICE: 10000, CHANGEPCT24HOUR: 1 },
       },
+      ETH: {
+        USD: { PRICE: 1000, CHANGEPCT24HOUR: 2 },
+        BTC: { PRICE: 0.1, CHANGEPCT24HOUR: 3 },
+      },
+      LTC: {
+        USD: { PRICE: 100, CHANGEPCT24HOUR: 4 },
+        BTC: { PRICE: 0.01, CHANGEPCT24HOUR: 5 },
+      },
+      USD: { BTC: { PRICE: 0.0001, CHANGEPCT24HOUR: -1 } },
     },
   };
 });

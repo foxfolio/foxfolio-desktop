@@ -3,8 +3,7 @@ import { createSelector } from 'reselect';
 import { getTickerEntry } from '../../../helpers/ticker';
 import { GlobalState } from '../../../modules';
 import { Exchanges } from '../../../modules/exchanges.types';
-import { MINIMUM_BALANCE} from '../../../modules/settings';
-import { SettingsType } from '../../../modules/settings.types';
+import { MINIMUM_BALANCE, SettingsType } from '../../../modules/settings.types';
 import { Ticker } from '../../../modules/ticker.types';
 import {
   getExchanges,

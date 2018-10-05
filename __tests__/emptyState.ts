@@ -1,5 +1,5 @@
 import { GlobalState } from '../app/modules';
-import { initialSettings } from '../app/modules/settings';
+import { initialSettings } from '../app/modules/settings.types';
 
 export const emptyState: GlobalState = {
   coinlist: {},
@@ -15,11 +15,9 @@ export const emptyState: GlobalState = {
       balances: {},
     },
   },
+  history: {},
+  prices: {},
   wallets: [],
-  ticker: {
-    ticker: {},
-    history: {},
-    pricesForTime: {},
-  },
+  ticker: {},
   settings: initialSettings,
 };

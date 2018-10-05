@@ -4,20 +4,45 @@ import { generateId } from '../helpers/reducers';
 import { Trade } from './exchanges.types';
 import { TradesMap } from './trades.types';
 
-export const trades = (state: TradesMap = {}, action: Action) => {
+// Reducer
+export default function reducer(state: TradesMap = {}, action: Action) {
   switch (action.type) {
     case 'ADD_TRADE':
-      return addTrade(state, action.trade);
+      return addTradeToState(state, action.trade);
     case 'UPDATE_TRADE':
-      return updateTrade(state, action.trade);
+      return updateTradeInState(state, action.trade);
     case 'DELETE_TRADE':
-      return deleteTrade(state, action.id);
+      return deleteTradeFromState(state, action.id);
     default:
       return state;
   }
-};
+}
 
-const addTrade = (state: TradesMap, trade: Trade): TradesMap => {
+// Action Creators
+export function addTrade(trade: Trade): Action {
+  return {
+    type: 'ADD_TRADE',
+    trade,
+  };
+}
+
+export function updateTrade(id: string, trade: Trade): Action {
+  return {
+    type: 'UPDATE_TRADE',
+    id,
+    trade,
+  };
+}
+
+export function deleteTrade(id: string): Action {
+  return {
+    type: 'DELETE_TRADE',
+    id,
+  };
+}
+
+// State Helpers
+const addTradeToState = (state: TradesMap, trade: Trade): TradesMap => {
   const newTrade = {
     ...trade,
     id: generateId(Object.keys(state)),
@@ -25,10 +50,10 @@ const addTrade = (state: TradesMap, trade: Trade): TradesMap => {
   return { ...state, [newTrade.id]: newTrade };
 };
 
-const updateTrade = (state: TradesMap, trade: Trade): TradesMap => {
+const updateTradeInState = (state: TradesMap, trade: Trade): TradesMap => {
   return { ...state, [trade.id]: trade };
 };
 
-const deleteTrade = (state: TradesMap, id: string): TradesMap => {
+const deleteTradeFromState = (state: TradesMap, id: string): TradesMap => {
   return _.omit(state, id);
 };

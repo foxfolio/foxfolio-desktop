@@ -15,10 +15,11 @@ import {
 import { bindActionCreators } from 'redux';
 
 import { Dispatch } from '../actions/actions.types';
-import * as TickerActions from '../actions/ticker';
 import { getHistoryEntry } from '../helpers/ticker';
 import { GlobalState } from '../modules';
-import { History } from '../modules/ticker.types';
+import { requestHistory as requestHistoryAction } from '../modules/history';
+import { History } from '../modules/history.types';
+import { getHistory } from '../selectors/selectGlobalState';
 
 interface StateProps {
   history: History;
@@ -87,10 +88,10 @@ export const ThemedTokenLineChart = withTheme()(
 );
 
 const mapStateToProps: MapStateToProps<StateProps, OwnProps, GlobalState> = state => ({
-  history: state.ticker.history,
+  history: getHistory(state),
 });
 const mapActionsToProps = (dispatch: Dispatch) =>
-  bindActionCreators(TickerActions, dispatch);
+  bindActionCreators({ requestHistory: requestHistoryAction }, dispatch);
 
 export const TokenLineChart = connect<StateProps, DispatchProps, OwnProps, GlobalState>(
   mapStateToProps,

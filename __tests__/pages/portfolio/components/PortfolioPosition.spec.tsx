@@ -1,6 +1,6 @@
 import { createShallow } from '@material-ui/core/test-utils';
 import * as React from 'react';
-import { initialSettings } from '../../../../app/modules/settings';
+import { initialSettings } from '../../../../app/modules/settings.types';
 import { Ticker } from '../../../../app/modules/ticker.types';
 import { PortfolioPosition } from '../../../../app/pages/portfolio/components/PortfolioPosition';
 import { FiatCurrency } from '../../../../app/utils/currencies';

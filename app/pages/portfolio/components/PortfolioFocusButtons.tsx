@@ -3,8 +3,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Dispatch } from '../../../actions/actions.types';
-import * as settingsActions from '../../../actions/settings';
 import { GlobalState } from '../../../modules';
+import * as settingsActions from '../../../modules/settings';
 import { CurrencyFocus, SettingsType } from '../../../modules/settings.types';
 import { getSettings } from '../../../selectors/selectGlobalState';
 

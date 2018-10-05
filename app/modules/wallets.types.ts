@@ -5,24 +5,7 @@ export interface Wallet {
   note?: string;
 }
 
-export type WalletActions = WalletClassActions | WalletInstanceActions;
-
-export type WalletClassActions = AddWalletAction | DeleteWalletAction;
-
-export interface AddWalletAction {
-  type: 'ADD_WALLET';
-  wallet: Wallet;
-}
-
-export interface DeleteWalletAction {
-  type: 'DELETE_WALLET';
-  id: string;
-}
-
-export type WalletInstanceActions = EditWalletAction;
-
-export interface EditWalletAction {
-  type: 'EDIT_WALLET';
-  id: string;
-  wallet: Wallet;
-}
+export type WalletActions =
+  | { type: 'ADD_WALLET'; wallet: Wallet }
+  | { type: 'EDIT_WALLET'; wallet: Wallet; newWallet: Wallet }
+  | { type: 'DELETE_WALLET'; wallet: Wallet };

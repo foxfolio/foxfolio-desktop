@@ -8,11 +8,12 @@ import { Add, Delete } from '@material-ui/icons';
 import dayjs from 'dayjs';
 import * as _ from 'lodash';
 import React, { Component } from 'react';
-import { TickerRequest } from '../../../actions/trades';
 import { Coinlist } from '../../../modules/coinlist.types';
 import { Trade } from '../../../modules/exchanges.types';
+import { Prices } from '../../../modules/prices.types';
 import { SettingsType } from '../../../modules/settings.types';
-import { PricesForTime, Ticker } from '../../../modules/ticker.types';
+import { Ticker } from '../../../modules/ticker.types';
+import { TickerRequest } from '../../../modules/trades.types';
 import { DialogConfig } from '../../exchange/components/ExchangeDialog';
 import { TradeDialog } from './TradeDialog';
 import { TradeListItem } from './TradeListItem';
@@ -37,11 +38,11 @@ export interface StateProps {
   trades: Trade[];
   settings: SettingsType;
   ticker: Ticker;
-  pricesForTime: PricesForTime;
+  prices: Prices;
 }
 
 export interface DispatchProps {
-  requestTicker: (requests: TickerRequest[]) => any;
+  requestPrice: (requests: TickerRequest[]) => any;
   addTrade: (trade: Trade) => any;
   updateTrade: (id: string, trade: Trade) => any;
   deleteTrade: (id: string) => any;
@@ -61,7 +62,7 @@ export const TradesList = withStyles(styles)(
     };
 
     public componentWillMount() {
-      const { requestTicker, trades, settings } = this.props;
+      const { requestPrice, trades, settings } = this.props;
       const requests: TickerRequest[] = flattenTrades(trades).reduce(
         (acc, trade) =>
           acc.concat({
@@ -71,7 +72,7 @@ export const TradesList = withStyles(styles)(
           }),
         [] as TickerRequest[]
       );
-      requestTicker(requests);
+      requestPrice(requests);
     }
 
     public handleEdit = trade => () => {
@@ -102,7 +103,7 @@ export const TradesList = withStyles(styles)(
     };
 
     public render() {
-      const { classes, ticker, coinlist, trades, settings, pricesForTime } = this.props;
+      const { classes, ticker, coinlist, trades, settings, prices } = this.props;
       const flattededTrades = flattenTrades(trades);
 
       return (
@@ -115,7 +116,7 @@ export const TradesList = withStyles(styles)(
                   trade={trade}
                   settings={settings}
                   ticker={ticker}
-                  pricesForTime={pricesForTime}
+                  pricesForTime={prices}
                 />
                 <IconButton onClick={this.handleDelete(trade)}>
                   <Delete />

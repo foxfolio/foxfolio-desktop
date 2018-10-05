@@ -1,13 +1,12 @@
 import { applyMiddleware, combineReducers, createStore } from 'redux';
 import thunk from 'redux-thunk';
 import shortid from 'shortid';
-import {
+import exchanges, {
   addExchange,
   deleteExchange,
   updateExchangeCredentials,
   updateExchangeTrades,
-} from '../../app/actions/exchanges';
-import * as exchanges from '../../app/modules/exchanges';
+} from '../../app/modules/exchanges';
 import { Trade } from '../../app/modules/exchanges.types';
 import { getExchanges } from '../../app/selectors/selectGlobalState';
 import { Store } from '../../app/store/configureStore';
@@ -18,7 +17,7 @@ jest.mock('shortid');
 (shortid.generate as any).mockReturnValue('id');
 
 beforeEach(() => {
-  store = createStore(combineReducers(exchanges as any), applyMiddleware(thunk)) as Store;
+  store = createStore(combineReducers({ exchanges }), applyMiddleware(thunk)) as Store;
 });
 
 test('addExchange', async () => {

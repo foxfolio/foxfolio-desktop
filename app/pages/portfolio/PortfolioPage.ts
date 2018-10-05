@@ -1,8 +1,8 @@
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Dispatch } from '../../actions/actions.types';
-import * as TransactionActions from '../../actions/transactions';
 import { GlobalState } from '../../modules';
+import * as exchangeActions from '../../modules/exchanges';
 import { getCoinlist, getSettings, getTicker } from '../../selectors/selectGlobalState';
 import { PortfolioContainer, PortfolioProps } from './container/Portfolio';
 import { getPortfolio, getPortfolioChange, getPortfolioSum } from './selectors/selectPortfolio';
@@ -19,7 +19,7 @@ function mapStateToProps(state: GlobalState): PortfolioProps {
 }
 
 function mapDispatchToProps(dispatch: Dispatch) {
-  return bindActionCreators(TransactionActions, dispatch);
+  return bindActionCreators(exchangeActions, dispatch);
 }
 
 export const PortfolioPage = connect(mapStateToProps, mapDispatchToProps)(PortfolioContainer);

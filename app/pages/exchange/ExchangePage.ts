@@ -2,8 +2,8 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import { Dispatch } from '../../actions/actions.types';
-import * as exchangeActions from '../../actions/exchanges';
 import { GlobalState } from '../../modules';
+import * as exchangeActions from '../../modules/exchanges';
 import {
   getCoinlist,
   getExchanges,

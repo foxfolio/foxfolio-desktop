@@ -3,8 +3,8 @@ import { routerActions, routerMiddleware } from 'react-router-redux';
 import { applyMiddleware, compose, createStore, Middleware, StoreEnhancer } from 'redux';
 import { createLogger } from 'redux-logger';
 import thunk from 'redux-thunk';
-import * as exchangeActions from '../actions/exchanges';
 import { rootReducer } from '../modules';
+import * as exchangeActions from '../modules/exchanges';
 import { Store } from './configureStore';
 import { persistStore } from './persistStore';
 

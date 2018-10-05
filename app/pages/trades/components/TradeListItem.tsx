@@ -11,8 +11,9 @@ import { CurrencyAvatar } from '../../../components/CurrencyAvatar';
 import { getPriceForTime, getTickerEntry } from '../../../helpers/ticker';
 import { Coinlist } from '../../../modules/coinlist.types';
 import { Trade } from '../../../modules/exchanges.types';
+import { Prices } from '../../../modules/prices.types';
 import { SettingsType } from '../../../modules/settings.types';
-import { PricesForTime, Ticker } from '../../../modules/ticker.types';
+import { Ticker } from '../../../modules/ticker.types';
 
 const styles: StyleRulesCallback = theme => ({
   avatar: {
@@ -38,7 +39,7 @@ export interface Props {
   trade: Trade;
   settings: SettingsType;
   ticker: Ticker;
-  pricesForTime: PricesForTime;
+  pricesForTime: Prices;
 }
 
 export const TradeListItem = withStyles(styles)(

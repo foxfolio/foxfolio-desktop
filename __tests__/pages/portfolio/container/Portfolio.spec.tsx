@@ -1,7 +1,7 @@
 import { createShallow } from '@material-ui/core/test-utils';
 import * as React from 'react';
 import { Coinlist } from '../../../../app/modules/coinlist.types';
-import { initialSettings } from '../../../../app/modules/settings';
+import { initialSettings } from '../../../../app/modules/settings.types';
 import { Ticker } from '../../../../app/modules/ticker.types';
 import { EmptyPortfolio } from '../../../../app/pages/portfolio/components/EmptyPortfolio';
 import { PortfolioContainer } from '../../../../app/pages/portfolio/container/Portfolio';

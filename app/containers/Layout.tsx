@@ -1,4 +1,4 @@
-import { AppBar, Avatar, List, Toolbar, Typography, WithStyles } from '@material-ui/core';
+import { AppBar, List, Typography, WithStyles } from '@material-ui/core';
 import Drawer from '@material-ui/core/Drawer';
 import { StyleRulesCallback, withStyles } from '@material-ui/core/styles';
 import {
@@ -13,10 +13,11 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router';
 import { Dispatch } from '../actions/actions.types';
-import { continuouslyUpdateTicker, requestCoinList } from '../actions/ticker';
-import { continuouslyFetchTransactions } from '../actions/transactions';
 import { DrawerItem } from '../components/DrawerItem';
 import { getRaven } from '../helpers/sentry';
+import { requestCoinList } from '../modules/coinlist';
+import { continuouslyFetchBalances } from '../modules/exchanges';
+import { continuouslyUpdateTicker } from '../modules/ticker';
 const icon = require('../resources/icon.png'); // tslint:disable-line:no-var-requires
 
 const drawerWidth = 250;
@@ -73,7 +74,7 @@ const styledLayout = withStyles(styles)(
     };
 
     public componentDidMount() {
-      this.props.dispatch(continuouslyFetchTransactions());
+      this.props.dispatch(continuouslyFetchBalances());
       this.props.dispatch(continuouslyUpdateTicker());
       this.props.dispatch(requestCoinList());
     }
@@ -95,7 +96,7 @@ const styledLayout = withStyles(styles)(
         <div className={classes.appFrame}>
           <Drawer variant="permanent" classes={{ paper: classes.drawerPaper }}>
             <AppBar position="static" color="default" elevation={1}>
-              <img src={icon} className={classes.icon} />
+              <img src={icon} className={classes.icon} alt="icon" />
             </AppBar>
             <List className={classes.topList}>
               <DrawerItem label="Portfolio" route="/" icon={<Dashboard />} />

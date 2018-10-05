@@ -1,8 +1,6 @@
-export interface TickerAndHistory {
-  ticker: Ticker;
-  history: History;
-  pricesForTime: PricesForTime;
-}
+export type TickerActions =
+  | { type: 'LAST_UPDATED'; key: string; time: Date }
+  | { type: 'TICKER_UPDATE'; ticker: Ticker };
 
 export interface Ticker {
   [fsym: string]: TickerForSymbol | undefined;
@@ -17,27 +15,3 @@ export interface TickerEntry {
   PRICE: number;
 }
 
-export interface History {
-  [fsym: string]:
-    | {
-        [tsym: string]: HistoryEntry | undefined;
-      }
-    | undefined;
-}
-export interface HistoryEntry {
-  lastUpdate: Date;
-  data: HistoryData;
-}
-export type HistoryData = Array<{ close: number; time: number }>;
-
-export interface PricesForTime {
-  [fsym: string]:
-    | {
-        [tsym: string]:
-          | {
-              [timestamp: number]: number | undefined;
-            }
-          | undefined;
-      }
-    | undefined;
-}
