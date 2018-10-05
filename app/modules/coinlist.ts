@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { Action, Dispatch, ThunkAction } from '../actions/actions.types';
 import { Coinlist } from './coinlist.types';
 
@@ -13,10 +14,11 @@ export default function reducer(state: Coinlist = {}, action: Action): Coinlist 
 
 // Action Creators
 export function requestCoinList(): ThunkAction {
-  return (dispatch: Dispatch) => {
-    fetch('https://min-api.cryptocompare.com/data/all/coinlist')
-      .then(result => result.json())
-      .then(result => dispatch(receiveCoinList(result.Data)))
+  return async (dispatch: Dispatch) => {
+    await axios
+      .get<{ Data: Coinlist }>('https://min-api.cryptocompare.com/data/all/coinlist')
+      .then(response => response.data)
+      .then(data => dispatch(receiveCoinList(data.Data)))
       .catch(error => console.error(error));
   };
 }
