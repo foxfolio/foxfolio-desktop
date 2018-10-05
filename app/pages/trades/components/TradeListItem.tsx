@@ -5,7 +5,7 @@ import Grid from '@material-ui/core/Grid';
 import { StyleRulesCallback } from '@material-ui/core/styles';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Typography from '@material-ui/core/Typography';
-import moment from 'moment';
+import dayjs from 'dayjs';
 import * as React from 'react';
 import { CurrencyAvatar } from '../../../components/CurrencyAvatar';
 import { getPriceForTime, getTickerEntry } from '../../../helpers/ticker';
@@ -64,7 +64,7 @@ export const TradeListItem = withStyles(styles)(
         <div className={classes.content}>
           <Grid container>
             <Grid item xs={2}>
-              <Typography variant="body1">{moment(trade.timestamp).format('MMM DD, YYYY')}</Typography>
+              <Typography variant="body1">{dayjs(trade.timestamp).format('MMM DD, YYYY')}</Typography>
             </Grid>
             <Grid item xs={4} className={classes.right}>
               <Typography variant="body1">

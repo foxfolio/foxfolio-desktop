@@ -5,8 +5,8 @@ import IconButton from '@material-ui/core/IconButton';
 import { StyleRulesCallback } from '@material-ui/core/styles';
 import withStyles from '@material-ui/core/styles/withStyles';
 import { Add, Delete } from '@material-ui/icons';
+import dayjs from 'dayjs';
 import * as _ from 'lodash';
-import moment from 'moment';
 import React, { Component } from 'react';
 import { TickerRequest } from '../../../actions/trades';
 import { Coinlist } from '../../../reducers/coinlist';
@@ -157,7 +157,7 @@ const mergeTradesForDay = (trades: Trade[]) =>
   trades.filter(trade => trade.side === 'buy').reduce((acc, trade): {
     [timestamp: number]: Trade[];
   } => {
-    const key = moment(trade.timestamp)
+    const key = dayjs(trade.timestamp)
       .startOf('day')
       .valueOf();
     return {
@@ -176,7 +176,7 @@ const mergeTrades = (tradeA: Trade, tradeB: Trade | undefined): Trade => {
     id: tradeA.id + (tradeB ? '-' + tradeB.id : ''),
     amount: tradeA.amount + (tradeB ? tradeB.amount : 0),
     cost: tradeA.cost + (tradeB ? tradeB.cost : 0),
-    datetime: moment(tradeA.timestamp)
+    datetime: dayjs(tradeA.timestamp)
       .startOf('day')
       .toDate(),
     // fee: tradeA.fee, // TODO Correct calculation
@@ -185,7 +185,7 @@ const mergeTrades = (tradeA: Trade, tradeB: Trade | undefined): Trade => {
     price: tradeA.price * shareA + (tradeB ? tradeB.price * (1 - shareA) : 0),
     side: tradeA.side,
     symbol: tradeA.symbol,
-    timestamp: moment(tradeA.timestamp)
+    timestamp: dayjs(tradeA.timestamp)
       .startOf('day')
       .valueOf(),
   };

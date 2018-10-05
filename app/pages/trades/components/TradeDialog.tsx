@@ -10,7 +10,7 @@ import {
   WithStyles,
 } from '@material-ui/core';
 import { StyleRules, withStyles } from '@material-ui/core/styles';
-import moment from 'moment';
+import dayjs from 'dayjs';
 import React, { Component, FormEvent } from 'react';
 import { Trade } from '../../../reducers/exchanges.types';
 import { DialogConfig } from '../../exchange/components/ExchangeDialog';
@@ -86,8 +86,8 @@ export const TradeDialog = withStyles(styles)(
     public handleDateChange = () => (event: React.ChangeEvent<HTMLInputElement>) => {
       this.setState({
         ...this.state,
-        datetime: moment(event.target.value).toDate(),
-        timestamp: moment(event.target.value).valueOf(),
+        datetime: dayjs(event.target.value).toDate(),
+        timestamp: dayjs(event.target.value).valueOf(),
       });
     };
 
@@ -140,7 +140,7 @@ export const TradeDialog = withStyles(styles)(
                 <TextField
                   label="Datetime"
                   id="datetime"
-                  value={moment(this.state.datetime).toISOString()}
+                  value={dayjs(this.state.datetime).toISOString()}
                   onChange={this.handleDateChange()}
                   fullWidth
                   margin="normal"

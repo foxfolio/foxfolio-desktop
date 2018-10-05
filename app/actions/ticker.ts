@@ -1,8 +1,8 @@
 import 'whatwg-fetch'; // Has to be imported before ccxt
 
 import * as ccxt from 'ccxt';
+import dayjs from 'dayjs';
 import _ from 'lodash';
-import moment from 'moment';
 import { getHistoryEntry, getTickerEntry } from '../helpers/ticker';
 import { Coinlist } from '../reducers/coinlist';
 import { Exchange, Exchanges } from '../reducers/exchanges.types';
@@ -178,7 +178,7 @@ export function requestHistory(
   forceRequest: boolean = false
 ): ThunkAction {
   return (dispatch: Dispatch, getState: GetState) => {
-    const twoMinutesAgo = moment().subtract(2, 'minutes');
+    const twoMinutesAgo = dayjs().subtract(2, 'minute');
     if (
       forceRequest ||
       !(getHistoryEntry(getHistory(getState()), fsym, tsym).lastUpdate >= twoMinutesAgo.toDate())

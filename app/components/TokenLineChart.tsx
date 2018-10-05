@@ -1,7 +1,7 @@
 import { LinearProgress, withTheme } from '@material-ui/core';
 import { Theme } from '@material-ui/core/styles';
 import { WithTheme } from '@material-ui/core/styles/withTheme';
-import moment from 'moment';
+import dayjs from 'dayjs';
 import React, { Component } from 'react';
 import { connect, MapStateToProps } from 'react-redux';
 import {
@@ -58,7 +58,7 @@ export const ThemedTokenLineChart = withTheme()(
               <XAxis
                 dataKey="time"
                 tick={{ fill: theme.palette.text.secondary, strokeWidth: 0 }}
-                tickFormatter={tick => moment.unix(tick).format('HH:mm')}
+                tickFormatter={tick => dayjs.unix(tick).format('HH:mm')}
               />
               <YAxis
                 interval="preserveStartEnd"
