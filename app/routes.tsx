@@ -3,13 +3,13 @@ import { orange } from '@material-ui/core/colors';
 import React, { Component } from 'react';
 import { Route, Switch } from 'react-router';
 import Layout from './containers/Layout';
+import { GlobalState } from './modules';
 import { AboutPage } from './pages/AboutPage';
 import { ExchangePage } from './pages/exchange/ExchangePage';
 import { PortfolioPage } from './pages/portfolio/PortfolioPage';
 import { SettingsPage } from './pages/settings/SettingsPage';
 import { TradesPage } from './pages/trades/TradesPage';
 import { WalletPage } from './pages/wallet/WalletPage';
-import { GlobalState } from './reducers';
 
 interface Props {
   getState: () => GlobalState;

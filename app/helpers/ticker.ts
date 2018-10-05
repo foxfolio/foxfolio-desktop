@@ -1,4 +1,4 @@
-import { History, HistoryEntry, PricesForTime, Ticker, TickerEntry } from '../reducers/ticker';
+import { History, HistoryEntry, PricesForTime, Ticker, TickerEntry } from '../modules/ticker.types';
 
 export interface TickerEntries {
   [symbol: string]: TickerEntry;

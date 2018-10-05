@@ -1,8 +1,8 @@
 import _ from 'lodash';
 import { createSelector } from 'reselect';
-import { GlobalState } from '../../../reducers';
-import { Trade } from '../../../reducers/exchanges.types';
-import { TradesMap } from '../../../reducers/trades';
+import { GlobalState } from '../../../modules';
+import { Trade } from '../../../modules/exchanges.types';
+import { TradesMap } from '../../../modules/trades.types';
 import { getExchanges } from '../../../selectors/selectGlobalState';
 
 export const getManualTrades = (state: GlobalState): TradesMap => state.trades;

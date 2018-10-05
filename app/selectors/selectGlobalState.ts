@@ -1,4 +1,4 @@
-import { GlobalState } from '../reducers';
+import { GlobalState } from '../modules';
 
 export const getCoinlist = (state: GlobalState) => state.coinlist;
 export const getHistory = (state: GlobalState) => state.ticker.history;

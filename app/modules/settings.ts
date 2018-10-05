@@ -1,18 +1,7 @@
 import { Action } from '../actions/actions.types';
-import { CryptoCurrency, FiatCurrency } from '../utils/currencies';
+import { SettingsType } from './settings.types';
 
 export const MINIMUM_BALANCE = 0.05;
-
-export type CurrencyFocus = 'crypto' | 'fiat' | 'equal';
-
-export interface SettingsType {
-  fiatCurrency: FiatCurrency;
-  cryptoCurrency: CryptoCurrency;
-  includeFiat: boolean;
-  hideZeroBalances: boolean;
-  currencyFocus: CurrencyFocus;
-  theme: 'light' | 'dark';
-}
 
 export const initialSettings: SettingsType = {
   fiatCurrency: 'USD',

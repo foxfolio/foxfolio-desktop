@@ -1,4 +1,4 @@
-import { Wallet } from '../reducers/wallets.types';
+import { Wallet } from '../modules/wallets.types';
 import { Action, Dispatch, ThunkAction } from './actions.types';
 import { requestTickerUpdate } from './ticker';
 

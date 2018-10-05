@@ -2,9 +2,9 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Dispatch } from '../../actions/actions.types';
 import * as WalletActions from '../../actions/wallets';
-import { GlobalState } from '../../reducers';
-import { Coinlist } from '../../reducers/coinlist';
-import { Wallet } from '../../reducers/wallets.types';
+import { GlobalState } from '../../modules';
+import { Coinlist } from '../../modules/coinlist.types';
+import { Wallet } from '../../modules/wallets.types';
 import { WalletGrid } from './components/WalletGrid';
 
 function mapStateToProps(state: GlobalState): { coinlist: Coinlist; wallets: Wallet[] } {

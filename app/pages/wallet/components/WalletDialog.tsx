@@ -1,8 +1,8 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField } from '@material-ui/core';
 import React, { Component, FormEvent } from 'react';
 import { Autocomplete } from '../../../components/Autocomplete';
-import { Coinlist } from '../../../reducers/coinlist';
-import { Wallet } from '../../../reducers/wallets.types';
+import { Coinlist } from '../../../modules/coinlist.types';
+import { Wallet } from '../../../modules/wallets.types';
 
 interface Props {
   wallet: Wallet;

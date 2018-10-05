@@ -1,9 +1,9 @@
-import { Button, Paper } from '@material-ui/core';
+import { Paper } from '@material-ui/core';
 import * as _ from 'lodash';
 import React from 'react';
-import { Coinlist } from '../../../reducers/coinlist';
-import { SettingsType } from '../../../reducers/settings';
-import { Ticker } from '../../../reducers/ticker';
+import { Coinlist } from '../../../modules/coinlist.types';
+import { SettingsType } from '../../../modules/settings.types';
+import { Ticker } from '../../../modules/ticker.types';
 import { EmptyPortfolio } from '../components/EmptyPortfolio';
 import { PortfolioChart } from '../components/PortfolioChart';
 import { PortfolioFocusButtons } from '../components/PortfolioFocusButtons';

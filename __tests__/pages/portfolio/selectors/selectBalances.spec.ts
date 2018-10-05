@@ -1,9 +1,9 @@
+import { GlobalState } from '../../../../app/modules';
 import {
   getExchangeBalances,
   getFilteredExchangeBalances,
   getWalletBalances,
 } from '../../../../app/pages/portfolio/selectors/selectBalances';
-import { GlobalState } from '../../../../app/reducers';
 import { emptyState } from '../../../emptyState';
 
 let state: GlobalState;

@@ -1,12 +1,12 @@
 import { createShallow } from '@material-ui/core/test-utils';
 import * as React from 'react';
+import { initialSettings } from '../../../../app/modules/settings';
+import { Ticker } from '../../../../app/modules/ticker.types';
 import {
   filterPortfolioForAsset,
   PortfolioPositions,
 } from '../../../../app/pages/portfolio/components/PortfolioPositions';
 import { Portfolio } from '../../../../app/pages/portfolio/types/portfolio.types';
-import { initialSettings } from '../../../../app/reducers/settings';
-import { Ticker } from '../../../../app/reducers/ticker';
 import { FiatCurrency } from '../../../../app/utils/currencies';
 
 let shallow;

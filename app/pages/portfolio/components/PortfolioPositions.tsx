@@ -1,9 +1,9 @@
 import * as _ from 'lodash';
 import React from 'react';
 import { getTickerEntry } from '../../../helpers/ticker';
-import { Coinlist } from '../../../reducers/coinlist';
-import { SettingsType } from '../../../reducers/settings';
-import { Ticker } from '../../../reducers/ticker';
+import { Coinlist } from '../../../modules/coinlist.types';
+import { SettingsType } from '../../../modules/settings.types';
+import { Ticker } from '../../../modules/ticker.types';
 import { ExchangeBalances, Portfolio } from '../types/portfolio.types';
 import { PortfolioPosition } from './PortfolioPosition';
 import { PortfolioPositionHeader } from './PortfolioPositionsHeader';

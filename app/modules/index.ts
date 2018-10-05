@@ -2,18 +2,22 @@ import { routerReducer as router } from 'react-router-redux';
 import { reducer as form } from 'redux-form';
 import { persistCombineReducers } from 'redux-persist';
 import { configureReduxPersist } from '../store/configureReduxPersist';
-import { coinlist, Coinlist } from './coinlist';
+import { coinlist} from './coinlist';
+import { Coinlist } from './coinlist.types';
 import { exchanges } from './exchanges';
 import { Exchanges } from './exchanges.types';
-import settings, { SettingsType } from './settings';
-import { ticker, TickerAndHistory } from './ticker';
+import settings from './settings';
+import { SettingsType } from './settings.types';
+import ticker from './ticker';
+import { TickerAndHistory } from './ticker.types';
 import timers, { Timers } from './timer';
-import { trades, TradesMap } from './trades';
+import { trades} from './trades';
+import { TradesMap } from './trades.types';
 import { wallets } from './wallets';
 import { Wallet } from './wallets.types';
 
 const config = configureReduxPersist();
-export default persistCombineReducers(config, {
+export const rootReducer = persistCombineReducers(config, {
   coinlist,
   exchanges,
   form,

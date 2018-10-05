@@ -1,7 +1,5 @@
 import {
-  Button,
   Card,
-  CardActions,
   CardContent,
   CardHeader,
   Typography,
@@ -12,8 +10,8 @@ import React, { Component } from 'react';
 
 import { CardMenu } from '../../../components/CardMenu';
 import { CurrencyAvatar } from '../../../components/CurrencyAvatar';
-import { Coinlist } from '../../../reducers/coinlist';
-import { Wallet } from '../../../reducers/wallets.types';
+import { Coinlist } from '../../../modules/coinlist.types';
+import { Wallet } from '../../../modules/wallets.types';
 
 const styles: StyleRulesCallback = theme => ({
   card: {

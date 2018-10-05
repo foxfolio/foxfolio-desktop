@@ -9,8 +9,8 @@ import {
 } from '@material-ui/core';
 import React from 'react';
 import { Field, reduxForm } from 'redux-form';
-import { Checkbox, Select, Switch } from 'redux-form-material-ui';
-import { SettingsType } from '../../../reducers/settings';
+import { Select, Switch } from 'redux-form-material-ui';
+import { SettingsType } from '../../../modules/settings.types';
 import { getCryptoCurrencies, getFiatCurrencies } from '../../../utils/currencies';
 
 interface Props {

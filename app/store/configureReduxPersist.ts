@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import { createMigrate, createTransform, PersistConfig } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
-import { GlobalState } from '../reducers';
+import { GlobalState } from '../modules';
 
 export const configureReduxPersist = (): PersistConfig => ({
   version: 0,

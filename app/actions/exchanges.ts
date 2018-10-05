@@ -1,4 +1,4 @@
-import { ExchangeCredentials, ExchangeTypeKeys, Trade } from '../reducers/exchanges.types';
+import { ExchangeCredentials, ExchangeTypeKeys, Trade } from '../modules/exchanges.types';
 import { Action, ThunkAction } from './actions.types';
 import { fetchAllBalances } from './transactions';
 

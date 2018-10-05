@@ -1,7 +1,7 @@
 import { LinearProgress } from '@material-ui/core';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { GlobalState } from '../reducers';
+import { GlobalState } from '../modules';
 
 interface Props {
   lastUpdate: Date | undefined;

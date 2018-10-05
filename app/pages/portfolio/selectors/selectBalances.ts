@@ -1,10 +1,11 @@
 import * as _ from 'lodash';
 import { createSelector } from 'reselect';
 import { getTickerEntry } from '../../../helpers/ticker';
-import { GlobalState } from '../../../reducers';
-import { Exchanges } from '../../../reducers/exchanges.types';
-import { MINIMUM_BALANCE, SettingsType } from '../../../reducers/settings';
-import { Ticker } from '../../../reducers/ticker';
+import { GlobalState } from '../../../modules';
+import { Exchanges } from '../../../modules/exchanges.types';
+import { MINIMUM_BALANCE} from '../../../modules/settings';
+import { SettingsType } from '../../../modules/settings.types';
+import { Ticker } from '../../../modules/ticker.types';
 import {
   getExchanges,
   getSettings,

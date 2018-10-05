@@ -12,7 +12,7 @@ import ccxt from 'ccxt';
 import React, { Component, FormEvent } from 'react';
 
 import { Autocomplete } from '../../../components/Autocomplete';
-import { Exchange } from '../../../reducers/exchanges.types';
+import { Exchange } from '../../../modules/exchanges.types';
 
 export type DialogConfig<T> = AddConfig | EditConfig<T>;
 

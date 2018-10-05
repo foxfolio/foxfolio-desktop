@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import { createSelector } from 'reselect';
 import { getTickerEntry } from '../../../helpers/ticker';
-import { Ticker } from '../../../reducers/ticker';
+import { Ticker } from '../../../modules/ticker.types';
 import { getSettings, getTicker } from '../../../selectors/selectGlobalState';
 import { Balances, Portfolio, PortfolioSum } from '../types/portfolio.types';
 import { getFilteredExchangeBalances, getWalletBalances } from './selectBalances';

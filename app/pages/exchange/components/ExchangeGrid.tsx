@@ -1,12 +1,12 @@
-import { Button, Grid, Typography, WithStyles } from '@material-ui/core';
+import { Button, Typography, WithStyles } from '@material-ui/core';
 import { StyleRulesCallback, withStyles } from '@material-ui/core/styles';
 import { Add } from '@material-ui/icons';
 import _ from 'lodash';
 import React, { Component } from 'react';
-import { Coinlist } from '../../../reducers/coinlist';
-import { Exchange, ExchangeCredentials, Exchanges, Trade } from '../../../reducers/exchanges.types';
-import { SettingsType } from '../../../reducers/settings';
-import { Ticker } from '../../../reducers/ticker';
+import { Coinlist } from '../../../modules/coinlist.types';
+import { Exchange, ExchangeCredentials, Exchanges, Trade } from '../../../modules/exchanges.types';
+import { SettingsType } from '../../../modules/settings.types';
+import { Ticker } from '../../../modules/ticker.types';
 import { ExchangeCard } from './ExchangeCard/ExchangeCard';
 import { DialogConfig, ExchangeDialog } from './ExchangeDialog';
 

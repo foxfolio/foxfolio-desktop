@@ -1,4 +1,4 @@
-import { CurrencyFocus, SettingsType } from '../reducers/settings';
+import { CurrencyFocus, SettingsType } from '../modules/settings.types';
 import { getSettings } from '../selectors/selectGlobalState';
 import { Action, Dispatch, GetState, ThunkAction } from './actions.types';
 import { requestTickerUpdate } from './ticker';

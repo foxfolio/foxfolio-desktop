@@ -2,10 +2,7 @@ import * as _ from 'lodash';
 import { Action } from '../actions/actions.types';
 import { generateId } from '../helpers/reducers';
 import { Trade } from './exchanges.types';
-
-export interface TradesMap {
-  [id: string]: Trade;
-}
+import { TradesMap } from './trades.types';
 
 export const trades = (state: TradesMap = {}, action: Action) => {
   switch (action.type) {

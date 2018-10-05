@@ -1,8 +1,8 @@
 import { createShallow } from '@material-ui/core/test-utils';
 import * as React from 'react';
+import { initialSettings } from '../../../../app/modules/settings';
+import { Ticker } from '../../../../app/modules/ticker.types';
 import { PortfolioChart } from '../../../../app/pages/portfolio/components/PortfolioChart';
-import { initialSettings } from '../../../../app/reducers/settings';
-import { Ticker } from '../../../../app/reducers/ticker';
 
 let shallow;
 

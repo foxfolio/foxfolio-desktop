@@ -9,10 +9,10 @@ import dayjs from 'dayjs';
 import * as React from 'react';
 import { CurrencyAvatar } from '../../../components/CurrencyAvatar';
 import { getPriceForTime, getTickerEntry } from '../../../helpers/ticker';
-import { Coinlist } from '../../../reducers/coinlist';
-import { Trade } from '../../../reducers/exchanges.types';
-import { SettingsType } from '../../../reducers/settings';
-import { PricesForTime, Ticker } from '../../../reducers/ticker';
+import { Coinlist } from '../../../modules/coinlist.types';
+import { Trade } from '../../../modules/exchanges.types';
+import { SettingsType } from '../../../modules/settings.types';
+import { PricesForTime, Ticker } from '../../../modules/ticker.types';
 
 const styles: StyleRulesCallback = theme => ({
   avatar: {

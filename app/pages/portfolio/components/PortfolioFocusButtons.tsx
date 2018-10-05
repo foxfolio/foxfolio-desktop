@@ -4,8 +4,8 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Dispatch } from '../../../actions/actions.types';
 import * as settingsActions from '../../../actions/settings';
-import { GlobalState } from '../../../reducers';
-import { CurrencyFocus, SettingsType } from '../../../reducers/settings';
+import { GlobalState } from '../../../modules';
+import { CurrencyFocus, SettingsType } from '../../../modules/settings.types';
 import { getSettings } from '../../../selectors/selectGlobalState';
 
 interface StateProps {

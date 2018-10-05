@@ -2,8 +2,8 @@ import { Button, createStyles, Grid, Typography, WithStyles } from '@material-ui
 import { StyleRulesCallback, withStyles } from '@material-ui/core/styles';
 import { Add } from '@material-ui/icons';
 import React, { Component } from 'react';
-import { Coinlist } from '../../../reducers/coinlist';
-import { Wallet } from '../../../reducers/wallets.types';
+import { Coinlist } from '../../../modules/coinlist.types';
+import { Wallet } from '../../../modules/wallets.types';
 import { WalletCard } from './WalletCard';
 import WalletDialog from './WalletDialog';
 

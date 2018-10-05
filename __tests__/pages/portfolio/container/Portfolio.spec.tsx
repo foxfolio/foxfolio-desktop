@@ -1,5 +1,8 @@
 import { createShallow } from '@material-ui/core/test-utils';
 import * as React from 'react';
+import { Coinlist } from '../../../../app/modules/coinlist.types';
+import { initialSettings } from '../../../../app/modules/settings';
+import { Ticker } from '../../../../app/modules/ticker.types';
 import { EmptyPortfolio } from '../../../../app/pages/portfolio/components/EmptyPortfolio';
 import { PortfolioContainer } from '../../../../app/pages/portfolio/container/Portfolio';
 import {
@@ -7,9 +10,6 @@ import {
   PortfolioChange,
   PortfolioSum,
 } from '../../../../app/pages/portfolio/types/portfolio.types';
-import { Coinlist } from '../../../../app/reducers/coinlist';
-import { initialSettings } from '../../../../app/reducers/settings';
-import { Ticker } from '../../../../app/reducers/ticker';
 
 let shallow;
 

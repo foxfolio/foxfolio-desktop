@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Dispatch } from '../../actions/actions.types';
 import * as tradeActions from '../../actions/trades';
-import { GlobalState } from '../../reducers';
+import { GlobalState } from '../../modules';
 import { getCoinlist, getSettings, getTicker } from '../../selectors/selectGlobalState';
 import { DispatchProps, StateProps, TradesList } from './components/TradesList';
 import { getAllTrades } from './selectors/selectTrades';

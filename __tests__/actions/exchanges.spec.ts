@@ -7,8 +7,8 @@ import {
   updateExchangeCredentials,
   updateExchangeTrades,
 } from '../../app/actions/exchanges';
-import * as exchanges from '../../app/reducers/exchanges';
-import { Trade } from '../../app/reducers/exchanges.types';
+import * as exchanges from '../../app/modules/exchanges';
+import { Trade } from '../../app/modules/exchanges.types';
 import { getExchanges } from '../../app/selectors/selectGlobalState';
 import { Store } from '../../app/store/configureStore';
 

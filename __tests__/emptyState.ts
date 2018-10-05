@@ -1,5 +1,5 @@
-import { GlobalState } from '../app/reducers';
-import { initialSettings } from '../app/reducers/settings';
+import { GlobalState } from '../app/modules';
+import { initialSettings } from '../app/modules/settings';
 
 export const emptyState: GlobalState = {
   coinlist: {},

@@ -4,7 +4,7 @@ import { applyMiddleware, compose, createStore, Middleware, StoreEnhancer } from
 import { createLogger } from 'redux-logger';
 import thunk from 'redux-thunk';
 import * as exchangeActions from '../actions/exchanges';
-import rootReducer from '../reducers';
+import { rootReducer } from '../modules';
 import { Store } from './configureStore';
 import { persistStore } from './persistStore';
 
@@ -53,7 +53,7 @@ const configureStore = (initialState?: any) => {
   const persistor = persistStore(store);
 
   if ((module as any).hot) {
-    (module as any).hot.accept('../reducers', () => store.replaceReducer(require('../reducers')));
+    (module as any).hot.accept('../reducers', () => store.replaceReducer(require('../modules')));
   }
 
   return { persistor, store };

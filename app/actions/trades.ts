@@ -1,5 +1,5 @@
 import { getPriceForTime } from '../helpers/ticker';
-import { Trade } from '../reducers/exchanges.types';
+import { Trade } from '../modules/exchanges.types';
 import { Action, Dispatch, GetState, ThunkAction } from './actions.types';
 
 export interface TickerRequest {

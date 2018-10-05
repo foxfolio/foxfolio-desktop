@@ -5,7 +5,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import { AccountBalance, HelpOutline } from '@material-ui/icons';
 import React from 'react';
 
-import { Coinlist } from '../reducers/coinlist';
+import { Coinlist } from '../modules/coinlist.types';
 import { getFiatCurrencies } from '../utils/currencies';
 
 const styles: StyleRules = {

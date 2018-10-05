@@ -4,8 +4,8 @@ import chartjs, { ChartData, ChartTooltipItem } from 'chart.js';
 import React from 'react';
 import { defaults, HorizontalBar } from 'react-chartjs-2';
 import { getTickerEntry } from '../../../helpers/ticker';
-import { SettingsType } from '../../../reducers/settings';
-import { Ticker } from '../../../reducers/ticker';
+import { SettingsType } from '../../../modules/settings.types';
+import { Ticker } from '../../../modules/ticker.types';
 import getColor from '../../../utils/colors';
 
 // Disable animating charts by default.

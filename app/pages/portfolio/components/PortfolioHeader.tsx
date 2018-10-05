@@ -1,6 +1,6 @@
 import { Grid, Typography } from '@material-ui/core';
 import React from 'react';
-import { SettingsType } from '../../../reducers/settings';
+import { SettingsType } from '../../../modules/settings.types';
 import { PortfolioChange, PortfolioSum } from '../types/portfolio.types';
 import { PriceChangeText } from './PriceChangeText';
 

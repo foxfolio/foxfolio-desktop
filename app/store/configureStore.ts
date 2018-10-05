@@ -3,7 +3,7 @@ import { Store as ReduxStore } from 'redux';
 import { Persistor } from 'redux-persist';
 import { ThunkDispatch } from 'redux-thunk';
 import { Action } from '../actions/actions.types';
-import { GlobalState } from '../reducers';
+import { GlobalState } from '../modules';
 
 export interface Store<State = GlobalState> extends ReduxStore<State, Action> {
   dispatch: ThunkDispatch<State, void, Action>;

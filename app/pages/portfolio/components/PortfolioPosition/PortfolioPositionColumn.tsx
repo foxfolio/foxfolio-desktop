@@ -2,7 +2,7 @@ import { Typography } from '@material-ui/core';
 import format from 'format-number';
 import React, { CSSProperties } from 'react';
 import { TickerEntries } from '../../../../helpers/ticker';
-import { CurrencyFocus, SettingsType } from '../../../../reducers/settings';
+import { CurrencyFocus, SettingsType } from '../../../../modules/settings.types';
 import { PriceChangeText } from '../PriceChangeText';
 
 export const PositionPrice = (

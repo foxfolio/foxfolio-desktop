@@ -17,8 +17,8 @@ import { bindActionCreators } from 'redux';
 import { Dispatch } from '../actions/actions.types';
 import * as TickerActions from '../actions/ticker';
 import { getHistoryEntry } from '../helpers/ticker';
-import { GlobalState } from '../reducers';
-import { History } from '../reducers/ticker';
+import { GlobalState } from '../modules';
+import { History } from '../modules/ticker.types';
 
 interface StateProps {
   history: History;

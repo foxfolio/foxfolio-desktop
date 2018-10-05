@@ -12,7 +12,7 @@ import {
 import { StyleRules, withStyles } from '@material-ui/core/styles';
 import dayjs from 'dayjs';
 import React, { Component, FormEvent } from 'react';
-import { Trade } from '../../../reducers/exchanges.types';
+import { Trade } from '../../../modules/exchanges.types';
 import { DialogConfig } from '../../exchange/components/ExchangeDialog';
 
 interface Props {

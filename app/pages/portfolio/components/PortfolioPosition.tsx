@@ -5,9 +5,9 @@ import { CurrencyAvatar } from '../../../components/CurrencyAvatar';
 import { ExpandableCard } from '../../../components/ExpandableCard';
 import { TokenLineChart } from '../../../components/TokenLineChart';
 import { getTickerEntries } from '../../../helpers/ticker';
-import { Coinlist } from '../../../reducers/coinlist';
-import { SettingsType } from '../../../reducers/settings';
-import { Ticker } from '../../../reducers/ticker';
+import { Coinlist } from '../../../modules/coinlist.types';
+import { SettingsType } from '../../../modules/settings.types';
+import { Ticker } from '../../../modules/ticker.types';
 import {
   PositionPrice,
   PositionPriceChange,

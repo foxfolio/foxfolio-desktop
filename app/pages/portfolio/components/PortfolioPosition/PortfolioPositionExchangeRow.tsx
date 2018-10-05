@@ -3,8 +3,8 @@ import { StyleRulesCallback } from '@material-ui/core/styles';
 import { TrendingUp } from '@material-ui/icons';
 import React from 'react';
 import { connect } from 'react-redux';
-import { GlobalState } from '../../../../reducers';
-import { Exchanges } from '../../../../reducers/exchanges.types';
+import { GlobalState } from '../../../../modules';
+import { Exchanges } from '../../../../modules/exchanges.types';
 import { getExchanges } from '../../../../selectors/selectGlobalState';
 
 const styles: StyleRulesCallback = theme => ({

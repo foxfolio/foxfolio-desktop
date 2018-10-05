@@ -2,7 +2,7 @@ import 'whatwg-fetch'; // Has to be imported before ccxt
 
 import ccxt from 'ccxt';
 import * as _ from 'lodash';
-import { GlobalState } from '../reducers';
+import { GlobalState } from '../modules';
 import {
   Balances,
   Exchange,
@@ -11,7 +11,7 @@ import {
   FailedExchangeRequestAction,
   IncrementExchangeRequestCounterAction,
   Trade,
-} from '../reducers/exchanges.types';
+} from '../modules/exchanges.types';
 import { unifySymbols } from '../utils/unifySymbols';
 import { Action, Dispatch, GetState, ThunkAction } from './actions.types';
 import { updateExchangeTrades } from './exchanges';

@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Dispatch } from '../../actions/actions.types';
 import * as TransactionActions from '../../actions/transactions';
-import { GlobalState } from '../../reducers';
+import { GlobalState } from '../../modules';
 import { getCoinlist, getSettings, getTicker } from '../../selectors/selectGlobalState';
 import { PortfolioContainer, PortfolioProps } from './container/Portfolio';
 import { getPortfolio, getPortfolioChange, getPortfolioSum } from './selectors/selectPortfolio';

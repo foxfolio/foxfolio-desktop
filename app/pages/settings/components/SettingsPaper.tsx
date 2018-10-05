@@ -1,7 +1,7 @@
 import { Paper, Typography, WithStyles } from '@material-ui/core';
 import { StyleRules, withStyles } from '@material-ui/core/styles';
 import React from 'react';
-import { CurrencyFocus, SettingsType } from '../../../reducers/settings';
+import { CurrencyFocus, SettingsType } from '../../../modules/settings.types';
 import { SettingsForm } from './SettingsForm';
 
 const styles: StyleRules = {

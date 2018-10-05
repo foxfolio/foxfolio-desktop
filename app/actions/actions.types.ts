@@ -1,11 +1,10 @@
-import { Dispatch as ReduxDispatch } from 'redux';
 import { ThunkAction as ReduxThunkAction, ThunkDispatch } from 'redux-thunk';
-import { GlobalState } from '../reducers';
-import { Coinlist } from '../reducers/coinlist';
-import { ExchangeActions } from '../reducers/exchanges.types';
-import { SettingsType } from '../reducers/settings';
-import { HistoryData, Ticker } from '../reducers/ticker';
-import { Wallet } from '../reducers/wallets.types';
+import { GlobalState } from '../modules';
+import { Coinlist } from '../modules/coinlist.types';
+import { ExchangeActions } from '../modules/exchanges.types';
+import { SettingsType } from '../modules/settings.types';
+import { HistoryData, Ticker } from '../modules/ticker.types';
+import { Wallet } from '../modules/wallets.types';
 import { TradeActions } from './trades';
 
 export type Action =

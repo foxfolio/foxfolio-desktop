@@ -4,8 +4,8 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import format from 'format-number';
 import React from 'react';
 import { CurrencyAvatar } from '../../../../components/CurrencyAvatar';
-import { Coinlist } from '../../../../reducers/coinlist';
-import { TickerEntry } from '../../../../reducers/ticker';
+import { Coinlist } from '../../../../modules/coinlist.types';
+import { TickerEntry } from '../../../../modules/ticker.types';
 
 const styles: StyleRulesCallback = theme => ({
   card: {

@@ -18,9 +18,9 @@ import * as _ from 'lodash';
 import { Dispatch } from '../../../actions/actions.types';
 import * as TickerActions from '../../../actions/ticker';
 import { getHistoryEntry } from '../../../helpers/ticker';
-import { GlobalState } from '../../../reducers';
-import { SettingsType } from '../../../reducers/settings';
-import { History} from '../../../reducers/ticker';
+import { GlobalState } from '../../../modules';
+import { SettingsType } from '../../../modules/settings.types';
+import { History} from '../../../modules/ticker.types';
 import { getHistory, getSettings } from '../../../selectors/selectGlobalState';
 import { Balances } from '../types/portfolio.types';
 

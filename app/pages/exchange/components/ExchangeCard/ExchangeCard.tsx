@@ -5,10 +5,11 @@ import { ClassNameMap } from '@material-ui/core/styles/withStyles';
 import React, { Component } from 'react';
 import { CardMenu } from '../../../../components/CardMenu';
 import { getTickerEntry } from '../../../../helpers/ticker';
-import { Coinlist } from '../../../../reducers/coinlist';
-import { Balances, Exchange } from '../../../../reducers/exchanges.types';
-import { MINIMUM_BALANCE, SettingsType } from '../../../../reducers/settings';
-import { Ticker } from '../../../../reducers/ticker';
+import { Coinlist } from '../../../../modules/coinlist.types';
+import { Balances, Exchange } from '../../../../modules/exchanges.types';
+import { MINIMUM_BALANCE } from '../../../../modules/settings';
+import { SettingsType } from '../../../../modules/settings.types';
+import { Ticker } from '../../../../modules/ticker.types';
 import { ExchangeCardBalance } from './ExchangeCardBalance';
 
 const styles: StyleRulesCallback = (theme: Theme) => ({
