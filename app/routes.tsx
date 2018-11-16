@@ -8,7 +8,6 @@ import { AboutPage } from './pages/AboutPage';
 import { ExchangePage } from './pages/exchange/ExchangePage';
 import { PortfolioPage } from './pages/portfolio/PortfolioPage';
 import { SettingsPage } from './pages/settings/SettingsPage';
-import { TradesPage } from './pages/trades/TradesPage';
 import { WalletPage } from './pages/wallet/WalletPage';
 
 interface Props {
@@ -31,7 +30,6 @@ export class Routes extends Component<Props> {
         <Layout>
           <Switch>
             <Route exact path="/" component={PortfolioPage} />
-            <Route path="/trades" component={TradesPage} />
             <Route path="/wallets" component={WalletPage} />
             <Route path="/exchanges" component={ExchangePage} />
             <Route path="/settings" component={SettingsPage} />

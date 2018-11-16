@@ -8,7 +8,6 @@ import { EmptyPortfolio } from '../components/EmptyPortfolio';
 import { PortfolioChart } from '../components/PortfolioChart';
 import { PortfolioFocusButtons } from '../components/PortfolioFocusButtons';
 import { PortfolioHeader } from '../components/PortfolioHeader';
-import { PortfolioLineChart } from '../components/PortfolioLineChart';
 import { PortfolioPositions } from '../components/PortfolioPositions';
 import { Portfolio, PortfolioChange, PortfolioSum } from '../types/portfolio.types';
 
@@ -34,12 +33,6 @@ export const PortfolioContainer = ({
       <div>
         <Paper style={{ marginTop: 0, paddingBottom: 25, paddingTop: 25, textAlign: 'center' }}>
           <PortfolioHeader change={change} settings={settings} sum={sum} />
-        </Paper>
-        <Paper style={{ marginTop: 30, paddingBottom: 20, paddingTop: 10 }}>
-          <PortfolioLineChart
-            portfolio={portfolio.total}
-            sum={sum.crypto}
-          />
         </Paper>
         <Paper style={{ marginTop: 30, paddingBottom: 20, paddingTop: 10 }}>
           <PortfolioChart
