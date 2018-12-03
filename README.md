@@ -10,7 +10,7 @@
 
 > Cryptocurrency portfolio management application which automatically retrieves balances and trades using exchange APIs
 
-![Foxfolio screenshot](resources/screenshots/foxfolio.png?raw=true)
+![Foxfolio screenshot](resources/screenshots/foxfolio-window.png?raw=true)
 
 ## Table of Contents
 

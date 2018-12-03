@@ -84,7 +84,7 @@
   },
   "author": {
     "name": "Andreas Greimel",
-    "email": "info@foxfol.io",
+    "email": "info@foxfolio.app",
     "url": "https://github.com/greimela"
   },
   "license": "MIT",
@@ -131,7 +131,7 @@
       "^.+\\.tsx?$": "ts-jest"
     }
   },
-  "homepage": "http://foxfol.io",
+  "homepage": "http://foxfolio.app",
   "devDependencies": {
     "@sentry/cli": "^1.30.0",
     "@types/chart.js": "^2.7.26",

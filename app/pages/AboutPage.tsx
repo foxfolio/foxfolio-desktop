@@ -26,8 +26,8 @@ export const AboutPage = withStyles(styles)(({ classes }) => {
         </Typography>
         <Typography paragraph>
           Website{' '}
-          <a href="http://foxfol.io" onClick={openInBrowser}>
-            foxfol.io
+          <a href="http://foxfolio.app" onClick={openInBrowser}>
+            foxfolio.app
           </a>
           <br />
           Sources on{' '}
