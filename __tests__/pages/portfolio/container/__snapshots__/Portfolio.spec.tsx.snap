@@ -46,24 +46,6 @@ exports[`Render portfolio page 1`] = `
       }
     }
   >
-    <Connect(WithTheme(class_1))
-      portfolio={
-        Object {
-          "BTC": 6,
-        }
-      }
-      sum={6}
-    />
-  </WithStyles(Paper)>
-  <WithStyles(Paper)
-    style={
-      Object {
-        "marginTop": 30,
-        "paddingBottom": 20,
-        "paddingTop": 10,
-      }
-    }
-  >
     <WithTheme(Component)
       portfolio={
         Object {

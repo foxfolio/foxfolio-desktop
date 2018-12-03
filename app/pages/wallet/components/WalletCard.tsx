@@ -1,10 +1,4 @@
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  Typography,
-  WithStyles,
-} from '@material-ui/core';
+import { Card, CardContent, CardHeader, Typography, WithStyles } from '@material-ui/core';
 import { StyleRulesCallback, withStyles } from '@material-ui/core/styles';
 import React, { Component } from 'react';
 
@@ -63,9 +57,7 @@ export const WalletCard = withStyles(styles)(
           />
           <CardContent className={classes.content}>
             <Typography variant="body1" className={classes.subheader}>
-              {`Address: ${wallet.address}`}
-              <br />
-              {`Note: ${wallet.note ? wallet.note : ''}`}
+              {`${wallet.note ? `Note: ${wallet.note}` : ''}`}
             </Typography>
           </CardContent>
         </Card>

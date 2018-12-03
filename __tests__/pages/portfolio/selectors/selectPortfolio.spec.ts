@@ -15,10 +15,10 @@ beforeEach(() => {
       ...emptyState.exchanges,
       key: { ...emptyState.exchanges.key, balances: { BTC: 2, ETH: 5, LTC: 0.00001, USD: 1 } },
     },
-    wallets: [
-      { currency: 'BTC', quantity: 5, address: 'btc' },
-      { currency: 'ETH', quantity: 4, address: 'eth' },
-    ],
+    wallets: {
+      btc: { currency: 'BTC', quantity: 5, id: 'btc' },
+      eth: { currency: 'ETH', quantity: 4, id: 'eth' },
+    },
     ticker: {
       BTC: {
         USD: { PRICE: 10000, CHANGEPCT24HOUR: 1 },

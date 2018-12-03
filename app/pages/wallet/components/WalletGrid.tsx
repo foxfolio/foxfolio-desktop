@@ -3,7 +3,7 @@ import { StyleRulesCallback, withStyles } from '@material-ui/core/styles';
 import { Add } from '@material-ui/icons';
 import React, { Component } from 'react';
 import { Coinlist } from '../../../modules/coinlist.types';
-import { Wallet } from '../../../modules/wallets.types';
+import { Wallet, Wallets } from '../../../modules/wallets.types';
 import { WalletCard } from './WalletCard';
 import WalletDialog from './WalletDialog';
 
@@ -20,10 +20,10 @@ const styles: StyleRulesCallback = theme =>
 
 interface Props extends WithStyles<typeof styles> {
   coinlist: Coinlist;
-  wallets: Wallet[];
+  wallets: Wallets;
   addWallet: (source: Wallet) => any;
-  editWallet: (oldWallet: Wallet, newWallet: Wallet) => any;
-  deleteWallet: (source: Wallet) => any;
+  editWallet: (id: string, updatedWallet: Wallet) => any;
+  deleteWallet: (id: string) => any;
 }
 
 interface State {
@@ -37,14 +37,14 @@ export const WalletGrid = withStyles(styles)(
     public state = {
       open: false,
       isNew: true,
-      currentWallet: { currency: '', address: '', quantity: 0 },
+      currentWallet: { id: '', currency: '', quantity: 0 },
     };
 
     public addDialog = () => {
       this.setState({
         open: true,
         isNew: true,
-        currentWallet: { currency: '', address: '', quantity: 0 },
+        currentWallet: { id: '', currency: '', quantity: 0 },
       });
     };
 
@@ -60,7 +60,7 @@ export const WalletGrid = withStyles(styles)(
       if (this.state.isNew) {
         this.props.addWallet(wallet);
       } else {
-        this.props.editWallet(this.state.currentWallet, wallet);
+        this.props.editWallet(this.state.currentWallet.id, wallet);
       }
       this.closeDialog();
     };
@@ -72,16 +72,18 @@ export const WalletGrid = withStyles(styles)(
         <div className="container">
           <Typography variant="headline">Wallets</Typography>
           <Grid container spacing={16}>
-            {wallets.sort((a, b) => a.address.localeCompare(b.address)).map(wallet => (
-              <Grid item key={wallet.currency + wallet.address} sm={12} md={8} lg={6}>
-                <WalletCard
-                  wallet={wallet}
-                  onEdit={() => this.editDialog(wallet)}
-                  onDelete={() => deleteWallet(wallet)}
-                  coinlist={coinlist}
-                />
-              </Grid>
-            ))}
+            {Object.values(wallets)
+              .sort((a, b) => a.currency.localeCompare(b.currency))
+              .map(wallet => (
+                <Grid item key={wallet.id} sm={12} md={8} lg={6}>
+                  <WalletCard
+                    wallet={wallet}
+                    onEdit={() => this.editDialog(wallet)}
+                    onDelete={() => deleteWallet(wallet.id)}
+                    coinlist={coinlist}
+                  />
+                </Grid>
+              ))}
           </Grid>
           <Button
             variant="fab"

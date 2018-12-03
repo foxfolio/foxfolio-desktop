@@ -8,7 +8,7 @@ import { getExchanges, getTimers } from '../selectors/selectGlobalState';
 import { Exchange, Exchanges } from './exchanges.types';
 import { Ticker, TickerEntry } from './ticker.types';
 import { startTimer } from './timer';
-import { Wallet } from './wallets.types';
+import { Wallets } from './wallets.types';
 
 // Reducer
 export default function reducer(state: Ticker = {}, action: Action): Ticker {
@@ -181,12 +181,12 @@ interface Symbols {
 
 function getSymbolsFromTransactions(
   exchanges: Exchanges,
-  wallets: Wallet[],
+  wallets: Wallets,
   fiatCurrency: string,
   cryptoCurrency: string,
   extraSymbols: string[]
 ): Symbols {
-  const walletSymbols = wallets.map(wallet => wallet.currency) || [];
+  const walletSymbols = Object.values(wallets).map(wallet => wallet.currency) || [];
   const exchangeSymbols = _.chain(exchanges)
     .values()
     .map(exchange => exchange.balances)

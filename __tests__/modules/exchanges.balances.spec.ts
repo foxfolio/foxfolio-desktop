@@ -20,7 +20,7 @@ let store: Store;
 
 beforeEach(() => {
   const initialState: Partial<GlobalState> = {
-    wallets: [],
+    wallets: {},
     exchanges: {
       id: {
         id: 'id',

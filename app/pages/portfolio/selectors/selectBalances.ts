@@ -29,7 +29,7 @@ export const getFilteredExchangeBalances = createSelector(
 export const getWalletBalances = createSelector(
   [getWallets, getSettings],
   (wallets, settings): Balances =>
-    wallets
+    Object.values(wallets)
       .filter(wallet => !(wallet.currency === settings.fiatCurrency && settings.includeFiat))
       .reduce(
         (acc, wallet) => ({

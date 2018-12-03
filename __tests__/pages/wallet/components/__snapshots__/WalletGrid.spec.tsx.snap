@@ -15,7 +15,7 @@ exports[`Render wallet grid 1`] = `
   >
     <WithStyles(Grid)
       item={true}
-      key="BTC"
+      key="btc"
       lg={6}
       md={8}
       sm={12}
@@ -26,8 +26,8 @@ exports[`Render wallet grid 1`] = `
         onEdit={[Function]}
         wallet={
           Object {
-            "address": "",
             "currency": "BTC",
+            "id": "btc",
             "quantity": 1,
           }
         }
@@ -50,8 +50,8 @@ exports[`Render wallet grid 1`] = `
     save={[Function]}
     wallet={
       Object {
-        "address": "",
         "currency": "",
+        "id": "",
         "quantity": 0,
       }
     }

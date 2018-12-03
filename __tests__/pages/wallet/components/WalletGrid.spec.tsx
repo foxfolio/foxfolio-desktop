@@ -1,6 +1,6 @@
 import { createShallow } from '@material-ui/core/test-utils';
 import * as React from 'react';
-import { Wallet } from '../../../../app/modules/wallets.types';
+import { Wallet, Wallets } from '../../../../app/modules/wallets.types';
 import { WalletGrid } from '../../../../app/pages/wallet/components/WalletGrid';
 
 let shallow;
@@ -9,10 +9,10 @@ beforeAll(() => {
   shallow = createShallow();
 });
 
-let wallets: Wallet[];
+let wallets: Wallets;
 
 beforeEach(() => {
-  wallets = [{ address: '', currency: 'BTC', quantity: 1 }];
+  wallets = { btc: { id: 'btc', currency: 'BTC', quantity: 1 } };
 });
 
 test('Render wallet grid', () => {

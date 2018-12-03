@@ -1,4 +1,11 @@
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField } from '@material-ui/core';
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  TextField,
+} from '@material-ui/core';
 import React, { Component, FormEvent } from 'react';
 import { Autocomplete } from '../../../components/Autocomplete';
 import { Coinlist } from '../../../modules/coinlist.types';
@@ -15,14 +22,12 @@ interface Props {
 interface StringWallet {
   currency: string;
   quantity: string;
-  address: string;
   note?: string;
 }
 
 export default class WalletDialog extends Component<Props, StringWallet> {
   public state: StringWallet = {
     currency: '',
-    address: '',
     quantity: '',
   };
 
@@ -30,7 +35,6 @@ export default class WalletDialog extends Component<Props, StringWallet> {
     if (this.props.open !== nextProps.open) {
       this.setState({
         currency: nextProps.wallet.currency,
-        address: nextProps.wallet.address,
         quantity: nextProps.wallet.quantity.toString(),
         note: nextProps.wallet.note,
       });
@@ -40,8 +44,8 @@ export default class WalletDialog extends Component<Props, StringWallet> {
   public save = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     this.props.save({
+      id: '',
       currency: this.state.currency,
-      address: this.state.address,
       quantity: parseFloat(this.state.quantity),
       note: this.state.note ? this.state.note : '',
     });
@@ -77,14 +81,6 @@ export default class WalletDialog extends Component<Props, StringWallet> {
               items={Object.values(coinlist)
                 .sort((a, b) => parseInt(a.SortOrder, 10) - parseInt(b.SortOrder, 10))
                 .map(coin => coin.FullName)}
-            />
-            <TextField
-              label="Address"
-              id="address"
-              value={this.state.address}
-              onChange={this.handleChange('address')}
-              fullWidth
-              margin="normal"
             />
             <TextField
               label="Quantity"

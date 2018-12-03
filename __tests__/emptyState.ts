@@ -17,7 +17,7 @@ export const emptyState: GlobalState = {
   },
   history: {},
   prices: {},
-  wallets: [],
+  wallets: {},
   ticker: {},
   settings: initialSettings,
 };

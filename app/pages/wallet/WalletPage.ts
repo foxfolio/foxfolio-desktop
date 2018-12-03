@@ -4,13 +4,14 @@ import { Dispatch } from '../../actions/actions.types';
 import { GlobalState } from '../../modules';
 import { Coinlist } from '../../modules/coinlist.types';
 import * as WalletActions from '../../modules/wallets';
-import { Wallet } from '../../modules/wallets.types';
+import { Wallets } from '../../modules/wallets.types';
+import { getCoinlist, getWallets } from '../../selectors/selectGlobalState';
 import { WalletGrid } from './components/WalletGrid';
 
-function mapStateToProps(state: GlobalState): { coinlist: Coinlist; wallets: Wallet[] } {
+function mapStateToProps(state: GlobalState): { coinlist: Coinlist; wallets: Wallets } {
   return {
-    coinlist: state.coinlist,
-    wallets: state.wallets,
+    coinlist: getCoinlist(state),
+    wallets: getWallets(state),
   };
 }
 

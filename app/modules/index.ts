@@ -19,7 +19,7 @@ import { Timers } from './timer.types';
 import trades from './trades';
 import { TradesMap } from './trades.types';
 import wallets from './wallets';
-import { Wallet } from './wallets.types';
+import { Wallets } from './wallets.types';
 
 const config = configureReduxPersist();
 export const rootReducer = persistCombineReducers(config, {
@@ -45,5 +45,5 @@ export interface GlobalState {
   ticker: Ticker;
   timers: Timers;
   trades: TradesMap;
-  wallets: Wallet[];
+  wallets: Wallets;
 }
