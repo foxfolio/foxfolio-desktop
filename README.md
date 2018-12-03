@@ -86,4 +86,4 @@ NANO xrb_3bua4emgw1ygmf3p4wfw43nkqdxsxuoxmk6bfx8ajsq91m9jxwdm6go6ebq9
 ```
 ## License
 
-MIT © 2017 Andreas Greimel
+MIT © 2018 Andreas Greimel
