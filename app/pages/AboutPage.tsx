@@ -1,7 +1,10 @@
 import { Paper, Typography, withStyles } from '@material-ui/core';
 import { StyleRules } from '@material-ui/core/styles';
+import { remote } from 'electron';
 import React from 'react';
 import { openInBrowser } from '../helpers/electron';
+const { shell } = remote;
+const poweredByCryptocompare = require('../resources/cryptocompare.png'); // tslint:disable-line:no-var-requires
 
 const version = process.env.VERSION || '';
 
@@ -18,8 +21,8 @@ export const AboutPage = withStyles(styles)(({ classes }) => {
           Version {version}
         </Typography>
         <Typography variant="body2">
-          Portfolio management application for cryptocurrencies&nbsp; which automatically retrieves
-          balances and trades using exchange APIs.
+          Portfolio management application for cryptocurrencies which automatically retrieves
+          balances using exchange APIs.
         </Typography>
         <Typography variant="caption" paragraph>
           Created by Andreas Greimel
@@ -36,13 +39,17 @@ export const AboutPage = withStyles(styles)(({ classes }) => {
           </a>
         </Typography>
         <Typography paragraph>
-          Price data retrieved using the&nbsp;
-          <a href="https://www.cryptocompare.com/api/" onClick={openInBrowser}>
-            CryptoCompare API
-          </a>
-          , licensed under&nbsp;
-          <a href="https://creativecommons.org/licenses/by-nc/3.0/" onClick={openInBrowser}>
-            Creative Commons Attribution-NonCommercial 3.0 Unported (CC BY-NC 3.0)
+          <img
+            src={poweredByCryptocompare}
+            width={200}
+            style={{ cursor: 'pointer' }}
+            onClick={() => shell.openExternal('https://www.cryptocompare.com/api/')}
+            alt="powered by CryptoCompare"
+          />
+          <br />Cryptocompare data is licensed under&nbsp;
+          <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" onClick={openInBrowser}>
+            Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA
+            4.0)
           </a>
         </Typography>
       </Paper>
