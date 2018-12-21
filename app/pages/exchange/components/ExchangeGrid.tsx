@@ -85,6 +85,7 @@ export const ExchangeGrid = withStyles(styles)(
           <div className={classes.cardcontainer}>
             {_.values(exchanges).map(exchange => (
               <ExchangeCard
+                key={exchange.id}
                 coinlist={coinlist}
                 exchange={exchange}
                 ticker={ticker}

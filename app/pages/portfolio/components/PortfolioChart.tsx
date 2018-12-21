@@ -1,4 +1,4 @@
-import { withTheme } from '@material-ui/core';
+import { WithTheme, withTheme } from '@material-ui/core';
 import { Theme } from '@material-ui/core/styles';
 import chartjs, { ChartData, ChartTooltipItem } from 'chart.js';
 import React from 'react';
@@ -18,55 +18,57 @@ interface Props {
   sum: number;
 }
 
-export const PortfolioChart = withTheme()<Props>(({ ticker, portfolio, settings, sum, theme }) => {
-  const chartData = calculateChartData(ticker, portfolio, settings, sum, theme);
+export const PortfolioChart = withTheme()(
+  ({ ticker, portfolio, settings, sum, theme }: Props & WithTheme) => {
+    const chartData = calculateChartData(ticker, portfolio, settings, sum, theme);
 
-  return (
-    <HorizontalBar
-      data={chartData}
-      options={{
-        responsive: true,
-        maintainAspectRatio: false,
-        tooltips: {
-          mode: 'x',
-          callbacks: {
-            label: labelCallback,
-          },
-        },
-        legend: {
-          display: true,
-          labels: {
-            fontColor: theme.palette.text.primary,
-          },
-        },
-        scales: {
-          xAxes: [
-            {
-              stacked: true,
-              gridLines: {
-                display: false,
-                color: theme.palette.text.secondary,
-              },
-              ticks: {
-                fontColor: theme.palette.text.primary,
-                min: 0,
-                max: 100,
-              },
+    return (
+      <HorizontalBar
+        data={chartData}
+        options={{
+          responsive: true,
+          maintainAspectRatio: false,
+          tooltips: {
+            mode: 'x',
+            callbacks: {
+              label: labelCallback,
             },
-          ],
-          yAxes: [
-            {
-              stacked: true,
-              gridLines: {
-                color: theme.palette.text.secondary,
-              },
+          },
+          legend: {
+            display: true,
+            labels: {
+              fontColor: theme.palette.text.primary,
             },
-          ],
-        },
-      }}
-    />
-  );
-});
+          },
+          scales: {
+            xAxes: [
+              {
+                stacked: true,
+                gridLines: {
+                  display: false,
+                  color: theme.palette.text.secondary,
+                },
+                ticks: {
+                  fontColor: theme.palette.text.primary,
+                  min: 0,
+                  max: 100,
+                },
+              },
+            ],
+            yAxes: [
+              {
+                stacked: true,
+                gridLines: {
+                  color: theme.palette.text.secondary,
+                },
+              },
+            ],
+          },
+        }}
+      />
+    );
+  }
+);
 
 function calculateChartData(
   ticker: Ticker,

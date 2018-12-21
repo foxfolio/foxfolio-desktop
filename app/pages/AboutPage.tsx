@@ -1,18 +1,18 @@
-import { Paper, Typography, withStyles } from '@material-ui/core';
-import { StyleRules } from '@material-ui/core/styles';
+import { createStyles, Paper, Typography, WithStyles, withStyles } from '@material-ui/core';
 import { remote } from 'electron';
 import React from 'react';
 import { openInBrowser } from '../helpers/electron';
+
 const { shell } = remote;
 const poweredByCryptocompare = require('../resources/cryptocompare.png'); // tslint:disable-line:no-var-requires
 
 const version = process.env.VERSION || '';
 
-const styles: StyleRules = {
+const styles = createStyles({
   paper: { marginTop: 30, padding: 25 },
-};
+});
 
-export const AboutPage = withStyles(styles)(({ classes }) => {
+export const AboutPage = withStyles(styles)(({ classes }: WithStyles<typeof styles>) => {
   return (
     <div className="container">
       <Paper className={classes.paper}>

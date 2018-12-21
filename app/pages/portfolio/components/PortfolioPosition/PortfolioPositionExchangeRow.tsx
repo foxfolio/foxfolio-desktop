@@ -1,5 +1,14 @@
-import { Avatar, Card, CardContent, Grid, Typography, withStyles } from '@material-ui/core';
-import { StyleRulesCallback } from '@material-ui/core/styles';
+import {
+  Avatar,
+  Card,
+  CardContent,
+  createStyles,
+  Grid,
+  Theme,
+  Typography,
+  WithStyles,
+  withStyles,
+} from '@material-ui/core';
 import { TrendingUp } from '@material-ui/icons';
 import React from 'react';
 import { connect } from 'react-redux';
@@ -7,36 +16,37 @@ import { GlobalState } from '../../../../modules';
 import { Exchanges } from '../../../../modules/exchanges.types';
 import { getExchanges } from '../../../../selectors/selectGlobalState';
 
-const styles: StyleRulesCallback = theme => ({
-  root: {
-    display: 'flex',
-    alignItems: 'center',
-  },
-  avatar: {
-    backgroundColor: theme.palette.text.secondary,
-    flex: '0 0 auto',
-    marginRight: theme.spacing.unit * 2,
-    margin: 5,
-    width: 30,
-    height: 30,
-  },
-  content: {
-    flex: '1 1 auto',
-  },
-  right: {
-    textAlign: 'right',
-  },
-});
+const styles = (theme: Theme) =>
+  createStyles({
+    root: {
+      display: 'flex',
+      alignItems: 'center',
+    },
+    avatar: {
+      backgroundColor: theme.palette.text.secondary,
+      flex: '0 0 auto',
+      marginRight: theme.spacing.unit * 2,
+      margin: 5,
+      width: 30,
+      height: 30,
+    },
+    content: {
+      flex: '1 1 auto',
+    },
+    right: {
+      textAlign: 'right',
+    },
+  });
 
-interface Props {
+interface Props extends WithStyles<typeof styles> {
   asset: string;
   balance: number;
   exchangeKey: string;
   exchanges: Exchanges;
 }
 
-const styledComponent = withStyles(styles)<Props>(
-  ({ asset, balance, classes, exchangeKey, exchanges }) => (
+const styledComponent = withStyles(styles)(
+  ({ asset, balance, classes, exchangeKey, exchanges }: Props) => (
     <Card>
       <CardContent className={classes.root}>
         <div>

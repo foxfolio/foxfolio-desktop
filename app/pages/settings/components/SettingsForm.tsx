@@ -46,7 +46,9 @@ export const SettingsForm = reduxForm<SettingsType>({ form: 'settingsForm' })(
                 <InputLabel htmlFor="fiatCurrency">Fiat currency</InputLabel>
                 <Field name="fiatCurrency" component={Select}>
                   {getFiatCurrencies().map(currency => (
-                    <MenuItem value={currency}>{currency}</MenuItem>
+                    <MenuItem key={currency} value={currency}>
+                      {currency}
+                    </MenuItem>
                   ))}
                 </Field>
               </FormControl>
@@ -58,7 +60,9 @@ export const SettingsForm = reduxForm<SettingsType>({ form: 'settingsForm' })(
                 <InputLabel htmlFor="cryptoCurrency">Main crypto currency</InputLabel>
                 <Field name="cryptoCurrency" component={Select}>
                   {getCryptoCurrencies().map(currency => (
-                    <MenuItem value={currency}>{currency}</MenuItem>
+                    <MenuItem key={currency} value={currency}>
+                      {currency}
+                    </MenuItem>
                   ))}
                 </Field>
               </FormControl>

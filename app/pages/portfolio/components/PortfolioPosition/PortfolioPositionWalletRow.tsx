@@ -1,36 +1,46 @@
-import { Avatar, Card, CardContent, Grid, Typography, withStyles } from '@material-ui/core';
-import { StyleRulesCallback } from '@material-ui/core/styles';
+import {
+  Avatar,
+  Card,
+  CardContent,
+  createStyles,
+  Grid,
+  Theme,
+  Typography,
+  WithStyles,
+  withStyles,
+} from '@material-ui/core';
 import { AccountBalanceWallet } from '@material-ui/icons';
 import React from 'react';
 
-const styles: StyleRulesCallback = theme => ({
-  root: {
-    display: 'flex',
-    alignItems: 'center',
-  },
-  avatar: {
-    backgroundColor: theme.palette.text.secondary,
-    flex: '0 0 auto',
-    margin: 5,
-    marginRight: theme.spacing.unit * 2,
-    width: 30,
-    height: 30,
-  },
-  content: {
-    flex: '1 1 auto',
-  },
-  right: {
-    textAlign: 'right',
-  },
-});
+const styles = (theme: Theme) =>
+  createStyles({
+    root: {
+      display: 'flex',
+      alignItems: 'center',
+    },
+    avatar: {
+      backgroundColor: theme.palette.text.secondary,
+      flex: '0 0 auto',
+      margin: 5,
+      marginRight: theme.spacing.unit * 2,
+      width: 30,
+      height: 30,
+    },
+    content: {
+      flex: '1 1 auto',
+    },
+    right: {
+      textAlign: 'right',
+    },
+  });
 
-interface Props {
+interface Props extends WithStyles<typeof styles> {
   asset: string;
   balance: number;
 }
 
-export const PortfolioPositionWalletRow = withStyles(styles)<Props>(
-  ({ asset, balance, classes }) => (
+export const PortfolioPositionWalletRow = withStyles(styles)(
+  ({ asset, balance, classes }: Props) => (
     <Card>
       <CardContent className={classes.root}>
         <div>

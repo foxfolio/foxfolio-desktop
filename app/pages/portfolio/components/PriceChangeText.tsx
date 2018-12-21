@@ -25,12 +25,12 @@ const styles = createStyles({
   },
 });
 
-interface Props {
+interface Props extends WithStyles<typeof styles> {
   change: number;
   muted?: boolean;
 }
 
-export const PriceChangeText = withStyles(styles)<Props>(({ change, classes, muted }) => {
+export const PriceChangeText = withStyles(styles)(({ change, classes, muted }: Props) => {
   let className = classes.positive;
   if (change > 0 && muted) {
     className = classes.positiveMuted;
