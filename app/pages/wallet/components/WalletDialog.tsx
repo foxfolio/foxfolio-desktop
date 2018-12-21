@@ -20,6 +20,7 @@ interface Props {
 }
 
 interface StringWallet {
+  id: string;
   currency: string;
   quantity: string;
   note?: string;
@@ -27,6 +28,7 @@ interface StringWallet {
 
 export default class WalletDialog extends Component<Props, StringWallet> {
   public state: StringWallet = {
+    id: '',
     currency: '',
     quantity: '',
   };
@@ -34,6 +36,7 @@ export default class WalletDialog extends Component<Props, StringWallet> {
   public componentWillReceiveProps(nextProps: Props) {
     if (this.props.open !== nextProps.open) {
       this.setState({
+        id: nextProps.wallet.id,
         currency: nextProps.wallet.currency,
         quantity: nextProps.wallet.quantity.toString(),
         note: nextProps.wallet.note,
@@ -44,7 +47,7 @@ export default class WalletDialog extends Component<Props, StringWallet> {
   public save = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     this.props.save({
-      id: '',
+      id: this.state.id,
       currency: this.state.currency,
       quantity: parseFloat(this.state.quantity),
       note: this.state.note ? this.state.note : '',
