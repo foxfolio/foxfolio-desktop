@@ -47,7 +47,7 @@ interface Props {
 
 export const ExchangeCardBalance = withStyles(styles)(
   ({ classes, coinlist, tickerEntry, asset, balance, fiatCurrency }: Props & WithStyles) => (
-    <Card elevation={2} className={classes.card}>
+    <Card elevation={2} square className={classes.card}>
       <CardContent className={classes.root}>
         <div className={classes.avatarrow}>
           <CurrencyAvatar asset={asset} coinlist={coinlist} classes={{ root: classes.avatar }} />

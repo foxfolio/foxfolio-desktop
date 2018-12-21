@@ -32,7 +32,7 @@ const styles: StyleRulesCallback = (theme: Theme) => ({
 });
 
 export const PortfolioPositionHeader = withStyles(styles)(({ classes }) => (
-  <Card>
+  <Card square>
     <CardContent className={classes.root}>
       <div className={classes.avatar} />
       <div className={classes.content}>
