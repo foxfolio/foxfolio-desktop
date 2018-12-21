@@ -21,7 +21,7 @@ const createExchangeTransform = () =>
     return inboundState;
   }, _.identity);
 
-const migrations = {
+export const migrations = {
   0: (state: GlobalState): GlobalState => ({
     ...state,
     ticker: { ...state.ticker, ticker: {}, history: {} },
