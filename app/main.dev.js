@@ -8,7 +8,7 @@
  *
  *
  */
-import { app, BrowserWindow, dialog } from 'electron';
+import { app, BrowserWindow, dialog, Menu } from 'electron';
 import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
 
@@ -107,4 +107,39 @@ function createAndShowWindow() {
   mainWindow.on('closed', () => {
     mainWindow = null;
   });
+
+  if (process.platform === 'darwin') {
+    var template = [{
+      label: 'Foxfolio',
+      submenu: [{
+        label: 'Quit',
+        accelerator: 'CmdOrCtrl+Q',
+        click: function() {
+          app.quit();
+        }
+      }]
+    }, {
+      label: 'Edit',
+      submenu: [{
+        label: 'Cut',
+        accelerator: 'CmdOrCtrl+X',
+        selector: 'cut:'
+      }, {
+        label: 'Copy',
+        accelerator: 'CmdOrCtrl+C',
+        selector: 'copy:'
+      }, {
+        label: 'Paste',
+        accelerator: 'CmdOrCtrl+V',
+        selector: 'paste:'
+      }, {
+        label: 'Select All',
+        accelerator: 'CmdOrCtrl+A',
+        selector: 'selectAll:'
+      }]
+    }];
+
+    var osxMenu = Menu.buildFromTemplate(template);
+    Menu.setApplicationMenu(osxMenu);
+  }
 }
