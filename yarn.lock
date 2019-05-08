@@ -2536,16 +2536,14 @@ caseless@~0.12.0:
   resolved "https://registry.yarnpkg.com/caseless/-/caseless-0.12.0.tgz#1b681c21ff84033c826543090689420d187151dc"
   integrity sha1-G2gcIf+EAzyCZUMJBolCDRhxUdw=
 
-ccxt@^1.16.58:
-  version "1.16.58"
-  resolved "https://registry.yarnpkg.com/ccxt/-/ccxt-1.16.58.tgz#8382acef7f13befd052d430d8ed5126a1b6418e1"
-  integrity sha512-r1NQIdHHvyPGq7Yb+oOGU+9psgdU/UmCT8zwZYettnmyxQH5KxBTr864smpzGPEEh/Q3kFzuaCIHwRWQMnDzIQ==
+ccxt@^1.18.511:
+  version "1.18.511"
+  resolved "https://registry.yarnpkg.com/ccxt/-/ccxt-1.18.511.tgz#b13e6e093f4db704f8107e94d65eb9218fc7bbd3"
+  integrity sha512-gVw6+/3CtyrKyB2kGlYqXJk5SQN4UEa9EFmqjY769PNyFrAFeTwgG+UxnC6peWfmpk8mb1R93VlqeqlDDeMtJQ==
   dependencies:
-    cloudscraper "1.4.1"
     crypto-js "3.1.9-1"
     fetch-ponyfill "4.1.0"
     opencollective "1.0.3"
-    qs "6.5.1"
 
 center-align@^0.1.1:
   version "0.1.3"
@@ -2801,13 +2799,6 @@ clone@^1.0.2:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/clone/-/clone-1.0.4.tgz#da309cc263df15994c688ca902179ca3c7cd7c7e"
   integrity sha1-2jCcwmPfFZlMaIypAheco8fNfH4=
-
-cloudscraper@1.4.1:
-  version "1.4.1"
-  resolved "https://registry.yarnpkg.com/cloudscraper/-/cloudscraper-1.4.1.tgz#f2b4431f317286d819b1357266ca3463b112ebca"
-  integrity sha1-8rRDHzFyhtgZsTVyZso0Y7ES68o=
-  dependencies:
-    request "^2.49.0"
 
 co@^4.6.0:
   version "4.6.0"
@@ -9819,7 +9810,7 @@ request-promise-native@^1.0.5:
     stealthy-require "^1.1.0"
     tough-cookie ">=2.3.3"
 
-request@2.87.0, request@^2.45.0, request@^2.49.0, request@^2.81.0, request@^2.83.0, request@^2.85.0:
+request@2.87.0, request@^2.45.0, request@^2.81.0, request@^2.83.0, request@^2.85.0:
   version "2.87.0"
   resolved "https://registry.yarnpkg.com/request/-/request-2.87.0.tgz#32f00235cd08d482b4d0d68db93a829c0ed5756e"
   integrity sha512-fcogkm7Az5bsS6Sl0sibkbhcKsnyon/jV1kF3ajGmF0c8HrttdKTPRT9hieOaQHA5HEq6r8OyWOo/o781C1tNw==
