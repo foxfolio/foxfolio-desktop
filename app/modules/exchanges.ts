@@ -151,15 +151,26 @@ export function continuouslyFetchBalances(): ThunkAction {
   };
 }
 
+async function fetchBalances(exchange: Exchange) {
+  const connector = new ccxt[exchange.type](exchange.credentials);
+  if (exchange.type === 'bitfinex') {
+    const totalBalances = {};
+    for (const type of ['exchange', 'trading', 'deposit']) {
+      const partialBalance = await connector.fetchTotalBalance({ type });
+      Object.keys(partialBalance).forEach(key => {
+        totalBalances[key] = (totalBalances[key] || 0) + partialBalance[key];
+      });
+    }
+    return totalBalances;
+  }
+  return connector.fetchTotalBalance();
+}
+
 function fetchBalancesForExchange(exchange: Exchange): ThunkAction {
   return async (dispatch: Dispatch) => {
     await dispatch(incrementExchangeRequestCounter(exchange.id));
     try {
-      const connector = new ccxt[exchange.type](exchange.credentials);
-      const balances: Balances = _.pickBy(
-        await connector.fetchTotalBalance(),
-        balance => balance > 0
-      );
+      const balances: Balances = _.pickBy(await fetchBalances(exchange), balance => balance > 0);
       await dispatch(
         updateExchangeBalances(exchange.id, _.mapKeys(balances, (value, key) => unifySymbols(key)))
       );
