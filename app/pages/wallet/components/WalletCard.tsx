@@ -1,7 +1,7 @@
 import { Card, CardContent, CardHeader, Typography, WithStyles } from '@material-ui/core';
+import green from '@material-ui/core/colors/green';
 import { StyleRulesCallback, withStyles } from '@material-ui/core/styles';
 import React, { Component } from 'react';
-
 import { CardMenu } from '../../../components/CardMenu';
 import { CurrencyAvatar } from '../../../components/CurrencyAvatar';
 import { Coinlist } from '../../../modules/coinlist.types';
@@ -12,9 +12,14 @@ const styles: StyleRulesCallback = theme => ({
     margin: '10px 0',
   },
   content: {
+    paddingTop: 0,
+    paddingLeft: theme.spacing.unit * 9,
     '&:last-child': {
-      paddingBottom: theme.spacing.unit * 2,
+      paddingBottom: theme.spacing.unit,
     },
+  },
+  success: {
+    color: green[500],
   },
   subheader: {
     marginBottom: 12,
@@ -30,6 +35,16 @@ interface Props {
   wallet: Wallet;
   onEdit: () => any;
   onDelete: () => any;
+}
+
+// TODO Show status when request in progress
+function getSubheader(classes, wallet) {
+  if (wallet.error) {
+    return <Typography color="error">{wallet.error}</Typography>;
+  } else if (wallet.address) {
+    return <Typography className={classes.success}>Up to date</Typography>;
+  }
+  return 'Manual wallet';
 }
 
 export const WalletCard = withStyles(styles)(
@@ -48,7 +63,7 @@ export const WalletCard = withStyles(styles)(
                 ]}
               />
             }
-            subheader={wallet.quantity}
+            subheader={getSubheader(classes, wallet)}
             title={
               <Typography variant="headline" component="h2">
                 {coinlist[wallet.currency] ? coinlist[wallet.currency].FullName : wallet.currency}
@@ -56,8 +71,9 @@ export const WalletCard = withStyles(styles)(
             }
           />
           <CardContent className={classes.content}>
+            <Typography variant="title">{wallet.quantity}</Typography>
             <Typography variant="body1" className={classes.subheader}>
-              {`${wallet.note ? `Note: ${wallet.note}` : ''}`}
+              {`${wallet.note ? `${wallet.note}` : ''}`}
             </Typography>
           </CardContent>
         </Card>

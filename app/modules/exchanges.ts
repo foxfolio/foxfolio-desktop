@@ -5,7 +5,7 @@ import _ from 'lodash';
 import { Action, Dispatch, GetState, ThunkAction } from '../actions/actions.types';
 import { generateId } from '../helpers/reducers';
 import { getExchangeBalances } from '../pages/portfolio/selectors/selectBalances';
-import { getExchanges, getTimers } from '../selectors/selectGlobalState';
+import { getExchanges, getTimers, getWallets } from '../selectors/selectGlobalState';
 import { unifySymbols } from '../utils/unifySymbols';
 import {
   AddExchangeAction,
@@ -27,6 +27,7 @@ import {
 import { GlobalState } from './index';
 import { requestTickerUpdate } from './ticker';
 import { setLastUpdate, startTimer } from './timer';
+import { fetchBalanceForWallet } from './wallets';
 
 const BALANCE_REFRESH_MS = 30000;
 // const TRADE_REFRESH_MS = 60000;
@@ -96,11 +97,15 @@ export function deleteExchange(id: string): Action {
   };
 }
 
+// TODO Split into exchange and wallet balances
 export function fetchAllBalances(): ThunkAction {
   return async (dispatch: Dispatch, getState: GetState) => {
     dispatch(setLastUpdate('balances'));
     const exchanges = getConfiguredExchanges(getState());
     await Promise.all(_.map(exchanges, exchange => dispatch(fetchBalancesForExchange(exchange))));
+
+    const wallets = getWallets(getState());
+    await Promise.all(_.map(wallets, wallet => dispatch(fetchBalanceForWallet(wallet))));
   };
 }
 

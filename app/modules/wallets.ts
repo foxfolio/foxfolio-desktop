@@ -1,11 +1,13 @@
 import _ from 'lodash';
 import { Action, Dispatch, ThunkAction } from '../actions/actions.types';
 import { generateId } from '../helpers/reducers';
+import { fetchAllBalances } from './exchanges';
 import { requestTickerUpdate } from './ticker';
 import {
   AddWalletAction,
   DeleteWalletAction,
   EditWalletAction,
+  FailedWalletRequestAction,
   Wallet,
   Wallets,
 } from './wallets.types';
@@ -19,6 +21,8 @@ export default function reducer(state: Wallets = {}, action: Action): Wallets {
       return editWalletInState(state, action);
     case 'DELETE_WALLET':
       return deleteWalletFromState(state, action);
+    case 'FAILED_WALLET_REQUEST_ACTION':
+      return addFailedRequestToState(state, action);
     default:
       return state;
   }
@@ -32,6 +36,7 @@ export function addWallet(wallet: Wallet): ThunkAction {
       type: 'ADD_WALLET',
       wallet,
     });
+    dispatch(fetchAllBalances());
   };
 }
 
@@ -43,6 +48,7 @@ export function editWallet(id: string, updatedWallet: Wallet): ThunkAction {
       id,
       updatedWallet,
     });
+    dispatch(fetchAllBalances());
   };
 }
 
@@ -50,6 +56,33 @@ export function deleteWallet(id: string): Action {
   return {
     type: 'DELETE_WALLET',
     id,
+  };
+}
+
+function failedRequest(id: string, error: string): FailedWalletRequestAction {
+  return {
+    type: 'FAILED_WALLET_REQUEST_ACTION',
+    id,
+    error,
+  };
+}
+
+export function fetchBalanceForWallet(wallet: Wallet): ThunkAction {
+  return async dispatch => {
+    if (wallet.currency === 'BTC' && wallet.address) {
+      const result = await fetch(`https://blockchain.info/rawaddr/${wallet.address}`);
+      if (!result.ok) {
+        dispatch(failedRequest(wallet.id, await result.text()));
+      } else {
+        const resultJson = await result.json();
+        const balance = resultJson.final_balance / 1e8;
+        dispatch({
+          type: 'EDIT_WALLET',
+          id: wallet.id,
+          updatedWallet: { ...wallet, quantity: balance },
+        });
+      }
+    }
   };
 }
 
@@ -64,6 +97,10 @@ function addWalletToState(state: Wallets, action: AddWalletAction): Wallets {
 
 function editWalletInState(state: Wallets, action: EditWalletAction): Wallets {
   return { ...state, [action.id]: action.updatedWallet };
+}
+
+function addFailedRequestToState(state: Wallets, action: FailedWalletRequestAction) {
+  return { ...state, [action.id]: { ...state[action.id], error: action.error } };
 }
 
 function deleteWalletFromState(state: Wallets, action: DeleteWalletAction): Wallets {
