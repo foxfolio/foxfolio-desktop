@@ -23,6 +23,7 @@ interface StringWallet {
   id: string;
   currency: string;
   quantity: string;
+  address?: string;
   note?: string;
 }
 
@@ -39,6 +40,7 @@ export default class WalletDialog extends Component<Props, StringWallet> {
         id: nextProps.wallet.id,
         currency: nextProps.wallet.currency,
         quantity: nextProps.wallet.quantity.toString(),
+        address: nextProps.wallet.address,
         note: nextProps.wallet.note,
       });
     }
@@ -50,6 +52,7 @@ export default class WalletDialog extends Component<Props, StringWallet> {
       id: this.state.id,
       currency: this.state.currency,
       quantity: parseFloat(this.state.quantity),
+      address: this.state.address ? this.state.address : '',
       note: this.state.note ? this.state.note : '',
     });
   };
@@ -85,11 +88,24 @@ export default class WalletDialog extends Component<Props, StringWallet> {
                 .sort((a, b) => parseInt(a.SortOrder, 10) - parseInt(b.SortOrder, 10))
                 .map(coin => coin.FullName)}
             />
+            {this.state.currency === 'BTC' ? (
+              <TextField
+                label="Address (optional, for automatic updates)"
+                id="address"
+                value={this.state.address}
+                onChange={this.handleChange('address')}
+                fullWidth
+                margin="normal"
+              />
+            ) : (
+              ''
+            )}
             <TextField
               label="Quantity"
               id="quantity"
               value={this.state.quantity}
               onChange={this.handleChange('quantity')}
+              disabled={!!this.state.address}
               fullWidth
               margin="normal"
               type="number"

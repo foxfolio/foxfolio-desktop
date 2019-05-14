@@ -2,6 +2,7 @@ export interface Wallet {
   id: string;
   currency: string;
   quantity: number;
+  address?: string;
   note?: string;
 }
 
