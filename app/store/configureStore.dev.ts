@@ -5,6 +5,7 @@ import { createLogger } from 'redux-logger';
 import thunk from 'redux-thunk';
 import { rootReducer } from '../modules';
 import * as exchangeActions from '../modules/exchanges';
+import * as walletActions from '../modules/wallets';
 import { Store } from './configureStore';
 import { persistStore } from './persistStore';
 
@@ -33,6 +34,7 @@ const configureStore = (initialState?: any) => {
   const actionCreators = {
     ...exchangeActions,
     ...routerActions,
+    ...walletActions,
   };
   // If Redux DevTools Extension is installed use it, otherwise use Redux compose
   /* eslint-disable no-underscore-dangle */
