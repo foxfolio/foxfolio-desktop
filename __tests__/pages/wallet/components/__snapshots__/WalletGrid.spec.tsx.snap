@@ -41,7 +41,7 @@ exports[`Render wallet grid 1`] = `
     onClick={[Function]}
     variant="fab"
   >
-    <pure(Add) />
+    <pure(AddIcon) />
   </WithStyles(Button)>
   <WalletDialog
     close={[Function]}

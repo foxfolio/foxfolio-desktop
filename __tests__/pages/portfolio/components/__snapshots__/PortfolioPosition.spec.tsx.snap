@@ -3,7 +3,7 @@
 exports[`Portfolio position with missing ticker 1`] = `
 <WithStyles(class_1)
   cardContent={
-    <UNDEFINED>
+    <React.Fragment>
       <div
         className="Component-avatar-1"
       >
@@ -62,7 +62,7 @@ exports[`Portfolio position with missing ticker 1`] = `
           </WithStyles(Grid)>
         </WithStyles(Grid)>
       </div>
-    </UNDEFINED>
+    </React.Fragment>
   }
   collapseContent={
     <Connect(WithTheme(class_1))
@@ -76,7 +76,7 @@ exports[`Portfolio position with missing ticker 1`] = `
 exports[`Render portfolio position 1`] = `
 <WithStyles(class_1)
   cardContent={
-    <UNDEFINED>
+    <React.Fragment>
       <div
         className="Component-avatar-1"
       >
@@ -207,7 +207,7 @@ exports[`Render portfolio position 1`] = `
           </WithStyles(Grid)>
         </WithStyles(Grid)>
       </div>
-    </UNDEFINED>
+    </React.Fragment>
   }
   collapseContent={
     <Connect(WithTheme(class_1))
