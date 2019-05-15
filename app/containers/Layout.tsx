@@ -1,14 +1,7 @@
 import { AppBar, List, Typography, WithStyles } from '@material-ui/core';
 import Drawer from '@material-ui/core/Drawer';
 import { StyleRulesCallback, withStyles } from '@material-ui/core/styles';
-import {
-  AccountBalanceWallet,
-  Cloud,
-  Dashboard,
-  HelpOutline,
-  Settings,
-  SwapHoriz,
-} from '@material-ui/icons';
+import { AccountBalanceWallet, Cloud, Dashboard, HelpOutline, Settings } from '@material-ui/icons';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router';
@@ -16,8 +9,9 @@ import { Dispatch } from '../actions/actions.types';
 import { DrawerItem } from '../components/DrawerItem';
 import { getRaven } from '../helpers/sentry';
 import { requestCoinList } from '../modules/coinlist';
-import { continuouslyFetchBalances } from '../modules/exchanges';
+import { continuouslyFetchBalances } from '../modules/init';
 import { continuouslyUpdateTicker } from '../modules/ticker';
+
 const icon = require('../resources/icon.png'); // tslint:disable-line:no-var-requires
 
 const drawerWidth = 250;

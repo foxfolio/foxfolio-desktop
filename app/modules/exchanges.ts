@@ -5,7 +5,7 @@ import _ from 'lodash';
 import { Action, Dispatch, GetState, ThunkAction } from '../actions/actions.types';
 import { generateId } from '../helpers/reducers';
 import { getExchangeBalances } from '../pages/portfolio/selectors/selectBalances';
-import { getExchanges, getTimers } from '../selectors/selectGlobalState';
+import { getExchanges } from '../selectors/selectGlobalState';
 import { unifySymbols } from '../utils/unifySymbols';
 import {
   AddExchangeAction,
@@ -26,10 +26,8 @@ import {
 } from './exchanges.types';
 import { GlobalState } from './index';
 import { requestTickerUpdate } from './ticker';
-import { setLastUpdate, startTimer } from './timer';
+import { EXCHANGE_BALANCE_TIMER, setLastUpdate } from './timer';
 
-const BALANCE_REFRESH_MS = 30000;
-// const TRADE_REFRESH_MS = 60000;
 
 // Reducer
 export default function reducer(state: Exchanges = {}, action: Action): Exchanges {
@@ -63,7 +61,7 @@ export function addExchange(type: string, credentials: ExchangeCredentials): Thu
       exchangeType: type,
       credentials,
     });
-    dispatch(fetchAllBalances());
+    dispatch(fetchAllExchangeBalances());
   };
 }
 
@@ -77,7 +75,7 @@ export function updateExchangeCredentials(
       id,
       credentials,
     });
-    dispatch(fetchAllBalances());
+    dispatch(fetchAllExchangeBalances());
   };
 }
 
@@ -96,9 +94,9 @@ export function deleteExchange(id: string): Action {
   };
 }
 
-export function fetchAllBalances(): ThunkAction {
+export function fetchAllExchangeBalances(): ThunkAction {
   return async (dispatch: Dispatch, getState: GetState) => {
-    dispatch(setLastUpdate('balances'));
+    dispatch(setLastUpdate(EXCHANGE_BALANCE_TIMER));
     const exchanges = getConfiguredExchanges(getState());
     await Promise.all(_.map(exchanges, exchange => dispatch(fetchBalancesForExchange(exchange))));
   };
@@ -136,19 +134,6 @@ function failedRequest(id: string, error: string): FailedExchangeRequestAction {
 
 function getConfiguredExchanges(state: GlobalState): Exchanges {
   return state.exchanges;
-}
-
-export function continuouslyFetchBalances(): ThunkAction {
-  return (dispatch: Dispatch, getState: GetState) => {
-    if (!getTimers(getState()).balances) {
-      const balanceTimer = window.setInterval(
-        () => dispatch(fetchAllBalances()),
-        BALANCE_REFRESH_MS
-      );
-
-      dispatch(startTimer('balances', balanceTimer));
-    }
-  };
 }
 
 async function fetchBalances(exchange: Exchange) {

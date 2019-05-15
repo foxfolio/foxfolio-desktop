@@ -1,6 +1,9 @@
 import { Action } from '../actions/actions.types';
 import { Timers } from './timer.types';
 
+export const EXCHANGE_BALANCE_TIMER = 'EXCHANGE_BALANCE_TIMER';
+export const WALLET_BALANCE_TIMER = 'WALLET_BALANCE_TIMER';
+
 // Reducer
 export default function reducer(state: Timers = { timers: {} }, action: Action): Timers {
   switch (action.type) {

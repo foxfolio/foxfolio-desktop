@@ -9,6 +9,7 @@ import {
 import React, { Component, FormEvent } from 'react';
 import { Autocomplete } from '../../../components/Autocomplete';
 import { Coinlist } from '../../../modules/coinlist.types';
+import { supportsAutoUpdate } from '../../../modules/wallets';
 import { Wallet } from '../../../modules/wallets.types';
 
 interface Props {
@@ -23,6 +24,7 @@ interface StringWallet {
   id: string;
   currency: string;
   quantity: string;
+  address?: string;
   note?: string;
 }
 
@@ -39,6 +41,7 @@ export default class WalletDialog extends Component<Props, StringWallet> {
         id: nextProps.wallet.id,
         currency: nextProps.wallet.currency,
         quantity: nextProps.wallet.quantity.toString(),
+        address: nextProps.wallet.address,
         note: nextProps.wallet.note,
       });
     }
@@ -50,6 +53,7 @@ export default class WalletDialog extends Component<Props, StringWallet> {
       id: this.state.id,
       currency: this.state.currency,
       quantity: parseFloat(this.state.quantity),
+      address: this.state.address ? this.state.address : '',
       note: this.state.note ? this.state.note : '',
     });
   };
@@ -86,16 +90,28 @@ export default class WalletDialog extends Component<Props, StringWallet> {
                 .map(coin => coin.FullName)}
             />
             <TextField
+              label={`Address (for automatic updates${
+                !supportsAutoUpdate(this.state.currency) ? ', currently only BTC and ETH' : ''
+              })`}
+              id="address"
+              value={this.state.address}
+              onChange={this.handleChange('address')}
+              disabled={!supportsAutoUpdate(this.state.currency)}
+              fullWidth
+              margin="normal"
+            />
+            <TextField
               label="Quantity"
               id="quantity"
               value={this.state.quantity}
               onChange={this.handleChange('quantity')}
+              disabled={!!this.state.address}
               fullWidth
               margin="normal"
               type="number"
             />
             <TextField
-              label="Note"
+              label="Note (optional)"
               id="note"
               value={this.state.note ? this.state.note : ''}
               onChange={this.handleChange('note')}
