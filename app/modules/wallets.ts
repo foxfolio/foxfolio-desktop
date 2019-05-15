@@ -76,20 +76,41 @@ export function fetchAllWalletBalances(): ThunkAction {
   };
 }
 
+export function supportsAutoUpdate(currency: string) {
+  return ['BTC', 'ETH'].includes(currency);
+}
+
 export function fetchBalanceForWallet(wallet: Wallet): ThunkAction {
   return async dispatch => {
-    if (wallet.currency === 'BTC' && wallet.address) {
-      const result = await fetch(`https://blockchain.info/rawaddr/${wallet.address}`);
-      if (!result.ok) {
-        dispatch(failedRequest(wallet.id, await result.text()));
-      } else {
+    if (wallet.address) {
+      if (wallet.currency === 'BTC') {
+        const result = await fetch(`https://blockchain.info/rawaddr/${wallet.address}`);
+        if (!result.ok) {
+          dispatch(failedRequest(wallet.id, await result.text()));
+        } else {
+          const resultJson = await result.json();
+          const balance = resultJson.final_balance / 1e8;
+          dispatch({
+            type: 'EDIT_WALLET',
+            id: wallet.id,
+            updatedWallet: { ...wallet, quantity: balance },
+          });
+        }
+      } else if (wallet.currency === 'ETH') {
+        const result = await fetch(
+          `https://api.blockcypher.com/v1/eth/main/addrs/${wallet.address}/balance`
+        );
         const resultJson = await result.json();
-        const balance = resultJson.final_balance / 1e8;
-        dispatch({
-          type: 'EDIT_WALLET',
-          id: wallet.id,
-          updatedWallet: { ...wallet, quantity: balance },
-        });
+        if (!result.ok) {
+          dispatch(failedRequest(wallet.id, resultJson.error));
+        } else {
+          const balance = resultJson.final_balance / 1e18;
+          dispatch({
+            type: 'EDIT_WALLET',
+            id: wallet.id,
+            updatedWallet: { ...wallet, quantity: balance },
+          });
+        }
       }
     }
   };

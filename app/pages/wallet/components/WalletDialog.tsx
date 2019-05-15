@@ -9,6 +9,7 @@ import {
 import React, { Component, FormEvent } from 'react';
 import { Autocomplete } from '../../../components/Autocomplete';
 import { Coinlist } from '../../../modules/coinlist.types';
+import { supportsAutoUpdate } from '../../../modules/wallets';
 import { Wallet } from '../../../modules/wallets.types';
 
 interface Props {
@@ -74,7 +75,6 @@ export default class WalletDialog extends Component<Props, StringWallet> {
   public render() {
     const { open, close, coinlist } = this.props;
 
-    const supportsAutoUpdate = this.state.currency === 'BTC';
     return (
       <Dialog title="New Wallet" open={open} onClose={close}>
         <DialogTitle>New wallet</DialogTitle>
@@ -91,12 +91,12 @@ export default class WalletDialog extends Component<Props, StringWallet> {
             />
             <TextField
               label={`Address (for automatic updates${
-                !supportsAutoUpdate ? ', currently only BTC' : ''
+                !supportsAutoUpdate(this.state.currency) ? ', currently only BTC and ETH' : ''
               })`}
               id="address"
               value={this.state.address}
               onChange={this.handleChange('address')}
-              disabled={!supportsAutoUpdate}
+              disabled={!supportsAutoUpdate(this.state.currency)}
               fullWidth
               margin="normal"
             />
