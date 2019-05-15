@@ -1,7 +1,7 @@
 import { applyMiddleware, combineReducers, createStore } from 'redux';
 import thunk from 'redux-thunk';
 import { GlobalState } from '../../app/modules';
-import exchanges, { fetchAllBalances } from '../../app/modules/exchanges';
+import exchanges, { fetchAllExchangeBalances } from '../../app/modules/exchanges';
 import { initialSettings } from '../../app/modules/settings.types';
 import { getExchanges } from '../../app/selectors/selectGlobalState';
 import { Store } from '../../app/store/configureStore';
@@ -50,7 +50,7 @@ describe('fetchAllBalances', () => {
   test('updates the balances in store', async () => {
     fakeFetchTotalBalance.mockResolvedValue({ BTC: 5 });
 
-    await store.dispatch(fetchAllBalances());
+    await store.dispatch(fetchAllExchangeBalances());
 
     expect(getExchanges(store.getState())).toMatchObject({
       id: {
@@ -66,7 +66,7 @@ describe('fetchAllBalances', () => {
   test('ignores empty balances', async () => {
     fakeFetchTotalBalance.mockResolvedValue({ BTC: 5, LTC: 0 });
 
-    await store.dispatch(fetchAllBalances());
+    await store.dispatch(fetchAllExchangeBalances());
 
     expect(getExchanges(store.getState())).toMatchObject({
       id: {
@@ -82,7 +82,7 @@ describe('fetchAllBalances', () => {
   test('stores the error message on failure', async () => {
     fakeFetchTotalBalance.mockRejectedValue({ message: 'Error Message' });
 
-    await store.dispatch(fetchAllBalances());
+    await store.dispatch(fetchAllExchangeBalances());
 
     expect(getExchanges(store.getState())).toMatchObject({
       id: {

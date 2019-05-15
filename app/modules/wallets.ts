@@ -1,8 +1,9 @@
 import _ from 'lodash';
-import { Action, Dispatch, ThunkAction } from '../actions/actions.types';
+import { Action, Dispatch, GetState, ThunkAction } from '../actions/actions.types';
 import { generateId } from '../helpers/reducers';
-import { fetchAllBalances } from './exchanges';
+import { getWallets } from '../selectors/selectGlobalState';
 import { requestTickerUpdate } from './ticker';
+import { setLastUpdate, WALLET_BALANCE_TIMER } from './timer';
 import {
   AddWalletAction,
   DeleteWalletAction,
@@ -36,7 +37,7 @@ export function addWallet(wallet: Wallet): ThunkAction {
       type: 'ADD_WALLET',
       wallet,
     });
-    dispatch(fetchAllBalances());
+    dispatch(fetchAllWalletBalances());
   };
 }
 
@@ -48,7 +49,7 @@ export function editWallet(id: string, updatedWallet: Wallet): ThunkAction {
       id,
       updatedWallet,
     });
-    dispatch(fetchAllBalances());
+    dispatch(fetchAllWalletBalances());
   };
 }
 
@@ -64,6 +65,14 @@ function failedRequest(id: string, error: string): FailedWalletRequestAction {
     type: 'FAILED_WALLET_REQUEST_ACTION',
     id,
     error,
+  };
+}
+
+export function fetchAllWalletBalances(): ThunkAction {
+  return async (dispatch: Dispatch, getState: GetState) => {
+    dispatch(setLastUpdate(WALLET_BALANCE_TIMER));
+    const wallets = getWallets(getState());
+    await Promise.all(_.map(wallets, wallet => dispatch(fetchBalanceForWallet(wallet))));
   };
 }
 
