@@ -35,7 +35,7 @@ exports[`Portfolio position with missing ticker 1`] = `
                 component="span"
                 variant="body2"
               >
-                10.000
+                10
               </WithStyles(Typography)>
             </div>
           </WithStyles(Grid)>
@@ -108,7 +108,7 @@ exports[`Render portfolio position 1`] = `
                 component="span"
                 variant="body2"
               >
-                10.000
+                10
               </WithStyles(Typography)>
             </div>
           </WithStyles(Grid)>
