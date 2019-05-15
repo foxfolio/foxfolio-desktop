@@ -74,6 +74,7 @@ export default class WalletDialog extends Component<Props, StringWallet> {
   public render() {
     const { open, close, coinlist } = this.props;
 
+    const supportsAutoUpdate = this.state.currency === 'BTC';
     return (
       <Dialog title="New Wallet" open={open} onClose={close}>
         <DialogTitle>New wallet</DialogTitle>
@@ -88,18 +89,17 @@ export default class WalletDialog extends Component<Props, StringWallet> {
                 .sort((a, b) => parseInt(a.SortOrder, 10) - parseInt(b.SortOrder, 10))
                 .map(coin => coin.FullName)}
             />
-            {this.state.currency === 'BTC' ? (
-              <TextField
-                label="Address (optional, for automatic updates)"
-                id="address"
-                value={this.state.address}
-                onChange={this.handleChange('address')}
-                fullWidth
-                margin="normal"
-              />
-            ) : (
-              ''
-            )}
+            <TextField
+              label={`Address (for automatic updates${
+                !supportsAutoUpdate ? ', currently only BTC' : ''
+              })`}
+              id="address"
+              value={this.state.address}
+              onChange={this.handleChange('address')}
+              disabled={!supportsAutoUpdate}
+              fullWidth
+              margin="normal"
+            />
             <TextField
               label="Quantity"
               id="quantity"
@@ -111,7 +111,7 @@ export default class WalletDialog extends Component<Props, StringWallet> {
               type="number"
             />
             <TextField
-              label="Note"
+              label="Note (optional)"
               id="note"
               value={this.state.note ? this.state.note : ''}
               onChange={this.handleChange('note')}
