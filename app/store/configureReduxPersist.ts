@@ -7,7 +7,7 @@ import { GlobalState } from '../modules';
 export const configureReduxPersist = (): PersistConfig => ({
   version: 1,
   key: 'primary',
-  blacklist: ['router', 'timer'],
+  blacklist: ['router', 'timers'],
   transforms: [createExchangeTransform()],
   migrate: createMigrate(migrations as any, { debug: false }),
   storage,
