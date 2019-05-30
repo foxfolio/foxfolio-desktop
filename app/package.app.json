@@ -1,7 +1,7 @@
 {
   "name": "foxfolio",
   "productName": "Foxfolio",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "description": "Cryptocurrency portfolio management application which automatically retrieves balances and trades using exchange APIs",
   "main": "./main.prod.js",
   "author": {
