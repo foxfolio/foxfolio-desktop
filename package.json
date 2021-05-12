@@ -223,7 +223,7 @@
     "@material-ui/icons": "^3.0.2",
     "axios": "^0.18.0",
     "ccxt": "^1.18.511",
-    "chart.js": "^2.7.2",
+    "chart.js": "^2.9.4",
     "classnames": "^2.2.5",
     "csvtojson": "^1.1.9",
     "dayjs": "^1.7.7",
