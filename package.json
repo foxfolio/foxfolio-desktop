@@ -190,7 +190,7 @@
     "jest": "^23.6.0",
     "lodash": "^4.17.5",
     "minimist": "^1.2.0",
-    "node-sass": "^4.5.3",
+    "node-sass": "^7.0.0",
     "prettier": "1.10.2",
     "react-test-renderer": "^16.2.0",
     "redux-logger": "^3.0.6",
