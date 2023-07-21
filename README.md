@@ -1,16 +1,11 @@
 # Foxfolio
 
 [![GitHub release](https://img.shields.io/github/release/foxfolio/foxfolio-desktop/all.svg?style=flat-square)](https://github.com/foxfolio/foxfolio-desktop/releases)
-[![Travis](https://img.shields.io/travis/foxfolio/foxfolio-desktop/master.svg?style=flat-square)](https://travis-ci.org/foxfolio/foxfolio-desktop)
 [![GitHub license](https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square)](https://github.com/foxfolio/foxfolio-desktop)
-[![CodeFactor](https://www.codefactor.io/repository/github/foxfolio/foxfolio-desktop/badge)](https://www.codefactor.io/repository/github/foxfolio/foxfolio-desktop)
-[![Coveralls github](https://img.shields.io/coveralls/github/foxfolio/foxfolio-desktop.svg?style=flat-square)](https://coveralls.io/github/foxfolio/foxfolio-desktop)
-[![Gitter](https://img.shields.io/gitter/room/foxfolio/foxfolio-desktop.js.svg?style=flat-square)](https://gitter.im/foxfolio-desktop/Lobby?utm_source=share-link&utm_medium=link&utm_campaign=share-link)
-[![Twitter Follow](https://img.shields.io/twitter/follow/foxfol_io.svg?label=Follow%20Foxfolio&style=flat-square)](https://twitter.com/foxfol_io)
 
 > Cryptocurrency portfolio management application which automatically retrieves balances and trades using exchange APIs
 
-![Foxfolio screenshot](resources/screenshots/foxfolio.png?raw=true)
+![Foxfolio screenshot](public/screenshots/foxfolio.png?raw=true)
 
 ## Table of Contents
 
@@ -41,12 +36,11 @@ Foxfolio will then retrieve the current balances and update the portfolio.
 
 ## Build from source
 
-* **Note: requires a node version >= 8.7 and an npm version >= 5.**
+* **Note: requires a node version >= 14.**
 
 Install dependencies with yarn.
 
 ```bash
-$ cd crypto-portfolio
 $ yarn
 ```
 **Note**: If you can't use [yarn](https://github.com/yarnpkg/yarn) for some reason, try `npm install`.
@@ -54,18 +48,16 @@ $ yarn
 To run the app in the `dev` environment use
 
 ```bash
-$ npm run dev
+$ yarn dev
 ```
 
-This starts the renderer process in [**hot-module-replacement**](https://webpack.js.org/guides/hmr-react/) mode and starts a server that sends hot updates to the renderer process
-
-To run the application without packaging use
+To package the project for your operating system use
 
 ```bash
-$ npm start
+$ yarn build
 ```
 
-This builds the application using Webpack and launches it.
+This builds the application and provides an executuable under `release`.
 
 ## Maintainers
 
@@ -78,12 +70,10 @@ Feel free to add issues/PRs/comments.
 If you appreciate my work, you can buy me a coffee using your favourite cryptocurrencies! 
 
 ```
-BTC 3E8yR2viEgLpErjfmFkMTZ9ntVP66KBLGD
-ETH 0x588fFcb52d43fe7Def5D4F45Bb7c324ECAA79010
-LTC MQTha8UbFoagdrM4RWKvrNvzJFFUat4jN3
-ARK AXkXn8h18dYKQMfkE3Va8WJ9SPQqCrATc3
-NANO xrb_3bua4emgw1ygmf3p4wfw43nkqdxsxuoxmk6bfx8ajsq91m9jxwdm6go6ebq9
+BTC bc1qeq43ma8nwrmr8cuuxrvy0xmsr446g4l5kqlzwd
+ETH acevail.eth / 0xdA43422c16b094f6428173fbe15E295523893549
+XCH xch1ue73qkk0haklxedjmxsymhmtgcvxr6k8va3xvj0jnfehheu37fyqe3gzzd
 ```
 ## License
 
-MIT © 2017 - 2019 Andreas Greimel
+MIT © 2017 - 2023 Andreas Greimel
