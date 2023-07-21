@@ -27,7 +27,7 @@
     "downshift": "^1.26.1",
     "electron-debug": "^1.2.0",
     "electron-log": "^2.2.14",
-    "electron-updater": "^2.19.1",
+    "electron-updater": "^6.1.1",
     "font-awesome": "^4.7.0",
     "format-number": "^3.0.0",
     "formsy-react": "^1.1.3",
