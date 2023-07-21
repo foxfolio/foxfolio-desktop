@@ -72,16 +72,16 @@ export function fetchAllWalletBalances(): ThunkAction {
   return async (dispatch: Dispatch, getState: GetState) => {
     dispatch(setLastUpdate(WALLET_BALANCE_TIMER));
     const wallets = getWallets(getState());
-    await Promise.all(_.map(wallets, wallet => dispatch(fetchBalanceForWallet(wallet))));
+    await Promise.all(_.map(wallets, (wallet) => dispatch(fetchBalanceForWallet(wallet))));
   };
 }
 
 export function supportsAutoUpdate(currency: string) {
-  return ['BTC', 'ETH'].includes(currency);
+  return ['BTC', 'ETH', 'XCH'].includes(currency);
 }
 
 export function fetchBalanceForWallet(wallet: Wallet): ThunkAction {
-  return async dispatch => {
+  return async (dispatch) => {
     if (wallet.address) {
       if (wallet.currency === 'BTC') {
         const result = await fetch(`https://blockchain.info/rawaddr/${wallet.address}`);
@@ -105,6 +105,19 @@ export function fetchBalanceForWallet(wallet: Wallet): ThunkAction {
           dispatch(failedRequest(wallet.id, resultJson.error));
         } else {
           const balance = resultJson.final_balance / 1e18;
+          dispatch({
+            type: 'EDIT_WALLET',
+            id: wallet.id,
+            updatedWallet: { ...wallet, quantity: balance },
+          });
+        }
+      } else if (wallet.currency === 'XCH') {
+        const result = await fetch(`https://api2.spacescan.io/1/xch/balance/${wallet.address}`);
+        const resultJson = await result.json();
+        if (!result.ok) {
+          dispatch(failedRequest(wallet.id, resultJson.error));
+        } else {
+          const balance = resultJson.data.balance;
           dispatch({
             type: 'EDIT_WALLET',
             id: wallet.id,
